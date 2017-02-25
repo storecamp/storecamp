@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/nilsenj/storecamp.svg?branch=master)](https://travis-ci.org/nilsenj/storecamp)
-
+[![Build Status](https://travis-ci.org/storecamp/storecamp.svg?branch=master)](https://travis-ci.org/storecamp/storecamp)
 ###ecommerce platform
 ###see the main code base in app/Core directory
 ###the project is still in active development and it is not required to use it anywhere
