@@ -181,6 +181,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        storecamp\htmlelements\htmlelementsServiceProvider::class,
+
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
         App\Providers\PresentersServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
