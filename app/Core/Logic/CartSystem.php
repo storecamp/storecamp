@@ -484,6 +484,7 @@ class CartSystem implements CartSystemContract
             $cartItem = CartItem::fromAttributes($id, $name, $price, $options);
             $cartItem->setQuantity($qty);
         }
+        $cartItem->setCurrency($this->currency);
         $cartItem->setTaxRate(config('cart.tax'));
         return $cartItem;
     }

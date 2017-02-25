@@ -10,7 +10,7 @@ return [
     |
     */
     'tax' => 21,
-    'main_currency' => 'USD',
+    'main_currency' => 'usd',
     /*
     |--------------------------------------------------------------------------
     | storecamp cart database settings

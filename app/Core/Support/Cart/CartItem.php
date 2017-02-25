@@ -56,6 +56,11 @@ class CartItem implements Arrayable, CartItemContract
     public $options;
 
     /**
+     * @var string
+     */
+    public $currency;
+
+    /**
      * The FQN of the associated model.
      *
      * @var string|null
@@ -231,6 +236,11 @@ class CartItem implements Arrayable, CartItemContract
             throw new \InvalidArgumentException('Please supply a valid quantity.');
 
         $this->qty = $qty;
+    }
+
+    public function setCurrency(string $currency)
+    {
+        $this->currency = $currency;
     }
 
     /**
