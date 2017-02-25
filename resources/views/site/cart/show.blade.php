@@ -39,8 +39,10 @@
                                 </div>
                             </td>
                             <td class="" style="text-align: center">
-                                <input type="number" class="form-control" id="cart-number"
+                                {!! Form::open([ 'method' => 'PUT', 'id' => 'update-item'.$row->rowId, 'route' => ['site::cart::update', $row->rowId]]) !!}
+                                <input type="number" name="quantity" class="form-control cart-number" onchange="this.form.submit()"
                                        value="{{$row->qty}}">
+                                {!! Form::close() !!}
                             </td>
                             <td class="text-center"><strong>${{ $row->price }}</strong></td>
                             <td class="text-center"><strong>${{ $row->total }}</strong></td>

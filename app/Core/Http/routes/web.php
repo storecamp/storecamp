@@ -30,6 +30,11 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
             'as' => 'show'
         ]);
 
+        $router->put('update/{cartId}', [
+            'uses' => 'Site\CartController@update',
+            'as' => 'update'
+        ]);
+
         $router->put('add/{cartId}', [
             'uses' => 'Site\CartController@add',
             'as' => 'add'
@@ -44,6 +49,7 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
             'uses' => 'Site\CartController@delete',
             'as' => 'delete'
         ]);
+
     });
 
     /**

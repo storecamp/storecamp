@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 class CartController extends BaseController
 {
     /**
+     * TODO Implement Try Catch blocks
+     */
+    /**
      * @var string
      */
     public $viewPathBase = "site.cart.";
@@ -34,12 +37,32 @@ class CartController extends BaseController
         $this->cartSystem = $cartSystem;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function show(Request $request)
     {
         $data = $request->all();
         $cart = $this->cartSystem->show($data);
         $cartSystem = $this->cartSystem;
         return $this->view('show', compact('cart', 'cartSystem'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $rowId
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $rowId)
+    {
+        $this->cartSystem->update($rowId, $request->get('quantity'));
+        if($request->ajax()) {
+            return response()->json(['message'=> 'cart item updated']);
+        } else {
+            \Flash::info('cart item updated');
+            return redirect()->route('site::cart::show');
+        }
     }
 
     /**
