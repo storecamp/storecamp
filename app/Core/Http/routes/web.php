@@ -58,12 +58,6 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
  * @param $this \Illuminate\Routing\Route
  */
 Auth::routes();
-// Password reset routes...
-$this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
-$this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
-$this->post('password/reset', 'Auth\PasswordController@postReset');
-$this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
-
 
 $this->get('/htmlElements', [
     'uses' => 'Admin\AdminController@htmlElements',
