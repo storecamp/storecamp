@@ -63,7 +63,7 @@ class StoreCampTest extends TestCase
     {
         $faker = Faker::create();
         $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, "password" => "passw0RD"]);
-
+        $this->artisan('db:seed');
         $this->visit('/login')
             ->type($user->email, 'email')
             ->type('passw0RD', 'password')
