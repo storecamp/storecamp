@@ -43,7 +43,9 @@
     "mpociot/laravel-apidoc-generator": "1.7.0",
     "amsgames/laravel-shop-gateway-paypal": "^1.0",
     "graham-campbell/manager": "^2.4",
-    "storecamp/htmlelements": "^1.0@dev"
+    "storecamp/htmlelements": "^1.0@dev",
+    "laracasts/flash": "^2.0",
+    "Landish/Pagination": "^1.3"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -53,8 +55,6 @@
     "symfony/dom-crawler": "3.1.*",
     "laracasts/generators": "dev-master",
     "doctrine/dbal": "^2.6@dev",
-    "laracasts/flash": "dev-master",
-    "Landish/Pagination": "dev-master",
     "squizlabs/php_codesniffer": "^2.7",
     "laravel/homestead": "^4.0"
   },
@@ -105,7 +105,6 @@
       "App\\Core\\Components\\Country\\": "app/Core/Components/Country/",
       "App\\Core\\Components\\Select\\SelectBuilder\\": "app/Core/Components/Select/",
       "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
-      "App\\Core\\Components\\Flash\\": "packages/Flash/",
       "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/"
     },
     "files": [
@@ -120,7 +119,6 @@
   "extra": {
     "merge-plugin": {
       "require": [
-        "packages/nilsenj/toastr-laravel/composer.json",
         "packages/vinkla/hashids/composer.json",
         "packages/laravel-auditing/composer.json"
       ],

@@ -15682,7 +15682,7 @@ namespace App\Core\Components\ActiveItem\Facades {
     }         
 }
     
-namespace App\Core\Components\Flash {
+namespace Laracasts\Flash {
 
     class Flash {
         
@@ -15690,11 +15690,12 @@ namespace App\Core\Components\Flash {
          * Flash an information message.
          *
          * @param string $message
+         * @return $this 
          * @static 
          */
         public static function info($message)
         {
-            return \App\Core\Components\Flash\FlashNotifier::info($message);
+            return \Laracasts\Flash\FlashNotifier::info($message);
         }
         
         /**
@@ -15706,7 +15707,7 @@ namespace App\Core\Components\Flash {
          */
         public static function success($message)
         {
-            return \App\Core\Components\Flash\FlashNotifier::success($message);
+            return \Laracasts\Flash\FlashNotifier::success($message);
         }
         
         /**
@@ -15718,7 +15719,7 @@ namespace App\Core\Components\Flash {
          */
         public static function error($message)
         {
-            return \App\Core\Components\Flash\FlashNotifier::error($message);
+            return \Laracasts\Flash\FlashNotifier::error($message);
         }
         
         /**
@@ -15730,7 +15731,7 @@ namespace App\Core\Components\Flash {
          */
         public static function warning($message)
         {
-            return \App\Core\Components\Flash\FlashNotifier::warning($message);
+            return \Laracasts\Flash\FlashNotifier::warning($message);
         }
         
         /**
@@ -15738,12 +15739,13 @@ namespace App\Core\Components\Flash {
          *
          * @param string $message
          * @param string $title
+         * @param string $level
          * @return $this 
          * @static 
          */
-        public static function overlay($message, $title = 'Notice')
+        public static function overlay($message, $title = 'Notice', $level = 'info')
         {
-            return \App\Core\Components\Flash\FlashNotifier::overlay($message, $title);
+            return \Laracasts\Flash\FlashNotifier::overlay($message, $title, $level);
         }
         
         /**
@@ -15756,7 +15758,7 @@ namespace App\Core\Components\Flash {
          */
         public static function message($message, $level = 'info')
         {
-            return \App\Core\Components\Flash\FlashNotifier::message($message, $level);
+            return \Laracasts\Flash\FlashNotifier::message($message, $level);
         }
         
         /**
@@ -15767,7 +15769,7 @@ namespace App\Core\Components\Flash {
          */
         public static function important()
         {
-            return \App\Core\Components\Flash\FlashNotifier::important();
+            return \Laracasts\Flash\FlashNotifier::important();
         }
         
     }         
@@ -24642,7 +24644,7 @@ if (! function_exists('with')) {
     
     class Active extends \App\Core\Components\ActiveItem\Facades\Active {}
     
-    class Flash extends \App\Core\Components\Flash\Flash {}
+    class Flash extends \Laracasts\Flash\Flash {}
     
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
     

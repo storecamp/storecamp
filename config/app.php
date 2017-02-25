@@ -181,7 +181,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        \storecamp\htmlelements\HtmlElementsServiceProvider::class,
 
 
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
@@ -228,17 +227,17 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
-
         Plank\Mediable\MediableServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
         App\Core\Components\ActiveItem\ActiveServiceProvider::class,
-        \App\Core\Components\Flash\FlashServiceProvider::class,
+        \Laracasts\Flash\FlashServiceProvider::class,
         \Webpatser\Countries\CountriesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         nilsenj\Toastr\ToastrServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         JeroenG\Packager\PackagerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
+        \storecamp\htmlelements\HtmlElementsServiceProvider::class,
     ],
 
     /*
@@ -297,7 +296,7 @@ return [
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Active' => App\Core\Components\ActiveItem\Facades\Active::class,
-        'Flash' => App\Core\Components\Flash\Flash::class,
+        'Flash' => \Laracasts\Flash\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => nilsenj\Toastr\Facades\Toastr::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
