@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "230d6f96651f0969c079c4db244f8c65",
+    "content-hash": "84307728b3497113e129d52f5d146d3d",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -3894,6 +3894,54 @@
             "time": "2017-02-22T07:43:54+00:00"
         },
         {
+            "name": "storecamp/htmlelements",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/storecamp/htmlelements.git",
+                "reference": "2fb5d56ba873d35d997e19c4509cbdefbb9dffb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/storecamp/htmlelements/zipball/2fb5d56ba873d35d997e19c4509cbdefbb9dffb6",
+                "reference": "2fb5d56ba873d35d997e19c4509cbdefbb9dffb6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.1|5.2|5.3|5.4",
+                "php": "~7.0|~7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "storecamp\\htmlelements\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "nilsenj",
+                    "email": "nikoleivan@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "html elements and form  builder for storecamp ecommerce",
+            "homepage": "https://github.com/storecamp/htmlelements",
+            "keywords": [
+                "HtmlElements",
+                "Storecamp"
+            ],
+            "time": "2017-02-25 15:40:19"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.6",
             "source": {
@@ -6968,20 +7016,20 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "intervention/image": 20,
         "codezero/mailer": 20,
         "davejamesmiller/laravel-breadcrumbs": 20,
-        "cviebrock/eloquent-sluggable": 15,
         "nilsenj/toastr-laravel": 20,
         "laravel/tinker": 20,
+        "storecamp/htmlelements": 20,
         "laracasts/generators": 20,
         "doctrine/dbal": 20,
         "laracasts/flash": 20,
         "landish/pagination": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.0"

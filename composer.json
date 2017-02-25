@@ -42,7 +42,8 @@
     "jeroen-g/laravel-packager": "^1.5",
     "mpociot/laravel-apidoc-generator": "1.7.0",
     "amsgames/laravel-shop-gateway-paypal": "^1.0",
-    "graham-campbell/manager": "^2.4"
+    "graham-campbell/manager": "^2.4",
+    "storecamp/htmlelements": "^1.0@dev"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -76,7 +77,6 @@
       "app/Core/Drivers/FolderToDb"
     ],
     "psr-4": {
-      "storecamp\\htmlelements\\": "packages/storecamp/htmlelements/src",
       "App\\": "app/",
       "Core\\": "app/Core/",
       "RepositoryLab\\Repository\\": "app/Core/RepositoryLab/",
@@ -151,5 +151,7 @@
   },
   "config": {
     "preferred-install": "dist"
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
