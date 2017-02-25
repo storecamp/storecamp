@@ -44,8 +44,7 @@
     "amsgames/laravel-shop-gateway-paypal": "^1.0",
     "graham-campbell/manager": "^2.4",
     "storecamp/htmlelements": "^1.0@dev",
-    "laracasts/flash": "^2.0",
-    "Landish/Pagination": "^1.3"
+    "laracasts/flash": "^2.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
