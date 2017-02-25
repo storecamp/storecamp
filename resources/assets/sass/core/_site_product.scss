@@ -1,0 +1,112 @@
+$color-1: #f8f8f8;
+$color-2: $brand-primary;
+$color-3: #3e454c;
+$color-4: $cyan-color;
+.extend_text_alignment {
+  padding: 3px 12px 0 0;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.product {
+  .product-title {
+    margin-top: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #414141;
+  }
+  .product-review-counter {
+    @extend .extend_text_alignment;
+  }
+  .product-quantity {
+    input[type="number"] {
+      width: 52px;
+    }
+  }
+  .product-price-box {
+    display: block;
+    position: relative;
+    text-align: left;
+    clear: both;
+   @extend .extend_text_alignment;
+    .product-price {
+      color: $color-2;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+  }
+  .product-status {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 0px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid transparent;
+  }
+  .product-sku {
+  }
+  .product-add-to-cart {
+    background: $color-4;
+    color: $color-1;
+  }
+  .product-add-to-wishList {
+  }
+  .product-add-to-compare {
+  }
+  .product-tabs-container {
+    margin-top: 20px;
+    .product-description {
+    }
+    .product-reviews {
+    }
+  }
+  .product-social-sharing {
+    .product-social-list {
+      padding-left: 0;
+      margin-top: 20px;
+      span {
+        font-size: 18px;
+        text-transform: uppercase;
+        color: #414141;
+        margin-right: 20px;
+      }
+    }
+    li {
+      list-style-type: none;
+      display: inline-block;
+    }
+  }
+  .product-images-list {
+    width: 75px;
+    height: 1px;
+    display: block;
+    float: left;
+    position: relative;
+    .product-popup-gallery {
+      height: 290px;
+      overflow: hidden;
+      a {
+        img {
+          margin-bottom: 24px;
+          outline: $color-4;
+          border: 2px solid  $color-3;
+          &:hover {
+            border-color: $color-4;
+          }
+        }
+      }
+    }
+  }
+  .product-main-img {
+    margin-left: 82px;
+    display: block;
+    float: left;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+}

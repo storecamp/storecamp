@@ -1,0 +1,35 @@
+{
+    "name": "components/laravel-auditing",
+    "description": "Keep a change history for your models using laravel and lumen",
+    "keywords": ["audit", "auditing", "activity", "laravel", "log", "logging", "register", "observer", "lumen"],
+    "homepage": "https://laravel-auditing.com",
+    "type": "package",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/bus": "5.2.*|5.3.*|5.4.*",
+        "illuminate/contracts": "5.2.*|5.3.*|5.4.*",
+        "illuminate/database": "5.2.*|5.3.*|5.4.*",
+        "illuminate/queue": "5.2.*|5.3.*|5.4.*",
+        "illuminate/support": "5.2.*|5.3.*|5.4.*",
+        "ramsey/uuid": "~3.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Core\\Components\\Auditing\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.1-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}

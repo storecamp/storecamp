@@ -1,0 +1,50 @@
+{
+  "name": "storecamp",
+  "description": "store api and admin panel",
+  "main": "",
+  "authors": [
+    "Nikolenko Ivan(nilsenj) <ni_cole@i.ua>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nilsenj/storecamp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropzone": "^4.3.0",
+    "summernote": "^0.6.16",
+    "toastr": "^2.1.3",
+    "Flot": "flot#^0.8.3",
+    "chart.js": "^1.1.1",
+    "morris.js": "^0.5.1",
+    "sparkline": "jquery.sparkline#^2.1.2",
+    "seiyria-bootstrap-slider": "^9.7.0",
+    "ion.rangeSlider": "ionrangeslider#^2.1.6",
+    "bootstrap-datepicker": "uxsolutions/bootstrap-datepicker#^1.6.4",
+    "bootstrap-daterangepicker": "dangrossman/bootstrap-daterangepicker#^2.1.25",
+    "bootstrap-colorpicker": "itsjavi/bootstrap-colorpicker#^2.4.0",
+    "bootstrap-timepicker": "jdewit/bootstrap-timepicker#^0.5.2",
+    "iCheck": "fronteed/icheck#^1.0.2",
+    "jquery.inputmask": "RobinHerbots/Inputmask#^3.3.4",
+    "bootstrap3-wysihtml5-bower": "bootstrap-wysiwyg/bootstrap3-wysiwyg#^0.3.3",
+    "datatables.net": "^1.10.13",
+    "datatables.net-dt": "^3.2.2",
+    "fullcalendar": "^3.1.0",
+    "jquery-ui": "^1.12.1",
+    "jquery-knob": "^1.2.13",
+    "jvectormap": "bjornd/jvectormap#^2.0.4",
+    "jquery-slimscroll": "rochal/jQuery-slimScroll#^1.3.8",
+    "PACE": "HubSpot/pace#^1.0.2",
+    "select2": "^4.0.3",
+    "fastclick": "ftlabs/fastclick#^1.0.6",
+    "plyr": "^2.0.11",
+    "bower-jquery-sparkline": "^2.1.3",
+    "jquery-bar-rating": "antennaio/jquery-bar-rating#^1.2.1",
+    "bourbon": "^4.3.2",
+    "magnific-popup": "^1.1.0"
+  }
+}

@@ -1,0 +1,113 @@
+
+$color-1: #f8f8f8;
+$color-2: $brand-primary;
+$color-3: #3e454c;
+$color-4: $cyan-color;
+
+.product-item {
+  padding: 15px;
+  background: #fff;
+  margin-top: 20px;
+  position: relative;
+  border: 1px solid #eaeaea;
+  &:hover {
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.4);
+  }
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0) 0%, #fff 80%, #fff 100%);
+  }
+}
+
+.sticker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 63px;
+  height: 63px;
+}
+
+.sticker-new {
+  background: none;
+  left: auto;
+  right: 0;
+}
+
+.item-img-wrapper {
+  position: relative;
+}
+
+.item-img-wrapper div {
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.product-item:hover > .item-img-wrapper > div {
+  display: block;
+}
+
+.item-img-wrapper div .btn {
+  padding: 3px 10px;
+  color: #fff;
+  border: 1px #fff solid;
+  margin: -13px 5px 0;
+  background: transparent;
+  text-transform: uppercase;
+  position: relative;
+  top: 50%;
+  line-height: 1.4;
+  font-size: 12px;
+}
+
+.product-item .btn:hover {
+  background: $color-2;
+  border-color: #c8c8c8;
+}
+
+.product-item h3 {
+  font-size: 14px;
+  font-weight: 300;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.product-item h3 a {
+  color: #3e4d5c;
+}
+
+.product-item h3 a:hover {
+  color: #E02222;
+}
+
+.item-price {
+  color: $color-2;
+  font-size: 18px;
+  float: left;
+  padding-top: 1px;
+}
+
+.product-item .add2cart {
+  float: right;
+  color: #a8aeb3;
+  border: 1px #ededed solid;
+  padding: 3px 6px;
+  text-transform: uppercase;
+}
+
+.product-item .add2cart:hover {
+  color: #fff;
+  background: $color-2;
+  border-color: $color-2;
+}

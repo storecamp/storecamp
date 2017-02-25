@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "bootstrap-vue": "^0.3.10",
+    "css-loader": "^0.26.1",
+    "gulp": "^3.9.1",
+    "gulp-connect-php": "0.0.5",
+    "jquery": "^3.1.0",
+    "laravel-elixir": "^6.0.0-14",
+    "laravel-elixir-browsersync-official": "^1.0.0",
+    "laravel-elixir-coffeescript": "^1.0.2",
+    "laravel-elixir-js-uglify": "^1.0.1",
+    "laravel-elixir-vue-2": "^0.2.0",
+    "laravel-elixir-webpack-official": "^1.0.2",
+    "lodash": "^4.16.2",
+    "url-loader": "^0.5.7",
+    "vue-loader": "^10.0.2",
+    "vue-style-loader": "^1.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
+    "vue": "^2.1.4",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.1.1",
+    "vuex": "^2.0.0"
+  }
+}

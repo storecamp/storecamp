@@ -1,0 +1,22 @@
+<?php
+
+$NAMESPACE$
+
+use Illuminate\Database\Eloquent\Model;
+use App\Core\Traits\GeneratesUnique;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
+
+class $CLASS$ extends Model implements Transformable
+{
+    use TransformableTrait;
+    use GeneratesUnique;
+
+    protected $fillable = $FILLABLE$;
+
+    public static function boot()
+    {
+       parent::boot();
+    }
+
+}

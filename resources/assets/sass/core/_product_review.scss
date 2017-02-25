@@ -1,0 +1,96 @@
+.review-wrapper {
+  position: relative;
+  display: block;
+  padding: 15px 0;
+  margin-top: -15px;
+  margin-bottom: -15px;
+  .box-comments {
+    background: transparent;
+  }
+  .box-comments .box-comment {
+    padding: 8px 7px;
+    border-bottom: 1px solid #eee;
+    background: #f7f7f7;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 992px) {
+  .review-wrapper {
+    padding-left: 215px;
+  }
+}
+
+.review-control {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  z-index: 1;
+}
+
+.review-paper {
+  position: relative;
+  min-height: 720px;
+  z-index: 2;
+  background-color: #fff;
+  box-shadow: none;
+  &.open {
+    -webkit-transform: translate(215px, 0);
+    transform: translate(215px, 0);
+  }
+  > {
+    .review-paper-footer, .review-paper-heading {
+      padding: 15px;
+    }
+    .review-paper-body {
+      position: relative;
+      z-index: 1;
+    }
+    .review-paper-footer {
+      position: relative;
+      height: 60px;
+      z-index: 2;
+    }
+    .review-paper-heading {
+      position: relative;
+      height: 60px;
+      z-index: 2;
+      top: 0;
+    }
+    .review-paper-footer {
+      bottom: 0;
+    }
+  }
+  .panel {
+    &.review-list-item {
+      margin-bottom: 0;
+      &.panel-expanded {
+        position: relative;
+        > {
+          .panel-heading .media-left {
+            min-width: 76px;
+            > .btn {
+              vertical-align: top;
+              padding-left: 0;
+              padding-right: 0;
+            }
+          }
+          .panel-body {
+            padding-left: 86px;
+          }
+        }
+      }
+    }
+    box-shadow: none;
+    [data-toggle=panel-expand] {
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .review-paper > .review-paper-body {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}

@@ -1,0 +1,83 @@
+
+// Body
+$body-bg: #f5f8fa;
+
+// Borders
+$laravel-border-color: darken($body-bg, 10%);
+$list-group-border: $laravel-border-color;
+$navbar-default-border: $laravel-border-color;
+$panel-default-border: $laravel-border-color;
+$panel-inner-border: $laravel-border-color;
+
+// Brands
+$brand-primary: #3097D1;
+$brand-info: #8eb4cb;
+$brand-success: #2ab27b;
+$brand-warning: #cbb956;
+$brand-danger: #bf5329;
+
+
+// Typography
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: 14px;
+$line-height-base: 1.6;
+$text-color: #636b6f;
+
+// Navbar
+$navbar-default-bg: #fff;
+
+// Buttons
+$btn-default-color: $text-color;
+
+// Inputs
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+// Panels
+$panel-default-heading-bg: #fff;
+//core variables
+
+$body-text-color: #555;
+$body-background: #34495e;
+$light-bg:#fff;
+$dark-bg:#555;
+$content-bg: #fff;
+$container-margin: 5px;
+$main-color: #f8f8f8 !default;
+$block-content-bg: #FAFAFA;
+
+//------------------------------------
+
+
+//_____________Colors________________
+
+$amber-color:#FFC107;
+$bluegrey-color: #607D8B;
+$brown-color: #795548;
+$cyan-color: #00BCD4;
+$deeporange-color: #FF5722;
+$deeppurple-color: #673AB7;
+$green-color: #4CAF50;
+$grey-color: #9E9E9E;
+$indigo-color: #3F51B5;
+$lightgreen-color: #8BC34A;
+$lightblue-color: #03A9F4;
+$lime-color: #CDDC39;
+$orange-color: #FF9800;
+$purple-color: #9C27B0;
+$red-color: #F44336;
+$teal-color: #009688;
+$yellow-color: #FFEB3B;
+$dark-color:   darken(#555, 5%);
+$facebook:#3b5998;
+$google:#dd4b39;
+$twitter:#55acee;
+$github:#999999;
+$danger-color: $red-color;
+$warning-color: $orange-color;
+$success-color: $green-color;
+$info-color: $lightblue-color;
+$primary-color: $bluegrey-color;
+$link-color: $primary-color;
+//_____________________End of Colors_____________

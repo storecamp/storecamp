@@ -1,0 +1,30 @@
+<?php
+
+namespace DummyNamespace;
+
+use App\Core\Components\Auditing\Contracts\Dispatcher as AuditContract;
+
+class DummyClass implements AuditContract
+{
+
+    /**
+     * Create a new auditor instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Audit the model auditable.
+     * 
+     * @param mixed $auditable
+     * @return mixed
+     */
+    public function audit($auditable)
+    {
+        //
+    }
+}

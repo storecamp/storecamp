@@ -1,0 +1,28 @@
+language: php
+
+php:
+  - 7.0
+
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan jwt:generate
+
+install:
+  - travis_retry composer self-update
+  - travis_retry composer clear-cache
+  - travis_retry composer update
+  - php artisan cache:clear
+  - php artisan view:clear
+  - php artisan route:clear
+  - mysql -e 'create database testing;' -uroot
+  - mysql -e "grant all privileges on *.* to ''@'localhost' with grant option;" -uroot
+
+after_script:
+  - php artisan migrate --seed
+
+script:
+  - vendor/bin/phpunit
