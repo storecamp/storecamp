@@ -181,7 +181,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        storecamp\htmlelements\htmlelementsServiceProvider::class,
+        \storecamp\htmlelements\HtmlElementsServiceProvider::class,
+
 
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
         App\Providers\PresentersServiceProvider::class,
@@ -238,7 +239,6 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         JeroenG\Packager\PackagerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
-        storecamp\htmlelements\HtmlElementsServiceProvider::class,
     ],
 
     /*
