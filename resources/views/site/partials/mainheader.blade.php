@@ -1,6 +1,6 @@
 <?php
 /**
- * @param $navigation['auth'] \Illuminate\Auth\AuthManager
+ * @param $navigation ['auth'] \Illuminate\Auth\AuthManager
  */
 $user = $navigation['auth']->user() ? $navigation['auth']->user() : null; ?>
 <header class="main-header">

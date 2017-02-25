@@ -13,6 +13,9 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
+        $this->artisan('migrate');
+        $this->artisan('db:seed');
+
         $this->visit('/')
              ->see('Navigation');
     }
