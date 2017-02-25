@@ -45,7 +45,7 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
             'as' => 'remove'
         ]);
 
-        $router->post('delete', [
+        $router->delete('delete', [
             'uses' => 'Site\CartController@delete',
             'as' => 'delete'
         ]);

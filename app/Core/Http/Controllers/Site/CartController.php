@@ -44,7 +44,7 @@ class CartController extends BaseController
     public function show(Request $request)
     {
         $data = $request->all();
-        $cart = $this->cartSystem->show($data);
+        $cart = $this->cartSystem->withCurrency()->show($data);
         $cartSystem = $this->cartSystem;
         return $this->view('show', compact('cart', 'cartSystem'));
     }
@@ -60,7 +60,7 @@ class CartController extends BaseController
         if($request->ajax()) {
             return response()->json(['message'=> 'cart item updated']);
         } else {
-            \Flash::info('cart item updated');
+            \Flash::success('cart item updated');
             return redirect()->route('site::cart::show');
         }
     }
@@ -75,6 +75,7 @@ class CartController extends BaseController
         $data = $request->all();
         $cart = $this->cartSystem->addItem($data, $productId);
         if($request->ajax()) {
+            \Flash::success('item added to cart');
             return response()->json(['cart'=> json_encode($cart)]);
         } else {
             return redirect()->route('site::cart::show');
@@ -92,6 +93,7 @@ class CartController extends BaseController
         if($request->ajax()) {
             return response()->json(['message' => 'cart item deleted'], 200);
         } else {
+            \Flash::warning('item deleted from cart');
             return redirect()->back();
         }
 
@@ -107,6 +109,7 @@ class CartController extends BaseController
         if($request->ajax()) {
             return response()->json(['message'=> 'cart deleted'], 200);
         } else {
+            \Flash::warning('cart cleared completely');
             return redirect()->back();
         }
     }

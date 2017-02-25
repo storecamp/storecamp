@@ -3,6 +3,7 @@
 namespace App\Core\Contracts;
 
 
+use App\Core\Logic\CartSystem;
 use App\Core\Support\Cart\CartItem;
 use Illuminate\Support\Collection;
 
@@ -12,6 +13,7 @@ use Illuminate\Support\Collection;
  */
 interface CartSystemContract
 {
+
     /**
      * @param array $data
      * @param bool $withAggregations
@@ -25,6 +27,23 @@ interface CartSystemContract
      * @return mixed
      */
     public function addItem(array $data, $productId);
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string;
+    /**
+     * @param string $currency
+     * @return CartSystem
+     */
+    public function setCurrency(string $currency): CartSystem;
+
+    /**
+     * @param string|null $currency
+     * @return CartSystem
+     */
+    public function withCurrency(string $currency=null): CartSystem;
+
     /**
      * Add an item to the cart.
      *
@@ -101,7 +120,7 @@ interface CartSystemContract
      * @param string $thousandSeperator
      * @return float
      */
-    public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null): float;
+    public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null);
 
     /**
      * Get the subtotal (total - tax) of the items in the cart.

@@ -44,12 +44,23 @@ class CartSystem implements CartSystemContract
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     private $events;
+
     /**
      * Holds the current cart instance.
      *
      * @var string
      */
     private $instance;
+
+    /**
+     * @var bool
+     */
+    private $withCurrency = false;
+
+    /**
+     * @var string
+     */
+    private $currency;
 
     /**
      * CartSystem constructor.
@@ -65,6 +76,7 @@ class CartSystem implements CartSystemContract
         $this->session = $session;
         $this->events = $events;
         $this->productsRepository = $productsRepository;
+        $this->currency = config('cart.main_currency');
 
         $this->instance(self::DEFAULT_INSTANCE);
     }
@@ -95,6 +107,36 @@ class CartSystem implements CartSystemContract
         $options['status'] = $product->getStockStatus();
         $options['thumb'] = $productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif");
         return $this->add($product, null, $quantity, null, $options);
+    }
+
+    /**
+     * @param string $currency
+     * @return CartSystem
+     */
+    public function setCurrency(string $currency): CartSystem
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     * @return CartSystem
+     */
+    public function withCurrency(string $currency=null): CartSystem
+    {
+        $this->currency = $currency ?? $this->currency;
+        $this->withCurrency = true;
+        return $this;
     }
 
     /**
@@ -219,7 +261,6 @@ class CartSystem implements CartSystemContract
     {
         $this->session->remove($this->instance);
     }
-
     /**
      * Get the content of the cart.
      *
@@ -257,7 +298,8 @@ class CartSystem implements CartSystemContract
         $total = $content->reduce(function ($total, $cartItem) {
             return $total + ($cartItem->qty * $cartItem->priceTax);
         }, 0);
-        return cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
+        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        return $currency . cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
     }
     /**
      * Get the total tax of the items in the cart.
@@ -267,13 +309,14 @@ class CartSystem implements CartSystemContract
      * @param string $thousandSeperator
      * @return float
      */
-    public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null): float
+    public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null)
     {
         $content = $this->getContent();
         $tax = $content->reduce(function ($tax, CartItem $cartItem) {
             return $tax + ($cartItem->qty * $cartItem->tax);
         }, 0);
-        return cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
+        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        return $currency . cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
     }
     /**
      * Get the subtotal (total - tax) of the items in the cart.
@@ -289,7 +332,8 @@ class CartSystem implements CartSystemContract
         $subTotal = $content->reduce(function ($subTotal, CartItem $cartItem) {
             return $subTotal + ($cartItem->qty * $cartItem->price);
         }, 0);
-        return cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
+        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        return $currency . cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
     }
 
     /**

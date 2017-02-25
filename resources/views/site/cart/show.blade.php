@@ -40,7 +40,8 @@
                             </td>
                             <td class="" style="text-align: center">
                                 {!! Form::open([ 'method' => 'PUT', 'id' => 'update-item'.$row->rowId, 'route' => ['site::cart::update', $row->rowId]]) !!}
-                                <input type="number" name="quantity" class="form-control cart-number" onchange="this.form.submit()"
+                                <input type="number" name="quantity" class="form-control cart-number"
+                                       onchange="this.form.submit()"
                                        value="{{$row->qty}}">
                                 {!! Form::close() !!}
                             </td>
@@ -62,26 +63,36 @@
                         <td>  </td>
                         <td>  </td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>${{ $cartSystem->subtotal() }}</strong></h5></td>
+                        <td class="text-right"><h5><strong>{{ $cartSystem->subtotal() }}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>  </td>
                         <td>  </td>
                         <td>  </td>
                         <td><h5>Tax</h5></td>
-                        <td class="text-right"><h5><strong>${{$cartSystem->tax()}}</strong></h5></td>
+                        <td class="text-right"><h5><strong>{{ $cartSystem->tax() }}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>  </td>
                         <td>  </td>
                         <td>  </td>
                         <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>${{$cartSystem->total()}}</strong></h3></td>
+                        <td class="text-right"><h3><strong>{{ $cartSystem->total() }}</strong></h3></td>
                     </tr>
                     <tr>
+                        <td>
+                            @if($cart->count())
+                                {!! Form::open([ 'method' => 'DELETE', 'id' => 'clear-cart', 'route' => ['site::cart::delete']]) !!}
+                                <button onclick="event.preventDefault();
+                                    document.getElementById('clear-cart').submit();" type="button"
+                                        class="btn btn-warning">
+                                    <span class="fa fa-close"></span> Clear cart
+                                </button>
+                                {!! Form::close() !!}
+                            @endif 
+                        </td>
                         <td>  </td>
-                        <td>  </td>
-                        <td>  </td>
+                        <td></td>
                         <td>
                             <button type="button" class="btn btn-default">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
