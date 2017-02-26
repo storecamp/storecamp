@@ -6,6 +6,7 @@ services:
   -mongodb
 
 before_script:
+  - "curl -sS https://raw.githubusercontent.com/zakhttp/Mongostead7/master/mongoHomestead7.1.sh | sh"
   - cp .env.travis .env
   - mysql -e 'create database homestead_test;'
   - composer self-update
