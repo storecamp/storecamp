@@ -2,6 +2,8 @@ language: php
 
 php:
   - 7.1
+services:
+  -mongodb
 
 before_script:
   - cp .env.travis .env
@@ -12,7 +14,6 @@ before_script:
   - php artisan jwt:generate
 
 install:
-  - sudo sh install-mongo.sh
   - travis_retry composer self-update
   - travis_retry composer clear-cache
   - travis_retry composer update
