@@ -1,0 +1,12 @@
+MongoDB shell version: 3.2.12
+connecting to: dbs
+Server has startup warnings: 
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] 
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] 
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2017-02-26T00:13:06.649+0000 I CONTROL  [initandlisten] 
+> sdsdada[3G[Jsdsdada[10G^C
+bye

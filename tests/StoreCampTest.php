@@ -117,7 +117,7 @@ class StoreCampTest extends TestCase
     public function testHomePageForAuthenticatedUsers()
     {
         $user = factory(\App\Core\Models\User::class)->create();
-
+        $this->artisan('db:seed');
         $this->actingAs($user)
             ->visit('/')
             ->see($user->name);

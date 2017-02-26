@@ -8,6 +8,7 @@ services:
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database homestead_test;'
+  - mongo --eval "db = db.getSiblingDB('homestead_test');
   - composer self-update
   - composer install --no-interaction
   - php artisan key:generate
@@ -22,6 +23,7 @@ install:
   - php artisan view:clear
   - php artisan route:clear
   - mysql -e 'create database testing;' -uroot
+  - mongo --eval "db = db.getSiblingDB('testing');
   - mysql -e "grant all privileges on *.* to ''@'localhost' with grant option;" -uroot
 
 after_script:
