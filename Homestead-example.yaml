@@ -1,10 +1,10 @@
 ---
 ip: "192.168.10.10"
-memory: 4096
-cpus: 4
-hostname: storecamp
-name: storecamp
+memory: 2048
+cpus: 2
 provider: virtualbox
+mongodb: true
+mariadb: true
 
 authorize: ~/.ssh/id_rsa.pub
 
@@ -12,17 +12,17 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: "C:/Users/nilse/OneDrive/CoderStyle/Code/storecamp"
-      to: "/home/vagrant/storecamp"
+    - map: ~/Code
+      to: /home/vagrant/Code
 
 sites:
     - map: storecamp.app
-      to: "/home/vagrant/storecamp/public"
-      hhvm: false
+      to: /home/vagrant/Code/storecamp/public
 
 databases:
-    - storecamp
     - homestead_test
+    - storecamp_test
+    - storecamp
 
 # blackfire:
 #     - id: foo

@@ -214,6 +214,7 @@ return [
         //End of API service providers
 
         //Vendor Providers
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,

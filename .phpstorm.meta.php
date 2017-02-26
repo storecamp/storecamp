@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-25.
+    * Generated on 2017-02-26.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -88,7 +88,6 @@ namespace PHPSTORM_META {
             'App\Core\Transformers\ReturnsTransformer' instanceof \App\Core\Transformers\ReturnsTransformer,
             'App\Core\Transformers\StaticPagesTransformer' instanceof \App\Core\Transformers\StaticPagesTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -349,7 +348,6 @@ namespace PHPSTORM_META {
             'App\Core\Transformers\ReturnsTransformer' instanceof \App\Core\Transformers\ReturnsTransformer,
             'App\Core\Transformers\StaticPagesTransformer' instanceof \App\Core\Transformers\StaticPagesTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -610,7 +608,6 @@ namespace PHPSTORM_META {
             'App\Core\Transformers\ReturnsTransformer' instanceof \App\Core\Transformers\ReturnsTransformer,
             'App\Core\Transformers\StaticPagesTransformer' instanceof \App\Core\Transformers\StaticPagesTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -871,7 +868,6 @@ namespace PHPSTORM_META {
             'App\Core\Transformers\ReturnsTransformer' instanceof \App\Core\Transformers\ReturnsTransformer,
             'App\Core\Transformers\StaticPagesTransformer' instanceof \App\Core\Transformers\StaticPagesTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
