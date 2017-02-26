@@ -11,9 +11,14 @@ class SidebarMenuBuilder
     public function createStructure()
     {
         $productsMenu = app('elements.menu.manager')
-            ->createMenu('<i class="fa fa-cube"></i> Products')
+            ->createMenu('<i class="fa fa-cube"></i>Manage Products')
             ->addLink('List of Products', ['route' => 'admin::products::index'])
-            ->addLink('Create Product', ['route' => ['admin::products::create']]);
+            ->addLink('Create Product', ['route' => ['admin::products::create']])
+            ->addLink('<span class="nav-text"> Reviews</span>',
+                ['route' => 'admin::reviews::index'])
+            ->addLink('Categories', ['route' => 'admin::categories::index'])
+            ->addLink('Attributes', ['route' => 'admin::attributes::index'])
+            ->addLink('Attribute Groups', ['route' => ['admin::attribute_groups::index']]);;
 
         $productReviews = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-newspaper-o"></i> Product Reviews')
@@ -92,9 +97,9 @@ class SidebarMenuBuilder
             ->addSubMenu($design, ['id' => 'link-design', 'url_def' => ['route_pattern' => 'admin::design::*']])
             ->addSubMenu($marketing, ['id' => 'link-marketing', 'url_def' => ['route_pattern' => 'admin::marketing::*']])
             ->addSubMenu($sales, ['id' => 'link-sales', 'url_def' => ['route_pattern' => 'admin::sales::*']])
-            ->addSubMenu($attributes, ['id' => 'link-attributes', 'url_def' => ['route_pattern' => 'admin::attributes::*']])
-            ->addSubMenu($categories, ['id' => 'link-categories', 'url_def' => ['route_pattern' => 'admin::categories::*']])
-            ->addSubMenu($productReviews, ['id' => 'link-reviews', 'url_def' => ['route_pattern' => 'admin::reviews::*']])
+//            ->addSubMenu($attributes, ['id' => 'link-attributes', 'url_def' => ['route_pattern' => 'admin::attributes::*']])
+//            ->addSubMenu($categories, ['id' => 'link-categories', 'url_def' => ['route_pattern' => 'admin::categories::*']])
+//            ->addSubMenu($productReviews, ['id' => 'link-reviews', 'url_def' => ['route_pattern' => 'admin::reviews::*']])
             ->addSubMenu($productsMenu, ['id' => 'link-products', 'url_def' => ['route_pattern' => 'admin::products::*']]);
     }
 }

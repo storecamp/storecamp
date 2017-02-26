@@ -4,6 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Components\Flash\Flash;
 use App\Core\Contracts\AttributeGroupSystemContract;
+use App\Core\Models\AttributeGroup;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\AttributeGroupRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
