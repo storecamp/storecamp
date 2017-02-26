@@ -81,11 +81,11 @@ class ShopSystem implements ShopSystemContract
      */
     public static function setGateway($gatewayKey)
     {
-        if (!array_key_exists($gatewayKey, \Config::get('shop.gateways')))
+        if (!array_key_exists($gatewayKey, config('sales.gateways')))
             throw new ShopException('Invalid gateway.');
         static::$gatewayKey = $gatewayKey;
         static::$gateway    = static::instanceGateway();
-        \Session::push('shop.gateway', $gatewayKey);
+        \Session::push('sales.gateway', $gatewayKey);
     }
 
     /**
@@ -93,7 +93,7 @@ class ShopSystem implements ShopSystemContract
      */
     public static function getGateway()
     {
-        $gateways = \Session::get('shop.gateway');
+        $gateways = \Session::get('sales.gateway');
         return $gateways && count($gateways) > 0
             ? $gateways[count($gateways) - 1]
             : null;
@@ -259,11 +259,11 @@ class ShopSystem implements ShopSystemContract
                 '/:currency/'
             ],
             [
-                \Config::get('shop.currency_symbol'),
+                config('sales.currency_symbol'),
                 $value,
-                \Config::get('shop.currency')
+                config('sales.currency')
             ],
-            \Config::get('shop.display_price_format')
+            config('sales.display_price_format')
         );
     }
 
@@ -305,7 +305,7 @@ class ShopSystem implements ShopSystemContract
     protected static function instanceGateway()
     {
         if (empty(static::$gatewayKey)) return;
-        $className = '\\' . \Config::get('shop.gateways')[static::$gatewayKey];
+        $className = '\\' . config('sales.gateways')[static::$gatewayKey];
         return new $className(static::$gatewayKey);
     }
 

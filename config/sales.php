@@ -59,7 +59,7 @@ return [
     | Cart Model
     |--------------------------------------------------------------------------
     |
-    | This is the Cart model used by LaravelShop to create correct relations.
+    | This is the Cart model used by Storecamp to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
@@ -70,7 +70,7 @@ return [
     | Cart Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save cart data to the database.
+    | This is the table used by Storecamp to save cart data to the database.
     |
     */
     'cart_table' => 'cart',
@@ -80,7 +80,7 @@ return [
     | Order Model
     |--------------------------------------------------------------------------
     |
-    | This is the Order model used by LaravelShop to create correct relations.
+    | This is the Order model used by Storecamp to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
@@ -91,7 +91,7 @@ return [
     | Order Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save order data to the database.
+    | This is the table used by Storecamp to save order data to the database.
     |
     */
     'order_table' => 'orders',
@@ -101,7 +101,7 @@ return [
     | Order Status Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save order status data to the database.
+    | This is the table used by Storecamp to save order status data to the database.
     |
     */
     'order_status_table' => 'order_statuses',
@@ -111,7 +111,7 @@ return [
     | Product Model
     |--------------------------------------------------------------------------
     |
-    | This is the Item model used by LaravelShop to create correct relations.
+    | This is the Item model used by Storecamp to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
@@ -119,10 +119,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Item Database Table
+    | Product Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save cart data to the database.
+    | This is the table used by Storecamp to save cart data to the database.
     |
     */
     'product_table' => 'products',
@@ -132,7 +132,7 @@ return [
     | Transaction Model
     |--------------------------------------------------------------------------
     |
-    | This is the Transaction model used by LaravelShop to create correct relations.
+    | This is the Transaction model used by Storecamp to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
@@ -143,7 +143,7 @@ return [
     | Transaction Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save cart data to the database.
+    | This is the table used by Storecamp to save cart data to the database.
     |
     */
     'transaction_table' => 'transactions',
@@ -153,7 +153,7 @@ return [
     | Coupon Model
     |--------------------------------------------------------------------------
     |
-    | This is the Coupon model used by LaravelShop to create correct relations.
+    | This is the Coupon model used by Storecamp to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
@@ -164,7 +164,7 @@ return [
     | Coupon Database Table
     |--------------------------------------------------------------------------
     |
-    | This is the table used by LaravelShop to save order data to the database.
+    | This is the table used by Storecamp to save order data to the database.
     |
     */
     'coupon_table' => 'coupons',
@@ -324,6 +324,7 @@ return [
     |
     */
     'gateways' => [
+        'omnipay'           =>  \App\Core\Gateways\GatewayOmnipay::class,
         'paypal'            =>  Amsgames\LaravelShopGatewayPaypal\GatewayPayPal::class,
         'paypalExpress'     =>  Amsgames\LaravelShopGatewayPaypal\GatewayPayPalExpress::class,
     ],

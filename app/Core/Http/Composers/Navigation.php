@@ -13,21 +13,16 @@ use Illuminate\View\View;
 class Navigation
 {
     /**
-     * @var AuthManager
-     */
-    public $auth;
-    /**
      * @var CartSystemContract
      */
     public $cartSystem;
+
     /**
      * Navigation constructor.
-     * @param AuthManager $authManager
      * @param CartSystemContract $cartSystem
      */
-    public function __construct(AuthManager $authManager, CartSystemContract $cartSystem)
+    public function __construct(CartSystemContract $cartSystem)
     {
-        $this->auth = $authManager;
         $this->cartSystem = $cartSystem;
     }
 
@@ -36,7 +31,7 @@ class Navigation
      */
     public function compose(View $view)
     {
-        $view->with('navigation', ['auth' => $this->auth, 'cartSystem' => $this->cartSystem]);
+        $view->with('navigation', ['cartSystem' => $this->cartSystem]);
     }
 
 }

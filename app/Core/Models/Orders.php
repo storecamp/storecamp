@@ -57,7 +57,7 @@ class Orders extends Model implements Transformable, OrderInterface
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('shop.order_table');
+        $this->table = config('sales.order_table');
     }
     /**
      * Boot the user model
@@ -92,7 +92,7 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function transactions(): HasMany
     {
-        return $this->hasMany(config('shop.transaction'), 'order_id');
+        return $this->hasMany(config('sales.transaction'), 'order_id');
     }
     /**
      * Returns flag indicating if order is lock and cant be modified by the user.
@@ -102,8 +102,9 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function getIsLockedAttribute(): bool
     {
-        return in_array($this->attributes['statusCode'], config('shop.order_status_lock'));
+        return in_array($this->attributes['statusCode'], config('sales.order_status_lock'));
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -118,7 +119,7 @@ class Orders extends Model implements Transformable, OrderInterface
         return $query->where('user_id', $userId);
     }
     /**
-     * Scopes class by item sku.
+     * Scopes class by product sku.
      * Optionally, scopes by status.
      *
      * @param Builder $query  Query.
@@ -129,12 +130,12 @@ class Orders extends Model implements Transformable, OrderInterface
     public function scopeWhereSKU($query, $sku): Builder
     {
         return $query->join(
-            config('shop.item_table'),
-            config('shop.item_table') . '.order_id',
+            config('sales.cart_table'),
+            config('sales.cart_table') . '.order_id',
             '=',
             $this->table . '.id'
         )
-            ->where(config('shop.item_table') . '.sku', $sku);
+            ->where(config('sales.cart_table') . '.sku', $sku);
     }
     /**
      * Scopes class by user ID and returns object.
@@ -241,6 +242,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'pending';
     }
+
     /**
      * Creates the order's transaction.
      *
@@ -252,7 +254,7 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function placeTransaction(string $gateway, $transactionId, string $detail = null, $token = null)
     {
-        return call_user_func(config('shop.transaction') . '::create', [
+        return call_user_func(config('sales.transaction') . '::create', [
             'order_id'          => $this->attributes['id'],
             'gateway'           => $gateway,
             'transaction_id'    => $transactionId,
@@ -262,15 +264,15 @@ class Orders extends Model implements Transformable, OrderInterface
     }
 
     /**
-     * Retrieves item from order;
+     * Retrieves product from order;
      *
-     * @param string $sku SKU of item.
+     * @param string $sku SKU of product.
      *
      * @return mixed
      */
     private function getItem(string $sku)
     {
-        $className  = config('shop.item');
+        $className  = config('sales.product');
         $item       = new $className();
         return $item->where('sku', $sku)
             ->where('order_id', $this->attributes['id'])

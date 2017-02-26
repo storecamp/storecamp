@@ -1,10 +1,12 @@
 <?php
 
 $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Routing\Router $router) {
+
     /**
-     * Client routes
+     * Client Site routes
      */
     $this->group(['prefix' => '/', 'as' => 'site::'], function (\Illuminate\Routing\Router $router) {
+
         $router->get('/', [
             'uses' => 'Site\IndexController@home'
         ]);
@@ -25,6 +27,7 @@ $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Ro
         });
 
         $router->group(['prefix' => 'cart', 'as' => 'cart::'], function (\Illuminate\Routing\Router $router) {
+
 
             $router->get('show', [
                 'uses' => 'Site\CartController@show',
@@ -51,13 +54,51 @@ $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Ro
                 'as' => 'delete'
             ]);
 
+            $router->get('checkout', [
+                'uses' => 'Site\CartController@checkout',
+                'as' => 'checkout'
+            ]);
+
+        });
+
+        $router->group(['prefix' => 'order', 'as' => 'order::'], function (\Illuminate\Routing\Router $router) {
+
+            $router->get('index', [
+                'uses' => 'Site\OrdersController@index',
+                'as' => 'index'
+            ]);
+
+            $router->get('personal', [
+                'uses' => 'Site\OrdersController@personal',
+                'as' => 'personal'
+            ]);
+
+            $router->get('address', [
+                'uses' => 'Site\OrdersController@address',
+                'as' => 'address'
+            ]);
+
+            $router->get('shipment', [
+                'uses' => 'Site\OrdersController@shipment',
+                'as' => 'shipment'
+            ]);
+
+            $router->get('payment', [
+                'uses' => 'Site\OrdersController@payment',
+                'as' => 'payment'
+            ]);
+
         });
 
         /**
          * site payment callbacks
          */
-        $router->get('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
-        $router->post('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
+        $router->get('callback/payment/{status}/{id}/{shoptoken}',
+            ['as' => 'callback', 'uses' => 'Site\CallbackController@process']
+        );
+        $router->post('callback/payment/{status}/{id}/{shoptoken}',
+            ['as' => 'callback', 'uses' => 'Site\CallbackController@process']
+        );
     });
 
 

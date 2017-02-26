@@ -130,3 +130,8 @@ Breadcrumbs::register('Carts', function ($breadcrumbs) {
     $breadcrumbs->parent('Home');
     $breadcrumbs->push('Cart', route('site::cart::show'));
 });
+
+Breadcrumbs::register('Order', function ($breadcrumbs) {
+    $breadcrumbs->parent('Home');
+    $breadcrumbs->push('Order', route('site::order::index'));
+});

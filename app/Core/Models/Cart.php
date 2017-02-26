@@ -16,9 +16,9 @@ class Cart extends Model implements Transformable, CartInterface
 
     protected $table;
     protected $casts = [
-        'content' => 'json'
+        'content' => 'array'
     ];
-    protected $fillable = ['id', 'unique_id', 'instance', 'content'];
+    protected $fillable = ['instance', 'content'];
 
     /**
      * Cart constructor.

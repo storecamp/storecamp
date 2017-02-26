@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
  */
 class CartController extends BaseController
 {
-    /**
-     * TODO Implement Try Catch blocks
-     */
+
     /**
      * @var string
      */
@@ -21,7 +19,7 @@ class CartController extends BaseController
     /**
      * @var string
      */
-    public $errorRedirectPath = "site.cart";
+    public $errorRedirectPath = "site::";
     /**
      * @var CartSystemContract
      */
@@ -39,14 +37,18 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request)
     {
-        $data = $request->all();
-        $cart = $this->cartSystem->setCurrency(config('sales.currency'))->show($data);
-        $cartSystem = $this->cartSystem;
-        return $this->view('show', compact('cart', 'cartSystem'));
+        try {
+            $data = $request->all();
+            $cart = $this->cartSystem->setCurrency(config('sales.currency'))->show($data);
+            $cartSystem = $this->cartSystem;
+            return $this->view('show', compact('cart', 'cartSystem'));
+        } catch (\Throwable $exception) {
+            return $this->redirectError($exception);
+        }
     }
 
     /**
@@ -56,12 +58,16 @@ class CartController extends BaseController
      */
     public function update(Request $request, $rowId)
     {
-        $this->cartSystem->update($rowId, $request->get('quantity'));
-        if($request->ajax()) {
-            return response()->json(['message'=> 'cart item updated']);
-        } else {
-            \Flash::success('cart item updated');
-            return redirect()->route('site::cart::show');
+        try {
+            $this->cartSystem->update($rowId, $request->get('quantity'));
+            if ($request->ajax()) {
+                return response()->json(['message' => 'cart item updated']);
+            } else {
+                \Flash::success('cart item updated');
+                return redirect()->route('site::cart::show');
+            }
+        } catch (\Throwable $exception) {
+            return $this->redirectError($exception);
         }
     }
 
@@ -72,13 +78,17 @@ class CartController extends BaseController
      */
     public function add(Request $request, $productId)
     {
-        $data = $request->all();
-        $cart = $this->cartSystem->addItem($data, $productId);
-        if($request->ajax()) {
-            \Flash::success('item added to cart');
-            return response()->json(['cart'=> json_encode($cart)]);
-        } else {
-            return redirect()->route('site::cart::show');
+        try {
+            $data = $request->all();
+            $cart = $this->cartSystem->addItem($data, $productId);
+            if ($request->ajax()) {
+                \Flash::success('item added to cart');
+                return response()->json(['cart' => json_encode($cart)]);
+            } else {
+                return redirect()->route('site::cart::show');
+            }
+        } catch (\Throwable $exception) {
+            return $this->redirectError($exception);
         }
     }
 
@@ -90,7 +100,7 @@ class CartController extends BaseController
     public function remove(Request $request, $itemId)
     {
         $this->cartSystem->remove($itemId);
-        if($request->ajax()) {
+        if ($request->ajax()) {
             return response()->json(['message' => 'cart item deleted'], 200);
         } else {
             \Flash::warning('item deleted from cart');
@@ -106,13 +116,12 @@ class CartController extends BaseController
     public function delete(Request $request)
     {
         $this->cartSystem->destroy();
-        if($request->ajax()) {
-            return response()->json(['message'=> 'cart deleted'], 200);
+        if ($request->ajax()) {
+            return response()->json(['message' => 'cart deleted'], 200);
         } else {
             \Flash::warning('cart cleared completely');
             return redirect()->back();
         }
     }
-
-
 }
+

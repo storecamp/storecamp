@@ -134,7 +134,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function cart()
     {
-        return $this->hasOne(config('shop.cart'), 'user_id');
+        return $this->hasOne(config('sales.cart'), 'user_id');
     }
 
     /**
@@ -144,7 +144,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function orders()
     {
-        return $this->hasMany(config('shop.order'), 'user_id');
+        return $this->hasMany(config('sales.order'), 'user_id');
     }
 
     /**

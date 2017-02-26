@@ -53,7 +53,7 @@ interface PaymentGatewayInterface
      * Called by shop when payment gateway calls callback url.
      * Success result
      *
-     * @param Order $order Order.
+     * @param Orders $order Order.
      * @param mixed $data  Request input from callback.
      */
     public function onCallbackSuccess($order, $data = null);

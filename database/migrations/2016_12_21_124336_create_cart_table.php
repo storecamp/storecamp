@@ -17,6 +17,7 @@ class CreateCartTable extends Migration
             $table->increments('id');
             $table->string('unique_id')->unique();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('order_id')->unsigned()->nullable();
             $table->string('instance');
             if ((DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') && version_compare(DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION), '5.7.8', 'ge')) {
                 $table->json('content')->nullable();

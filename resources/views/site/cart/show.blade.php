@@ -99,16 +99,14 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-success">
+                            <a href="{{route('site::order::index')}}" type="button" class="btn btn-success">
                                 Checkout <span class="glyphicon glyphicon-play"></span>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 @endsection

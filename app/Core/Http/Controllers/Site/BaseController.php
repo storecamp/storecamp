@@ -48,7 +48,7 @@ abstract class BaseController extends Controller
                 return response()->json('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode(), $e->getCode());
             }
             \Flash::error('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
-            return redirect($this->errorRedirectPath);
+            return redirect()->route($this->errorRedirectPath);
         } else {
             if(request()->ajax()) {
                 return response()->json('Sorry Error found!', 404);

@@ -1,8 +1,8 @@
 <?php
 /**
- * @param $navigation ['auth'] \Illuminate\Auth\AuthManager
+ * @var $auth \Illuminate\Auth\AuthManager
  */
-$user = $navigation['auth']->user() ? $navigation['auth']->user() : null; ?>
+$user = $auth->user() ? $auth->user() : null; ?>
 <header class="main-header">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -102,42 +102,12 @@ $user = $navigation['auth']->user() ? $navigation['auth']->user() : null; ?>
                                 <span class="label label-yellow">0</span>
                             @endif
                         </a>
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--<li class="header">You have 9 items</li>--}}
-                            {{--<li>--}}
-                                {{--<!-- Inner menu: contains the tasks -->--}}
-                                {{--<ul class="menu">--}}
-                                    {{--<li><!-- Task item -->--}}
-                                        {{--<a href="#">--}}
-                                            {{--<!-- Task title and progress text -->--}}
-                                            {{--<h3>--}}
-                                                {{--Design some buttons--}}
-                                                {{--<small class="pull-right">20%</small>--}}
-                                            {{--</h3>--}}
-                                            {{--<!-- The progress bar -->--}}
-                                            {{--<div class="progress xs">--}}
-                                                {{--<!-- Change the css width attribute to simulate progress -->--}}
-                                                {{--<div class="progress-bar progress-bar-aqua" style="width: 20%"--}}
-                                                     {{--role="progressbar" aria-valuenow="20" aria-valuemin="0"--}}
-                                                     {{--aria-valuemax="100">--}}
-                                                    {{--<span class="sr-only">20% Complete</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                    {{--</li>--}}
-                                    {{--<!-- end task item -->--}}
-                                {{--</ul>--}}
-                            {{--</li>--}}
-                            {{--<li class="footer">--}}
-                                {{--<a href="#">View all tasks</a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
                     </li>
                     <!-- User Account Menu -->
-                    @if(!$navigation['auth']->guest())
+                    @if(!$auth->guest())
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{str_limit(
-                            $navigation['auth']->user()->name,
+                            $auth->user()->name,
                             20
                             )}}
                                 <span class="caret"></span></a>

@@ -6,11 +6,13 @@ use App\Core\Contracts\Buyable;
 use App\Core\Exceptions\CartAlreadyStoredException;
 use App\Core\Exceptions\InvalidRowIDException;
 use App\Core\Exceptions\UnknownModelException;
+use App\Core\Exceptions\UserNotLoggedInException;
 use App\Core\Repositories\CartRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Support\Cart\CartItem;
 use app\Core\Contracts\CartSystemContract;
 use App\Core\Support\Cart\CartItemContract;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
@@ -63,21 +65,27 @@ class CartSystem implements CartSystemContract
     private $currency;
 
     /**
+     * @var AuthManager
+     */
+    private $auth;
+
+    /**
      * CartSystem constructor.
      * @param SessionManager $session
      * @param Dispatcher $events
      * @param CartRepository $cartRepository
      * @param ProductsRepository $productsRepository
+     * @param AuthManager $auth
      */
     public function __construct(SessionManager $session, Dispatcher $events,
-                                CartRepository $cartRepository, ProductsRepository $productsRepository)
+                                CartRepository $cartRepository, ProductsRepository $productsRepository, AuthManager $auth)
     {
         $this->cartRepository = $cartRepository;
         $this->session = $session;
         $this->events = $events;
         $this->productsRepository = $productsRepository;
         $this->currency = config('sales.currency');
-
+        $this->auth = $auth;
         $this->instance(self::DEFAULT_INSTANCE);
     }
 
@@ -383,10 +391,39 @@ class CartSystem implements CartSystemContract
     }
 
     /**
-     * Store an the current instance of the cart.
+     * TODO implement db transaction
      *
+     * Transforms cart into an order.
+     * Returns created order.
+     *
+     * @param null $statusCode
+     * @return mixed
+     * @throws UserNotLoggedInException
+     */
+    public function placeOrder($statusCode = null)
+    {
+        if (empty($statusCode)) {
+            $statusCode = config('sales.order_status_placement');
+        }
+        if ($this->auth->user()->guest()) {
+            throw new UserNotLoggedInException("Order placement requires logged in user.");
+        }
+        // Create order
+        $order = call_user_func( config('sales.order') . '::create', [
+            'user_id'       => $this->auth->user()->id,
+            'statusCode'    => $statusCode
+        ]);
+        $cart = $this->store($this->content()->rowId());
+        $cart->order_id  = $order->id;
+        $cart->save();
+
+        return $order;
+    }
+
+    /**
      * @param mixed $identifier
-     * @return void
+     * @return mixed
+     * @throws UserNotLoggedInException
      */
     public function store($identifier)
     {
@@ -394,13 +431,19 @@ class CartSystem implements CartSystemContract
         if ($this->storedCartWithIdentifierExists($identifier)) {
             throw new CartAlreadyStoredException("A cart with identifier {$identifier} was already stored.");
         }
-        $this->cartRepository->create([
+
+        if ($this->auth->user()->guest()) {
+            throw new UserNotLoggedInException("A cart with identifier {$identifier} requires logged in user.");
+        }
+
+        $cart = $this->cartRepository->create([
             'unique_id' => $identifier,
-            'user_id' => !\Auth::guest() ? \Auth::user()->id : null,
+            'user_id' => $this->auth->user()->id,
             'instance' => $this->currentInstance(),
             'content' => json_encode($content)
         ]);
         $this->events->fire('cart.stored');
+        return $cart;
     }
 
     /**

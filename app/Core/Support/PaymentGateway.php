@@ -12,7 +12,7 @@ use App\Core\Contracts\PaymentGatewayInterface;
 abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jsonable, JsonSerializable
 {
     /**
-     * Gateway Id, set by shop.
+     * Gateway Id, set by sales.
      *
      * @var mixed
      */
@@ -82,10 +82,10 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
     }
 
     /**
-     * Called by shop when payment gateway calls callback url.
+     * Called by sales when payment gateway calls callback url.
      * Success result
      *
-     * @param Order $order Order.
+     * @param Orders $order Order.
      * @param mixed $data  Callback data.
      *
      * @return string
@@ -95,7 +95,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
     }
 
     /**
-     * Called by shop when payment gateway calls callback url.
+     * Called by sales when payment gateway calls callback url.
      * Failed result
      *
      * @param Order $order Order.
@@ -114,13 +114,13 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
      */
     public function setCallbacks($order)
     {
-        $this->callbackSuccess = route(config('shop.callback_route'), [
+        $this->callbackSuccess = route(config('sales.callback_route'), [
             'status'    => 'success',
             'id'        => $order->id,
             'token'     => $this->token,
         ]);
 
-        $this->callbackFail    = route(config('shop.callback_route'), [
+        $this->callbackFail    = route(config('sales.callback_route'), [
             'status'    => 'fail',
             'id'        => $order->id,
             'token'     => $this->token,
