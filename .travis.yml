@@ -5,7 +5,6 @@ php:
 
 before_script:
   - cp .env.travis .env
-  - sudo sh install-mongo.sh
   - mysql -e 'create database homestead_test;'
   - composer self-update
   - composer install --no-interaction
@@ -13,6 +12,7 @@ before_script:
   - php artisan jwt:generate
 
 install:
+  - sudo sh install-mongo.sh
   - travis_retry composer self-update
   - travis_retry composer clear-cache
   - travis_retry composer update
