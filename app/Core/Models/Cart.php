@@ -27,7 +27,7 @@ class Cart extends Model implements Transformable, CartInterface
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('shop.cart_table');
+        $this->table = config('sales.cart_table');
     }
 
     public static function boot()

@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Core\Access\Middleware\AccessPermission;
 use App\Core\Access\Middleware\AccessRole;
 use App\Http\Middleware\BelongsToUserOrAdmin;
+use App\Http\Middleware\DetectBrowserLanguage;
 use App\Http\Middleware\FolderLocked;
 use App\Http\Middleware\UserAdditionalInfo;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'notAdmin' => \App\Http\Middleware\ShouldNotBeAdmin::class,
         'shouldLeftAdmin' => \App\Http\Middleware\AdminsShouldLeft::class,
         'folderLocked' => FolderLocked::class,
-        'belongsToUserOrAdmin' => BelongsToUserOrAdmin::class
+        'belongsToUserOrAdmin' => BelongsToUserOrAdmin::class,
+        'DetectBrowserLanguage' => DetectBrowserLanguage::class,
     ];
 }

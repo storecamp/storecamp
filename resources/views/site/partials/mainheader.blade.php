@@ -164,8 +164,8 @@ $user = $navigation['auth']->user() ? $navigation['auth']->user() : null; ?>
                             </ul>
                         </li>
                     @else
-                        <li><a href="{{ url('/login') }}">{{ trans('message.login') }}</a></li>
-                        <li><a href="{{ url('/register') }}">{{ trans('message.register') }}</a></li>
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
                     @endif
                 </ul>
             </div>

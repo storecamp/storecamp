@@ -1,16 +1,32 @@
 <?php
 return [
 
+
+    /*
+     * Cart functionality
+
+    /*
+   |--------------------------------------------------------------------------
+   | Shop name
+   |--------------------------------------------------------------------------
+   |
+   | Shop name.
+   |
+   */
+    'name' => 'StoreCamp',
     /*
     |--------------------------------------------------------------------------
-    | Destroy the cart on user logout
+    | storecamp cart database settings
     |--------------------------------------------------------------------------
     |
-    | When this option is set to 'true' the cart will automatically
-    | destroy all cart instances when the user logs out.
+    | Here you can set the connection that the cart should use when
+    | storing and restoring a cart.
     |
     */
-    'destroy_on_logout' => false,
+    'database' => [
+        'connection' => env('DB_CONNECTION'),
+        'table' => 'cart',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Default number format
@@ -27,14 +43,16 @@ return [
     ],
 
     /*
-   |--------------------------------------------------------------------------
-   | Shop name
-   |--------------------------------------------------------------------------
-   |
-   | Shop name.
-   |
-   */
-    'name' => 'StoreCamp',
+    |--------------------------------------------------------------------------
+    | Destroy the cart on user logout
+    |--------------------------------------------------------------------------
+    |
+    | When this option is set to 'true' the cart will automatically
+    | destroy all cart instances when the user logs out.
+    |
+    */
+    'destroy_on_logout' => false,
+
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +200,9 @@ return [
     | Tax config value:        0.08
     |
     */
-    'tax' => 0.0,
+    'tax' => 0.21,
+
+    'tax_percent' => (float) config('sales.tax') * 100,
 
     /*
     |--------------------------------------------------------------------------
@@ -197,7 +217,7 @@ return [
     | Example result: '$0.99 (USD)'
     |
     */
-    'display_price_format' => ':symbol:price',
+    'display_price_format' => ':symbol:price (:currency)',
 
     /*
     |--------------------------------------------------------------------------

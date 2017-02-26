@@ -45,8 +45,8 @@
                                        value="{{$row->qty}}">
                                 {!! Form::close() !!}
                             </td>
-                            <td class="text-center"><strong>{{$row->currency ? $row->currency : ''}} {{ $row->price }}</strong></td>
-                            <td class="text-center"><strong>{{$row->currency ? $row->currency : ''}} {{ $row->total }}</strong></td>
+                            <td class="text-center"><strong>{{ shopFormat($row->price) }}</strong></td>
+                            <td class="text-center"><strong>{{ shopFormat($row->total) }}</strong></td>
                             <td class="">
                                 {!! Form::open([ 'method' => 'PUT', 'id' => 'remove-item'.$row->rowId, 'route' => ['site::cart::remove', $row->rowId]]) !!}
                                 <button type="button" onclick="event.preventDefault();
@@ -63,21 +63,21 @@
                         <td>  </td>
                         <td>  </td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>{{$cartSystem->getCurrency() ?? ''}} {{ $cartSystem->subtotal() }}</strong></h5></td>
+                        <td class="text-right"><h5><strong>{{ $cartSystem->subtotal() }}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>  </td>
                         <td>  </td>
                         <td>  </td>
                         <td><h5>Tax</h5></td>
-                        <td class="text-right"><h5><strong>{{$cartSystem->getCurrency() ?? ''}} {{ $cartSystem->tax() }}</strong></h5></td>
+                        <td class="text-right"><h5><strong>{{ $cartSystem->tax() }}</strong></h5></td>
                     </tr>
                     <tr>
                         <td>  </td>
                         <td>  </td>
                         <td>  </td>
                         <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>{{$cartSystem->getCurrency() ?? ''}} {{ $cartSystem->total() }}</strong></h3></td>
+                        <td class="text-right"><h3><strong>{{ $cartSystem->total() }}</strong></h3></td>
                     </tr>
                     <tr>
                         <td>

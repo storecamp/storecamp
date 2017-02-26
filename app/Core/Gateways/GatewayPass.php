@@ -2,25 +2,15 @@
 
 namespace App\Core\Gateways;
 
-/**
- * This file is part of LaravelShop,
- * A shop solution for Laravel.
- *
- * @author Alejandro Mostajo
- * @copyright Amsgames, LLC
- * @license MIT
- * @package App\Core
- */
-
-use Log;
-use App\Core\Core\PaymentGateway;
+use App\Core\Models\Orders;
+use App\Core\Support\PaymentGateway;
 
 class GatewayPass extends PaymentGateway
 {
     /**
      * Called by shop to charge order's amount.
      *
-     * @param Order $order Order.
+     * @param Orders $order.
      *
      * @return bool
      */

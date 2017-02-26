@@ -2,16 +2,6 @@
 
 namespace App\Core\Gateways;
 
-/**
- * This file is part of LaravelShop,
- * A shop solution for Laravel.
- *
- * @author Alejandro Mostajo
- * @copyright Amsgames, LLC
- * @license MIT
- * @package App\Core
- */
-
 use App\Core\Exceptions\CheckoutException;
 use App\Core\Exceptions\GatewayException;
 use App\Core\Exceptions\ShopException;
@@ -23,7 +13,8 @@ class GatewayFail extends PaymentGateway
     /**
      * Called on cart checkout.
      *
-     * @param Orders $order Order.
+     * @param \App\Core\Models\Cart $cart
+     * @throws CheckoutException
      */
     public function onCheckout($cart)
     {

@@ -9,6 +9,7 @@ use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use \Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -32,13 +33,16 @@ class Orders extends Model implements Transformable, OrderInterface
     use TransformableTrait;
     use GeneratesUnique;
     use CalculationsTrait;
-    protected $table;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
+    protected $table;
+
+
     /**
      * Fillable attributes for mass assignment.
      *

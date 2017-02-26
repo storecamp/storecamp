@@ -44,7 +44,7 @@ class CartController extends BaseController
     public function show(Request $request)
     {
         $data = $request->all();
-        $cart = $this->cartSystem->setCurrency(config('cart.main_currency'))->show($data);
+        $cart = $this->cartSystem->setCurrency(config('sales.currency'))->show($data);
         $cartSystem = $this->cartSystem;
         return $this->view('show', compact('cart', 'cartSystem'));
     }

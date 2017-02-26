@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-fullcalendar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/alt/AdminLTE-bootstrap-social.min.css') }}">
     <link rel="stylesheet" href="{{asset('/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css')}}">
-
+    <link rel="stylesheet" href="{{asset('plugins/datatables.net-dt/css/jquery.dataTables.min.css')}}">
     <!-- iCheck -->
     <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app_less.css') }}" rel="stylesheet" type="text/css" />

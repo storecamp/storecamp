@@ -49,7 +49,7 @@
 <script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{asset('plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
-
+<script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <!-- Page script -->
 <script>
     APP_URL = {!! json_encode(url('/')) !!};

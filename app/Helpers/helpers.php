@@ -329,18 +329,18 @@ if (!function_exists('cartNumberFormat')) {
     function cartNumberFormat($value, $decimals = null, $decimalPoint = null, $thousandSeperator = null)
     {
         if (is_null($decimals)) {
-            $decimals = is_null(config('cart.format.decimals'))
-                ? 2 : config('cart.format.decimals');
+            $decimals = is_null(config('sales.format.decimals'))
+                ? 2 : config('sales.format.decimals');
         }
         if (is_null($decimalPoint)) {
-            $decimalPoint = is_null(config('cart.format.decimal_point'))
-                ? '.' : config('cart.format.decimal_point');
+            $decimalPoint = is_null(config('sales.format.decimal_point'))
+                ? '.' : config('sales.format.decimal_point');
         }
         if (is_null($thousandSeperator)) {
-            $thousandSeperator = is_null(config('cart.format.thousand_seperator'))
-                ? ',' : config('cart.format.thousand_seperator');
+            $thousandSeperator = is_null(config('sales.format.thousand_seperator'))
+                ? ',' : config('sales.format.thousand_seperator');
         }
-        return number_format($value, $decimals, $decimalPoint, $thousandSeperator);
+        return shopFormat(number_format($value, $decimals, $decimalPoint, $thousandSeperator));
     }
 }
 if (!function_exists('shopFormat')) {
@@ -353,11 +353,11 @@ if (!function_exists('shopFormat')) {
                 '/:currency/'
             ],
             [
-                config('shop.currency_symbol'),
+                config('sales.currency_symbol'),
                 $value,
-                config('shop.currency')
+                config('sales.currency')
             ],
-            config('shop.display_price_format')
+            config('sales.display_price_format')
         );
     }
 }

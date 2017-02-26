@@ -2,15 +2,8 @@
 
 namespace App\Core\Contracts;
 
-/**
- * This file is part of LaravelShop,
- * A shop solution for Laravel.
- *
- * @author Alejandro Mostajo
- * @copyright Amsgames, LLC
- * @license MIT
- * @package App\Core
- */
+use App\Core\Models\Cart;
+use App\Core\Models\Orders;
 
 interface PaymentGatewayInterface
 {
@@ -18,11 +11,10 @@ interface PaymentGatewayInterface
      * Constructor.
      */
     public function __construct($id = '');
-    
+
     /**
-     * Called on cart checkout.
-     *
-     * @param Cart $cart Cart.
+     * @param Cart $cart
+     * @return mixed
      */
     public function onCheckout($cart);
 
@@ -70,7 +62,7 @@ interface PaymentGatewayInterface
      * Called by shop when payment gateway calls callback url.
      * Failed result
      *
-     * @param Order $order Order.
+     * @param Orders $order.
      * @param mixed $data  Request input from callback.
      */
     public function onCallbackFail($order, $data = null);
@@ -78,7 +70,7 @@ interface PaymentGatewayInterface
     /**
      * Sets callback urls
      *
-     * @param Order $order Order.
+     * @param Orders $order.
      */
     public function setCallbacks($order);
 

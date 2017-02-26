@@ -76,7 +76,7 @@ class CartSystem implements CartSystemContract
         $this->session = $session;
         $this->events = $events;
         $this->productsRepository = $productsRepository;
-        $this->currency = config('cart.main_currency');
+        $this->currency = config('sales.currency');
 
         $this->instance(self::DEFAULT_INSTANCE);
     }
@@ -485,7 +485,7 @@ class CartSystem implements CartSystemContract
             $cartItem->setQuantity($qty);
         }
         $cartItem->setCurrency($this->currency);
-        $cartItem->setTaxRate(config('cart.tax'));
+        $cartItem->setTaxRate(config('sales.tax_percent'));
         return $cartItem;
     }
     /**

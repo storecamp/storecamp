@@ -135,7 +135,7 @@ class CartItem implements Arrayable, CartItemContract
         }
 
         if($attribute === 'user') {
-            return $this->userId ? User::find($this->userId) : null;
+            return $this->userId ? app('App\Core\Repositories\UserRepository')->find($this->userId) : null;
         }
 
         if($attribute === 'model') {

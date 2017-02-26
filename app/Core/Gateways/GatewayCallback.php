@@ -2,16 +2,6 @@
 
 namespace App\Core\Gateways;
 
-/**
- * This file is part of LaravelShop,
- * A shop solution for Laravel.
- *
- * @author Alejandro Mostajo
- * @copyright Amsgames, LLC
- * @license MIT
- * @package App\Core
- */
-
 use App\Core\Gateways\GatewayPass;
 use App\Core\Models\Orders;
 
