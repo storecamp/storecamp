@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -47,6 +48,7 @@ class Media extends \Plank\Mediable\Media implements Transformable
 {
     use TransformableTrait;
     use Auditable;
+    use CacheableEloquent;
 
     protected $fillable = ['directory_id', 'directory', 'disk', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
     protected $guarded = ['id'];

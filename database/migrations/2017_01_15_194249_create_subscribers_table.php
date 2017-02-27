@@ -17,7 +17,7 @@ class CreateSubscribersTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

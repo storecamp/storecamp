@@ -4,8 +4,6 @@ namespace RepositoryLab\Repository\Listeners;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 use RepositoryLab\Repository\Events\RepositoryEventBase;
 use RepositoryLab\Repository\Helpers\CacheKeys;

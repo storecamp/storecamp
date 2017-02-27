@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Contracts\CartInterface;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CalculationsTrait;
 use App\Core\Traits\GeneratesUnique;
 use App\Core\Base\Model;
@@ -13,6 +14,7 @@ class Cart extends Model implements Transformable, CartInterface
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     protected $table;
     protected $casts = [

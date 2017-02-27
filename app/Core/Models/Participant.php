@@ -1,12 +1,25 @@
-<?php namespace App\Core\Components\Messenger\Models;
+<?php
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+namespace App\Core\Models;
+
+use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Base\Model;
+use App\Core\Traits\GeneratesUnique;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Participant extends Eloquent
+class Participant extends Model implements Transformable
 {
+    use TransformableTrait;
+    use GeneratesUnique;
     use SoftDeletes;
+    use CacheableEloquent;
+
+    public static function boot()
+    {
+       parent::boot();
+    }
 
     /**
      * The database table used by the model.
@@ -36,7 +49,7 @@ class Participant extends Eloquent
      */
     public function thread()
     {
-        return $this->belongsTo('App\Core\Components\Messenger\Models\Thread');
+        return $this->belongsTo(Thread::class);
     }
 
     /**
@@ -46,6 +59,8 @@ class Participant extends Eloquent
      */
     public function user()
     {
-        return $this->belongsTo(Config::get('messenger.user_model'));
+        return $this->belongsTo(config('messenger.user_model'));
     }
+
+
 }

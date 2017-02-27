@@ -21,3 +21,5 @@ Homestead.yaml
 /.phpintel/
 public/images/
 /public/plugins/
+
+/packages/storeacamp/htmlelements

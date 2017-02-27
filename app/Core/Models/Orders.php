@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Contracts\OrderInterface;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CalculationsTrait;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
@@ -34,6 +35,7 @@ class Orders extends Model implements Transformable, OrderInterface
     use GeneratesUnique;
     use CalculationsTrait;
     use SoftDeletes;
+    use CacheableEloquent;
 
     /**
      * The database table used by the model.

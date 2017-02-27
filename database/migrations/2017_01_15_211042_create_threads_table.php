@@ -15,6 +15,8 @@ class CreateThreadsTable extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('unique_id', 36)->unique();
+
             $table->string('subject')->default('review');
             $table->integer('commentable_id')->unsigned();
             $table->string('commentable_type');

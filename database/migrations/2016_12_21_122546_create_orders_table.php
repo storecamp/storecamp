@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         // Create table for storing carts
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
             $table->integer('user_id')->unsigned();
             $table->string('statusCode', 32);
             $table->timestamps();

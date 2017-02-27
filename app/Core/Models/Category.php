@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use App\Core\Base\Model;
@@ -74,6 +75,17 @@ class Category extends Model implements Transformable
     use Mediable;
     use NodeTrait;
 
+//    use NodeTrait, CacheableEloquent {
+//        NodeTrait::newEloquentBuilder as node_newEloquentBuilder;
+//        CacheableEloquent::newEloquentBuilder as cache_newEloquentBuilder;
+//    }
+
+//    public function newEloquentBuilder($query)
+//    {
+//        $this->node_newEloquentBuilder($query);
+//        $this->cache_newEloquentBuilder($query);
+//    }
+
     /**
      * @var array
      */
@@ -122,7 +134,8 @@ class Category extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function products() {
+    public function products()
+    {
         return $this->belongsToMany(Product::class, 'products_categories');
     }
 

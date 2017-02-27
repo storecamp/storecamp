@@ -17,8 +17,8 @@
     Forms::help('Here is a help text')
 )!!}
             <h3>Menu</h3>
-            {!! app('elements.menu.manager')->menu('sidebar') !!}
-            {!! app('elements.menu.manager')->menu('administration') !!}
+            {{--{!! app('elements.menu.manager')->menu('sidebar') !!}--}}
+            {{--{!! app('elements.menu.manager')->menu('administration') !!}--}}
             <h3>Carousel</h3>
             <div class="row">
                 <div class="col-md-8">

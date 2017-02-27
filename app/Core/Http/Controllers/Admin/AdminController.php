@@ -22,7 +22,8 @@ class AdminController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function htmlElements() {
+    public function htmlElements()
+    {
         return view("admin.htmlElements.elements");
     }
 

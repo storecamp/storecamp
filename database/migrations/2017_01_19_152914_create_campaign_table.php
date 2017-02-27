@@ -16,7 +16,7 @@ class CreateCampaignTable extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->increments('id');
             $table->string('campaign')->unique();
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -10,7 +11,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
-use App\Core\Components\Messenger\Models\Thread;
+use App\Core\Models\Thread;
 use Toastr;
 
 /**
@@ -30,7 +31,7 @@ use Toastr;
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Core\Models\User $user
  * @property-read \App\Core\Models\Product $product
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $thread
+ * @property-read Thread[] $thread
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereProductId($value)
@@ -50,7 +51,7 @@ use Toastr;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview byRating($reason)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $comments
+ * @property-read Thread[] $comments
  */
 class ProductReview extends Model implements Transformable
 {
@@ -58,6 +59,7 @@ class ProductReview extends Model implements Transformable
     use SoftDeletes;
     use GeneratesUnique;
     use Auditable;
+    use CacheableEloquent;
 
     /**
      * @var string

@@ -49,7 +49,10 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Promocode',
             'Returns',
             'StaticPages',
-            'Cart'
+            'Cart',
+            'Thread',
+            'Message',
+            'Participant'
         ];
 
         foreach ($models as $repo) {

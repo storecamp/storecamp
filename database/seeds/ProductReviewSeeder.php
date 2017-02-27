@@ -39,13 +39,13 @@ class ProductReviewSeeder extends Seeder
 
             }
             $userId = $faker->numberBetween(2, 22);
-            $message = \App\Core\Components\Messenger\Models\Message::create([
+            $message = \App\Core\Models\Message::create([
                 'thread_id' => $thread->id,
                 'user_id' => $userId,
                 'body' => $faker->paragraphs(5, true),
             ]);
 
-            $participant = \App\Core\Components\Messenger\Models\Participant::create([
+            $participant = \App\Core\Models\Participant::create([
                 'thread_id' => $thread->id,
                 'user_id' => $userId,
                 'last_read' => new \Carbon\Carbon()
@@ -75,13 +75,13 @@ class ProductReviewSeeder extends Seeder
 
             }
             $userId = $faker->numberBetween(2, 22);
-            $message = \App\Core\Components\Messenger\Models\Message::create([
+            $message = \App\Core\Models\Message::create([
                 'thread_id' => $thread->id,
                 'user_id' => $userId,
                 'body' => $faker->paragraphs(5, true),
             ]);
 
-            $participant = \App\Core\Components\Messenger\Models\Participant::create([
+            $participant = \App\Core\Models\Participant::create([
                 'thread_id' => $thread->id,
                 'user_id' => $userId,
                 'last_read' => new \Carbon\Carbon()

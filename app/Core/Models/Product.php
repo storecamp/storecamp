@@ -6,6 +6,7 @@ use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
 use App\Core\Logic\ShopSystem;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use Carbon\Carbon;
 use App\Core\Base\Model;
@@ -102,6 +103,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use Auditable;
     use Mediable;
     use CartItemTrait;
+    use CacheableEloquent;
 
     /**
      * Custom field name to define the item's name.

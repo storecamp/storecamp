@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
@@ -34,7 +35,7 @@ class Campaign extends Model implements Transformable
     use SoftDeletes;
     use GeneratesUnique;
     use Auditable;
-
+    use CacheableEloquent;
 
     protected $table = "campaigns";
 

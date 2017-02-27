@@ -2,22 +2,14 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Validators\ProductReview\ProductReviewFormRequest;
-use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use RepositoryLab\Repository\Traits\CacheableRepository;
-use App\Core\Models\Product;
-use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Models\ProductReview;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use App\Core\Components\Messenger\Models\Thread;
-use App\Core\Components\Messenger\Models\Message;
-use App\Core\Components\Messenger\Models\Participant;
+use App\Core\Models\Thread;
+use App\Core\Models\Message;
+use App\Core\Models\Participant;
 
 /**
  * Class ProductReviewRepositoryEloquent
@@ -119,26 +111,23 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     {
         return $this->with('user')->where('user_id', '=', \Auth::id())->count();
     }
+
     /**
      * get all Products
      * @return mixed
      */
     public function getAll()
     {
-
         return $this->getModel()->latest('created_at')->paginate();
-
     }
 
     /**
-     * get all current logged in user Feedbacks
+     * get all current logged in user Reviews
      * @return mixed
      */
     public function getAllUsers()
     {
-
         return $this->getModel()->latest('created_at')->users()->paginate();
-
     }
 
     /**
@@ -148,7 +137,6 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     public function getAllUserById($id)
     {
-
         return $this->getModel()->latest('created_at')->usersById($id)->paginate();
     }
 

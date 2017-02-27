@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -16,6 +17,7 @@ class Returns extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     protected $fillable = [];
 

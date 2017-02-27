@@ -1,7 +1,10 @@
-<?php namespace App\Core\Components\Messenger\Traits;
+<?php
 
-use App\Core\Components\Messenger\Models\Thread;
-use App\Core\Components\Messenger\Models\Participant;
+namespace App\Core\Traits;
+
+use App\Core\Models\Message;
+use App\Core\Models\Participant;
+use App\Core\Models\Thread;
 
 trait Messagable
 {
@@ -12,7 +15,7 @@ trait Messagable
      */
     public function messages()
     {
-        return $this->hasMany(\App\Core\Components\Messenger\Models\Message::class);
+        return $this->hasMany(Message::class);
     }
 
     /**
@@ -22,7 +25,7 @@ trait Messagable
      */
     public function threads()
     {
-        return $this->belongsToMany(\App\Core\Components\Messenger\Models\Thread::class, 'participants');
+        return $this->belongsToMany(Thread::class, 'participants');
     }
 
     /**

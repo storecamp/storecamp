@@ -1,21 +1,29 @@
-<?php namespace App\Core\Components\Messenger\Models;
+<?php
 
-use App\Core\Models\User;
+namespace App\Core\Models;
+
+use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Base\Model;
+use App\Core\Traits\GeneratesUnique;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use App\Core\Models\ProductReview;
 
-/**
- * Class Thread
- * @package App\Core\Components\Messenger\Models
- */
-class Thread extends Eloquent
+class Thread extends Model implements Transformable
 {
+    use TransformableTrait;
+    use GeneratesUnique;
     use SoftDeletes;
+    use CacheableEloquent;
+
+    public static function boot()
+    {
+       parent::boot();
+    }
 
     /**
      * The database table used by the model.
@@ -73,7 +81,7 @@ class Thread extends Eloquent
      */
     public function messages()
     {
-        return $this->hasMany('App\Core\Components\Messenger\Models\Message');
+        return $this->hasMany(Message::class);
     }
 
     /**
@@ -100,7 +108,7 @@ class Thread extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany('App\Core\Components\Messenger\Models\Participant');
+        return $this->hasMany(Participant::class);
     }
 
     /**
@@ -168,7 +176,8 @@ class Thread extends Eloquent
             ->where('participants.user_id', $userId)
             ->whereNull('participants.deleted_at')
             ->where(function ($query) {
-                $query->where('threads.updated_at', '>', $this->getConnection()->raw($this->getConnection()->getTablePrefix() . 'participants.last_read'))
+                $query->where('threads.updated_at', '>',
+                    $this->getConnection()->raw($this->getConnection()->getTablePrefix() . 'participants.last_read'))
                     ->orWhereNull('participants.last_read');
             })
             ->select('threads.*');
@@ -185,8 +194,8 @@ class Thread extends Eloquent
     {
         $query->whereHas('participants', function ($query) use ($participants) {
             $query->whereIn('user_id', $participants)
-                    ->groupBy('thread_id')
-                    ->havingRaw('COUNT(thread_id)='.count($participants));
+                ->groupBy('thread_id')
+                ->havingRaw('COUNT(thread_id)='.count($participants));
         });
     }
 
@@ -384,5 +393,6 @@ class Thread extends Eloquent
         $userModel = Config::get('messenger.user_model');
         return $this->usersTable = (new $userModel)->getTable();
     }
+
 
 }

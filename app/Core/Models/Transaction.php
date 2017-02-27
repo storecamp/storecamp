@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Contracts\TransactionInterface;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\TransactionTrait;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
@@ -13,6 +14,7 @@ class Transaction extends Model implements Transformable, TransactionInterface
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     protected $fillable = [];
 
@@ -24,7 +26,7 @@ class Transaction extends Model implements Transformable, TransactionInterface
     /**
      * One-to-One relations with the order model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function order()
     {

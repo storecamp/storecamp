@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
@@ -48,6 +49,7 @@ class Folder extends Model implements Transformable
     use SluggableScopeHelpers;
     use GeneratesUnique;
     use Auditable;
+    use CacheableEloquent;
 
     protected $with = ["files"];
     /**

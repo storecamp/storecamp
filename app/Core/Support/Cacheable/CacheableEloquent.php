@@ -15,6 +15,7 @@ trait CacheableEloquent
      * @var \Illuminate\Contracts\Container\Container
      */
     protected $container;
+
     /**
      * The methods to clear cache on.
      *
@@ -43,48 +44,53 @@ trait CacheableEloquent
      * @var bool
      */
     public $cacheClearEnabled = true;
+
     /**
      * Fire the given event for the model.
      *
      * @param string $event
-     * @param bool   $halt
+     * @param bool $halt
      *
      * @return mixed
      */
     abstract public function fireModelEvent($event, $halt = true);
+
     /**
      * Register an updated model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int             $priority
+     * @param int $priority
      *
      * @return void
      */
     abstract public static function updated($callback, $priority = 0);
+
     /**
      * Register a created model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int             $priority
+     * @param int $priority
      *
      * @return void
      */
     abstract public static function created($callback, $priority = 0);
+
     /**
      * Register a deleted model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int             $priority
+     * @param int $priority
      *
      * @return void
      */
     abstract public static function deleted($callback, $priority = 0);
+
     /**
      * Forget model cache on create/update/delete.
      *
      * @return void
      */
-    public static function bootAbstractCacheable()
+    public static function bootCacheableEloquent()
     {
         static::updated(function (Model $cachedModel) {
             if ($cachedModel->isCacheClearEnabled() && in_array('update', $cachedModel->cacheClearOn)) {
@@ -96,17 +102,20 @@ trait CacheableEloquent
                 $cachedModel->forgetCache();
             }
         });
+        static::saved(function (Model $cachedModel) {
+            if ($cachedModel->isCacheClearEnabled() && in_array('create', $cachedModel->cacheClearOn)) {
+                $cachedModel->forgetCache();
+            }
+        });
         static::deleted(function (Model $cachedModel) {
             if ($cachedModel->isCacheClearEnabled() && in_array('delete', $cachedModel->cacheClearOn)) {
                 $cachedModel->forgetCache();
             }
         });
     }
+
     /**
-     * Set the IoC container instance.
-     *
-     * @param \Illuminate\Contracts\Container\Container $container
-     *
+     * @param Container $container
      * @return $this
      */
     public function setContainer(Container $container)
@@ -114,6 +123,7 @@ trait CacheableEloquent
         $this->container = $container;
         return $this;
     }
+
     /**
      * Get the IoC container instance or any of its services.
      *
@@ -125,6 +135,7 @@ trait CacheableEloquent
     {
         return is_null($service) ? ($this->container ?: app()) : ($this->container[$service] ?: app($service));
     }
+
     /**
      * Store the given cache key for the given model by mimicking cache tags.
      *
@@ -137,11 +148,12 @@ trait CacheableEloquent
     {
         $keysFile = storage_path('framework/cache/storecamp.cacheable.json');
         $cacheKeys = $this->getCacheKeys($keysFile);
-        if (! isset($cacheKeys[$model]) || ! in_array($cacheKey, $cacheKeys[$model])) {
+        if (!isset($cacheKeys[$model]) || !in_array($cacheKey, $cacheKeys[$model])) {
             $cacheKeys[$model][] = $cacheKey;
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
     }
+
     /**
      * Get cache keys from the given file.
      *
@@ -151,11 +163,12 @@ trait CacheableEloquent
      */
     protected function getCacheKeys($file)
     {
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             file_put_contents($file, null);
         }
         return json_decode(file_get_contents($file), true) ?: [];
     }
+
     /**
      * Flush cache keys of the given model by mimicking cache tags.
      *
@@ -175,6 +188,7 @@ trait CacheableEloquent
         }
         return $flushedKeys;
     }
+
     /**
      * Set the model cache lifetime.
      *
@@ -187,6 +201,7 @@ trait CacheableEloquent
         $this->cacheLifetime = $cacheLifetime;
         return $this;
     }
+
     /**
      * Get the model cache lifetime.
      *
@@ -196,6 +211,7 @@ trait CacheableEloquent
     {
         return $this->cacheLifetime;
     }
+
     /**
      * Set the model cache driver.
      *
@@ -208,6 +224,7 @@ trait CacheableEloquent
         $this->cacheDriver = $cacheDriver;
         return $this;
     }
+
     /**
      * Get the model cache driver.
      *
@@ -217,6 +234,7 @@ trait CacheableEloquent
     {
         return $this->cacheDriver;
     }
+
     /**
      * Enable model cache clear.
      *
@@ -229,6 +247,7 @@ trait CacheableEloquent
         $this->cacheClearEnabled = $status;
         return $this;
     }
+
     /**
      * Determine if model cache clear is enabled.
      *
@@ -238,6 +257,7 @@ trait CacheableEloquent
     {
         return $this->cacheClearEnabled;
     }
+
     /**
      * Forget the model cache.
      *
@@ -259,6 +279,7 @@ trait CacheableEloquent
         }
         return $this;
     }
+
     /**
      * Reset cached model to its defaults.
      *
@@ -283,22 +304,22 @@ trait CacheableEloquent
     {
         $query = $builder->getQuery();
         $vars = [
-            'aggregate'   => $query->aggregate,
-            'columns'     => $query->columns,
-            'distinct'    => $query->distinct,
-            'from'        => $query->from,
-            'joins'       => $query->joins,
-            'wheres'      => $query->wheres,
-            'groups'      => $query->groups,
-            'havings'     => $query->havings,
-            'orders'      => $query->orders,
-            'limit'       => $query->limit,
-            'offset'      => $query->offset,
-            'unions'      => $query->unions,
-            'unionLimit'  => $query->unionLimit,
+            'aggregate' => $query->aggregate,
+            'columns' => $query->columns,
+            'distinct' => $query->distinct,
+            'from' => $query->from,
+            'joins' => $query->joins,
+            'wheres' => $query->wheres,
+            'groups' => $query->groups,
+            'havings' => $query->havings,
+            'orders' => $query->orders,
+            'limit' => $query->limit,
+            'offset' => $query->offset,
+            'unions' => $query->unions,
+            'unionLimit' => $query->unionLimit,
             'unionOffset' => $query->unionOffset,
             'unionOrders' => $query->unionOrders,
-            'lock'        => $query->lock,
+            'lock' => $query->lock,
         ];
         return md5(json_encode([
             $vars,

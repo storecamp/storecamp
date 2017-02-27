@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Core\Components\Flash\Flash;
-use App\Core\Components\Messenger\Models\Message;
+use Flash;
+use App\Core\Models\Message;
 use Closure;
 
 class BelongsToUserOrAdmin
@@ -23,7 +23,6 @@ class BelongsToUserOrAdmin
         if (\Auth::user()->isAdmin()) {
             return $next($request);
         }
-
         if($message->count()) {
             $messageCount = $message->where('user_id', \Auth::user()->id);
             if($messageCount){

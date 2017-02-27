@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Support\Nestedset\QueryBuilder;
 use App\Core\Contracts\CouponInterface;
 use App\Core\Base\Model;
@@ -13,6 +14,7 @@ class Coupon extends Model implements Transformable, CouponInterface
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     /**
      * The database table used by the model.

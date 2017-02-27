@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         // Create table for storing transactions
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
 
             $table->bigInteger('order_id')->unsigned();
             $table->string('gateway', 64);

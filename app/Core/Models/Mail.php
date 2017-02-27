@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -37,6 +38,7 @@ class Mail extends Model implements Transformable
     use TransformableTrait;
     use Auditable;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     protected $table = "mails";
     protected $fillable = ["from", "to", "subject", "message", "user_id"];

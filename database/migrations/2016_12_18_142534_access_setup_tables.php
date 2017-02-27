@@ -14,7 +14,7 @@ class AccessSetupTables extends Migration
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
 
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
@@ -39,7 +39,7 @@ class AccessSetupTables extends Migration
         // Create table for storing permissions
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
 
             $table->string('name')->unique();
             $table->string('display_name')->nullable();

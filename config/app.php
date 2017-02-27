@@ -188,7 +188,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 
-
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
         App\Providers\PresentersServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
@@ -211,7 +210,6 @@ return [
         \App\Providers\SubscriberServiceProvider::class,
         \App\Providers\GeneratorsServiceProvider::class,
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
-        \App\Core\Components\Messenger\MessengerServiceProvider::class,
         \App\Core\Components\Auditing\AuditingServiceProvider::class,
         \App\Providers\MailServiceProvider::class,
         \App\Providers\MenuBuilderProvider::class,
@@ -236,7 +234,6 @@ return [
         \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
-        App\Core\Components\ActiveItem\ActiveServiceProvider::class,
         \Laracasts\Flash\FlashServiceProvider::class,
         \Webpatser\Countries\CountriesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,

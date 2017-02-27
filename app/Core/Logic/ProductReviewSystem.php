@@ -2,13 +2,12 @@
 
 namespace App\Core\Logic;
 
-use App\Core\Components\Messenger\Models\Message;
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\User;
+use App\Core\Repositories\MessageRepository;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
-use Illuminate\Http\Request;
 
 /**
  * Class ProductReviewSystem
@@ -35,18 +34,20 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * ProductReviewSystem constructor.
+     *
      * @param ProductsRepository $product
      * @param UserRepository $user
      * @param ProductReviewRepository $productReview
+     * @param MessageRepository $message
      */
     public function __construct(ProductsRepository $product,
                                 UserRepository $user,
-                                ProductReviewRepository $productReview)
+                                ProductReviewRepository $productReview, MessageRepository $message)
     {
         $this->product = $product;
         $this->user = $user;
         $this->productReview = $productReview;
-        $this->message = new Message();
+        $this->message = $message;
     }
 
     /**
@@ -114,9 +115,8 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function editMessage(array $data, int $messageId)
     {
-        $message = $this->message->find($messageId);
-        $message->body = $data['reply_message'];
-        $message->save();
+        $message = $this->message->update(['body' => $data['reply_message']], $messageId);
+
         return $message;
     }
 

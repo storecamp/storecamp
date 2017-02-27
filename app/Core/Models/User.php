@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
 use App\Core\Components\Auditing\Auditable;
-use App\Core\Components\Messenger\Traits\Messagable;
+use App\Core\Traits\Messagable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
@@ -38,8 +38,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property-write mixed $date
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Role[] $roles
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Message[] $messages
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $threads
+ * @property-read Message[] $messages
+ * @property-read Thread[] $threads
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereName($value)

@@ -43,12 +43,12 @@
     "mpociot/laravel-apidoc-generator": "1.7.0",
     "amsgames/laravel-shop-gateway-paypal": "^1.0",
     "graham-campbell/manager": "^2.4",
-    "storecamp/htmlelements": "^1.0@dev",
     "laracasts/flash": "^2.0",
     "jenssegers/mongodb": "^3.2",
     "symfony/event-dispatcher": "^2.8",
     "omnipay/common": "^2.5",
-    "omnipay/omnipay": "~2.0"
+    "omnipay/omnipay": "~2.0",
+    "storecamp/htmlelements": "^1.0@dev"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -106,9 +106,7 @@
       "App\\Core\\Components\\Sidebar\\": "app/Core/Components/Sidebar/",
       "App\\Core\\Components\\Timezone\\": "app/Core/Components/Timezone/",
       "App\\Core\\Components\\Country\\": "app/Core/Components/Country/",
-      "App\\Core\\Components\\Select\\SelectBuilder\\": "app/Core/Components/Select/",
-      "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
-      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/"
+      "App\\Core\\Components\\Select\\SelectBuilder\\": "app/Core/Components/Select/"
     },
     "files": [
       "app/Helpers/helpers.php"

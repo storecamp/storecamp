@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "76020fd295b23e850732d99f2dab8a1c",
+    "content-hash": "e77c4f55e2989395e3c1a8c4027ff8db",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -1147,12 +1147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "a05dba589dc86888359efc946585466c09bb3169"
+                "reference": "50bf623418be0feb3282bb50d07a4aea977fb33a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/a05dba589dc86888359efc946585466c09bb3169",
-                "reference": "a05dba589dc86888359efc946585466c09bb3169",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/50bf623418be0feb3282bb50d07a4aea977fb33a",
+                "reference": "50bf623418be0feb3282bb50d07a4aea977fb33a",
                 "shasum": ""
             },
             "require": {
@@ -1211,7 +1211,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-02-22T15:27:04+00:00"
+            "time": "2017-02-25T22:09:19+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -5851,12 +5851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/storecamp/htmlelements.git",
-                "reference": "2fb5d56ba873d35d997e19c4509cbdefbb9dffb6"
+                "reference": "041db06049ede889a3331829042dc328249fb462"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/storecamp/htmlelements/zipball/2fb5d56ba873d35d997e19c4509cbdefbb9dffb6",
-                "reference": "2fb5d56ba873d35d997e19c4509cbdefbb9dffb6",
+                "url": "https://api.github.com/repos/storecamp/htmlelements/zipball/041db06049ede889a3331829042dc328249fb462",
+                "reference": "041db06049ede889a3331829042dc328249fb462",
                 "shasum": ""
             },
             "require": {
@@ -5872,7 +5872,10 @@
             "autoload": {
                 "psr-4": {
                     "storecamp\\htmlelements\\": "src"
-                }
+                },
+                "files": [
+                    "src/helpers/activenav-helpers.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5891,7 +5894,7 @@
                 "HtmlElements",
                 "Storecamp"
             ],
-            "time": "2017-02-25 15:40:19"
+            "time": "2017-02-27 10:18:50"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7342,47 +7345,6 @@
             "time": "2015-05-11T14:41:42+00:00"
         },
         {
-            "name": "landish/pagination",
-            "version": "1.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Landish/Pagination.git",
-                "reference": "4a18a861923ff2a4d73350411f05dfbe2ab1a205"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Landish/Pagination/zipball/4a18a861923ff2a4d73350411f05dfbe2ab1a205",
-                "reference": "4a18a861923ff2a4d73350411f05dfbe2ab1a205",
-                "shasum": ""
-            },
-            "require-dev": {
-                "illuminate/pagination": "~5.0",
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Landish\\Pagination\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lado Lomidze",
-                    "email": "lado.lomidze@gmail.com"
-                }
-            ],
-            "description": "Laravel 5 Custom Pagination Presenter",
-            "keywords": [
-                "laravel",
-                "pagination"
-            ],
-            "time": "2015-07-01T11:57:57+00:00"
-        },
-        {
             "name": "laracasts/generators",
             "version": "dev-master",
             "source": {
@@ -7941,25 +7903,30 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260"
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4|~5"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -7981,7 +7948,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12T18:03:57+00:00"
+            "time": "2017-02-26T11:10:40+00:00"
         },
         {
             "name": "phpunit/php-token-stream",

@@ -1,4 +1,6 @@
-<?php namespace RepositoryLab\Repository\Transformer;
+<?php
+
+namespace RepositoryLab\Repository\Transformer;
 
 use League\Fractal\TransformerAbstract;
 use RepositoryLab\Repository\Contracts\Transformable;

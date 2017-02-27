@@ -16,7 +16,7 @@ class CreateCouponTable extends Migration
         // Create table for storing coupons
         Schema::create('coupons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
 
             $table->string('code')->unique();
             $table->string('name');

@@ -42,7 +42,6 @@ class Role extends AccessRole implements Transformable
     use GeneratesUnique;
     use Auditable;
 
-
     protected $fillable = ['name', 'display_name', 'description'];
 
     /**

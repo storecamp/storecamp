@@ -17,7 +17,7 @@ class CreateProductReviewTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->string('unique_id')->unique();
+            $table->string('unique_id', 36)->unique();
             $table->text('review')->nullable();
             $table->boolean('hidden')->default(false);
             $table->unsignedTinyInteger('rating')->default(5);

@@ -1,10 +1,25 @@
-<?php namespace App\Core\Components\Messenger\Models;
+<?php
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+namespace App\Core\Models;
 
-class Message extends Eloquent
+use App\Core\Base\Model;
+use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Traits\GeneratesUnique;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
+
+class Message extends Model implements Transformable
 {
+    use TransformableTrait;
+    use GeneratesUnique;
+    use CacheableEloquent;
+
+    protected $fillable = ['thread_id', 'user_id', 'body', 'banned'];
+
+    public static function boot()
+    {
+       parent::boot();
+    }
     /**
      * The database table used by the model.
      *
@@ -28,7 +43,6 @@ class Message extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['thread_id', 'user_id', 'body', 'banned'];
 
     /**
      * Validation rules.
@@ -46,7 +60,7 @@ class Message extends Eloquent
      */
     public function thread()
     {
-        return $this->belongsTo('App\Core\Components\Messenger\Models\Thread');
+        return $this->belongsTo(Thread::class);
     }
 
     /**
@@ -64,7 +78,7 @@ class Message extends Eloquent
      */
     public function user()
     {
-        return $this->belongsTo(Config::get('messenger.user_model'));
+        return $this->belongsTo(config('messenger.user_model'));
     }
 
     /**
@@ -74,7 +88,7 @@ class Message extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany('App\Core\Components\Messenger\Models\Participant', 'thread_id', 'thread_id');
+        return $this->hasMany(Participant::class, 'thread_id', 'thread_id');
     }
 
     /**
