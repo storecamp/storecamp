@@ -48,13 +48,11 @@ interface CartSystemContract
      * Add an item to the cart.
      *
      * @param $id
-     * @param null $name
      * @param null $qty
-     * @param null $price
      * @param array $options
      * @return array|mixed
      */
-    public function add($id, $name = null, $qty = null, $price = null, array $options = []);
+    public function add($id, $qty = null, array $options = []);
 
     /**
      * Update the cart item with the given rowId.

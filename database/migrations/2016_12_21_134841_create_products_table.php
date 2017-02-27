@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('body');
             $table->decimal('tax', 20, 2)->default(0);
             $table->char('model')->nullable();
+            $table->char('brand_name')->nullable();
             $table->string('slug')->nullable();
             $table->string('stock_status')->nullable();
             $table->integer('viewed')->default(0);

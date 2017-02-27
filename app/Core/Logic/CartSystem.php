@@ -109,12 +109,9 @@ class CartSystem implements CartSystemContract
     public function addItem(array $data, $productId)
     {
         $product = $this->productsRepository->find($productId);
-        $productMedia = $product->getMedia('gallery');
         $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
         $options = isset($data['options']) ? $data['options'] : [];
-        $options['status'] = $product->getStockStatus();
-        $options['thumb'] = $productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif");
-        return $this->add($product, null, $quantity, null, $options);
+        return $this->add($product, $quantity, $options);
     }
 
     /**
@@ -173,20 +170,18 @@ class CartSystem implements CartSystemContract
      * Add an item to the cart.
      *
      * @param $id
-     * @param null $name
      * @param null $qty
-     * @param null $price
      * @param array $options
-     * @return array|mixed
+     * @return CartItem|array
      */
-    public function add($id, $name = null, $qty = null, $price = null, array $options = [])
+    public function add($id, $qty = null, array $options = [])
     {
         if ($this->isMulti($id)) {
             return array_map(function ($item) {
                 return $this->add($item);
             }, $id);
         }
-        $cartItem = $this->createCartItem($id, $name, $qty, $price, $options);
+        $cartItem = $this->createCartItem($id, $qty, $options);
         $content = $this->getContent();
         if ($content->has($cartItem->rowId)) {
             $cartItem->qty += $content->get($cartItem->rowId)->qty;
@@ -338,7 +333,7 @@ class CartSystem implements CartSystemContract
     {
         $content = $this->getContent();
         $subTotal = $content->reduce(function ($subTotal, CartItem $cartItem) {
-            return $subTotal + ($cartItem->qty * $cartItem->price);
+            return $subTotal + ($cartItem->qty * $cartItem->product->price);
         }, 0);
         $currency = $this->withCurrency ? $this->currency.' ' : null;
         return $currency . cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
@@ -414,7 +409,7 @@ class CartSystem implements CartSystemContract
             'statusCode'    => $statusCode
         ]);
         $cart = $this->store($this->content()->rowId());
-        $cart->order_id  = $order->id;
+        $cart->order_id = $order->id;
         $cart->save();
 
         return $order;
@@ -507,13 +502,11 @@ class CartSystem implements CartSystemContract
      * Create a new CartItem from the supplied attributes.
      *
      * @param $id
-     * @param $name
      * @param $qty
-     * @param $price
      * @param array $options
-     * @return mixed
+     * @return CartItem
      */
-    private function createCartItem($id, $name, $qty, $price, array $options)
+    private function createCartItem($id, $qty, array $options)
     {
         //detect if $id is model and implements Buyable Interface
         if ($id instanceof Buyable) {
@@ -524,7 +517,7 @@ class CartSystem implements CartSystemContract
             $cartItem = CartItem::fromArray($id);
             $cartItem->setQuantity($id['qty']);
         } else {
-            $cartItem = CartItem::fromAttributes($id, $name, $price, $options);
+            $cartItem = CartItem::fromAttributes($id, $options);
             $cartItem->setQuantity($qty);
         }
         $cartItem->setCurrency($this->currency);

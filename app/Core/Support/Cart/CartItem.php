@@ -2,9 +2,11 @@
 
 namespace App\Core\Support\Cart;
 
+use App\Core\Models\Product;
 use App\Core\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 use App\Core\Contracts\Buyable;
+use Mockery\Exception;
 
 class CartItem implements Arrayable, CartItemContract
 {
@@ -34,21 +36,6 @@ class CartItem implements Arrayable, CartItemContract
     public $qty;
 
     /**
-     * The name of the cart item.
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * The price without TAX of the cart item.
-     *
-     * @var float
-     */
-    public $price;
-
-
-    /**
      * The options for this cart item.
      *
      * @var array
@@ -76,30 +63,30 @@ class CartItem implements Arrayable, CartItemContract
 
     /**
      * CartItem constructor.
-     *
-     * @param int|string $id
-     * @param string     $name
-     * @param float      $price
-     * @param array      $options
+     * @param $id
+     * @param array $options
      */
-    public function __construct($id, string $name, float $price, array $options = [])
+    public function __construct($id, array $options = [])
     {
-        if(empty($id)) {
+        if (empty($id)) {
             throw new \InvalidArgumentException('Please supply a valid identifier.');
         }
-        if(empty($name)) {
-            throw new \InvalidArgumentException('Please supply a valid name.');
-        }
-        if(strlen($price) < 0 || ! is_numeric($price)) {
-            throw new \InvalidArgumentException('Please supply a valid price.');
-        }
 
-        $this->id       = $id;
-        $this->userId       = \Auth::check() ? \Auth::user()->id : null;
-        $this->name     = $name;
-        $this->price    = floatval($price);
-        $this->options  = new CartItemOptions($options);
+        $this->id = $id;
+        $this->userId = \Auth::check() ? \Auth::user()->id : null;
+        $this->options = new CartItemOptions($options);
         $this->rowId = $this->generateRowId($id, $options);
+    }
+
+    /**
+     * @return Product|null
+     */
+    public function getProduct(): ?Product
+    {
+        $productString = $this->associatedModel;
+        $product = new $productString;
+        $product = $product->find($this->id);
+        return $product;
     }
 
     /**
@@ -110,35 +97,40 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function __get($attribute)
     {
-        if(property_exists($this, $attribute)) {
+        if (property_exists($this, $attribute)) {
             return $this->{$attribute};
         }
-
-        if($attribute === 'priceTax') {
-            return round($this->price + $this->tax, 2);
+        if ($attribute === 'product') {
+            return $this->getProduct() ?? null;
         }
-
-        if($attribute === 'subtotal') {
+        if ($attribute === 'name') {
+            return $this->getProduct()->getBuyableDescription();
+        }
+        if ($attribute === 'price') {
+            return $this->getProduct()->getBuyablePrice();
+        }
+        if ($attribute === 'priceTax') {
+            $price = $this->getProduct()->getBuyablePrice();
+            return round($price + $this->tax, 2);
+        }
+        if ($attribute === 'subtotal') {
             return round($this->qty * $this->price, 2);
         }
-
-        if($attribute === 'total') {
+        if ($attribute === 'total') {
             return round($this->qty * ($this->priceTax), 2);
         }
-
-        if($attribute === 'tax') {
-            return $this->price * ($this->taxRate / 100);
+        if ($attribute === 'tax') {
+            return $this->getProduct()->getBuyablePrice() * ($this->taxRate / 100);
         }
 
-        if($attribute === 'taxTotal') {
+        if ($attribute === 'taxTotal') {
             return $this->tax * $this->qty;
         }
-
-        if($attribute === 'user') {
+        if ($attribute === 'user') {
             return $this->userId ? app('App\Core\Repositories\UserRepository')->find($this->userId) : null;
         }
 
-        if($attribute === 'model') {
+        if ($attribute === 'model') {
             return with(new $this->associatedModel)->find($this->id);
         }
 
@@ -148,7 +140,7 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted price without TAX.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -161,7 +153,7 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted price with TAX.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -175,7 +167,7 @@ class CartItem implements Arrayable, CartItemContract
      * Returns the formatted subtotal.
      * Subtotal is price for whole CartItem without TAX
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -189,7 +181,7 @@ class CartItem implements Arrayable, CartItemContract
      * Returns the formatted total.
      * Total is price for whole CartItem with TAX
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -202,7 +194,7 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -215,7 +207,7 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      * @return string
@@ -232,7 +224,7 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function setQuantity($qty)
     {
-        if(empty($qty) || ! is_numeric($qty))
+        if (empty($qty) || !is_numeric($qty))
             throw new \InvalidArgumentException('Please supply a valid quantity.');
 
         $this->qty = $qty;
@@ -250,9 +242,9 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function updateFromBuyable(Buyable $item)
     {
-        $this->id       = $item->getBuyableIdentifier($this->options);
-        $this->name     = $item->getBuyableDescription($this->options);
-        $this->price    = $item->getBuyablePrice($this->options);
+        $this->id = $item->getBuyableIdentifier($this->options);
+        $this->name = $item->getBuyableDescription($this->options);
+        $this->price = $item->getBuyablePrice($this->options);
         $this->priceTax = $this->price + $this->tax;
     }
 
@@ -264,12 +256,13 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function updateFromArray(array $attributes)
     {
-        $this->id       = array_get($attributes, 'id', $this->id);
-        $this->qty      = array_get($attributes, 'qty', $this->qty);
-        $this->name     = array_get($attributes, 'name', $this->name);
-        $this->price    = array_get($attributes, 'price', $this->price);
+
+        $this->id = array_get($attributes, 'id', $this->id);
+        $this->qty = array_get($attributes, 'qty', $this->qty);
+        $this->name = array_get($attributes, 'name', $this->name);
+        $this->price = array_get($attributes, 'price', $this->price);
         $this->priceTax = $this->price + $this->tax;
-        $this->options  = new CartItemOptions(array_get($attributes, 'options', $this->options));
+        $this->options = new CartItemOptions(array_get($attributes, 'options', $this->options));
 
         $this->rowId = $this->generateRowId($this->id, $this->options->all());
     }
@@ -310,7 +303,6 @@ class CartItem implements Arrayable, CartItemContract
     public static function fromBuyable($item, array $options = []): CartItem
     {
         return new self($item->getBuyableIdentifier($options),
-            $item->getBuyableDescription($options), $item->getBuyablePrice($options),
             $options);
     }
 
@@ -324,28 +316,26 @@ class CartItem implements Arrayable, CartItemContract
     {
         $options = array_get($attributes, 'options', []);
 
-        return new self($attributes['id'], $attributes['name'], $attributes['price'], $options);
+        return new self($attributes['id'], $options);
     }
 
     /**
      * Create a new instance from the given attributes.
      *
      * @param $id
-     * @param $name
-     * @param $price
      * @param array $options
      * @return CartItem
      */
-    public static function fromAttributes($id, $name, $price, array $options = []): CartItem
+    public static function fromAttributes($id, array $options = []): CartItem
     {
-        return new self($id, $name, $price, $options);
+        return new self($id, $options);
     }
 
     /**
      * Generate a unique id for the cart item.
      *
      * @param string $id
-     * @param array  $options
+     * @param array $options
      * @return string
      */
     protected function generateRowId($id, array $options): string
@@ -363,14 +353,14 @@ class CartItem implements Arrayable, CartItemContract
     public function toArray(): array
     {
         return [
-            'rowId'    => $this->rowId,
-            'id'       => $this->id,
-            'userId'     => \Auth::check() ? \Auth::user()->id : null,
-            'name'     => $this->name,
-            'qty'      => $this->qty,
-            'price'    => $this->price,
-            'options'  => $this->options,
-            'tax'      => $this->tax,
+            'rowId' => $this->rowId,
+            'id' => $this->id,
+            'userId' => \Auth::check() ? \Auth::user()->id : null,
+            'name' => $this->name,
+            'qty' => $this->qty,
+            'price' => $this->price,
+            'options' => $this->options,
+            'tax' => $this->tax,
             'subtotal' => $this->subtotal
         ];
     }

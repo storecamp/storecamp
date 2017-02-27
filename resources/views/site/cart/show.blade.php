@@ -26,15 +26,18 @@
                         <tr>
                             <td class="">
                                 <div class="media">
-                                    <a class="thumbnail pull-left" href="#">
+                                    <a class="thumbnail pull-left" href="{{route('site::products::show', $row->id)}}">
+                                        <?php
+                                        $productMedia = $row->product->getMedia('gallery');
+                                        ?>
                                         <img class="media-object"
-                                             src="{{$row->options->has('thumb') ? $row->options->thumb : ''}}"
-                                             style="width: 72px; height: 72px;"> </a>
+                                             src="{{$productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif")}}"
+                                             style="width: 72px; height: 72px;"></a>
                                     <div class="media-body">
-                                        <h4 class="media-heading"><a href="#">{{$row->name}}</a></h4>
-                                        {{--<h5 class="media-heading"> by <a href="#">Brand name</a></h5>--}}
+                                        <h4 class="media-heading"><a href="{{route('site::products::show', $row->id)}}">{{$row->product->title}}</a></h4>
+                                        {{--<h5 class="media-heading"> by <a href="#"></a></h5>--}}
                                         <span>Status: </span><span
-                                                class="text-success"><strong>{{$row->options->has('status') ? $row->options->status : 'no status'}}</strong></span>
+                                                class="text-success"><strong>{{$row->product->getStockStatus() ?? 'no status'}}</strong></span>
                                     </div>
                                 </div>
                             </td>

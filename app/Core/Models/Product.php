@@ -147,7 +147,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'stock_status',
         'attr_description_id',
         'product_id',
-        'value'
+        'value',
+        'brand_name'
     ];
     /**
      * The database table used by the model.

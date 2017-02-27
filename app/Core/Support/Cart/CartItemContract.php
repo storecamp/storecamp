@@ -128,12 +128,10 @@ interface CartItemContract
      * Create a new instance from the given attributes.
      *
      * @param $id
-     * @param $name
-     * @param $price
      * @param array $options
      * @return CartItem
      */
-    public static function fromAttributes($id, $name, $price, array $options = []): CartItem;
+    public static function fromAttributes($id, array $options = []): CartItem;
 
     /**
      * Get the instance as an array.

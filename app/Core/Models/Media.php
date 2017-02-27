@@ -52,7 +52,6 @@ class Media extends \Plank\Mediable\Media implements Transformable
 
     protected $fillable = ['directory_id', 'directory', 'disk', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
     protected $guarded = ['id'];
-//    protected $with = ["folder"];
 
     /**
      * bootable methods fix

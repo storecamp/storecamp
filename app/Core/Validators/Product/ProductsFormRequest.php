@@ -31,7 +31,7 @@ class ProductsFormRequest extends FormRequest
             'availability' => 'required|integer',
             'category_id' => 'required|integer',
             'date_available' => 'required|date',
-            'model' => 'string|min:2',
+            'model' => 'string|min:2,max:255',
             'quantity' => 'numeric|min:1',
             'sku' => 'string|unique:products',
             'upc' => 'string|unique:products',
@@ -46,7 +46,8 @@ class ProductsFormRequest extends FormRequest
             'meta_tag_description' => 'string|min:5',
             'meta_tag_keywords' => 'string|min:2',
             'sort_order' => 'numeric|max:10',
-            'weight' => 'string|min:1'
+            'weight' => 'string|min:1',
+            'brand_name' => 'string|min:2,max:255'
         ];
         return $rules;
     }
