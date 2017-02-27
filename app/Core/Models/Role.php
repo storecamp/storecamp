@@ -5,6 +5,7 @@ namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Access\AccessRole;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -40,6 +41,7 @@ class Role extends AccessRole implements Transformable
     use TransformableTrait;
     use GeneratesUnique;
     use Auditable;
+
 
     protected $fillable = ['name', 'display_name', 'description'];
 

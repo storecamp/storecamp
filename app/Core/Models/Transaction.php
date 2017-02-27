@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Contracts\TransactionInterface;
 use App\Core\Traits\TransactionTrait;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

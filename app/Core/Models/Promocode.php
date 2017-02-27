@@ -2,7 +2,7 @@
 
 namespace App\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

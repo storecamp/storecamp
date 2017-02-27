@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Support\Nestedset\QueryBuilder;
 use App\Core\Contracts\CouponInterface;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

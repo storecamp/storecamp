@@ -5,7 +5,7 @@ namespace App\Core\Models;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Traits\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;

@@ -5,6 +5,7 @@ namespace App\Core\Models;
 
 use App\Core\Access\AccessPermission;
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

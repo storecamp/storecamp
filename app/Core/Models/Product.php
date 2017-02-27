@@ -8,7 +8,7 @@ use App\Core\Contracts\ProductInterface;
 use App\Core\Logic\ShopSystem;
 use App\Core\Traits\CartItemTrait;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;

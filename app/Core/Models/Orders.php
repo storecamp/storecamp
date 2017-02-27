@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Contracts\OrderInterface;
 use App\Core\Traits\CalculationsTrait;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

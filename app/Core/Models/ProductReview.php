@@ -3,7 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

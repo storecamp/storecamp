@@ -5,7 +5,7 @@ namespace App\Core\Models;
 use App\Core\Contracts\CartInterface;
 use App\Core\Traits\CalculationsTrait;
 use App\Core\Traits\GeneratesUnique;
-use Illuminate\Database\Eloquent\Model;
+use App\Core\Base\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
