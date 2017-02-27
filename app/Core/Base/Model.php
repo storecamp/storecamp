@@ -15,10 +15,25 @@ abstract class Model extends Eloquent
     public function __call($method, $parameters)
     {
         if ($method == 'find') {
-            $this->find(...$parameters);
+            $this->finder(...$parameters);
         }
 
         return parent::__call($method, $parameters);
+    }
+
+    /**
+     * Handle dynamic static method calls into the method.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        if ($method == 'find') {
+            return (new static)->finder(...$parameters);
+        }
+        return (new static)->$method(...$parameters);
     }
 
     /**
@@ -28,7 +43,7 @@ abstract class Model extends Eloquent
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Eloquent|null|static
      */
-    public function find($id, $columns = ['*'])
+    public function finder($id, $columns = ['*'])
     {
         $newQuery = $this->newQuery();
         if (is_array($id)) {
@@ -36,7 +51,7 @@ abstract class Model extends Eloquent
         }
 
         if (is_numeric($id)) {
-            $newQuery->where($this->model->getQualifiedKeyName(), '=', $id);
+            $newQuery->where($this->getQualifiedKeyName(), '=', $id);
             return $newQuery->first($columns);
         } else {
             return $newQuery->where('unique_id', '=', $id)->first($columns);

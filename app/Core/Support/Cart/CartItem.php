@@ -3,10 +3,8 @@
 namespace App\Core\Support\Cart;
 
 use App\Core\Models\Product;
-use App\Core\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 use App\Core\Contracts\Buyable;
-use Mockery\Exception;
 
 class CartItem implements Arrayable, CartItemContract
 {

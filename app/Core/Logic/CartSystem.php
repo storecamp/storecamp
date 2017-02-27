@@ -78,7 +78,8 @@ class CartSystem implements CartSystemContract
      * @param AuthManager $auth
      */
     public function __construct(SessionManager $session, Dispatcher $events,
-                                CartRepository $cartRepository, ProductsRepository $productsRepository, AuthManager $auth)
+                                CartRepository $cartRepository, ProductsRepository $productsRepository,
+                                AuthManager $auth)
     {
         $this->cartRepository = $cartRepository;
         $this->session = $session;
@@ -96,8 +97,11 @@ class CartSystem implements CartSystemContract
      */
     public function show(array $data, bool $withAggregations=true)
     {
-        $cart = $this->content();
-
+        if (isset($data['instance'])) {
+            $cart = $this->instance($data['instance'])->content();
+        } else {
+            $cart = $this->content();
+        }
         return $cart;
     }
 
@@ -111,7 +115,11 @@ class CartSystem implements CartSystemContract
         $product = $this->productsRepository->find($productId);
         $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
         $options = isset($data['options']) ? $data['options'] : [];
-        return $this->add($product, $quantity, $options);
+        if (isset($data['instance'])) {
+            return $this->instance($data['instance'])->add($product, $quantity, $options);
+        } else {
+            return $this->add($product, $quantity, $options);
+        }
     }
 
     /**
@@ -121,7 +129,6 @@ class CartSystem implements CartSystemContract
     public function setCurrency(string $currency): CartSystem
     {
         $this->currency = $currency;
-
         return $this;
     }
 
