@@ -73,18 +73,15 @@ class Category extends Model implements Transformable
     use SluggableScopeHelpers;
     use Auditable;
     use Mediable;
-    use NodeTrait;
+    use NodeTrait, CacheableEloquent {
+        NodeTrait::newEloquentBuilder as node_newEloquentBuilder;
+        CacheableEloquent::newEloquentBuilder as cache_newEloquentBuilder;
+    }
 
-//    use NodeTrait, CacheableEloquent {
-//        NodeTrait::newEloquentBuilder as node_newEloquentBuilder;
-//        CacheableEloquent::newEloquentBuilder as cache_newEloquentBuilder;
-//    }
-
-//    public function newEloquentBuilder($query)
-//    {
-//        $this->node_newEloquentBuilder($query);
-//        $this->cache_newEloquentBuilder($query);
-//    }
+    public function newEloquentBuilder($query)
+    {
+        return $this->node_newEloquentBuilder($query);
+    }
 
     /**
      * @var array
