@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Site;
 
+use App\Core\Models\AttributeGroup;
 use App\Core\Models\Product;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,9 @@ class IndexController extends BaseController
      */
     public function home(Request $request)
     {
+        $product = new Product();
+        $attr = new AttributeGroup();
+        dd($attr->meta);
         return $this->view('index');
     }
 }

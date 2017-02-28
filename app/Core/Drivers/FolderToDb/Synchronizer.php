@@ -219,7 +219,9 @@ class Synchronizer implements SynchronizerInterface
     public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
         $Directory = new \RecursiveDirectoryIterator($root);
-        $Iterator = new \RecursiveIteratorIterator($Directory);
+        $Iterator = new \RecursiveIteratorIterator($Directory,
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD);
         $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
         $files = [];
         foreach ($Regex as $file) {
