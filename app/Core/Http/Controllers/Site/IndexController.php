@@ -22,9 +22,6 @@ class IndexController extends BaseController
      */
     public function home(Request $request)
     {
-        $product = new Product();
-        $attr = new AttributeGroup();
-        dd($attr->meta);
         return $this->view('index');
     }
 }
