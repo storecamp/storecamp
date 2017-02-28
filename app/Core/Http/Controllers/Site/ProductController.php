@@ -3,6 +3,7 @@
 namespace App\Core\Http\Controllers\Site;
 
 use App\Core\Contracts\ProductSystemContract;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Core\Models\Product;
 use App\Core\Repositories\ProductsRepository;
@@ -31,15 +32,21 @@ class ProductController extends BaseController
 
     public function index(Request $request, $category = null)
     {
-        $data = $request->all();
-        if ($category) {
-            $products = $this->productSystem->categorized($data, $category, []);
-            $categoryInstance = app("App\\Core\\Repositories\\CategoryRepository");
-            $category = $categoryInstance->find($category);
-        } else {
-            $products = $this->productSystem->present($data, null);
+        try {
+            $data = $request->all();
+            if ($category) {
+                $products = $this->productSystem->categorized($data, $category, []);
+                $categoryInstance = app("App\\Core\\Repositories\\CategoryRepository");
+                $category = $categoryInstance->find($category);
+            } else {
+                $products = $this->productSystem->present($data, null);
+            }
+            return $this->view('index', compact('products', 'category'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
         }
-        return $this->view('index', compact('products', 'category'));
     }
 
     /**
@@ -49,10 +56,16 @@ class ProductController extends BaseController
      */
     public function show(Request $request, $productId)
     {
-        $data = $request->all();
-        $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
-        $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
-        $category = $product->categories->first();
-        return $this->view('show', compact('product', 'category', 'mostViewed'));
+        try {
+            $data = $request->all();
+            $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
+            $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
+            $category = $product->categories->first();
+            return $this->view('show', compact('product', 'category', 'mostViewed'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
 }
