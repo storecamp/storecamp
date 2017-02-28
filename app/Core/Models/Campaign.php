@@ -2,16 +2,16 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Campaign
+ * App\Core\Models\Campaign.
  *
  * @property int $id
  * @property string $campaign
@@ -37,15 +37,15 @@ class Campaign extends Model implements Transformable
     use Auditable;
     use CacheableEloquent;
 
-    protected $table = "campaigns";
+    protected $table = 'campaigns';
 
     protected $fillable = [
         'campaign',
-        'unique_id'
+        'unique_id',
     ];
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -57,6 +57,6 @@ class Campaign extends Model implements Transformable
      */
     public function subscribers()
     {
-        return $this->belongsToMany(Subscribers::class, "campaign_subscribers", 'campaign_id', 'subscriber_id')->withTimestamps();
+        return $this->belongsToMany(Subscribers::class, 'campaign_subscribers', 'campaign_id', 'subscriber_id')->withTimestamps();
     }
 }

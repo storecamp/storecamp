@@ -2,20 +2,18 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Models\Role;
 use App\Core\Models\Permission;
+use App\Core\Models\Role;
 use App\Core\Models\User;
 use Illuminate\Support\Facades\Input;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class RolesRepositoryEloquent
- * @package App\Core\Repositories
+ * Class RolesRepositoryEloquent.
  */
 class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 {
-
     /**
      * @var array
      */
@@ -25,7 +23,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -35,7 +33,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -53,6 +51,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
         foreach ($listIds as $key => $value) {
             $role->attachPermission($value);
         }
+
         return $role;
     }
 
@@ -63,7 +62,6 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
      */
     public function renew($data, $dataPerm, $role)
     {
-
         $role->update($data);
         $permissionsCount = count($role->perms()->get());
 
@@ -88,7 +86,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     {
         $user = new User();
         $roleUsers = $user->getUsersByRole($name);
+
         return $roleUsers;
     }
-
 }

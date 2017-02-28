@@ -4,24 +4,23 @@ namespace App\Core\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
 use App\Core\Components\Auditing\Auditable;
-use App\Core\Traits\Messagable;
 use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Traits\GeneratesUnique;
+use App\Core\Traits\Messagable;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Core\Traits\GeneratesUnique;
-use Plank\Mediable\Mediable;
-use RepositoryLab\Repository\Contracts\Transformable;
-use RepositoryLab\Repository\Traits\TransformableTrait;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Plank\Mediable\Mediable;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class User
+ * Class User.
  *
- * @package App\Core\Models
  * @property int $id
  * @property string $unique_id
  * @property string $name
@@ -67,7 +66,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMediaMatchAll($tags = array())
  */
-class User extends Authenticatable implements Transformable, AuthenticatableContract,
+class User extends Authenticatable implements
+    Transformable,
+    AuthenticatableContract,
     CanResetPasswordContract
 {
     use TransformableTrait;
@@ -93,7 +94,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      * @var array
      */
     protected $fillable = [
-        'name', 'notify', 'email', 'password', 'logo_path'
+        'name', 'notify', 'email', 'password', 'logo_path',
     ];
 
     /**
@@ -118,13 +119,13 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -204,7 +205,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     /**
      * @var array
      */
-
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = \Hash::make($value);
@@ -219,7 +219,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
-     * check if the given customer is admin
+     * check if the given customer is admin.
      * @return bool
      */
     public function isAdmin()
@@ -228,7 +228,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
-     * CHECK if the customer is the owner of the instance
+     * CHECK if the customer is the owner of the instance.
      * @param $instance
      * @return bool
      */
@@ -236,7 +236,9 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     {
         if ($this->id == $instance->user()->id) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -245,7 +247,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function scopeByMailOrName($query, $name)
     {
-        $query->where("name", $name)->orWhere('email', $name);
+        $query->where('name', $name)->orWhere('email', $name);
     }
 
     /**
@@ -274,7 +276,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
-     * find user by slug
+     * find user by slug.
      *
      * @param $slug
      * @return mixed

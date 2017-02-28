@@ -2,10 +2,10 @@
 
 namespace App\Core\Http\Controllers\Auth;
 
-use App\Core\Models\User;
 use App\Core\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Core\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -65,9 +65,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-        if($user->roles->count() === 0) {
+        if ($user->roles->count() === 0) {
             $user->attachRole(2);
         }
+
         return $user;
     }
 }

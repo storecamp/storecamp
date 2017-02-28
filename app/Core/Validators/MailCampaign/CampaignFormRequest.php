@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Core\Validators;
 
 use Illuminate\Foundation\Http\FormRequest as Request;
@@ -27,7 +26,7 @@ class CampaignFormRequest extends Request
         return [
             'to' => 'required|numeric|min:1,max:11',
             'subject' => 'required|min:3',
-            'message' => 'required|min:25,max:5000'
+            'message' => 'required|min:25,max:5000',
         ];
     }
 }

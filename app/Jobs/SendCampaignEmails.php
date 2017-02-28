@@ -2,30 +2,28 @@
 
 namespace App\Jobs;
 
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Mail\Mailer;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Routing\UrlGenerator;
 
 /**
- * Class SendCampaignEmails
- * @package App\Jobs
+ * Class SendCampaignEmails.
  */
 class SendCampaignEmails extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected
-        $urlhelper,
-        $mailer,
-        $view,
-        $subject,
-        $receiverEmail,
-        $senderEmail,
-        $senderName = null,
-        $name = null,
-        $filepath = null;
+    protected $urlhelper;
+    protected $mailer;
+    protected $view;
+    protected $subject;
+    protected $receiverEmail;
+    protected $senderEmail;
+    protected $senderName = null;
+    protected $name = null;
+    protected $filepath = null;
 
     /**
      * SendCampaignEmails constructor.
@@ -62,7 +60,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
         $urlhelper->forceRootUrl(config('app.url'));
         $mailer->queue($this->view,
             ['name' => $this->name, 'receiverEmail' => $receiverEmail, 'subject' => $subject,
-                'senderName' => $senderName],
+                'senderName' => $senderName, ],
             function ($m) use ($receiverEmail, $subject, $senderEmail, $senderName, $filepath) {
                 $m->to($receiverEmail)->subject($subject);
                 $m->from($senderEmail, $senderName);

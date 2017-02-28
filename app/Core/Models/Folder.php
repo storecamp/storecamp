@@ -2,16 +2,16 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Folder
+ * App\Core\Models\Folder.
  *
  * @property int $id
  * @property string $unique_id
@@ -51,7 +51,7 @@ class Folder extends Model implements Transformable
     use Auditable;
     use CacheableEloquent;
 
-    protected $with = ["files"];
+    protected $with = ['files'];
     /**
      * @var array
      */
@@ -63,7 +63,7 @@ class Folder extends Model implements Transformable
         'locked',
         'unique_id',
         'path_on_disk',
-        'parent_id'
+        'parent_id',
     ];
 
     /**
@@ -75,19 +75,19 @@ class Folder extends Model implements Transformable
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
-
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
         parent::boot();
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -105,10 +105,10 @@ class Folder extends Model implements Transformable
     }
 
     /**
-     * get media files in folder
+     * get media files in folder.
      */
-    public function files() {
-
+    public function files()
+    {
         return $this->hasMany(Media::class, 'directory_id');
     }
 }

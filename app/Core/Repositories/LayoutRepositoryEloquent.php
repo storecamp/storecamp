@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\LayoutRepository;
 use App\Core\Models\Layout;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class LayoutRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class LayoutRepositoryEloquent.
  */
 class LayoutRepositoryEloquent extends BaseRepository implements LayoutRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class LayoutRepositoryEloquent extends BaseRepository implements LayoutRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

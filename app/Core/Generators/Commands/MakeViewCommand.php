@@ -2,12 +2,11 @@
 
 namespace App\Core\Generators\Commands;
 
-use Illuminate\Console\Command;
 use App\Core\Generators\Stub;
+use Illuminate\Console\Command;
 
 /**
- * Class MakeViewCommand
- * @package App\Console\Commands
+ * Class MakeViewCommand.
  */
 class MakeViewCommand extends Command
 {
@@ -39,9 +38,6 @@ class MakeViewCommand extends Command
         parent::__construct();
     }
 
-    /**
-     *
-     */
     public function handle()
     {
         $arguments = $this->argument();
@@ -64,12 +60,13 @@ class MakeViewCommand extends Command
         $path = '';
         $count = count($paths);
         for ($i = 0; $i < $count; $i++) {
-            $path .= $paths[$i] . '/';
-            if (!is_dir($this->path . '/resources/views/'.$for."/". $path)) {
-                mkdir($this->path . '/resources/views/' .$for."/" . $path);
+            $path .= $paths[$i].'/';
+            if (! is_dir($this->path.'/resources/views/'.$for.'/'.$path)) {
+                mkdir($this->path.'/resources/views/'.$for.'/'.$path);
             }
         }
-        return $this->path . '/resources/views/' .$for."/" . $path;
+
+        return $this->path.'/resources/views/'.$for.'/'.$path;
     }
 
     /**
@@ -80,48 +77,49 @@ class MakeViewCommand extends Command
     private function getContent($for, $view)
     {
         $content = [];
-        $basePath = base_path(). '/resources/views/';
+        $basePath = base_path().'/resources/views/';
         if ($for) {
-            if($for == "admin") {
+            if ($for == 'admin') {
                 $content = [
                     (new Stub(
-                        $basePath . '_stubs/view-make/index-admin.blade.stub',
+                        $basePath.'_stubs/view-make/index-admin.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/create-admin.blade.stub',
+                        $basePath.'_stubs/view-make/create-admin.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/edit-admin.blade.stub',
+                        $basePath.'_stubs/view-make/edit-admin.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/show-admin.blade.stub',
+                        $basePath.'_stubs/view-make/show-admin.blade.stub',
                         ['view' => $view]
-                    ))->render()
+                    ))->render(),
                 ];
             } else {
                 $content = [
                     (new Stub(
-                        $basePath . '_stubs/view-make/index.blade.stub',
+                        $basePath.'_stubs/view-make/index.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/create.blade.stub',
+                        $basePath.'_stubs/view-make/create.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/edit.blade.stub',
+                        $basePath.'_stubs/view-make/edit.blade.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath . '_stubs/view-make/show.blade.stub',
+                        $basePath.'_stubs/view-make/show.blade.stub',
                         ['view' => $view]
-                    ))->render()
+                    ))->render(),
                 ];
             }
         }
+
         return $content;
     }
 
@@ -132,11 +130,11 @@ class MakeViewCommand extends Command
      */
     private function createView($path, $content, $for)
     {
-        $files = ['index','create', 'edit', 'show'];
+        $files = ['index', 'create', 'edit', 'show'];
         foreach ($content as $key => $cont) {
-            $file = $path . $files[$key].'.blade.php';
+            $file = $path.$files[$key].'.blade.php';
             file_put_contents($file, $cont);
-            $this->info('Success on created view. With name: ' . $file);
+            $this->info('Success on created view. With name: '.$file);
         }
     }
 }

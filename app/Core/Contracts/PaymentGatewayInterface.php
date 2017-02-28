@@ -51,7 +51,7 @@ interface PaymentGatewayInterface
 
     /**
      * Called by shop when payment gateway calls callback url.
-     * Success result
+     * Success result.
      *
      * @param Orders $order Order.
      * @param mixed $data  Request input from callback.
@@ -60,7 +60,7 @@ interface PaymentGatewayInterface
 
     /**
      * Called by shop when payment gateway calls callback url.
-     * Failed result
+     * Failed result.
      *
      * @param Orders $order.
      * @param mixed $data  Request input from callback.
@@ -68,7 +68,7 @@ interface PaymentGatewayInterface
     public function onCallbackFail($order, $data = null);
 
     /**
-     * Sets callback urls
+     * Sets callback urls.
      *
      * @param Orders $order.
      */
@@ -80,5 +80,4 @@ interface PaymentGatewayInterface
      * @return string
      */
     public function getTransactionStatusCode();
-
 }

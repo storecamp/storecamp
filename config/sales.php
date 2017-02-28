@@ -1,6 +1,6 @@
 <?php
-return [
 
+return [
 
     /*
      * Cart functionality
@@ -39,7 +39,7 @@ return [
     'format' => [
         'decimals' => 2,
         'decimal_point' => '.',
-        'thousand_seperator' => ','
+        'thousand_seperator' => ',',
     ],
 
     /*
@@ -52,7 +52,6 @@ return [
     |
     */
     'destroy_on_logout' => false,
-
 
     /*
     |--------------------------------------------------------------------------
@@ -254,35 +253,35 @@ return [
 
     'order_statuses' => [
         [
-            'code' 				=> 'in_creation',
-            'name' 				=> 'In creation',
+            'code'                => 'in_creation',
+            'name'                => 'In creation',
             'description' => 'Order being created.',
         ],
         [
-            'code' 				=> 'pending',
-            'name' 				=> 'Pending',
+            'code'                => 'pending',
+            'name'                => 'Pending',
             'description' => 'Created / placed order pending payment or similar.',
         ],
         [
-            'code' 				=> 'in_process',
-            'name' 				=> 'In process',
+            'code'                => 'in_process',
+            'name'                => 'In process',
             'description' => 'Completed order in process of shipping or revision.',
         ],
         [
-            'code' 				=> 'completed',
-            'name' 				=> 'Completed',
+            'code'                => 'completed',
+            'name'                => 'Completed',
             'description' => 'Completed order. Payment and other processes have been made.',
         ],
         [
-            'code' 				=> 'failed',
-            'name' 				=> 'Failed',
+            'code'                => 'failed',
+            'name'                => 'Failed',
             'description' => 'Failed order. Payment or other process failed.',
         ],
         [
-            'code' 				=> 'canceled',
-            'name' 				=> 'Canceled',
+            'code'                => 'canceled',
+            'name'                => 'Canceled',
             'description' => 'Canceled order.',
-        ]
+        ],
     ],
 
     /*
@@ -348,7 +347,5 @@ return [
     |
     */
     'callback_redirect_route' => '/',
-
-
 
 ];

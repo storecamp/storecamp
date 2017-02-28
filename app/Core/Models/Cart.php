@@ -2,11 +2,10 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Contracts\CartInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Traits\CalculationsTrait;
 use App\Core\Traits\GeneratesUnique;
-use App\Core\Base\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -18,7 +17,7 @@ class Cart extends Model implements Transformable, CartInterface
 
     protected $table;
     protected $casts = [
-        'content' => 'array'
+        'content' => 'array',
     ];
     protected $fillable = ['instance', 'content'];
 

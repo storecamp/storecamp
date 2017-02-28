@@ -5,22 +5,21 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\ProductReview;
 use App\Core\Repositories\ProductReviewRepository;
+use App\Core\Repositories\ProductsRepository;
+use App\Core\Repositories\UserRepository;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
 use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Core\Repositories\ProductsRepository;
-use App\Core\Repositories\UserRepository;
 
 /**
- * Class ProductReviewController
- * @package App\Core\Http\Controllers\Admin
+ * Class ProductReviewController.
  */
 class ProductReviewController extends BaseController
 {
-    public $viewPathBase = "admin.productReview.";
-    public $errorRedirectPath = "admin/reviews/index";
+    public $viewPathBase = 'admin.productReview.';
+    public $errorRedirectPath = 'admin/reviews/index';
     /**
      * @var ProductsRepository
      */
@@ -68,11 +67,9 @@ class ProductReviewController extends BaseController
             $no = $productReviews->firstItem();
 
             return $this->view('index', compact('productReviews', 'no'));
-
         } catch (\Throwable $e) {
             return $this->redirectError($e);
         }
-
     }
 
     /**
@@ -84,7 +81,7 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);;
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
             $currentUserId = \Auth::user()->id;
 //            $productReview->comments->first()->markAsRead($currentUserId);
             return $this->view('show', compact('productReview', 'currentUserId'));
@@ -103,6 +100,7 @@ class ProductReviewController extends BaseController
     public function create(Request $request, $productId)
     {
         $product = $this->product->find($productId);
+
         return $this->view('create', compact('product'));
     }
 
@@ -119,6 +117,7 @@ class ProductReviewController extends BaseController
             $data['user_id'] = $userId;
             $data['product_id'] = $productId;
             $review = $this->productReviewSystem->create($data);
+
             return redirect()->to(route('admin::reviews::index'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -127,11 +126,12 @@ class ProductReviewController extends BaseController
         }
     }
 
-    public function update(UpdateProductReviewFormRequest$request, $reviewId)
+    public function update(UpdateProductReviewFormRequest $request, $reviewId)
     {
         try {
             $data = $request->all();
             $review = $this->productReviewSystem->update($data, $reviewId);
+
             return redirect()->to(route('admin::reviews::index'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -149,8 +149,9 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);;
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
             $product = $productReview->product;
+
             return $this->view('edit', compact('productReview', 'product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -160,7 +161,7 @@ class ProductReviewController extends BaseController
     }
 
     /**
-     * edit message in review
+     * edit message in review.
      *
      * @param ReplyProductReviewFormRequest $request
      * @param $messageId
@@ -174,6 +175,7 @@ class ProductReviewController extends BaseController
             if ($request->ajax()) {
                 return response()->json(['body' => $message->body], 200);
             }
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -183,7 +185,7 @@ class ProductReviewController extends BaseController
     }
 
     /**
-     * delete message in review
+     * delete message in review.
      *
      * @param Request $request
      * @param $messageId
@@ -197,6 +199,7 @@ class ProductReviewController extends BaseController
             if ($request->ajax() && $message) {
                 return response()->json(['message' => 'message deleted successfully'], 200);
             }
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -215,13 +218,14 @@ class ProductReviewController extends BaseController
         try {
             $data = $request->all();
             $productReviews = $this->productReviewSystem->replyProductReview($id, $data);
-            if($request->ajax()) {
+            if ($request->ajax()) {
                 $message = $productReviews->comments->last()->messages->last();
                 $messageView = $this->view('message-item', compact('message'));
+
                 return response()->json(['message' => $messageView->render()]);
             }
 
-            return redirect()->to(route("admin::reviews::show", $productReviews->id));
+            return redirect()->to(route('admin::reviews::show', $productReviews->id));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -239,6 +243,7 @@ class ProductReviewController extends BaseController
         try {
             $data = $request->all();
             $productReview = $this->productReviewSystem->toggleVisibility($id, $data);
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -258,9 +263,9 @@ class ProductReviewController extends BaseController
             $data = $request->all();
             if ($request->ajax()) {
                 $this->productReviewSystem->markAsRead($id, $data);
+
                 return response()->json(
-                    ['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()]
-                    , 200);
+                    ['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()], 200);
             } else {
                 return response()->json('not allowed', 400);
             }
@@ -281,9 +286,10 @@ class ProductReviewController extends BaseController
         try {
             $data = $request->all();
             $deleted = $this->productReviewSystem->delete($id, $data);
-            if (!$deleted) {
+            if (! $deleted) {
                 \Flash::error('Error appeared! Review not deleted!');
             }
+
             return redirect('admin/reviews/index');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

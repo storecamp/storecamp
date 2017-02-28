@@ -2,7 +2,6 @@
 
 namespace App\Core\Contracts;
 
-
 interface BaseLogicContract
 {
     /**

@@ -2,10 +2,8 @@
 
 namespace App\Core\Contracts;
 
-
 /**
- * Interface CategorySystemContract
- * @package App\Core\Contracts
+ * Interface CategorySystemContract.
  */
 interface CategorySystemContract extends BaseLogicContract
 {

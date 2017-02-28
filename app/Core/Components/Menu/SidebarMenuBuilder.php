@@ -2,11 +2,10 @@
 
 namespace App\Core\Components\Menu;
 
-
 class SidebarMenuBuilder
 {
     /**
-     * create sidebar menu structure
+     * create sidebar menu structure.
      */
     public function createStructure()
     {
@@ -18,7 +17,7 @@ class SidebarMenuBuilder
                 ['route' => 'admin::reviews::index'])
             ->addLink('Categories', ['route' => 'admin::categories::index'])
             ->addLink('Attributes', ['route' => 'admin::attributes::index'])
-            ->addLink('Attribute Groups', ['route' => ['admin::attribute_groups::index']]);;
+            ->addLink('Attribute Groups', ['route' => ['admin::attribute_groups::index']]);
 
         $productReviews = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-newspaper-o"></i> Product Reviews')
@@ -72,11 +71,11 @@ class SidebarMenuBuilder
             ->addLink('<i class="fa fa-archive"></i> Logs', ['route' => 'log-viewer::logs.list']);
 
         /**
-         * declare sidebar administration menu
+         * declare sidebar administration menu.
          */
         $administrationMenu = app('elements.menu.manager')
             ->setStructureClasses(
-                ['root_class' => "sidebar-menu", 'li_class' => "treeview", 'ul_class' => "treeview-menu", 'a_class' => "link"]
+                ['root_class' => 'sidebar-menu', 'li_class' => 'treeview', 'ul_class' => 'treeview-menu', 'a_class' => 'link']
             )
             ->menu('administration')
             ->setLabel('Administration')
@@ -85,10 +84,10 @@ class SidebarMenuBuilder
             ->addSubMenu($logsViewer, ['id' => 'link-logs', 'url_def' => ['route_pattern' => 'log-viewer::*']]);
 
         /**
-         * declare sidebar menu
+         * declare sidebar menu.
          */
         $menu = app('elements.menu.manager')->setStructureClasses(
-            ['root_class' => "sidebar-menu", 'li_class' => "treeview", 'ul_class' => "treeview-menu", 'a_class' => "link"]
+            ['root_class' => 'sidebar-menu', 'li_class' => 'treeview', 'ul_class' => 'treeview-menu', 'a_class' => 'link']
         )
             ->menu('sidebar')
             ->setLabel('MAIN NAVIGATION')

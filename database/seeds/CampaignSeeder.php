@@ -13,7 +13,7 @@ class CampaignSeeder extends Seeder
     {
         \Illuminate\Database\Eloquent\Model::unguard();
         $globalCampaign = \App\Core\Models\Campaign::create([
-            "campaign" => "Global"
+            'campaign' => 'Global',
         ]);
 
         $subscriberOne = \App\Core\Models\Subscribers::create(['email' => 'nikoleivan@gmail.com']);
@@ -22,7 +22,7 @@ class CampaignSeeder extends Seeder
         $globalCampaign->subscribers()->sync([$subscriberOne->id, $subscriberTwo->id]);
 
         \App\Core\Models\Campaign::create([
-            "campaign" => "Clients"
+            'campaign' => 'Clients',
         ]);
     }
 }

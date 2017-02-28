@@ -46,19 +46,19 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
-            'rootFromProject' => 'public/uploads'
+            'rootFromProject' => 'public/uploads',
         ],
         'uploads' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
             'visibility' => 'uploads',
             'prefix' => 'uploads',
-            'rootFromProject' => 'public/uploads'
+            'rootFromProject' => 'public/uploads',
         ],
         'mails' => [
             'driver' => 'local',
             'root'   => public_path('mails'),
-            'rootFromProject' => 'public/mails'
+            'rootFromProject' => 'public/mails',
         ],
         'public' => [
             'driver' => 'local',

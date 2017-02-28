@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface BannerRepository
- * @package namespace App\Core\Repositories;
+ * Interface BannerRepository.
  */
 interface BannerRepository extends RepositoryInterface
 {

@@ -2,14 +2,12 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\AttributeGroupRepository;
 use App\Core\Models\AttributeGroup;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class AttributeGroupRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class AttributeGroupRepositoryEloquent.
  */
 class AttributeGroupRepositoryEloquent extends BaseRepository implements AttributeGroupRepository
 {
@@ -17,11 +15,11 @@ class AttributeGroupRepositoryEloquent extends BaseRepository implements Attribu
      * @var array
      */
     protected $fieldSearchable = [
-        'name' => 'like'
+        'name' => 'like',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -29,6 +27,7 @@ class AttributeGroupRepositoryEloquent extends BaseRepository implements Attribu
     {
         return AttributeGroup::class;
     }
+
     /**
      * @return mixed
      */
@@ -38,8 +37,9 @@ class AttributeGroupRepositoryEloquent extends BaseRepository implements Attribu
 
         return new $model;
     }
+
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

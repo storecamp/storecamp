@@ -3,12 +3,11 @@
 namespace App\Core\Repositories;
 
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
+
 /**
- * Interface ProductsRepository
- * @package namespace App\Core\Repositories;
+ * Interface ProductsRepository.
  */
 interface ProductsRepository extends RepositoryInterface
 {
     public function getModel();
-
 }

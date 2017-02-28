@@ -1,13 +1,13 @@
-<?php namespace App\Core\Access\Contracts;
+<?php
+
+namespace App\Core\Access\Contracts;
 
 /**
  * This file is part of Access,
  * a role & permission management solution for Syrinx.
  *
  * @license MIT
- * @package App\Core\Access
  */
-
 interface AccessRoleInterface
 {
     /**
@@ -16,7 +16,7 @@ interface AccessRoleInterface
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users();
-    
+
     /**
      * Many-to-Many relations with the permission model.
      * Named "perms" for backwards compatibility. Also because "perms" is short and sweet.
@@ -24,7 +24,7 @@ interface AccessRoleInterface
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function perms();
-    
+
     /**
      * Save the inputted permissions.
      *
@@ -33,8 +33,8 @@ interface AccessRoleInterface
      * @return void
      */
     public function savePermissions($inputPermissions);
-    
-     /**
+
+    /**
      * Attach permission to current role.
      *
      * @param object|array $permission
@@ -42,7 +42,7 @@ interface AccessRoleInterface
      * @return void
      */
     public function attachPermission($permission);
-    
+
     /**
      * Detach permission form current role.
      *
@@ -51,7 +51,7 @@ interface AccessRoleInterface
      * @return void
      */
     public function detachPermission($permission);
-    
+
     /**
      * Attach multiple permissions to current role.
      *
@@ -60,9 +60,9 @@ interface AccessRoleInterface
      * @return void
      */
     public function attachPermissions($permissions);
-    
+
     /**
-     * Detach multiple permissions from current role
+     * Detach multiple permissions from current role.
      *
      * @param mixed $permissions
      *

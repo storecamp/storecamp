@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCategoriesTable extends Migration
 {
@@ -29,7 +29,7 @@ class CreateCategoriesTable extends Migration
             \App\Core\Support\Nestedset\NestedSet::columns($table);
             $table->timestamps();
             $table->unique(['parent_id', 'unique_id', 'id', 'name']);
-            $table->index(['parent_id','unique_id']);
+            $table->index(['parent_id', 'unique_id']);
             $table->index(['unique_id', 'slug']);
         });
     }
@@ -41,7 +41,7 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories', function(Blueprint $t) {
+        Schema::drop('categories', function (Blueprint $t) {
             \App\Core\Support\Nestedset\NestedSet::dropColumns($t);
         });
     }

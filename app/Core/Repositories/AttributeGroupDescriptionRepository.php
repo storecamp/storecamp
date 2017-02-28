@@ -5,10 +5,8 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface AttributeGroupDescriptionRepository
- * @package namespace App\Core\Repositories;
+ * Interface AttributeGroupDescriptionRepository.
  */
 interface AttributeGroupDescriptionRepository extends RepositoryInterface
 {
-
 }

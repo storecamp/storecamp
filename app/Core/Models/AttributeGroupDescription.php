@@ -2,18 +2,17 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class AttributeGroupDescription
+ * Class AttributeGroupDescription.
  *
- * @package App\Core\Models
  * @property int $id
  * @property string $name
  * @property string $unique_id
@@ -51,20 +50,20 @@ class AttributeGroupDescription extends Model implements Transformable
         'sort_order',
         'attr_description_id',
         'product_id',
-        'value'
+        'value',
     ];
 
     /**
      * @var string
      */
-    protected $table = "attributes_group_description";
+    protected $table = 'attributes_group_description';
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function attributesGroup()
     {
-        return $this->belongsTo(AttributeGroup::class, "attributes_group_id", "id");
+        return $this->belongsTo(AttributeGroup::class, 'attributes_group_id', 'id');
     }
 
     /**
@@ -72,6 +71,6 @@ class AttributeGroupDescription extends Model implements Transformable
      */
     public function product()
     {
-        return $this->belongsToMany(Product::class, "product_attribute", "attr_description_id", "product_id")->withPivot("value");
+        return $this->belongsToMany(Product::class, 'product_attribute', 'attr_description_id', 'product_id')->withPivot('value');
     }
 }

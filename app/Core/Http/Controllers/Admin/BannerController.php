@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Core\Models\Banner;
-use App\Core\Repositories\BannerRepository;
 use App\Core\Http\Controllers\Controller;
+use App\Core\Repositories\BannerRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class BannersController
- * @package App\Core\Http\Controllers
+ * Class BannersController.
  */
-class BannerController extends Controller {
-
+class BannerController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +52,6 @@ class BannerController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

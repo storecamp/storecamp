@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\UserCounterRepository;
 use App\Core\Models\UserCounter;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class UserCounterRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class UserCounterRepositoryEloquent.
  */
 class UserCounterRepositoryEloquent extends BaseRepository implements UserCounterRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class UserCounterRepositoryEloquent extends BaseRepository implements UserCounte
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

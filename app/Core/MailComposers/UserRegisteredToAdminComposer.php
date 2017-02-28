@@ -4,7 +4,6 @@ namespace App\Core\MailComposers;
 
 use CodeZero\Mailer\MailComposer;
 
-
 class UserRegisteredToAdminComposer extends MailComposer
 {
     /**

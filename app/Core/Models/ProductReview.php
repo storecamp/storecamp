@@ -2,22 +2,19 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use RepositoryLab\Repository\Contracts\Transformable;
-use RepositoryLab\Repository\Traits\TransformableTrait;
+use App\Core\Traits\GeneratesUnique;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Core\Traits\GeneratesUnique;
-use App\Core\Models\Thread;
-use Toastr;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
+
 
 /**
- * Class ProductReview
+ * Class ProductReview.
  *
- * @package App\Core\Models
  * @property int $id
  * @property int $user_id
  * @property int $product_id
@@ -64,7 +61,7 @@ class ProductReview extends Model implements Transformable
     /**
      * @var string
      */
-    protected $table = "product_reviews";
+    protected $table = 'product_reviews';
 
     /**
      * The attributes that are mass assignable.
@@ -78,9 +75,8 @@ class ProductReview extends Model implements Transformable
      */
     protected $dates = ['date'];
 
-
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -118,7 +114,7 @@ class ProductReview extends Model implements Transformable
      */
     public function product()
     {
-        return $this->belongsTo(Product::class, "product_id");
+        return $this->belongsTo(Product::class, 'product_id');
     }
 
     /**
@@ -134,7 +130,7 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeUsers($query)
     {
-        $query->where("user_id", \Auth::user()->id);
+        $query->where('user_id', \Auth::user()->id);
     }
 
     /**
@@ -151,8 +147,7 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeOnlyVisible($query)
     {
-
-        return $query->where("hidden", false);
+        return $query->where('hidden', false);
     }
 
     /**
@@ -161,7 +156,7 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeOnlyHidden($query)
     {
-        return $query->where("hidden", true);
+        return $query->where('hidden', true);
     }
 
     /**
@@ -171,7 +166,6 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeByRating($query, $rating)
     {
-        return $query->where("rating", $rating);
+        return $query->where('rating', $rating);
     }
-
 }

@@ -17,6 +17,7 @@ class GatewayPass extends PaymentGateway
     public function onCharge($order)
     {
         $this->transactionId = uniqid();
-    	return true;
+
+        return true;
     }
 }

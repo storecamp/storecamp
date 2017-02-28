@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 /**
- * Class MailTemplatesToMediaSeeder
+ * Class MailTemplatesToMediaSeeder.
  */
 class MailTemplatesToMediaSeeder extends Seeder
 {
@@ -28,7 +28,7 @@ class MailTemplatesToMediaSeeder extends Seeder
      */
     public function run()
     {
-        $mailsPath = public_path("mails");
-        $this->synchronizer->synchronizeWithFiles($mailsPath, "mails");
+        $mailsPath = public_path('mails');
+        $this->synchronizer->synchronizeWithFiles($mailsPath, 'mails');
     }
 }

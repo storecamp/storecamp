@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAttributesGroupDescription extends Migration
 {
@@ -38,6 +38,5 @@ class CreateAttributesGroupDescription extends Migration
             $table->dropForeign('attributes_group_description_attributes_group_id_foreign');
             $table->dropSoftDeletes();
         });
-
     }
 }

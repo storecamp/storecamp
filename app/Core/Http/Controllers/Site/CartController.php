@@ -6,20 +6,18 @@ use App\Core\Contracts\CartSystemContract;
 use Illuminate\Http\Request;
 
 /**
- * Class CartsController
- * @package App\Core\Http\Controllers
+ * Class CartsController.
  */
 class CartController extends BaseController
 {
-
     /**
      * @var string
      */
-    public $viewPathBase = "site.cart.";
+    public $viewPathBase = 'site.cart.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "site::";
+    public $errorRedirectPath = 'site::';
     /**
      * @var CartSystemContract
      */
@@ -45,6 +43,7 @@ class CartController extends BaseController
             $data = $request->all();
             $cart = $this->cartSystem->setCurrency(config('sales.currency'))->show($data);
             $cartSystem = $this->cartSystem;
+
             return $this->view('show', compact('cart', 'cartSystem'));
         } catch (\Throwable $exception) {
             return $this->redirectError($exception);
@@ -64,6 +63,7 @@ class CartController extends BaseController
                 return response()->json(['message' => 'cart item updated']);
             } else {
                 \Flash::success('cart item updated');
+
                 return redirect()->route('site::cart::show');
             }
         } catch (\Throwable $exception) {
@@ -83,6 +83,7 @@ class CartController extends BaseController
             $cart = $this->cartSystem->addItem($data, $productId);
             if ($request->ajax()) {
                 \Flash::success('item added to cart');
+
                 return response()->json(['cart' => json_encode($cart)]);
             } else {
                 return redirect()->route('site::cart::show');
@@ -104,9 +105,9 @@ class CartController extends BaseController
             return response()->json(['message' => 'cart item deleted'], 200);
         } else {
             \Flash::warning('item deleted from cart');
+
             return redirect()->back();
         }
-
     }
 
     /**
@@ -120,8 +121,8 @@ class CartController extends BaseController
             return response()->json(['message' => 'cart deleted'], 200);
         } else {
             \Flash::warning('cart cleared completely');
+
             return redirect()->back();
         }
     }
 }
-

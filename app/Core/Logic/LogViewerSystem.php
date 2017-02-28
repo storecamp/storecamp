@@ -2,7 +2,6 @@
 
 namespace App\Core\Logic;
 
-
 use App\Core\Contracts\LogViewerSystemContract;
 use Arcanedev\LogViewer\Exceptions\LogNotFoundException;
 use Arcanedev\LogViewer\Tables\StatsTable;
@@ -11,8 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 /**
- * Class LogViewerSystem
- * @package App\Core\Logic
+ * Class LogViewerSystem.
  */
 class LogViewerSystem implements LogViewerSystemContract
 {
@@ -22,7 +20,7 @@ class LogViewerSystem implements LogViewerSystemContract
     protected $perPage = 30;
 
     /**
-     * The log viewer instance
+     * The log viewer instance.
      *
      * @var \Arcanedev\LogViewer\Contracts\LogViewer
      */
@@ -37,6 +35,7 @@ class LogViewerSystem implements LogViewerSystemContract
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * LogViewerSystem constructor.
      * @param Arr $arr
@@ -54,9 +53,9 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     public function dashboard()
     {
-        $stats     = $this->logViewer->statsTable();
+        $stats = $this->logViewer->statsTable();
         $chartData = $this->prepareChartData($stats);
-        $percents  = $this->calcPercentages($stats->footer(), $stats->header());
+        $percents = $this->calcPercentages($stats->footer(), $stats->header());
 
         return compact('chartData', 'percents', 'stats');
     }
@@ -70,9 +69,9 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     public function showLogs(Request $request)
     {
-        $stats   = $this->logViewer->statsTable();
+        $stats = $this->logViewer->statsTable();
         $headers = $stats->header();
-        $rows    = $this->paginate($stats->rows(), $request);
+        $rows = $this->paginate($stats->rows(), $request);
 
         return compact('headers', 'rows', 'footer', 'stats');
     }
@@ -86,10 +85,11 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     public function show($date)
     {
-        $stats   = $this->logViewer->statsTable();
-        $log     = $this->getLogOrFail($date);
-        $levels  = $this->logViewer->levelsNames();
+        $stats = $this->logViewer->statsTable();
+        $log = $this->getLogOrFail($date);
+        $levels = $this->logViewer->levelsNames();
         $entries = $log->entries()->paginate($this->perPage);
+
         return compact('log', 'levels', 'entries', 'stats');
     }
 
@@ -103,11 +103,11 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     public function showByLevel($date, $level)
     {
-        $stats   = $this->logViewer->statsTable();
+        $stats = $this->logViewer->statsTable();
 
         $log = $this->getLogOrFail($date);
 
-        $levels  = $this->logViewer->levelsNames();
+        $levels = $this->logViewer->levelsNames();
         $entries = $this->logViewer
             ->entries($date, $level)
             ->paginate($this->perPage);
@@ -116,7 +116,7 @@ class LogViewerSystem implements LogViewerSystemContract
     }
 
     /**
-     * Download the log
+     * Download the log.
      *
      * @param  string  $date
      *
@@ -138,6 +138,7 @@ class LogViewerSystem implements LogViewerSystemContract
     {
         $date = $request->get('date');
         $deleted = $this->logViewer->delete($date);
+
         return $deleted;
     }
 
@@ -145,6 +146,7 @@ class LogViewerSystem implements LogViewerSystemContract
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Paginate logs.
      *
@@ -155,10 +157,10 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     protected function paginate(array $data, Request $request)
     {
-        $page   = $request->get('page', 1);
+        $page = $request->get('page', 1);
         $offset = ($page * $this->perPage) - $this->perPage;
-        $items  = array_slice($data, $offset, $this->perPage, true);
-        $rows   = new LengthAwarePaginator($items, count($data), $this->perPage, $page);
+        $items = array_slice($data, $offset, $this->perPage, true);
+        $rows = new LengthAwarePaginator($items, count($data), $this->perPage, $page);
 
         $rows->setPath($request->url());
 
@@ -166,7 +168,7 @@ class LogViewerSystem implements LogViewerSystemContract
     }
 
     /**
-     * Get a log or fail
+     * Get a log or fail.
      *
      * @param  string  $date
      *
@@ -178,8 +180,7 @@ class LogViewerSystem implements LogViewerSystemContract
 
         try {
             $log = $this->logViewer->get($date);
-        }
-        catch (LogNotFoundException $e) {
+        } catch (LogNotFoundException $e) {
             abort(404, $e->getMessage());
         }
 
@@ -220,7 +221,7 @@ class LogViewerSystem implements LogViewerSystemContract
     protected function calcPercentages(array $total, array $names)
     {
         $percents = [];
-        $all      = $this->arr->get($total, 'all');
+        $all = $this->arr->get($total, 'all');
 
         foreach ($total as $level => $count) {
             $percents[$level] = [

@@ -4,17 +4,14 @@ namespace App\Core\Components\Sidebar;
 
 use Illuminate\Support\Collection;
 
-
 trait SidebarTrait
 {
-
     protected $instance;
 
     /**
      * SidebarTrait constructor.
      * @param $instance
      */
-
     public function __construct($instance)
     {
         $this->instace = $instance;
@@ -41,7 +38,7 @@ trait SidebarTrait
      */
     public function formLastModelsCollection()
     {
-        $collection = collect(["instance" => $this->getLastInstances()]);
+        $collection = collect(['instance' => $this->getLastInstances()]);
 
         return $collection;
     }

@@ -6,14 +6,12 @@ use App\Core\Transformers\TransactionTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class TransactionPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class TransactionPresenter.
  */
 class TransactionPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         'App\Core\Generators\Commands\PresenterCommand',
         'App\Core\Generators\Commands\EntityCommand',
         'App\Core\Generators\Commands\ControllerCommand',
-        'App\Core\Commands\ClearTablesCommand'
+        'App\Core\Commands\ClearTablesCommand',
     ];
 
     /**

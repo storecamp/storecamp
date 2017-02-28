@@ -3,10 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\User;
 use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use DB;
+
 class ElementShouldBeUnique
 {
     /**
@@ -18,9 +16,6 @@ class ElementShouldBeUnique
      */
     public function handle($request, Closure $next)
     {
-
-       return $next($request);
-
-
+        return $next($request);
     }
 }

@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
-use Illuminate\Database\Eloquent\Model;
 use App\Core\Models\Product;
 use Faker\Factory as Faker;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
@@ -18,12 +17,12 @@ class ProductSeeder extends Seeder
         Model::unguard();
 
         $faker = Faker::create();
-        foreach (range(1,100) as $index) {
+        foreach (range(1, 100) as $index) {
             $product = Product::create([
-                'title' => $faker->company." - ".$faker->numberBetween(1, 72),
+                'title' => $faker->company.' - '.$faker->numberBetween(1, 72),
                 'model' => $faker->company,
                 'body' => $faker->paragraphs(5, true),
-                'price' => $faker->randomNumber(3, true).".".$faker->numberBetween(0, 99),
+                'price' => $faker->randomNumber(3, true).'.'.$faker->numberBetween(0, 99),
                 'availability' => $faker->boolean,
                 'date_available' => $faker->date(),
                 'quantity' => $faker->numberBetween(0, 1000),
@@ -35,6 +34,5 @@ class ProductSeeder extends Seeder
             ]);
             $product->categories()->attach([$faker->numberBetween(1, 72)]);
         }
-
     }
 }

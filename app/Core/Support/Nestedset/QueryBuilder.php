@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Core\Support\Nestedset;;
+namespace App\Core\Support\Nestedset;
 
 use App\Core\Traits\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Query\Builder as Query;
 use Illuminate\Database\Query\Builder as BaseQueryBuilder;
+use Illuminate\Database\Query\Builder as Query;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Arr;
 use LogicException;
-use Illuminate\Database\Query\Expression;
 
 class QueryBuilder extends Builder
 {
@@ -35,14 +35,14 @@ class QueryBuilder extends Builder
 
         $query->where($this->model->getKeyName(), '=', $id);
 
-        $data = $query->first([ $this->model->getLftName(),
-                                $this->model->getRgtName() ]);
+        $data = $query->first([$this->model->getLftName(),
+                                $this->model->getRgtName(), ]);
 
-        if ( ! $data && $required) {
+        if (! $data && $required) {
             throw new ModelNotFoundException;
         }
 
-        return (array)$data;
+        return (array) $data;
     }
 
     /**
@@ -95,7 +95,7 @@ class QueryBuilder extends Builder
             $valueQuery = $this->model
                 ->newQuery()
                 ->toBase()
-                ->select("_.".$this->model->getLftName())
+                ->select('_.'.$this->model->getLftName())
                 ->from($this->model->getTable().' as _')
                 ->where($keyName, '=', $id)
                 ->limit(1);
@@ -125,7 +125,7 @@ class QueryBuilder extends Builder
      *
      * @return \App\Core\Support\Nestedset\Collection
      */
-    public function ancestorsOf($id, array $columns = array( '*' ))
+    public function ancestorsOf($id, array $columns = ['*'])
     {
         return $this->whereAncestorOf($id)->get($columns);
     }
@@ -185,7 +185,7 @@ class QueryBuilder extends Builder
         }
 
         // Don't include the node
-        if ( ! $andSelf) {
+        if (! $andSelf) {
             ++$data[0];
         }
 
@@ -245,13 +245,11 @@ class QueryBuilder extends Builder
      *
      * @return Collection
      */
-    public function descendantsOf($id, array $columns = [ '*' ], $andSelf = false)
+    public function descendantsOf($id, array $columns = ['*'], $andSelf = false)
     {
         try {
             return $this->whereDescendantOf($id, 'and', false, $andSelf)->get($columns);
-        }
-
-        catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return $this->model->newCollection();
         }
     }
@@ -262,7 +260,7 @@ class QueryBuilder extends Builder
      *
      * @return Collection
      */
-    public function descendantsAndSelf($id, array $columns = [ '*' ])
+    public function descendantsAndSelf($id, array $columns = ['*'])
     {
         return $this->descendantsOf($id, $columns, true);
     }
@@ -293,9 +291,9 @@ class QueryBuilder extends Builder
             $value = '('.$valueQuery->toSql().')';
         }
 
-        list($lft,) = $this->wrappedColumns();
+        list($lft) = $this->wrappedColumns();
 
-        $this->query->whereRaw("{$lft} {$operator} {$value}", [ ], $boolean);
+        $this->query->whereRaw("{$lft} {$operator} {$value}", [], $boolean);
 
         return $this;
     }
@@ -339,7 +337,9 @@ class QueryBuilder extends Builder
      */
     public function withDepth($as = 'depth')
     {
-        if ($this->query->columns === null) $this->query->columns = [ '*' ];
+        if ($this->query->columns === null) {
+            $this->query->columns = ['*'];
+        }
 
         $table = $this->wrappedTable();
 
@@ -511,7 +511,7 @@ class QueryBuilder extends Builder
 
         $params = compact('lft', 'rgt', 'from', 'to', 'height', 'distance');
 
-        $boundary = [ $from, $to ];
+        $boundary = [$from, $to];
 
         $query = $this->toBase()->where(function (Query $inner) use ($boundary) {
             $inner->whereBetween($this->model->getLftName(), $boundary);
@@ -558,7 +558,7 @@ class QueryBuilder extends Builder
 
         $columns = [];
 
-        foreach ([ $this->model->getLftName(), $this->model->getRgtName() ] as $col) {
+        foreach ([$this->model->getLftName(), $this->model->getRgtName()] as $col) {
             $columns[$col] = $this->columnPatch($grammar->wrap($col), $params);
         }
 
@@ -580,20 +580,24 @@ class QueryBuilder extends Builder
         extract($params);
 
         /** @var int $height */
-        if ($height > 0) $height = '+'.$height;
+        if ($height > 0) {
+            $height = '+'.$height;
+        }
 
         if (isset($cut)) {
             return new Expression("case when {$col} >= {$cut} then {$col}{$height} else {$col} end");
         }
 
         /** @var int $distance */
-        /** @var int $lft */
-        /** @var int $rgt */
-        /** @var int $from */
-        /** @var int $to */
-        if ($distance > 0) $distance = '+'.$distance;
+        /* @var int $lft */
+        /* @var int $rgt */
+        /* @var int $from */
+        /* @var int $to */
+        if ($distance > 0) {
+            $distance = '+'.$distance;
+        }
 
-        return new Expression("case ".
+        return new Expression('case '.
                               "when {$col} between {$lft} and {$rgt} then {$col}{$distance} ". // Move the node
                               "when {$col} between {$from} and {$to} then {$col}{$height} ". // Move other nodes
                               "else {$col} end"
@@ -621,7 +625,7 @@ class QueryBuilder extends Builder
         $checks['wrong_parent'] = $this->getWrongParentQuery();
 
         // Check for nodes that have missing parent
-        $checks['missing_parent' ] = $this->getMissingParentQuery();
+        $checks['missing_parent'] = $this->getMissingParentQuery();
 
         $query = $this->query->newQuery();
 
@@ -631,7 +635,7 @@ class QueryBuilder extends Builder
             $query->selectSub($inner, $key);
         }
 
-        return (array)$query->first();
+        return (array) $query->first();
     }
 
     /**
@@ -814,7 +818,7 @@ class QueryBuilder extends Builder
         $cut = self::reorderNodes($dictionary, $fixed);
 
         // Save nodes that have invalid parent as roots
-        while ( ! empty($dictionary)) {
+        while (! empty($dictionary)) {
             $dictionary[null] = reset($dictionary);
 
             unset($dictionary[key($dictionary)]);
@@ -836,7 +840,7 @@ class QueryBuilder extends Builder
     protected static function reorderNodes(array &$dictionary, &$fixed,
                                            $parentId = null, $cut = 1
     ) {
-        if ( ! isset($dictionary[$parentId])) {
+        if (! isset($dictionary[$parentId])) {
             return $cut;
         }
 
@@ -883,7 +887,7 @@ class QueryBuilder extends Builder
 
         $this->buildRebuildDictionary($dictionary, $data, $existing);
 
-        if ( ! empty($existing)) {
+        if (! empty($existing)) {
             if ($delete) {
                 $this->model
                     ->newScopedQuery()
@@ -913,13 +917,13 @@ class QueryBuilder extends Builder
         $keyName = $this->model->getKeyName();
 
         foreach ($data as $itemData) {
-            if ( ! isset($itemData[$keyName])) {
+            if (! isset($itemData[$keyName])) {
                 $model = $this->model->newInstance();
 
                 // We will save it as raw node since tree will be fixed
                 $model->rawNode(0, 0, $parentId);
             } else {
-                if ( ! isset($existing[$key = $itemData[$keyName]])) {
+                if (! isset($existing[$key = $itemData[$keyName]])) {
                     throw new ModelNotFoundException;
                 }
 
@@ -932,7 +936,9 @@ class QueryBuilder extends Builder
 
             $dictionary[$parentId][] = $model;
 
-            if ( ! isset($itemData['children'])) continue;
+            if (! isset($itemData['children'])) {
+                continue;
+            }
 
             $this->buildRebuildDictionary($dictionary,
                                           $itemData['children'],
@@ -962,6 +968,7 @@ class QueryBuilder extends Builder
     {
         return $this->whereIsRoot()->first($columns);
     }
+
     /**
      * Execute the query as a "select" statement.
      *
@@ -980,6 +987,7 @@ class QueryBuilder extends Builder
             if (count($models) > 0) {
                 $models = $builder->eagerLoadRelations($models);
             }
+
             return $builder->getModel()->newcollection($models);
         };
         // Check if cache is enabled
@@ -990,6 +998,7 @@ class QueryBuilder extends Builder
         $result = call_user_func($closure);
         // We're done, let's clean up!
         $builder->getModel()->resetCacheConfig();
+
         return $result;
     }
 }

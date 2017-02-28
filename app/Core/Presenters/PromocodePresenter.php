@@ -6,14 +6,12 @@ use App\Core\Transformers\PromocodeTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class PromocodePresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class PromocodePresenter.
  */
 class PromocodePresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Coupon;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class CouponTransformer
- * @package namespace App\Core\Transformers;
+ * Class CouponTransformer.
  */
 class CouponTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Coupon entity
+     * Transform the \Coupon entity.
      * @param Coupon $model
      *
      * @return array
@@ -26,7 +24,7 @@ class CouponTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

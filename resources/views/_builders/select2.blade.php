@@ -6,7 +6,7 @@
         title="{!! isset($title) ? $title : ""!!}">
     <?php echo $placeholder; ?>
         @foreach($selected as $item => $tag)
-            <?php $i++;?>
+            <?php $i++; ?>
             @if($i <= 1)
                 <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
                 <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>

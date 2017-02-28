@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Default config values
+ * Default config values.
  */
 return [
     'bootstrapVersion' => '3.3.0',
@@ -9,10 +9,10 @@ return [
     'icon_prefix' => 'glyphicon',
     'icon_tag' => 'span',
     'menu' => [
-        'root_class' => "menu",
-        'li_class' => "item",
-        'ul_class' => "item-menu",
-        'a_class' => "link"
+        'root_class' => 'menu',
+        'li_class' => 'item',
+        'ul_class' => 'item-menu',
+        'a_class' => 'link',
     ],
-    'breadcrumb-system-view' => 'partials.breadcrumbs'
+    'breadcrumb-system-view' => 'partials.breadcrumbs',
 ];

@@ -14,8 +14,7 @@ class OrderStatusesSeeder extends Seeder
         DB::table('order_statuses')->delete();
 
         DB::table('order_statuses')->insert([
-            config('shop.order_statuses')
+            config('shop.order_statuses'),
         ]);
-
     }
 }

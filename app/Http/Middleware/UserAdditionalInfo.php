@@ -17,6 +17,7 @@ class UserAdditionalInfo
     {
         $role = $request->user()->getRole();
         $request['type'] = $role;
+
         return $next($request);
     }
 }

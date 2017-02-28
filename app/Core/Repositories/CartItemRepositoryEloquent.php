@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\CartItemRepository;
 use App\Core\Models\CartItem;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class CartItemRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class CartItemRepositoryEloquent.
  */
 class CartItemRepositoryEloquent extends BaseRepository implements CartItemRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class CartItemRepositoryEloquent extends BaseRepository implements CartItemRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

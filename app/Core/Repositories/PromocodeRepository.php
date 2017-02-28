@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface PromocodeRepository
- * @package namespace App\Core\Repositories;
+ * Interface PromocodeRepository.
  */
 interface PromocodeRepository extends RepositoryInterface
 {

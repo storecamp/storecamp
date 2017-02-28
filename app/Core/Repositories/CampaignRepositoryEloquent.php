@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\CampaignRepository;
 use App\Core\Models\Campaign;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class CampaignRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class CampaignRepositoryEloquent.
  */
 class CampaignRepositoryEloquent extends BaseRepository implements CampaignRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,11 +22,10 @@ class CampaignRepositoryEloquent extends BaseRepository implements CampaignRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-
 }

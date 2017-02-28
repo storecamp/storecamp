@@ -1,14 +1,14 @@
 <?php
+
 namespace RepositoryLab\Repository\Events;
 
 /**
- * Class RepositoryEntityDeleted
- * @package RepositoryLab\Repository\Events
+ * Class RepositoryEntityDeleted.
  */
 class RepositoryEntityDeleted extends RepositoryEventBase
 {
     /**
      * @var string
      */
-    protected $action = "deleted";
+    protected $action = 'deleted';
 }

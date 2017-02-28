@@ -2,24 +2,20 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
-use App\Core\Http\Requests;
-use App\Core\Http\Controllers\Controller;
 use App\Core\Repositories\SubscribersRepository;
+use Illuminate\Http\Request;
 
 class SubscriptionController extends BaseController
 {
+    /**
+     * @var string
+     */
+    public $viewPathBase = 'admin.subscribers.';
 
     /**
      * @var string
      */
-    public $viewPathBase = "admin.subscribers.";
-
-    /**
-     * @var string
-     */
-    public $errorRedirectPath = "admin/subscribers";
+    public $errorRedirectPath = 'admin/subscribers';
 
     /**
      * @var SubscribersRepository
@@ -29,7 +25,6 @@ class SubscriptionController extends BaseController
     /**
      * SubscriptionController constructor.
      * @param SubscribersRepository $repository
-     *
      */
     public function __construct(SubscribersRepository $repository)
     {
@@ -38,13 +33,11 @@ class SubscriptionController extends BaseController
 
     public function index(Request $request)
     {
-
         $lists = $this->repository->getNewsList();
 
         $subscribers = $this->repository->paginate();
 
         return $this->view('index', compact('subscribers', 'lists'));
-
     }
 
     /**
@@ -54,20 +47,16 @@ class SubscriptionController extends BaseController
      */
     public function show(Request $request, $uid)
     {
-
-        if (!is_null($uid)) {
-
+        if (! is_null($uid)) {
             $lists = $this->repository->getNewsList();
 
             $newslist = $this->repository->findList($uid);
 
             $subscribers = $newslist->subscribers()->paginate();
 
-            return $this->view("index", compact('lists', 'newslist', 'subscribers', 'mails'));
-
+            return $this->view('index', compact('lists', 'newslist', 'subscribers', 'mails'));
         } else {
-
-            \Toastr::error("Subscriber Not found!", $title = "Try once more.", $options = []);
+            \Toastr::error('Subscriber Not found!', $title = 'Try once more.', $options = []);
 
             return redirect()->to(route('admin::newsletter::subscribe::index'));
         }
@@ -81,25 +70,21 @@ class SubscriptionController extends BaseController
      */
     public function showUser(Request $request, $type, $email)
     {
-
         if ($type) {
             $lists = $this->repository->getNewsList();
 
             $subscriber = $this->repository->findSubscriber($email);
 
-            return $this->view("showUser", compact('lists', 'subscriber'));
-
+            return $this->view('showUser', compact('lists', 'subscriber'));
         } else {
             $lists = $this->repository->getNewsList();
 
             $subscribers = $this->repository->getModel()->all();
 
-            \Toastr::error("Subscriber Not found!", $title = "Try once more.", $options = []);
+            \Toastr::error('Subscriber Not found!', $title = 'Try once more.', $options = []);
 
             return redirect()->back();
-
         }
-
     }
 
     /**
@@ -109,9 +94,7 @@ class SubscriptionController extends BaseController
      */
     public function showGenerate(Request $request, $uid)
     {
-
-        if (!is_null($uid)) {
-
+        if (! is_null($uid)) {
             $mails = $this->repository->resolveTmpMails();
 
             $mailHistory = $this->repository->resolveMailHistory($uid);
@@ -121,13 +104,15 @@ class SubscriptionController extends BaseController
             $newslist = $this->repository->findList($uid);
 
             if (empty($newslist)) {
-                \Toastr::error("News list not found", "Please specify the correct newsletter uid.");
+                \Toastr::error('News list not found', 'Please specify the correct newsletter uid.');
+
                 return \Redirect::route('admin::newsletter::subscribe::index');
             }
-            return $this->view("generate", compact('lists', 'newslist', 'mails', 'mailHistory'));
 
-        } else return $this->redirectError();
-
+            return $this->view('generate', compact('lists', 'newslist', 'mails', 'mailHistory'));
+        } else {
+            return $this->redirectError();
+        }
     }
 
     /**
@@ -136,8 +121,8 @@ class SubscriptionController extends BaseController
      */
     public function getTmpMail($file)
     {
-
         $mail = $this->repository->getTmpMail($file);
+
         return $mail;
     }
 
@@ -148,7 +133,6 @@ class SubscriptionController extends BaseController
      */
     public function getHistoryTmpMail($folder, $filename)
     {
-
         $mail = $this->repository->getHistoryTmpMail($folder, $filename);
 
         return $this->view('show-campaign-history', compact('mail'));

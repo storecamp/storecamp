@@ -1,9 +1,9 @@
 <?php
+
 namespace RepositoryLab\Repository\Contracts;
 
 /**
- * Interface Transformable
- * @package RepositoryLab\Repository\Contracts
+ * Interface Transformable.
  */
 interface Transformable
 {

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Core\Logic;
-
 
 use App\Core\Contracts\UsersSystemContract;
 use App\Core\Models\User;
@@ -10,8 +8,7 @@ use App\Core\Repositories\RolesRepository;
 use App\Core\Repositories\UserRepository;
 
 /**
- * Class UsersSystem
- * @package App\Core\Logic
+ * Class UsersSystem.
  */
 class UsersSystem implements UsersSystemContract
 {
@@ -48,12 +45,13 @@ class UsersSystem implements UsersSystemContract
         if ($id) {
             $users = $this->userRepository->find($id);
         } else {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $users = $this->userRepository->with($with)->paginate();
             } else {
                 $users = $this->userRepository->paginate();
             }
         }
+
         return $users;
     }
 
@@ -66,6 +64,7 @@ class UsersSystem implements UsersSystemContract
         $role = $data['role'];
         $user = $this->userRepository->create($data);
         $user->addRole($role);
+
         return $user;
     }
 
@@ -77,7 +76,8 @@ class UsersSystem implements UsersSystemContract
     public function update(array $data, $id) : User
     {
         $user = $this->userRepository->update($data, $id);
-        $user->roles()->sync((array)$data['role']);
+        $user->roles()->sync((array) $data['role']);
+
         return $user;
     }
 
@@ -89,6 +89,7 @@ class UsersSystem implements UsersSystemContract
     public function delete($id, array $data = []) : int
     {
         $deleted = $this->userRepository->delete($id);
+
         return $deleted;
     }
 }

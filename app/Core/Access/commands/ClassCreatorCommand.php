@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access\Commands;
+<?php
 
-/**
+namespace App\Core\Access\Commands;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
  *
@@ -36,11 +38,11 @@ class ClassCreatorCommand extends Command
     {
         $this->laravel->view->addNamespace('access', substr(__DIR__, 0, -8).'views');
 
-        $roleModel           = Config::get('access.role');
-        $permissionModel     = Config::get('access.permission');
+        $roleModel = Config::get('access.role');
+        $permissionModel = Config::get('access.permission');
 
-        $roleModelName       = explode('/', $roleModel);
-        $roleModelName       = end($roleModelName);
+        $roleModelName = explode('/', $roleModel);
+        $roleModelName = end($roleModelName);
 
         $permissionModelName = explode('/', $permissionModel);
         $permissionModelName = end($permissionModelName);
@@ -48,38 +50,35 @@ class ClassCreatorCommand extends Command
         $classes = compact('roleModelName', 'permissionModelName');
 
         $this->line('');
-        $this->info( "Models: $roleModelName, $permissionModelName" );
+        $this->info("Models: $roleModelName, $permissionModelName");
 
         $message = "Creates '$roleModelName', '$permissionModelName' classes will be created in app directory";
 
         $this->comment($message);
         $this->line('');
 
-        if ($this->confirm("Proceed with the class creation? [Yes|no]", "Yes")) {
-
+        if ($this->confirm('Proceed with the class creation? [Yes|no]', 'Yes')) {
             $this->line('');
-            $this->info("Creating classes...");
+            $this->info('Creating classes...');
 
             foreach ($classes as $key => $class) {
-
-                $classFile = app_path($class . '.php');
+                $classFile = app_path($class.'.php');
 
                 if (file_exists($classFile)
-                    && !$this->confirm($class . " exists. Proceed with overwriting? [Yes|no]", "Yes")) {
-                    $this->info($class . " class creation skipped.");
+                    && ! $this->confirm($class.' exists. Proceed with overwriting? [Yes|no]', 'Yes')) {
+                    $this->info($class.' class creation skipped.');
                     continue;
                 }
 
                 if ($this->createClass($class, $classFile)) {
-                    $this->info($class . " class successfully created!");
+                    $this->info($class.' class successfully created!');
                 } else {
                     $this->error(
-                        "Couldn't create " . $class . " class.\n".
-                        "Check the write permissions within the app directory."
+                        "Couldn't create ".$class." class.\n".
+                        'Check the write permissions within the app directory.'
                     );
                 }
             }
-
         }
 
         $this->line('');
@@ -101,6 +100,7 @@ class ClassCreatorCommand extends Command
         if ($fs = fopen($classFile, 'w')) {
             fwrite($fs, $output);
             fclose($fs);
+
             return true;
         }
 

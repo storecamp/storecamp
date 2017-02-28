@@ -2,10 +2,9 @@
 
 namespace App\Core\Support\Cacheable;
 
-
 use Illuminate\Container\Container;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait CacheableEloquent
 {
@@ -121,6 +120,7 @@ trait CacheableEloquent
     public function setContainer(Container $container)
     {
         $this->container = $container;
+
         return $this;
     }
 
@@ -148,7 +148,7 @@ trait CacheableEloquent
     {
         $keysFile = storage_path('framework/cache/storecamp.cacheable.json');
         $cacheKeys = $this->getCacheKeys($keysFile);
-        if (!isset($cacheKeys[$model]) || !in_array($cacheKey, $cacheKeys[$model])) {
+        if (! isset($cacheKeys[$model]) || ! in_array($cacheKey, $cacheKeys[$model])) {
             $cacheKeys[$model][] = $cacheKey;
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
@@ -163,9 +163,10 @@ trait CacheableEloquent
      */
     protected function getCacheKeys($file)
     {
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             file_put_contents($file, null);
         }
+
         return json_decode(file_get_contents($file), true) ?: [];
     }
 
@@ -186,6 +187,7 @@ trait CacheableEloquent
             unset($cacheKeys[$model]);
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
+
         return $flushedKeys;
     }
 
@@ -199,6 +201,7 @@ trait CacheableEloquent
     public function setCacheLifetime($cacheLifetime)
     {
         $this->cacheLifetime = $cacheLifetime;
+
         return $this;
     }
 
@@ -222,6 +225,7 @@ trait CacheableEloquent
     public function setCacheDriver($cacheDriver)
     {
         $this->cacheDriver = $cacheDriver;
+
         return $this;
     }
 
@@ -245,6 +249,7 @@ trait CacheableEloquent
     public function enableCacheClear($status = true)
     {
         $this->cacheClearEnabled = $status;
+
         return $this;
     }
 
@@ -277,6 +282,7 @@ trait CacheableEloquent
             }
             $this->fireModelEvent('.cache.flushed', false);
         }
+
         return $this;
     }
 
@@ -290,6 +296,7 @@ trait CacheableEloquent
         $this->cacheDriver = null;
         $this->cacheLifetime = null;
         $this->cacheClearEnabled = null;
+
         return $this;
     }
 
@@ -321,6 +328,7 @@ trait CacheableEloquent
             'unionOrders' => $query->unionOrders,
             'lock' => $query->lock,
         ];
+
         return md5(json_encode([
             $vars,
             $columns,
@@ -353,6 +361,7 @@ trait CacheableEloquent
         // We need cache tags, check if default driver supports it
         if (method_exists($this->getContainer('cache')->getStore(), 'tags')) {
             $result = $lifetime === -1 ? $this->getContainer('cache')->tags($model)->rememberForever($cacheKey, $closure) : $this->getContainer('cache')->tags($model)->remember($cacheKey, $lifetime, $closure);
+
             return $result;
         }
         $result = $lifetime === -1 ? $this->getContainer('cache')->rememberForever($cacheKey, $closure) : $this->getContainer('cache')->remember($cacheKey, $lifetime, $closure);
@@ -360,6 +369,7 @@ trait CacheableEloquent
         $this->storeCacheKey($model, $cacheKey);
         // We're done, let's clean up!
         $this->resetCacheConfig();
+
         return $result;
     }
 
@@ -371,5 +381,4 @@ trait CacheableEloquent
     {
         return new EloquentBuilder($query);
     }
-
 }

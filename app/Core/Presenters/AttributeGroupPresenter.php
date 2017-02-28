@@ -6,14 +6,12 @@ use App\Core\Transformers\AttributeGroupTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class AttributeGroupPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class AttributeGroupPresenter.
  */
 class AttributeGroupPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

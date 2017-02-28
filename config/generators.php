@@ -18,7 +18,7 @@ return [
             'controllers'=> 'Controllers',
             'interfaces'=>'Repositories',
             'transformers'=>'Transformers',
-            'presenters'=>'Presenters'
-        ]
-    ]
+            'presenters'=>'Presenters',
+        ],
+    ],
 ];

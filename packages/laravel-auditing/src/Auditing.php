@@ -34,7 +34,6 @@ class Auditing extends Model
      */
     public $timestamps = false;
 
-
     /**
      * The guarded attributes on the model.
      *
@@ -69,11 +68,11 @@ class Auditing extends Model
     /**
      * @return mixed
      */
-    public function auditor() {
-        $user = User::where("id", $this->user_id);
-        if($user->count() > 0 ){
+    public function auditor()
+    {
+        $user = User::where('id', $this->user_id);
+        if ($user->count() > 0) {
             return $user->first();
         }
-        return null;
     }
 }

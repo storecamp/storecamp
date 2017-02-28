@@ -18,8 +18,9 @@ class Message extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
+
     /**
      * The database table used by the model.
      *
@@ -54,7 +55,7 @@ class Message extends Model implements Transformable
     ];
 
     /**
-     * Thread relationship
+     * Thread relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -72,7 +73,7 @@ class Message extends Model implements Transformable
     }
 
     /**
-     * User relationship
+     * User relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -82,7 +83,7 @@ class Message extends Model implements Transformable
     }
 
     /**
-     * Participants relationship
+     * Participants relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -92,7 +93,7 @@ class Message extends Model implements Transformable
     }
 
     /**
-     * Recipients of this message
+     * Recipients of this message.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

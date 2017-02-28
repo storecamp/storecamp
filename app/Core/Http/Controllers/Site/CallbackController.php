@@ -6,14 +6,15 @@ use App\Core\Http\Controllers\Controller;
 use App\Core\Logic\ShopSystem;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Validator;
 use Illuminate\Http\Request;
+use Validator;
 
 class CallbackController extends Controller
 {
     use DispatchesJobs, ValidatesRequests;
 
     protected $shopSystem;
+
     public function __construct()
     {
     }
@@ -37,9 +38,9 @@ class CallbackController extends Controller
                 'shoptoken' => $shoptoken,
             ],
             [
-                'id'        => 'required|exists:' . config('shop.order_table') . ',id',
+                'id'        => 'required|exists:'.config('shop.order_table').',id',
                 'status'    => 'required|in:success,fail',
-                'shoptoken' => 'required|exists:' . config('shop.transaction_table') . ',token,order_id,' . $id,
+                'shoptoken' => 'required|exists:'.config('shop.transaction_table').',token,order_id,'.$id,
             ]
         );
 
@@ -47,7 +48,7 @@ class CallbackController extends Controller
             abort(404);
         }
 
-        $order = call_user_func(config('shop.order') . '::find', $id);
+        $order = call_user_func(config('shop.order').'::find', $id);
 
         $transaction = $order->transactions()->where('token', $shoptoken)->first();
 

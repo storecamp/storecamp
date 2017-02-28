@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\ReturnsRepository;
 use App\Core\Models\Returns;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ReturnRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class ReturnRepositoryEloquent.
  */
 class ReturnsRepositoryEloquent extends BaseRepository implements ReturnsRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class ReturnsRepositoryEloquent extends BaseRepository implements ReturnsReposit
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

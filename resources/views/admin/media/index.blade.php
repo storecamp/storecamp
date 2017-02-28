@@ -1,4 +1,4 @@
-﻿@extends('admin/app')
+@extends('admin/app')
     @section('breadcrumb')
         {!! Breadcrumbs::render('media', $disk) !!}
     @endsection

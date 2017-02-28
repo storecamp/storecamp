@@ -5,12 +5,10 @@ namespace App\Core\Traits;
 use App\Core\Models\Media;
 
 /**
- * Class MediableCore
- * @package App\Core\Traits
+ * Class MediableCore.
  */
 trait MediableCore
 {
-
     /**
      * @param $model
      * @param string $selectedFiles
@@ -18,8 +16,8 @@ trait MediableCore
      */
     private function attachMediaFiles($model, string $selectedFiles, string $tag)
     {
-        if (!empty($selectedFiles)) {
-            foreach (explode(",", $selectedFiles) as $item) {
+        if (! empty($selectedFiles)) {
+            foreach (explode(',', $selectedFiles) as $item) {
                 $model->attachMedia(Media::find($item), $tag);
             }
         }
@@ -32,7 +30,7 @@ trait MediableCore
      */
     private function syncMediaFiles($model, string $selectedFiles, string $tag)
     {
-        if (!empty($selectedFiles)) {
+        if (! empty($selectedFiles)) {
             $model->detachMediaTags($tag);
             $this->attachMediaFiles($model, $selectedFiles, $tag);
         } else {
@@ -47,9 +45,9 @@ trait MediableCore
      */
     private function syncMediaFile($model, string $selectedFile, string $tag)
     {
-        if (!empty($selectedFile)) {
+        if (! empty($selectedFile)) {
             $model->detachMediaTags($tag);
-            $selectedFile = explode(",", $selectedFile);
+            $selectedFile = explode(',', $selectedFile);
             $model->attachMedia(Media::findOrFail($selectedFile[0]), $tag);
         } else {
             $model->detachMediaTags($tag);

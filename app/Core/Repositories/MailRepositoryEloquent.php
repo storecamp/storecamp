@@ -2,20 +2,17 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Mail;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\MailRepository;
-use App\Core\Models\Mail;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class MailRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class MailRepositoryEloquent.
  */
 class MailRepositoryEloquent extends BaseRepository implements MailRepository
 {
-
     protected $defaultTemplatesPath;
     protected $personalTemplatesPath;
 
@@ -26,7 +23,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -36,7 +33,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -46,19 +43,17 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     /**
      * @return mixed
      */
-    public function getDefaultMailTemplatesPath() {
-
+    public function getDefaultMailTemplatesPath()
+    {
         return config('mail.default_mail_templates_path');
-
     }
 
     /**
      * @return mixed
      */
-    public function getCustomMailTemplatesPath() {
-
+    public function getCustomMailTemplatesPath()
+    {
         return config('mail.personal_mail_templates_path');
-
     }
 
     /**
@@ -84,7 +79,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     public function resolveMailHistory($uid)
     {
         $mailHistory = [];
-        $pathToHistory = base_path('resources/views/storage/tmp_mails/' . $uid);
+        $pathToHistory = base_path('resources/views/storage/tmp_mails/'.$uid);
         if (\File::exists($pathToHistory)) {
             $emailArr = \File::allFiles($pathToHistory);
 
@@ -94,9 +89,9 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
                 }
             }
         }
+
         return $mailHistory;
     }
-
 
     /**
      * @param $file
@@ -107,16 +102,14 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
         $path = base_path($this->defaultTemplatesPath);
 
         try {
-            $path = $path . $file . ".html";
-            if(\File::exists($path)) {
+            $path = $path.$file.'.html';
+            if (\File::exists($path)) {
                 return \File::get($path);
             }
-
         } catch (\Throwable $e) {
             return back()->withErrors($e);
         }
     }
-
 
     /**
      * @param $folder
@@ -128,21 +121,17 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
         $path = base_path('resources/views/storage/tmp_mails/');
 
         try {
-            $path = $path . '/' . $folder . '/' . $filename . ".php";
+            $path = $path.'/'.$folder.'/'.$filename.'.php';
 
             if (\File::exists($path)) {
                 return \File::get($path);
             } else {
-                return null;
+                return;
             }
-
         } catch (\Throwable $e) {
-
             return back()->withErrors($e);
         }
-
     }
-
 
     /**
      * @param $request
@@ -151,19 +140,17 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
      */
     private function putMail($request, $uid)
     {
-        $root = base_path('resources/views/storage/tmp_mails') . "/" . $uid . "/";
-        if (!\File::exists($root)) {
-
+        $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
+        if (! \File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $randomStr = str_random(5);
-        $filename = $randomStr . ".blade.php";
-        $path = $root . $filename;
-        $viewFolder = "storage/tmp_mails" . "/" . $uid . "/" . $randomStr;
+        $filename = $randomStr.'.blade.php';
+        $path = $root.$filename;
+        $viewFolder = 'storage/tmp_mails'.'/'.$uid.'/'.$randomStr;
         \File::put($path, $request->mail);
 
-        return array("root" => $root, "path" => $path, "viewFolder" => $viewFolder);
-
+        return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
     }
 
     /**
@@ -172,16 +159,13 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
      */
     private function putCSV($root)
     {
-        if (!\File::exists($root)) {
-
+        if (! \File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
 
-        $path = $root . str_random(5) . ".csv";
+        $path = $root.str_random(5).'.csv';
         \File::put($path, null);
 
         return $path;
-
     }
-
 }

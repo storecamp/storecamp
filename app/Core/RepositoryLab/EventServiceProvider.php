@@ -2,12 +2,10 @@
 
 namespace RepositoryLab\Repository;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
-class EventServiceProvider extends ServiceProvider {
-
-
+class EventServiceProvider extends ServiceProvider
+{
     /**
      * The subscriber classes to register.
      *
@@ -21,14 +19,14 @@ class EventServiceProvider extends ServiceProvider {
      */
     protected $listen = [
         \RepositoryLab\Repository\Events\RepositoryEntityCreated::class => [
-            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class
+            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class,
         ],
         \RepositoryLab\Repository\Events\RepositoryEntityUpdated::class => [
-            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class
+            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class,
         ],
         \RepositoryLab\Repository\Events\RepositoryEntityDeleted::class => [
-            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class
-        ]
+            \RepositoryLab\Repository\Listeners\CleanCacheRepository::class,
+        ],
     ];
 
     /**
@@ -48,6 +46,7 @@ class EventServiceProvider extends ServiceProvider {
             $events->subscribe($subscriber);
         }
     }
+
     /**
      * {@inheritdoc}
      */
@@ -55,6 +54,7 @@ class EventServiceProvider extends ServiceProvider {
     {
         //
     }
+
     /**
      * Get the events and handlers.
      *

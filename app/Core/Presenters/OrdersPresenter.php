@@ -6,14 +6,12 @@ use App\Core\Transformers\OrdersTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class OrdersPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class OrdersPresenter.
  */
 class OrdersPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

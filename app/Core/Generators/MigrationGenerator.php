@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Core\Generators;
+
 use App\Core\Generators\Migrations\NameParser;
 use App\Core\Generators\Migrations\SchemaParser;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 /**
- * Class MigrationGenerator
- * @package App\Core\Generators
+ * Class MigrationGenerator.
  */
 class MigrationGenerator extends Generator
 {
@@ -17,6 +17,7 @@ class MigrationGenerator extends Generator
      * @var string
      */
     protected $stub = 'migration/plain';
+
     /**
      * Get base path of destination file.
      *
@@ -24,8 +25,9 @@ class MigrationGenerator extends Generator
      */
     public function getBasePath()
     {
-        return base_path() . '/database/migrations/';
+        return base_path().'/database/migrations/';
     }
+
     /**
      * Get destination path for generated file.
      *
@@ -33,8 +35,9 @@ class MigrationGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . $this->getFileName() . '.php';
+        return $this->getBasePath().$this->getFileName().'.php';
     }
+
     /**
      * Get generator path config node.
      *
@@ -44,6 +47,7 @@ class MigrationGenerator extends Generator
     {
         return '';
     }
+
     /**
      * Get root namespace.
      *
@@ -53,6 +57,7 @@ class MigrationGenerator extends Generator
     {
         return '';
     }
+
     /**
      * Get migration name.
      *
@@ -62,6 +67,7 @@ class MigrationGenerator extends Generator
     {
         return strtolower($this->name);
     }
+
     /**
      * Get file name.
      *
@@ -69,8 +75,9 @@ class MigrationGenerator extends Generator
      */
     public function getFileName()
     {
-        return date('Y_m_d_His_') . $this->action .'_'. $this->getMigrationName() .'_table';
+        return date('Y_m_d_His_').$this->action.'_'.$this->getMigrationName().'_table';
     }
+
     /**
      * Get schema parser.
      *
@@ -80,6 +87,7 @@ class MigrationGenerator extends Generator
     {
         return new SchemaParser($this->fields);
     }
+
     /**
      * Get name parser.
      *
@@ -89,6 +97,7 @@ class MigrationGenerator extends Generator
     {
         return new NameParser($this->name);
     }
+
     /**
      * Get stub templates.
      *
@@ -132,10 +141,11 @@ class MigrationGenerator extends Generator
                 break;
         }
         $path = __DIR__;
-        if (!file_exists($path . "/Stubs/migration/{$file}.stub")) {
-            throw new FileNotFoundException($path . "/Stubs/migration/{$file}.stub");
+        if (! file_exists($path."/Stubs/migration/{$file}.stub")) {
+            throw new FileNotFoundException($path."/Stubs/migration/{$file}.stub");
         }
-        return Stub::create($path . "/Stubs/migration/{$file}.stub", $replacements);
+
+        return Stub::create($path."/Stubs/migration/{$file}.stub", $replacements);
     }
 
     /**
@@ -146,13 +156,15 @@ class MigrationGenerator extends Generator
     protected function checkFileExists($backup = false)
     {
         $path = $this->getPath();
-        if ( $this->checkMigrationExists() && !$this->force) {
+        if ($this->checkMigrationExists() && ! $this->force) {
             if (! $backup) {
                 throw new FileAlreadyExistsException($this->getMigrationName());
             }
         }
+
         return $path;
     }
+
     /**
      * Check if migration exists.
      *
@@ -161,7 +173,8 @@ class MigrationGenerator extends Generator
     protected function checkMigrationExists()
     {
         $iterator = new \FilesystemIterator(dirname($this->getPath()));
-        $filter = new \RegexIterator($iterator, '/' . $this->getMigrationName() . '.php$/');
+        $filter = new \RegexIterator($iterator, '/'.$this->getMigrationName().'.php$/');
+
         return iterator_count($filter);
     }
 }

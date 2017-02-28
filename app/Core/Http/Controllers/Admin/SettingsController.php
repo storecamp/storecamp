@@ -2,8 +2,6 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 class SettingsController extends BaseController
 {
     /**
@@ -11,7 +9,7 @@ class SettingsController extends BaseController
      */
     public function __construct()
     {
-        $this->middleware(["role:Admin"]);
+        $this->middleware(['role:Admin']);
     }
 
     /**
@@ -22,10 +20,12 @@ class SettingsController extends BaseController
     public function settings()
     {
         if (! defined('STDIN')) {
-            $stdin = fopen("php://stdin", "r");
+            $stdin = fopen('php://stdin', 'r');
         }
+
         return view('settings');
     }
+
     /**
      * Reinstall the application.
      *
@@ -35,8 +35,10 @@ class SettingsController extends BaseController
     {
         \Artisan::call('migrate:reset');
         \Artisan::call('db:seed');
+
         return redirect('settings')->with(\Flash::info('Reinstalled success!'));
     }
+
     /**
      * Clear the application cache.
      *
@@ -45,6 +47,7 @@ class SettingsController extends BaseController
     public function clearCache()
     {
         \Artisan::call('cache:clear');
+
         return redirect('settings')->with(\Flash::info('Application cache cleared!'));
     }
 }

@@ -2,24 +2,20 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Folder;
 use App\Core\Models\Media;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
+use Illuminate\Filesystem\Filesystem;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Models\Folder;
-use \Illuminate\Filesystem\Filesystem;
-use RepositoryLab\Repository\Traits\CacheableRepository;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class FolderRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class FolderRepositoryEloquent.
  */
 class FolderRepositoryEloquent extends BaseRepository implements FolderRepository
 {
-
     /**
      * @var Media
      */
@@ -61,7 +57,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -71,12 +67,13 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
     /**
      * @return mixed
      */
@@ -92,6 +89,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     public function setDisk($disk) : FolderRepositoryEloquent
     {
         $this->disk = $disk;
+
         return $this;
     }
 
@@ -110,6 +108,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     public function setDiskRoot($diskRoot) : FolderRepositoryEloquent
     {
         $this->diskRoot = $diskRoot;
+
         return $this;
     }
 
@@ -135,12 +134,14 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      */
     public function disk(string $name): FolderRepositoryEloquent
     {
-        if (!empty($name)) {
+        if (! empty($name)) {
             $that = $this->setDisk($name);
-            $that->setDiskRoot(config('filesystems.disks.' . $name . '.root'));
-            $that->setRootFromProject(config('filesystems.disks.' . $name . '.rootFromProject'));
+            $that->setDiskRoot(config('filesystems.disks.'.$name.'.root'));
+            $that->setRootFromProject(config('filesystems.disks.'.$name.'.rootFromProject'));
+
             return $that;
         }
+
         return $this;
     }
 
@@ -151,9 +152,10 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     {
         $rootFolders = $this->findWhere([
             ['parent_id', '=', null],
-            ["name", "=", ""],
-            ["path_on_disk", "=", null]
+            ['name', '=', ''],
+            ['path_on_disk', '=', null],
         ]);
+
         return $rootFolders;
     }
 
@@ -169,6 +171,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         } else {
             $newFolder = $this->disk($disk)->findByField('disk', $disk)->first();
         }
+
         return $newFolder;
     }
 
@@ -182,12 +185,15 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         while ($folder->parent_id != null) {
             $newParent = $this->find($folder->parent_id);
             array_unshift($array, $newParent->name);
+
             return $this->getParentFoldersPath($newParent, $array);
         }
-        return implode("/", array_filter($array));
+
+        return implode('/', array_filter($array));
     }
+
     /**
-     * rewrite of delete method
+     * rewrite of delete method.
      *
      * @param $id
      * @return int
@@ -196,8 +202,8 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     {
         $folder = $this->find($id);
         $parentFoldersPath = $this->getParentFoldersPath($folder);
-        $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
-        $folderFullPath = $this->getDiskRoot() . '/' . $folderPath;
+        $folderPath = $parentFoldersPath ? $parentFoldersPath.'/'.$folder->name : $folder->name;
+        $folderFullPath = $this->getDiskRoot().'/'.$folderPath;
         if ($this->file->isDirectory($folderFullPath)) {
             $medias = $this->media->inDirectory($this->getDisk(), $folderPath)->get();
             foreach ($medias as $media) {
@@ -206,19 +212,18 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
             $result = $this->file->deleteDirectory($folderFullPath);
         } else {
             $medias = $this->media->inDirectory($this->getDisk(), $folderPath);
-            if($medias->count() > 0) {
+            if ($medias->count() > 0) {
                 foreach ($medias->get() as $media) {
                     $media->delete();
                 }
             }
         }
         parent::delete($folder->id);
-
     }
 
     /**
      * Rewrite of a find method
-     * Find data by id or unique_id
+     * Find data by id or unique_id.
      *
      * @param       $id
      * @param array $columns
@@ -240,8 +245,9 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
                 return $this->parserResult($model);
             }
-        } elseif (!is_null($model)) {
+        } elseif (! is_null($model)) {
             $this->resetModel();
+
             return $this->parserResult($model);
         }
         throw (new ModelNotFoundException())->setModel(get_class($this->model), $id);
@@ -258,13 +264,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         $this->applyCriteria();
         $this->applyScope();
 
-        $model = $this->model->where("disk", '=', $this->getDisk())
+        $model = $this->model->where('disk', '=', $this->getDisk())
             ->where($key, $operator, $value)->get($columns = ['*']);
 
         $this->resetModel();
 
         return $this->parserResult($model);
     }
-
-
 }

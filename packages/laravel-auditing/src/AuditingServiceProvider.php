@@ -2,12 +2,12 @@
 
 namespace App\Core\Components\Auditing;
 
-use Illuminate\Support\ServiceProvider;
 use App\Core\Components\Auditing\Console\AuditingTableCommand;
 use App\Core\Components\Auditing\Console\AuditorMakeCommand;
 use App\Core\Components\Auditing\Console\InstallCommand;
 use App\Core\Components\Auditing\Contracts\Dispatcher;
 use App\Core\Components\Auditing\Facades\Auditing as AuditingFacade;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * This is the owen auditing service provider class.

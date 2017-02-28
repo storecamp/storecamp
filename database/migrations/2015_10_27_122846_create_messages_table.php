@@ -25,7 +25,6 @@ class CreateMessagesTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -33,7 +32,7 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('messages',function(Blueprint $table) {
+        Schema::drop('messages', function (Blueprint $table) {
             $table->dropForeign('messages_thread_id_foreign');
             $table->dropForeign('messages_user_id_foreign');
         });

@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 class CreateViewCountersTable extends Migration
 {
@@ -13,8 +12,7 @@ class CreateViewCountersTable extends Migration
      */
     public function up()
     {
-        Schema::create('counter', function($table)
-        {
+        Schema::create('counter', function ($table) {
             $table->string('unique_id', 36)->unique();
             $table->increments('id');
             $table->string('class_name');
@@ -24,8 +22,7 @@ class CreateViewCountersTable extends Migration
             $table->index('object_id');
             $table->timestamps();
         });
-        Schema::create('user_counter', function($table)
-        {
+        Schema::create('user_counter', function ($table) {
             $table->string('unique_id', 36)->unique();
             $table->increments('id');
             $table->string('class_name');
@@ -37,7 +34,6 @@ class CreateViewCountersTable extends Migration
             $table->index('object_id');
             $table->index('user_id');
         });
-
     }
 
     /**

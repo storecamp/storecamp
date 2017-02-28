@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access;
+<?php
 
-/**
+namespace App\Core\Access;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for Laravel.
  *

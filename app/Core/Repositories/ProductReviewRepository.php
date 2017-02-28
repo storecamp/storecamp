@@ -5,19 +5,17 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface FeedBackRepository
- * @package namespace SXC\Repositories;
+ * Interface FeedBackRepository.
  */
 interface ProductReviewRepository extends RepositoryInterface
 {
-
     /**
      * @return mixed
      */
     public function getModel();
 
     /**
-     * get all Feedbacks
+     * get all Feedbacks.
      * @return mixed
      */
     public function getAll();
@@ -39,9 +37,8 @@ interface ProductReviewRepository extends RepositoryInterface
      */
     public function countUserProductReviews();
 
-
     /**
-     * get all feedbacks by user id
+     * get all feedbacks by user id.
      * @param $id
      * @return mixed
      */

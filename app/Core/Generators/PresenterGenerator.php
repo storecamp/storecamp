@@ -1,11 +1,10 @@
 <?php
+
 namespace App\Core\Generators;
 
 /**
- * Class PresenterGenerator
- * @package App\Core\Generators
+ * Class PresenterGenerator.
  */
-
 class PresenterGenerator extends Generator
 {
     /**
@@ -53,7 +52,7 @@ class PresenterGenerator extends Generator
     public function getReplacements()
     {
         return array_merge(parent::getReplacements(), [
-            'appnamespace' => $this->getAppNamespace()
+            'appnamespace' => $this->getAppNamespace(),
         ]);
     }
 
@@ -64,6 +63,6 @@ class PresenterGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/'.parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) .'/' . $this->getName() . 'Presenter.php';
+        return $this->getBasePath().'/'.parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.$this->getName().'Presenter.php';
     }
 }

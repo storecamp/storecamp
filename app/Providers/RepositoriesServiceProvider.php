@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RepositoriesServiceProvider
- * @package App\Providers
+ * Class RepositoriesServiceProvider.
  */
 class RepositoriesServiceProvider extends ServiceProvider
 {
@@ -52,7 +50,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Cart',
             'Thread',
             'Message',
-            'Participant'
+            'Participant',
         ];
 
         foreach ($models as $repo) {

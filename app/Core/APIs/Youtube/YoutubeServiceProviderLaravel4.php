@@ -1,51 +1,48 @@
-<?php 
+<?php
 
 namespace App\Core\APIs\Youtube;
 
 use Config;
-use App\Core\APIs\Youtube\Youtube;
 use Illuminate\Support\ServiceProvider;
 
+class YoutubeServiceProviderLaravel4 extends ServiceProvider
+{
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
 
-class YoutubeServiceProviderLaravel4 extends ServiceProvider {
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package('youtuebApis/php-youtube-api');
+    }
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = true;
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bindShared('App\Core\APIs\Youtube\Youtube', function ($app) {
+            return new Youtube($app['config']->get('php-youtube-api::youtube'));
+        });
+    }
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->package('youtuebApis/php-youtube-api');
-	}
-
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app->bindShared('App\Core\APIs\Youtube\Youtube', function($app){
-			return new Youtube($app['config']->get('php-youtube-api::youtube'));
-		});
-	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('App\Core\APIs\Youtube\Youtube');
-	}
-
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['App\Core\APIs\Youtube\Youtube'];
+    }
 }

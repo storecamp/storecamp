@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access;
+<?php
 
-/**
+namespace App\Core\Access;
+
+/*
  * This file is part of Access,
  * a role & permission management solution for Laravel.
  *
@@ -8,9 +10,9 @@
  * @package App\Core\Access
  */
 
-use Illuminate\Support\ServiceProvider;
 use App\Core\Access\Commands\ClassCreatorCommand;
 use App\Core\Access\Commands\MigrationCommand;
+use Illuminate\Support\ServiceProvider;
 
 class AccessServiceProvider extends ServiceProvider
 {
@@ -36,8 +38,6 @@ class AccessServiceProvider extends ServiceProvider
         // Register commands
         $this->commands('command.access.migration');
         $this->commands('command.access.classes');
-
-
     }
 
     /**
@@ -47,7 +47,6 @@ class AccessServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->registerAccess();
 
         $this->registerCommands();
@@ -56,37 +55,37 @@ class AccessServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the blade directives
+     * Register the blade directives.
      *
      * @return void
      */
     private function bladeDirectives()
     {
         // Call to Access::hasRole
-        \Blade::directive('role', function($expression) {
+        \Blade::directive('role', function ($expression) {
             return "<?php if (\\Access::hasRole{$expression}) : ?>";
         });
 
-        \Blade::directive('endrole', function($expression) {
-            return "<?php endif; // Access::hasRole ?>";
+        \Blade::directive('endrole', function ($expression) {
+            return '<?php endif; // Access::hasRole ?>';
         });
 
         // Call to Access::may
-        \Blade::directive('permission', function($expression) {
+        \Blade::directive('permission', function ($expression) {
             return "<?php if (\\Access::may{$expression}) : ?>";
         });
 
-        \Blade::directive('endpermission', function($expression) {
-            return "<?php endif; // Access::may ?>";
+        \Blade::directive('endpermission', function ($expression) {
+            return '<?php endif; // Access::may ?>';
         });
 
         // Call to Access::ability
-        \Blade::directive('ability', function($expression) {
+        \Blade::directive('ability', function ($expression) {
             return "<?php if (\\Access::ability{$expression}) : ?>";
         });
 
-        \Blade::directive('endability', function($expression) {
-            return "<?php endif; // Access::ability ?>";
+        \Blade::directive('endability', function ($expression) {
+            return '<?php endif; // Access::ability ?>';
         });
     }
 
@@ -100,7 +99,7 @@ class AccessServiceProvider extends ServiceProvider
         $this->app->bind('access', function ($app) {
             return new Access($app);
         });
-        
+
         $this->app->alias('access', 'App\Core\Access\Access');
     }
 
@@ -139,7 +138,7 @@ class AccessServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'command.access.migration'
+            'command.access.migration',
         ];
     }
 }

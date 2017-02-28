@@ -1,17 +1,17 @@
-<?php namespace App\Core\Access;
+<?php
+
+namespace App\Core\Access;
 
 /**
  * This class is the main entry point of Access. Usually this the interaction
- * with this class will be done through the Access Facade
+ * with this class will be done through the Access Facade.
  *
  * @license MIT
- * @package App\Core\Access
  */
-
 class Access
 {
     /**
-     * Laravel application
+     * Laravel application.
      *
      * @var \Illuminate\Foundation\Application
      */
@@ -26,7 +26,7 @@ class Access
     }
 
     /**
-     * Checks if the current user has a role by its name
+     * Checks if the current user has a role by its name.
      *
      * @param string $name Role name.
      *
@@ -42,7 +42,7 @@ class Access
     }
 
     /**
-     * Check if the current user has a permission by its name
+     * Check if the current user has a permission by its name.
      *
      * @param string $permission Permission string.
      *
@@ -80,13 +80,13 @@ class Access
      */
     public function routeNeedsRole($route, $roles, $result = null, $requireAll = true)
     {
-        $filterName  = is_array($roles) ? implode('_', $roles) : $roles;
+        $filterName = is_array($roles) ? implode('_', $roles) : $roles;
         $filterName .= '_'.substr(md5($route), 0, 6);
 
         $closure = function () use ($roles, $result, $requireAll) {
             $hasRole = $this->hasRole($roles, $requireAll);
 
-            if (!$hasRole) {
+            if (! $hasRole) {
                 return empty($result) ? $this->app->abort(403) : $result;
             }
         };
@@ -114,13 +114,13 @@ class Access
      */
     public function routeNeedsPermission($route, $permissions, $result = null, $requireAll = true)
     {
-        $filterName  = is_array($permissions) ? implode('_', $permissions) : $permissions;
+        $filterName = is_array($permissions) ? implode('_', $permissions) : $permissions;
         $filterName .= '_'.substr(md5($route), 0, 6);
 
         $closure = function () use ($permissions, $result, $requireAll) {
             $hasPerm = $this->may($permissions, $requireAll);
 
-            if (!$hasPerm) {
+            if (! $hasPerm) {
                 return empty($result) ? $this->app->abort(403) : $result;
             }
         };
@@ -149,12 +149,12 @@ class Access
      */
     public function routeNeedsRoleOrPermission($route, $roles, $permissions, $result = null, $requireAll = false)
     {
-        $filterName  =      is_array($roles)       ? implode('_', $roles)       : $roles;
+        $filterName = is_array($roles) ? implode('_', $roles) : $roles;
         $filterName .= '_'.(is_array($permissions) ? implode('_', $permissions) : $permissions);
         $filterName .= '_'.substr(md5($route), 0, 6);
 
         $closure = function () use ($roles, $permissions, $result, $requireAll) {
-            $hasRole  = $this->hasRole($roles, $requireAll);
+            $hasRole = $this->hasRole($roles, $requireAll);
             $hasPerms = $this->may($permissions, $requireAll);
 
             if ($requireAll) {
@@ -163,7 +163,7 @@ class Access
                 $hasRolePerm = $hasRole || $hasPerms;
             }
 
-            if (!$hasRolePerm) {
+            if (! $hasRolePerm) {
                 return empty($result) ? $this->app->abort(403) : $result;
             }
         };

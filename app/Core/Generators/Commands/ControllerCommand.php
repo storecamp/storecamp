@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core\Generators\Commands;
 
 use App\Core\Generators\ControllerGenerator;
@@ -9,7 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ControllerCommand extends Command
 {
-
     /**
      * The name of command.
      *
@@ -41,14 +41,14 @@ class ControllerCommand extends Command
         $this->generators->push(new ControllerGenerator([
             'name'      => $this->argument('name'),
             'for'      => $this->argument('for'),
-            'force'     => $this->option('force')
+            'force'     => $this->option('force'),
         ]));
 
-        foreach ( $this->generators as $generator) {
+        foreach ($this->generators as $generator) {
             $generator->run();
         }
 
-        $this->info("Controller created successfully.");
+        $this->info('Controller created successfully.');
     }
 
     /**
@@ -60,7 +60,7 @@ class ControllerCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of class being generated.', null],
-            ['for', InputOption::VALUE_NONE, 'Create Controller for admin, site or something else.', null]
+            ['for', InputOption::VALUE_NONE, 'Create Controller for admin, site or something else.', null],
         ];
     }
 
@@ -72,7 +72,7 @@ class ControllerCommand extends Command
     public function getOptions()
     {
         return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null]
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null],
         ];
     }
 }

@@ -2,14 +2,12 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Models\AttributeGroupDescription;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class AttributeGroupDescriptionRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class AttributeGroupDescriptionRepositoryEloquent.
  */
 class AttributeGroupDescriptionRepositoryEloquent extends BaseRepository implements AttributeGroupDescriptionRepository
 {
@@ -17,11 +15,11 @@ class AttributeGroupDescriptionRepositoryEloquent extends BaseRepository impleme
      * @var array
      */
     protected $fieldSearchable = [
-        'name' => 'like'
+        'name' => 'like',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -39,8 +37,9 @@ class AttributeGroupDescriptionRepositoryEloquent extends BaseRepository impleme
 
         return new $model;
     }
+
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

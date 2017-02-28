@@ -2,24 +2,21 @@
 
 namespace App\Core\Contracts;
 
-
 use App\Core\Logic\CartSystem;
 use App\Core\Support\Cart\CartItem;
 use Illuminate\Support\Collection;
 
 /**
- * Interface CartSystemContract
- * @package app\Core\Contracts
+ * Interface CartSystemContract.
  */
 interface CartSystemContract
 {
-
     /**
      * @param array $data
      * @param bool $withAggregations
      * @return mixed
      */
-    public function show(array $data, bool $withAggregations=true);
+    public function show(array $data, bool $withAggregations = true);
 
     /**
      * @param array $data
@@ -32,6 +29,7 @@ interface CartSystemContract
      * @return string
      */
     public function getCurrency(): string;
+
     /**
      * @param string $currency
      * @return CartSystem
@@ -42,7 +40,7 @@ interface CartSystemContract
      * @param string|null $currency
      * @return CartSystem
      */
-    public function withCurrency(string $currency=null): CartSystem;
+    public function withCurrency(string $currency = null): CartSystem;
 
     /**
      * Add an item to the cart.

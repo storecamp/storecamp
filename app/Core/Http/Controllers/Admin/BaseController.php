@@ -9,8 +9,8 @@ use Illuminate\View\View;
 
 abstract class BaseController extends Controller
 {
-    public $viewPathBase = "admin.";
-    public $errorRedirectPath = "admin";
+    public $viewPathBase = 'admin.';
+    public $errorRedirectPath = 'admin';
 
     /**
      * @param $view
@@ -20,7 +20,7 @@ abstract class BaseController extends Controller
      */
     protected function view($view, array $data = [], array $mergeData = []) : View
     {
-        return view($this->viewPathBase . $view, $data, $mergeData);
+        return view($this->viewPathBase.$view, $data, $mergeData);
     }
 
     /**
@@ -30,7 +30,8 @@ abstract class BaseController extends Controller
     protected function redirectNotFound($e = null) : RedirectResponse
     {
         if (isset($e)) {
-            \Flash::error('Not Found! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
+            \Flash::error('Not Found! Server message is - '.$e->getMessage().' and code is - '.$e->getCode());
+
             return redirect($this->errorRedirectPath);
         } else {
             return redirect($this->errorRedirectPath)
@@ -45,15 +46,17 @@ abstract class BaseController extends Controller
     protected function redirectError($e = null) : RedirectResponse
     {
         if (isset($e)) {
-            if(request()->ajax()) {
-                return response()->json('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode(), $e->getCode());
+            if (request()->ajax()) {
+                return response()->json('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode(), $e->getCode());
             }
-            \Flash::error('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
+            \Flash::error('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode());
+
             return redirect($this->errorRedirectPath);
         } else {
-            if(request()->ajax()) {
+            if (request()->ajax()) {
                 return response()->json('Sorry Error found!', 404);
             }
+
             return redirect($this->errorRedirectPath)
                 ->with(\Flash::error('Sorry Error found!'));
         }
@@ -65,7 +68,6 @@ abstract class BaseController extends Controller
      */
     protected function parserSearchValue($search)
     {
-
         if (stripos($search, ';') || stripos($search, ':')) {
             $values = explode(';', $search);
             foreach ($values as $value) {
@@ -75,10 +77,9 @@ abstract class BaseController extends Controller
                 }
             }
 
-            return null;
+            return;
         }
 
         return '%'.trim($search).'%';
     }
-
 }

@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface ReturnRepository
- * @package namespace App\Core\Repositories;
+ * Interface ReturnRepository.
  */
 interface ReturnsRepository extends RepositoryInterface
 {

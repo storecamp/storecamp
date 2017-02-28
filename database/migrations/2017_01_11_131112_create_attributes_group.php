@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAttributesGroup extends Migration
 {
@@ -21,7 +21,6 @@ class CreateAttributesGroup extends Migration
             $table->tinyInteger('sort_order')->default(0);
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

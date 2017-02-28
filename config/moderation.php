@@ -1,5 +1,6 @@
 <?php
-return array(
+
+return [
     /*
     |--------------------------------------------------------------------------
     | Status column
@@ -31,4 +32,4 @@ return array(
     | In other case, all resources except Rejected ones, will returned as well.
     */
     'strict' => true,
-);
+];

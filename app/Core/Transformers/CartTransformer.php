@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Cart;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class CartTransformer
- * @package namespace App\Core\Transformers;
+ * Class CartTransformer.
  */
 class CartTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Cart entity
+     * Transform the \Cart entity.
      * @param \Cart $model
      *
      * @return array
@@ -26,7 +24,7 @@ class CartTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

@@ -6,11 +6,10 @@ use Illuminate\Support\Arr;
 use RepositoryLab\Repository\Contracts\PresenterInterface;
 
 /**
- * Class PresentableTrait
- * @package RepositoryLab\Repository\Traits
+ * Class PresentableTrait.
  */
-trait PresentableTrait {
-
+trait PresentableTrait
+{
     /**
      * @var PresenterInterface
      */
@@ -20,8 +19,10 @@ trait PresentableTrait {
      * @param \RepositoryLab\Repository\Contracts\PresenterInterface $presenter
      * @return $this
      */
-    public function setPresenter(PresenterInterface $presenter){
+    public function setPresenter(PresenterInterface $presenter)
+    {
         $this->presenter = $presenter;
+
         return $this;
     }
 
@@ -30,8 +31,7 @@ trait PresentableTrait {
      */
     public function presenter()
     {
-        if( $this->hasPresenter() )
-        {
+        if ($this->hasPresenter()) {
             return $this->presenter->present($this);
         }
 
@@ -45,9 +45,9 @@ trait PresentableTrait {
      */
     public function present($key, $default = null)
     {
-        if ( $this->hasPresenter() )
-        {
+        if ($this->hasPresenter()) {
             $data = $this->presenter()['data'];
+
             return Arr::get($data, $key, $default);
         }
 

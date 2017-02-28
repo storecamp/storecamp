@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Layout;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class LayoutTransformer
- * @package namespace App\Core\Transformers;
+ * Class LayoutTransformer.
  */
 class LayoutTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Layout entity
+     * Transform the \Layout entity.
      * @param \Layout $model
      *
      * @return array
@@ -26,7 +24,7 @@ class LayoutTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

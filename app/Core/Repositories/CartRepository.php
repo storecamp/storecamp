@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface CartRepository
- * @package namespace App\Core\Repositories;
+ * Interface CartRepository.
  */
 interface CartRepository extends RepositoryInterface
 {

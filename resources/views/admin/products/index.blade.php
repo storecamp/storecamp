@@ -69,7 +69,7 @@
                                        title="Are you sure you want to delete?"><em class="fa fa-trash"></em></a>
                                 </td>
                             </tr>
-                            <?php $no++;?>
+                            <?php $no++; ?>
                         @endforeach
                         </tbody>
                     </table>

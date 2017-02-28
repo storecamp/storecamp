@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Core\Models\Layout;
-use App\Core\Repositories\LayoutRepository;
 use App\Core\Http\Controllers\Controller;
+use App\Core\Repositories\LayoutRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class LayoutsController
- * @package App\Core\Http\Controllers
+ * Class LayoutsController.
  */
-class LayoutController extends Controller {
-
+class LayoutController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +52,6 @@ class LayoutController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

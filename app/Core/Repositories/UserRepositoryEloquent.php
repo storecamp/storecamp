@@ -2,14 +2,12 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\UserRepository;
 use App\Core\Models\User;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class UserRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class UserRepositoryEloquent.
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
@@ -18,11 +16,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     protected $fieldSearchable = [
         'name' => 'like',
-        'email' => 'like'
+        'email' => 'like',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -32,7 +30,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -53,8 +51,8 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      * @param $user
      * @return mixed
      */
-    public function getRole($user) {
-
+    public function getRole($user)
+    {
         foreach ($user->roles()->get() as $role) {
             {
                 return $role->name;

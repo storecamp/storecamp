@@ -2,29 +2,26 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Models\Category;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class CategoryRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class CategoryRepositoryEloquent.
  */
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
 {
-
     /**
      * @var array
      */
     protected $fieldSearchable = [
         'name' => 'like',
         'slug' => 'like',
-        'created_at' => 'like'
+        'created_at' => 'like',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -34,7 +31,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -54,14 +51,13 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     /**
      * @return mixed
      */
-    public function getCategories(){
-
-        $categories = $this->getModel()->where('parent_id', null)->get();//united
+    public function getCategories()
+    {
+        $categories = $this->getModel()->where('parent_id', null)->get(); //united
 
         $categories = $this->addRelation($categories);
 
         return $categories;
-
     }
 
     /**
@@ -70,26 +66,23 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      */
     protected function selectChild($id)
     {
-        $categories = $this->getModel()->where('parent_id',$id)->get(); //rooney
+        $categories = $this->getModel()->where('parent_id', $id)->get(); //rooney
 
         $categories = $this->addRelation($categories);
 
         return $categories;
-
     }
 
     /**
      * @param $categories
      * @return mixed
      */
-    protected function addRelation($categories){
-
+    protected function addRelation($categories)
+    {
         $categories->map(function ($item, $key) {
-
             $sub = $this->selectChild($item->id);
 
-            return $item = array_add($item,'subCategory',$sub);
-
+            return $item = array_add($item, 'subCategory', $sub);
         });
 
         return $categories;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Support\Nestedset;;
+namespace App\Core\Support\Nestedset;
 
 use App\Core\Traits\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -30,7 +30,7 @@ class DescendantsRelation extends Relation
      */
     public function __construct(QueryBuilder $builder, Model $model)
     {
-        if ( ! NestedSet::isNode($model)) {
+        if (! NestedSet::isNode($model)) {
             throw new InvalidArgumentException('Model must be node.');
         }
 
@@ -45,7 +45,7 @@ class DescendantsRelation extends Relation
      * @return mixed
      */
     public function getRelationQuery(EloquentBuilder $query, EloquentBuilder $parent,
-                                        $columns = [ '*' ]
+                                        $columns = ['*']
     ) {
         $query->select($columns);
 
@@ -80,7 +80,9 @@ class DescendantsRelation extends Relation
      */
     public function addConstraints()
     {
-        if ( ! static::$constraints) return;
+        if (! static::$constraints) {
+            return;
+        }
 
         $this->query->whereDescendantOf($this->parent);
     }

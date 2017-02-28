@@ -2,9 +2,9 @@
 
 namespace App\Core\Support\Cart;
 
+use App\Core\Contracts\Buyable;
 use App\Core\Models\Product;
 use Illuminate\Contracts\Support\Arrayable;
-use App\Core\Contracts\Buyable;
 
 class CartItem implements Arrayable, CartItemContract
 {
@@ -84,6 +84,7 @@ class CartItem implements Arrayable, CartItemContract
         $productString = $this->associatedModel;
         $product = new $productString();
         $product = $product->find($this->id);
+
         return $product;
     }
 
@@ -109,6 +110,7 @@ class CartItem implements Arrayable, CartItemContract
         }
         if ($attribute === 'priceTax') {
             $price = $this->getProduct()->getBuyablePrice();
+
             return round($price + $this->tax, 2);
         }
         if ($attribute === 'subtotal') {
@@ -131,8 +133,6 @@ class CartItem implements Arrayable, CartItemContract
         if ($attribute === 'model') {
             return with(new $this->associatedModel)->find($this->id);
         }
-
-        return null;
     }
 
     /**
@@ -163,7 +163,7 @@ class CartItem implements Arrayable, CartItemContract
 
     /**
      * Returns the formatted subtotal.
-     * Subtotal is price for whole CartItem without TAX
+     * Subtotal is price for whole CartItem without TAX.
      *
      * @param int $decimals
      * @param string $decimalPoint
@@ -177,7 +177,7 @@ class CartItem implements Arrayable, CartItemContract
 
     /**
      * Returns the formatted total.
-     * Total is price for whole CartItem with TAX
+     * Total is price for whole CartItem with TAX.
      *
      * @param int $decimals
      * @param string $decimalPoint
@@ -222,9 +222,9 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function setQuantity($qty)
     {
-        if (empty($qty) || !is_numeric($qty))
+        if (empty($qty) || ! is_numeric($qty)) {
             throw new \InvalidArgumentException('Please supply a valid quantity.');
-
+        }
         $this->qty = $qty;
     }
 
@@ -254,7 +254,6 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function updateFromArray(array $attributes)
     {
-
         $this->id = array_get($attributes, 'id', $this->id);
         $this->qty = array_get($attributes, 'qty', $this->qty);
         $this->name = array_get($attributes, 'name', $this->name);
@@ -340,7 +339,7 @@ class CartItem implements Arrayable, CartItemContract
     {
         ksort($options);
 
-        return md5($id . serialize($options));
+        return md5($id.serialize($options));
     }
 
     /**
@@ -359,7 +358,7 @@ class CartItem implements Arrayable, CartItemContract
             'price' => $this->price,
             'options' => $this->options,
             'tax' => $this->tax,
-            'subtotal' => $this->subtotal
+            'subtotal' => $this->subtotal,
         ];
     }
 }

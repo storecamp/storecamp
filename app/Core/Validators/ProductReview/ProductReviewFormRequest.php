@@ -24,9 +24,9 @@ class ProductReviewFormRequest extends FormRequest
     public function rules()
     {
         return [
-            "review" => "required|string|min:25,max:3000",
-            "hidden" => "required|boolean",
-            "rating" => "required|numeric|min:0,max:5"
+            'review' => 'required|string|min:25,max:3000',
+            'hidden' => 'required|boolean',
+            'rating' => 'required|numeric|min:0,max:5',
         ];
     }
 }

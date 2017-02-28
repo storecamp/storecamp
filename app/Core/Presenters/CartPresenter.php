@@ -6,14 +6,12 @@ use App\Core\Transformers\CartTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class CartPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class CartPresenter.
  */
 class CartPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

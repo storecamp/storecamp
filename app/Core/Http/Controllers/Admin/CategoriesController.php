@@ -3,27 +3,26 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\CategorySystemContract;
-use App\Core\Validators\Category\CategoriesFormRequest;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Class CategoriesController
- * @package App\Core\Http\Controllers
+ * Class CategoriesController.
  */
 class CategoriesController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.categories.";
+    public $viewPathBase = 'admin.categories.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/categories";
+    public $errorRedirectPath = 'admin/categories';
 
     /**
      * @var CategoryRepository
@@ -48,7 +47,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Display a listing of categories
+     * Display a listing of categories.
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -63,7 +62,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Show the form for creating a new category
+     * Show the form for creating a new category.
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -72,7 +71,7 @@ class CategoriesController extends BaseController
     {
         $categories = $this->repository->with(['parent', 'children'])->all();
         $parent = null;
-        $preferredTag = "thumbnail";
+        $preferredTag = 'thumbnail';
 
         return $this->view('create', compact('categories', 'parent', 'preferredTag'));
     }
@@ -86,6 +85,7 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->create($data);
+
             return redirect('admin/categories');
         } catch (\Throwable $exception) {
             return $this->redirectError($exception);
@@ -104,6 +104,7 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->present($data, $id, ['media']);
             $categories = $this->repository->all();
+
             return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -111,7 +112,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * get category description for json
+     * get category description for json.
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -120,6 +121,7 @@ class CategoriesController extends BaseController
         try {
             $category = $this->repository->find($id);
             $description = $category->description;
+
             return response()->json($description);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
@@ -138,7 +140,8 @@ class CategoriesController extends BaseController
             $category = $this->categorySystem->present($data, $id, ['media', 'parent']);
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
-            $preferredTag = "thumbnail";
+            $preferredTag = 'thumbnail';
+
             return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -155,6 +158,7 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->update($data, $id);
+
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -171,9 +175,10 @@ class CategoriesController extends BaseController
     {
         try {
             $deleted = $this->categorySystem->delete($id);
-            if (!$deleted) {
-                \Flash::warning("Sorry category is not deleted");
+            if (! $deleted) {
+                \Flash::warning('Sorry category is not deleted');
             }
+
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

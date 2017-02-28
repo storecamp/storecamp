@@ -2,20 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\OrdersRepository;
 use App\Core\Models\Orders;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class OrdersRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class OrdersRepositoryEloquent.
  */
 class OrdersRepositoryEloquent extends BaseRepository implements OrdersRepository
 {
-
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -25,12 +22,10 @@ class OrdersRepositoryEloquent extends BaseRepository implements OrdersRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-
-
 }

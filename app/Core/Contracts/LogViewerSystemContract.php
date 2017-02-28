@@ -3,16 +3,15 @@
  * Created by PhpStorm.
  * User: nilse
  * Date: 02.02.2017
- * Time: 13:05
+ * Time: 13:05.
  */
 
 namespace App\Core\Contracts;
 
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 /**
- * Interface LogViewerSystemContract
- * @package App\Core\Contracts
+ * Interface LogViewerSystemContract.
  */
 interface LogViewerSystemContract
 {
@@ -51,5 +50,4 @@ interface LogViewerSystemContract
      * @return mixed
      */
     public function delete(Request $request);
-
 }

@@ -6,8 +6,7 @@ use League\Fractal\TransformerAbstract;
 use RepositoryLab\Repository\Contracts\Transformable;
 
 /**
- * Class ModelTransformer
- * @package RepositoryLab\Repository\Transformer
+ * Class ModelTransformer.
  */
 class ModelTransformer extends TransformerAbstract
 {

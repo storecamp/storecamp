@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\PromocodeRepository;
 use App\Core\Models\Promocode;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class PromocodeRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class PromocodeRepositoryEloquent.
  */
 class PromocodeRepositoryEloquent extends BaseRepository implements PromocodeRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class PromocodeRepositoryEloquent extends BaseRepository implements PromocodeRep
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

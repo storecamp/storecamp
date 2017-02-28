@@ -6,14 +6,12 @@ use App\Core\Transformers\MessageTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class MessagePresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class MessagePresenter.
  */
 class MessagePresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

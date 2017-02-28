@@ -2,12 +2,10 @@
 
 namespace App\Core\Contracts;
 
-
 use App\Core\Models\Folder;
 
 /**
- * Interface MediaSystemContract
- * @package App\Core\Contracts
+ * Interface MediaSystemContract.
  */
 interface MediaSystemContract
 {
@@ -34,6 +32,7 @@ interface MediaSystemContract
      * @return mixed
      */
     public function makeFolder($request, $disk = '') : Folder;
+
     /**
      * @param $request
      * @param string $disk

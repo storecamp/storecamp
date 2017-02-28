@@ -2,32 +2,20 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Models\Mail;
-use App\Events\MailSentTOReceiver;
-use App\Jobs\SendCampaignEmails;
-use App\Core\Models\User;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use RepositoryLab\Repository\Traits\CacheableRepository;
-use App\Core\Repositories\SubscribersRepository;
 use App\Core\Models\Subscribers;
-
+use App\Core\Models\User;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use League\Csv\Writer;
-use League\Csv\Reader;
-use Illuminate\Routing\UrlGenerator;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Mail\Mailer;
+use RepositoryLab\Repository\Contracts\CacheableInterface;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Traits\CacheableRepository;
 
 /**
- * Class SubscribersRepositoryEloquent
- * @package App\Core\Repositories
+ * Class SubscribersRepositoryEloquent.
  */
 class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository, CacheableInterface
 {
-
     use CacheableRepository;
     /**
      * @var RolesRepository
@@ -56,8 +44,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     public function __construct(Application $app, Dispatcher $dispatcher,
                                 RolesRepository $roleRepository,
                                 CampaignRepository $campaignRepository
-    )
-    {
+    ) {
         parent::__construct($app, $dispatcher);
 
         $this->roleRepository = $roleRepository;
@@ -67,7 +54,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     }
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -77,7 +64,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -85,7 +72,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     }
 
     /**
-     * get the model
+     * get the model.
      *
      * @return mixed
      */
@@ -102,7 +89,6 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
      */
     public function findSubscriber($email)
     {
-
         $subscriber = $this->getModel()->where('email', $email)->first();
 
         return $subscriber;
@@ -120,10 +106,11 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
             $subscriber->{$key} = $value;
         }
         $subscriber->save();
-        if (!is_null($list)) {
+        if (! is_null($list)) {
             $list->subscribers()->attach($subscriber);
             $list->save();
         }
+
         return true;
     }
 
@@ -137,26 +124,30 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         $mail = $request->get('subscriber_email');
         $list = $this->campaignRepository->find($campaignId);
         $info = [
-            'email' => $mail
+            'email' => $mail,
         ];
 
         if (is_null($subscriber = $this->getModel()->where('email', $mail)->first())) {
-            if (!is_null($list)) {
+            if (! is_null($list)) {
                 $list->subscribers()->attach($subscriber);
                 $list->save();
                 $this->createSubscriber($info, $list);
+
                 return true;
             } else {
                 return false;
             }
         } else {
-            $countListEmail = $list->subscribers()->where("email", $mail)->count();
+            $countListEmail = $list->subscribers()->where('email', $mail)->count();
 
             if ($countListEmail == 0) {
                 $subscriber = $this->getModel()->mails($mail)->first();
                 $list->subscribers()->sync([$subscriber->id]);
+
                 return true;
-            } else return false;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -172,20 +163,21 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         $subscriber = $this->getModel()->where('email', $mail)->first();
 
         if (is_null($subscriber)) {
-            \Toastr::warning("Subscriber Not Found. Sorry!!!");
+            \Toastr::warning('Subscriber Not Found. Sorry!!!');
+
             return redirect()->back();
         }
 
         foreach ($subscriber->newsList as $list) {
-            if ($list->name == $type || $type === NULL) {
+            if ($list->name == $type || $type === null) {
                 $list->subscribers()->detach($subscriber);
             }
         }
         if (is_null($type)) {
             $subscriber->delete();
+
             return true;
         }
-
     }
 
     /**
@@ -197,8 +189,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         if (is_null($type)) {
             return $this->campaignRepository->all();
         } else {
-            return $this->campaignRepository->findByField("listName", $type);
+            return $this->campaignRepository->findByField('listName', $type);
         }
     }
-
 }

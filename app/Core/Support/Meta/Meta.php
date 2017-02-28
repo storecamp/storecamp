@@ -2,7 +2,6 @@
 
 namespace App\Core\Support\Meta;
 
-
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -30,7 +29,7 @@ class Meta extends Model implements Transformable
             'meta_value',
             'meta_type',
             'metable_id',
-            'metable_type'
+            'metable_type',
         ];
 
     public function setTable($table)

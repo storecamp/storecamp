@@ -2,7 +2,6 @@
 
 namespace App\Core\Logic;
 
-
 use App\Core\Contracts\ShopSystemContract;
 use App\Core\Exceptions\CheckoutException;
 use App\Core\Exceptions\GatewayException;
@@ -18,35 +17,35 @@ class ShopSystem implements ShopSystemContract
      * Forces quantity to reset when adding items to cart.
      * @var bool
      */
-    const QUANTITY_RESET                = true;
+    const QUANTITY_RESET = true;
 
     /**
      * Gateway in use.
      * @var string
      */
-    protected static $gatewayKey        = null;
+    protected static $gatewayKey = null;
 
     /**
      * Gateway instance.
      * @var object
      */
-    protected static $gateway           = null;
+    protected static $gateway = null;
 
     /**
      * Gatway in use.
      * @var string
      */
-    protected static $exception         = null;
+    protected static $exception = null;
 
     /**
-     * Laravel application
+     * Laravel application.
      *
      * @var \Illuminate\Foundation\Application
      */
     private $errorMessage;
 
     /**
-     * Laravel application
+     * Laravel application.
      *
      * @var \Illuminate\Foundation\Application
      */
@@ -60,10 +59,10 @@ class ShopSystem implements ShopSystemContract
      */
     public function __construct($app)
     {
-        $this->app              = $app;
-        static::$gatewayKey     = $this->getGateway();
-        static::$exception      = null;
-        static::$gateway        = static::instanceGateway();
+        $this->app = $app;
+        static::$gatewayKey = $this->getGateway();
+        static::$exception = null;
+        static::$gateway = static::instanceGateway();
     }
 
     /**
@@ -81,10 +80,11 @@ class ShopSystem implements ShopSystemContract
      */
     public static function setGateway($gatewayKey)
     {
-        if (!array_key_exists($gatewayKey, config('sales.gateways')))
+        if (! array_key_exists($gatewayKey, config('sales.gateways'))) {
             throw new ShopException('Invalid gateway.');
+        }
         static::$gatewayKey = $gatewayKey;
-        static::$gateway    = static::instanceGateway();
+        static::$gateway = static::instanceGateway();
         \Session::push('sales.gateway', $gatewayKey);
     }
 
@@ -94,6 +94,7 @@ class ShopSystem implements ShopSystemContract
     public static function getGateway()
     {
         $gateways = \Session::get('sales.gateway');
+
         return $gateways && count($gateways) > 0
             ? $gateways[count($gateways) - 1]
             : null;
@@ -113,7 +114,9 @@ class ShopSystem implements ShopSystemContract
             if (empty(static::$gatewayKey)) {
                 throw new ShopException('Payment gateway not selected.');
             }
-            if (empty($cart)) $cart = \Auth::user()->cart;
+            if (empty($cart)) {
+                $cart = \Auth::user()->cart;
+            }
             static::$gateway->onCheckout($cart);
         } catch (ShopException $e) {
             static::setException($e);
@@ -125,8 +128,10 @@ class ShopSystem implements ShopSystemContract
             static::$exception = $e;
             $success = false;
         }
-        if ($cart)
+        if ($cart) {
             \event(new CartCheckout($cart->id, $success));
+        }
+
         return $success;
     }
 
@@ -140,9 +145,12 @@ class ShopSystem implements ShopSystemContract
     public static function placeOrder($cart = null)
     {
         try {
-            if (empty(static::$gatewayKey))
+            if (empty(static::$gatewayKey)) {
                 throw new ShopException('Payment gateway not selected.');
-            if (empty($cart)) $cart = \Auth::user()->cart;
+            }
+            if (empty($cart)) {
+                $cart = \Auth::user()->cart;
+            }
             $order = $cart->placeOrder();
             $statusCode = $order->statusCode;
             \event(new OrderPlaced($order->id));
@@ -158,8 +166,9 @@ class ShopSystem implements ShopSystemContract
                     static::$gateway->getTransactionToken()
                 );
                 // Fire event
-                if ($order->isCompleted)
+                if ($order->isCompleted) {
                     \event(new OrderCompleted($order->id));
+                }
             } else {
                 $order->statusCode = 'failed';
                 $order->save();
@@ -193,6 +202,7 @@ class ShopSystem implements ShopSystemContract
         }
         if ($order) {
             static::checkStatusChange($order, $statusCode);
+
             return $order;
         } else {
             return;
@@ -223,9 +233,10 @@ class ShopSystem implements ShopSystemContract
                         static::$gateway->getTransactionToken()
                     );
                     // Fire event
-                    if ($order->isCompleted)
+                    if ($order->isCompleted) {
                         \event(new OrderCompleted($order->id));
-                } else if ($status == 'fail') {
+                    }
+                } elseif ($status == 'fail') {
                     static::$gateway->onCallbackFail($order, $data);
                     $order->statusCode = 'failed';
                 }
@@ -256,12 +267,12 @@ class ShopSystem implements ShopSystemContract
             [
                 '/:symbol/',
                 '/:price/',
-                '/:currency/'
+                '/:currency/',
             ],
             [
                 config('sales.currency_symbol'),
                 $value,
-                config('sales.currency')
+                config('sales.currency'),
             ],
             config('sales.display_price_format')
         );
@@ -304,8 +315,11 @@ class ShopSystem implements ShopSystemContract
      */
     protected static function instanceGateway()
     {
-        if (empty(static::$gatewayKey)) return;
-        $className = '\\' . config('sales.gateways')[static::$gatewayKey];
+        if (empty(static::$gatewayKey)) {
+            return;
+        }
+        $className = '\\'.config('sales.gateways')[static::$gatewayKey];
+
         return new $className(static::$gatewayKey);
     }
 
@@ -317,7 +331,8 @@ class ShopSystem implements ShopSystemContract
      */
     protected static function checkStatusChange($order, $prevStatusCode)
     {
-        if (!empty($prevStatusCode) && $order->statusCode != $prevStatusCode)
+        if (! empty($prevStatusCode) && $order->statusCode != $prevStatusCode) {
             \event(new OrderStatusChanged($order->id, $order->statusCode, $prevStatusCode));
+        }
     }
 }

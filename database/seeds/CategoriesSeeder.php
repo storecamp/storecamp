@@ -24,7 +24,7 @@ class CategoriesSeeder extends Seeder
                 'Prestigio',
                 'Razer',
                 'Toshiba',
-                'Xiaomi'
+                'Xiaomi',
             ],
             'PC' => [
                 'Components',
@@ -38,7 +38,7 @@ class CategoriesSeeder extends Seeder
                 'Graphic Cards',
                 'Memory (RAM)',
                 'Fans and coolers',
-                'Computer Accessories'
+                'Computer Accessories',
             ],
             'Phones' => [
                 'Acer',
@@ -71,7 +71,7 @@ class CategoriesSeeder extends Seeder
                 'Sigma',
                 'Sony',
                 'Xiaomi',
-                'ZTE'
+                'ZTE',
             ],
             'TV' => [
                 'televisions',
@@ -79,27 +79,27 @@ class CategoriesSeeder extends Seeder
                 'Supports, fastening TV',
                 'TV antennas and receivers',
                 'TV Accessories',
-                'Universal remote controls'
+                'Universal remote controls',
             ],
             'Audio' => [
                 'home audio',
                 'Acoustics',
                 'Portable audio',
                 'Audio Accessories',
-                'A stereo'
-            ]
+                'A stereo',
+            ],
         ];
 
         foreach (array_keys($categories) as $category) {
             $newCategory = \App\Core\Models\Category::create([
                 'name' => $category,
-                'description' => $category
+                'description' => $category,
             ]);
             foreach ($categories[$category] as $child) {
                 $childCategory = \App\Core\Models\Category::create([
                     'parent_id' => $newCategory->id,
                     'name' => $child,
-                    'description' => $child
+                    'description' => $child,
                 ]);
             }
         }

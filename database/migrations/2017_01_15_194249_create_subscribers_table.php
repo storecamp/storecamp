@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSubscribersTable extends Migration
 {
@@ -30,7 +30,7 @@ class CreateSubscribersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('subscribers', function(Blueprint $table) {
+        Schema::drop('subscribers', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });
     }

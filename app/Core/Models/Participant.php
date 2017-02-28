@@ -2,12 +2,12 @@
 
 namespace App\Core\Models;
 
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Participant extends Model implements Transformable
 {
@@ -18,7 +18,7 @@ class Participant extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**
@@ -43,7 +43,7 @@ class Participant extends Model implements Transformable
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'last_read'];
 
     /**
-     * Thread relationship
+     * Thread relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -53,7 +53,7 @@ class Participant extends Model implements Transformable
     }
 
     /**
-     * User relationship
+     * User relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -61,6 +61,4 @@ class Participant extends Model implements Transformable
     {
         return $this->belongsTo(config('messenger.user_model'));
     }
-
-
 }

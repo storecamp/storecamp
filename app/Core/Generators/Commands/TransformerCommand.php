@@ -1,15 +1,14 @@
 <?php
+
 namespace App\Core\Generators\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use App\Core\Generators\TransformerGenerator;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class TransformerCommand extends Command
 {
-
     /**
      * The name of command.
      *
@@ -35,9 +34,8 @@ class TransformerCommand extends Command
             'name'  => $this->argument('name'),
             'force' => $this->option('force'),
         ]))->run();
-        $this->info("Transformer created successfully.");
+        $this->info('Transformer created successfully.');
     }
-
 
     /**
      * The array of command arguments.
@@ -59,7 +57,7 @@ class TransformerCommand extends Command
     public function getOptions()
     {
         return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null]
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null],
         ];
     }
 }

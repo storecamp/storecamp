@@ -1,19 +1,16 @@
 <?php
 
-
 namespace App\Core\Models;
 
-use App\Core\Components\Auditing\Auditable;
 use App\Core\Access\AccessRole;
-use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Components\Auditing\Auditable;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class Role
+ * Class Role.
  *
- * @package App
  * @property int $id
  * @property string $unique_id
  * @property string $name
@@ -45,7 +42,7 @@ class Role extends AccessRole implements Transformable
     protected $fillable = ['name', 'display_name', 'description'];
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -59,30 +56,31 @@ class Role extends AccessRole implements Transformable
     {
         $roleAdminArr = $this->users()->get();
 
-        $adminArr = array();
+        $adminArr = [];
 
         foreach ($roleAdminArr as $key => $admin) {
-
             $adminArr[] = $admin->id;
         }
+
         return array_values($adminArr);
     }
 
     /**
      * @param $query
      */
-    public function scopeWhereAdmin($query){
-
-       $query->where("name", "Admin");
+    public function scopeWhereAdmin($query)
+    {
+        $query->where('name', 'Admin');
     }
 
     /**
-     * detach all permissions
+     * detach all permissions.
      */
     public function detachAllPermissions()
     {
         $this->perms()->sync([]);
     }
+
     /**
      * @param string $name
      * @return mixed

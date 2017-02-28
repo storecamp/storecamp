@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\ParticipantRepository;
 use App\Core\Models\Participant;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ParticipantRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class ParticipantRepositoryEloquent.
  */
 class ParticipantRepositoryEloquent extends BaseRepository implements ParticipantRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class ParticipantRepositoryEloquent extends BaseRepository implements Participan
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

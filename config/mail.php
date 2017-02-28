@@ -18,7 +18,6 @@ return [
 
     'driver' => env('APP_ENV') == 'local' ? env('MAIL_DRIVER_LOCAL', 'mail') : env('MAIL_DRIVER', 'sendmail'),
 
-
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address
@@ -55,8 +54,7 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-    'from' =>
-        array('address' => env('APP_ENV') == 'local' ? 'dev@domain.com' : env('MAIL_FROM'), 'name' => env('APP_ENV') == 'local' ? 'Dev Example' : env('MAIL_NAME')),
+    'from' => ['address' => env('APP_ENV') == 'local' ? 'dev@domain.com' : env('MAIL_FROM'), 'name' => env('APP_ENV') == 'local' ? 'Dev Example' : env('MAIL_NAME')],
 
     /*
     |--------------------------------------------------------------------------
@@ -112,6 +110,6 @@ return [
 
     'pretend' => true,
 
-    'default_mail_templates_path' => "uploads/mails/",
+    'default_mail_templates_path' => 'uploads/mails/',
 
 ];
