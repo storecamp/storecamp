@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \Illuminate\Database\Eloquent\Model::unguard();
-
+        Artisan::call('cache:clear');
         $this->call(AccessSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(CategoriesSeeder::class);

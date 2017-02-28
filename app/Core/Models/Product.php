@@ -7,6 +7,7 @@ use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
+use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
@@ -103,6 +104,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use Mediable;
     use CartItemTrait;
     use CacheableEloquent;
+    use ViewCounterTrait;
 
     /**
      * Custom field name to define the item's name.

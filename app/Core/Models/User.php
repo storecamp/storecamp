@@ -6,6 +6,7 @@ use App\Core\Access\Traits\AccessUserTrait;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Traits\Messagable;
 use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,6 +80,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use Auditable;
     use Mediable;
     use CacheableEloquent;
+    use ViewCounterTrait;
 
     /**
      * @var string

@@ -4,8 +4,14 @@
     @else
         <div class="alert alert-{{ Session::get('flash_notification.level') }}">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
-            {{ Session::get('flash_notification.message') }}
+            <?php $messages = Session::get('flash_notification.message'); ?>
+            @if (count($messages) <= 1)
+                {!! $messages !!}
+            @else
+                @foreach($messages as $message)
+                    {!! $message !!}
+                @endforeach
+            @endif
         </div>
     @endif
 @endif

@@ -17,7 +17,6 @@ abstract class Model extends Eloquent
         if ($method == 'find') {
             $this->finder(...$parameters);
         }
-
         return parent::__call($method, $parameters);
     }
 

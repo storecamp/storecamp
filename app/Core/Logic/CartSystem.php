@@ -258,6 +258,7 @@ class CartSystem implements CartSystemContract
     public function find($rowId)
     {
         $content = $this->getContent();
+        dd($content);
         if ( ! $content->has($rowId))
             throw new InvalidRowIDException("The cart does not contain rowId {$rowId}.");
         return $content->get($rowId);
@@ -281,16 +282,31 @@ class CartSystem implements CartSystemContract
         if (is_null($this->session->get($this->instance))) {
             return new Collection([]);
         }
-//        $content = $this->session->get($this->instance);
-//
-//        foreach ($content as $item) {
-//            $cartProduct = $item->getProduct();
-//            if (!$cartProduct) {
-//                $this->remove($item->rowId);
-//            }
-//        }
-        return $this->session->get($this->instance);
+        $content = $this->session->get($this->instance);
+        return $content;
     }
+
+    /**
+     * recheck items in the cart
+     * with products table
+     *
+     * @param $content
+     * @return mixed
+     */
+    private function checkItems($content)
+    {
+        foreach ($content as $item) {
+            $cartProduct = $item->getProduct();
+            if (!$cartProduct) {
+                $content->pull($item->rowId);
+                $this->events->fire('cart.removed', $item);
+                $this->session->put($this->instance, $content);
+            }
+        }
+        $content = $this->session->get($this->instance);
+        return $content;
+    }
+
     /**
      * Get the number of items in the cart.
      *
@@ -514,6 +530,7 @@ class CartSystem implements CartSystemContract
         $content = $this->session->has($this->instance)
             ? $this->session->get($this->instance)
             : new Collection();
+        $content = $this->checkItems($content);
         return $content;
     }
 
