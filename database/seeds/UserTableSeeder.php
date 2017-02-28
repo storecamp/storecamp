@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Core\Models\User;
+use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder
 
             'email' => 'nilsenj@yandex.ua',
 
-            'password' => 'nilsenj1992'
+            'password' => 'nilsenj1992',
         ]);
 
         $user->attachRole(1);
@@ -29,12 +29,12 @@ class UserTableSeeder extends Seeder
 
             'email' => 'nikoleivan@gmail.com',
 
-            'password' => 'nilsenj-dev-01'
+            'password' => 'nilsenj-dev-01',
         ]);
 
         $user->attachRole(2);
 
-        factory(User::class, 20)->create()->each(function($u) {
+        factory(User::class, 20)->create()->each(function ($u) {
             $u->attachRole(2);
         });
     }

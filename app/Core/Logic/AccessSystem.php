@@ -3,7 +3,6 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\AccessSystemContract;
-use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
 
@@ -42,12 +41,13 @@ class AccessSystem implements AccessSystemContract
         if ($id) {
             $roles = $this->rolesRepository->find($id);
         } else {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $roles = $this->rolesRepository->with($with)->paginate();
             } else {
                 $roles = $this->rolesRepository->paginate();
             }
         }
+
         return $roles;
     }
 
@@ -62,12 +62,13 @@ class AccessSystem implements AccessSystemContract
         if ($id) {
             $permissions = $this->permissionRepository->find($id);
         } else {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $permissions = $this->permissionRepository->with($with)->paginate();
             } else {
                 $permissions = $this->permissionRepository->paginate();
             }
         }
+
         return $permissions;
     }
 
@@ -78,6 +79,7 @@ class AccessSystem implements AccessSystemContract
     public function createRole(array $data)
     {
         $role = $this->rolesRepository->store($data);
+
         return $role;
     }
 
@@ -88,6 +90,7 @@ class AccessSystem implements AccessSystemContract
     public function createPermission(array $data)
     {
         $permission = $this->permissionRepository->create($data);
+
         return $permission;
     }
 
@@ -102,6 +105,7 @@ class AccessSystem implements AccessSystemContract
         unset($data['permissions']);
         $role = $this->rolesRepository->find($id);
         $role = $this->rolesRepository->renew($data, $permissions, $role);
+
         return $role;
     }
 
@@ -113,6 +117,7 @@ class AccessSystem implements AccessSystemContract
     public function updatePermission(array $data, $id)
     {
         $permission = $this->permissionRepository->update($data, $id);
+
         return $permission;
     }
 
@@ -124,8 +129,8 @@ class AccessSystem implements AccessSystemContract
     public function deleteRole($id, array $data = []): int
     {
         $deleted = $this->rolesRepository->delete($id);
-        return $deleted;
 
+        return $deleted;
     }
 
     /**
@@ -136,7 +141,7 @@ class AccessSystem implements AccessSystemContract
     public function deletePermission($id, array $data = []): int
     {
         $deleted = $this->permissionRepository->delete($id);
-        return $deleted;
 
+        return $deleted;
     }
 }

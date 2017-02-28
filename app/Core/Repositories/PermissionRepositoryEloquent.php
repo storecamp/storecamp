@@ -3,18 +3,16 @@
 namespace App\Core\Repositories;
 
 use App\Core\Models\Permission;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\PermissionRepository;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class PermissionRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class PermissionRepositoryEloquent.
  */
 class PermissionRepositoryEloquent extends BaseRepository implements PermissionRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -22,12 +20,12 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
     {
         return Permission::class;
     }
+
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-
 }

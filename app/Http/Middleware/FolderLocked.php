@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use App\Core\Repositories\FolderRepository;
 use Closure;
-use Illuminate\Support\Facades\URL;
 
 class FolderLocked
 {
@@ -31,10 +30,12 @@ class FolderLocked
         $disk = $request->disk ? $request->disk : 'local';
         $folderId = $request->folder;
 
-        if($this->folder->disk($disk)->find($folderId)->locked){
-            \Toastr::warning("Folder is used in other parts of the app", "Sorry it is locked and can't be edited or deleted!");
+        if ($this->folder->disk($disk)->find($folderId)->locked) {
+            \Toastr::warning('Folder is used in other parts of the app', "Sorry it is locked and can't be edited or deleted!");
+
             return redirect()->to(\URL::previous());
         }
+
         return $next($request);
     }
 }

@@ -7,19 +7,18 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
- * Class AttributesController
- * @package App\Core\Http\Controllers\Admin
+ * Class AttributesController.
  */
 class AttributesController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.attributes.";
+    public $viewPathBase = 'admin.attributes.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/attributes";
+    public $errorRedirectPath = 'admin/attributes';
 
     /**
      * @var AttributeGroupSystemContract
@@ -38,13 +37,12 @@ class AttributesController extends BaseController
      * AttributesController constructor.
      * @param AttributeGroupSystemContract $attributeGroupSystem
      */
-    function __construct(AttributeGroupSystemContract $attributeGroupSystem)
+    public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
     {
         $this->attributeGroupSystem = $attributeGroupSystem;
         $this->groupRepository = $attributeGroupSystem->group;
         $this->groupDescriptionRepository = $attributeGroupSystem->description;
     }
-
 
     /**
      * @param Request $request
@@ -72,6 +70,7 @@ class AttributesController extends BaseController
     }
 
     /*TODO Create form request*/
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -81,6 +80,7 @@ class AttributesController extends BaseController
         try {
             $data = $request->all();
             $groupDescription = $this->attributeGroupSystem->createDescription($data);
+
             return redirect('admin/attributes');
         } catch (\Throwable $exception) {
             return $this->redirectNotFound($exception);
@@ -97,6 +97,7 @@ class AttributesController extends BaseController
         try {
             $data = $request->all();
             $groupDescriptions = $this->attributeGroupSystem->presentDescription($data, $id, ['attributesGroup']);
+
             return $this->view('show', compact('groupDescriptions'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -113,7 +114,7 @@ class AttributesController extends BaseController
         try {
             $data = $request->all();
             $groupDescription = $this->attributeGroupSystem->presentDescription($data, $id, ['attributesGroup']);
-            $attributesList = $groupDescription->attributesGroup->pluck("name", "id");
+            $attributesList = $groupDescription->attributesGroup->pluck('name', 'id');
             $selector = buildSelect(route('admin::attribute_groups::get::json'),
                 'attributes_group_id', false, $attributesList->toArray(), $attributesList->toArray());
 
@@ -126,6 +127,7 @@ class AttributesController extends BaseController
     }
 
     /*TODO Create form request*/
+
     /**
      * @param Request $request
      * @param $id
@@ -136,6 +138,7 @@ class AttributesController extends BaseController
         try {
             $data = $request->all();
             $groupdescription = $this->attributeGroupSystem->updateDescription($data, $id);
+
             return redirect('admin/attributes');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -152,9 +155,10 @@ class AttributesController extends BaseController
     {
         try {
             $deleted = $this->attributeGroupSystem->deleteDescription($id);
-            if (!$deleted) {
-                \Flash::warning("Item not deleted. Some error appeared!");
+            if (! $deleted) {
+                \Flash::warning('Item not deleted. Some error appeared!');
             }
+
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -164,7 +168,7 @@ class AttributesController extends BaseController
     }
 
     /**
-     * get groups name in json format
+     * get groups name in json format.
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -172,12 +176,13 @@ class AttributesController extends BaseController
     public function getJson(Request $request)
     {
         $query = $this->parserSearchValue($request->get('search'));
-        $attrGroup = $this->groupDescriptionRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
+        $attrGroup = $this->groupDescriptionRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
         $attrGroupArr = [];
         foreach ($attrGroup as $key => $attrGroupItem) {
             $attrGroupArr[$key]['text'] = $attrGroupItem['name'];
             $attrGroupArr[$key]['id'] = $attrGroupItem['id'];
         }
+
         return \Response::json($attrGroupArr);
     }
 }

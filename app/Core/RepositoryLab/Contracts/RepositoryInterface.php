@@ -1,41 +1,41 @@
 <?php
+
 namespace RepositoryLab\Repository\Contracts;
 
 /**
- * Interface RepositoryInterface
- * @package RepositoryLab\Repository\Contracts
+ * Interface RepositoryInterface.
  */
 interface RepositoryInterface
 {
     /**
-     * get model instance
+     * get model instance.
      */
     public function getModel();
 
     /**
-     * Retrieve all data of repository
+     * Retrieve all data of repository.
      *
      * @param array $columns
      * @return mixed
      */
-    public function all($columns = array('*'));
+    public function all($columns = ['*']);
 
     /**
-     * Retrieve all data of repository, paginated
+     * Retrieve all data of repository, paginated.
      * @param null $limit
      * @param array $columns
      * @return mixed
      */
-    public function paginate($limit = null, $columns = array('*'));
+    public function paginate($limit = null, $columns = ['*']);
 
     /**
-     * Find data by id
+     * Find data by id.
      *
      * @param $id
      * @param array $columns
      * @return mixed
      */
-    public function find($id, $columns = array('*'));
+    public function find($id, $columns = ['*']);
 
     /**
      * @param $id
@@ -43,47 +43,48 @@ interface RepositoryInterface
      * @return mixed
      */
     public function findOrFail($id, $columns = ['*']);
+
     /**
-     * Find data by field and value
+     * Find data by field and value.
      *
      * @param $field
      * @param $value
      * @param array $columns
      * @return mixed
      */
-    public function findByField($field, $value, $columns = array('*'));
+    public function findByField($field, $value, $columns = ['*']);
 
     /**
-     * Find data by multiple fields
+     * Find data by multiple fields.
      *
      * @param array $where
      * @param array $columns
      * @return mixed
      */
-    public function findWhere(array $where, $columns = array('*'));
+    public function findWhere(array $where, $columns = ['*']);
 
     /**
-     * Find data by multiple values in one field
+     * Find data by multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
      * @return mixed
      */
-    public function findWhereIn($field, array $values, $columns = array('*'));
+    public function findWhereIn($field, array $values, $columns = ['*']);
 
     /**
-     * Find data by excluding multiple values in one field
+     * Find data by excluding multiple values in one field.
      *
      * @param $field
      * @param array $values
      * @param array $columns
      * @return mixed
      */
-    public function findWhereNotIn($field, array $values, $columns = array('*'));
+    public function findWhereNotIn($field, array $values, $columns = ['*']);
 
     /**
-     * Save a new entity in repository
+     * Save a new entity in repository.
      *
      * @param array $attributes
      * @return mixed
@@ -91,7 +92,7 @@ interface RepositoryInterface
     public function create(array $attributes);
 
     /**
-     * Update a entity in repository by id
+     * Update a entity in repository by id.
      *
      * @param array $attributes
      * @param $id
@@ -107,7 +108,7 @@ interface RepositoryInterface
     public function updateOrCreate(array $attributes, array $values = []);
 
     /**
-     * Delete a entity in repository by id
+     * Delete a entity in repository by id.
      *
      * @param $id
      * @return int
@@ -115,7 +116,7 @@ interface RepositoryInterface
     public function delete($id);
 
     /**
-     * Load relations
+     * Load relations.
      *
      * @param $relations
      * @return $this
@@ -123,7 +124,7 @@ interface RepositoryInterface
     public function with($relations);
 
     /**
-     * Set hidden fields
+     * Set hidden fields.
      *
      * @param array $fields
      * @return $this
@@ -131,7 +132,7 @@ interface RepositoryInterface
     public function hidden(array $fields);
 
     /**
-     * Set visible fields
+     * Set visible fields.
      *
      * @param array $fields
      * @return $this
@@ -139,7 +140,7 @@ interface RepositoryInterface
     public function visible(array $fields);
 
     /**
-     * Query Scope
+     * Query Scope.
      *
      * @param \Closure $scope
      * @return $this
@@ -147,14 +148,14 @@ interface RepositoryInterface
     public function scopeQuery(\Closure $scope);
 
     /**
-     * Get Searchable Fields
+     * Get Searchable Fields.
      *
      * @return array
      */
     public function getFieldsSearchable();
 
     /**
-     * Set Presenter
+     * Set Presenter.
      *
      * @param $presenter
      * @return mixed
@@ -162,7 +163,7 @@ interface RepositoryInterface
     public function setPresenter($presenter);
 
     /**
-     * Skip Presenter Wrapper
+     * Skip Presenter Wrapper.
      *
      * @param bool $status
      * @return $this
@@ -171,20 +172,19 @@ interface RepositoryInterface
 
     /**
      * get the name of the Model
-     * not lowercased
+     * not lowercased.
      *
      * @return mixed
      */
 //    public function getModelName();
 
     /**
-     * get some data attached to model from config folder
+     * get some data attached to model from config folder.
      *
      * @param $configFileName
      * @return mixed
      */
 //    public function bindFromConfigModel($configFileName);
-
 
     /**
      * @param $criteria
@@ -192,9 +192,8 @@ interface RepositoryInterface
      */
     public function pushCriteria($criteria);
 
-
     /**
-     * Retrieve data array for populate field select
+     * Retrieve data array for populate field select.
      *
      * @param string $column
      * @param string|null $key
@@ -204,15 +203,15 @@ interface RepositoryInterface
     public function lists($column, $key = null);
 
     /**
-     * Retrieve all data of repository, simple paginated
+     * Retrieve all data of repository, simple paginated.
      * @param null $limit
      * @param array $columns
      * @return mixed
      */
-    public function simplePaginate($limit = null, $columns = array('*'));
+    public function simplePaginate($limit = null, $columns = ['*']);
 
     /**
-     * Reset Query Scope
+     * Reset Query Scope.
      *
      * @return $this
      */
@@ -232,5 +231,4 @@ interface RepositoryInterface
      * @return mixed
      */
     public function order($key, $order);
-
 }

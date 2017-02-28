@@ -18,24 +18,23 @@ use App\Core\Models\User;
 use Illuminate\Http\Request;
 
 /**
- * Class AuditsController
- * @package App\Core\Http\Controllers\Admin
+ * Class AuditsController.
  */
 class AuditsController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.audits.";
+    public $viewPathBase = 'admin.audits.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/audits";
+    public $errorRedirectPath = 'admin/audits';
 
     public function show(Request $request, $model, $id)
     {
         switch ($model) {
-            case "product":
+            case 'product':
                 if (Product::isAuditEnabled()) {
                     $model = Product::find($id);
                     $audits = $model->audits;
@@ -43,7 +42,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "attributeGroup":
+            case 'attributeGroup':
                 if (AttributeGroup::isAuditEnabled()) {
                     $model = AttributeGroup::find($id);
                     $audits = $model->audits;
@@ -51,7 +50,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "attributeGroupDescription":
+            case 'attributeGroupDescription':
                 if (AttributeGroupDescription::isAuditEnabled()) {
                     $model = AttributeGroupDescription::find($id);
                     $audits = $model->audits;
@@ -59,7 +58,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "campaign":
+            case 'campaign':
                 if (Campaign::isAuditEnabled()) {
                     $model = Campaign::find($id);
                     $audits = $model->audits;
@@ -67,7 +66,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "category":
+            case 'category':
                 if (Category::isAuditEnabled()) {
                     $model = Category::find($id);
                     $audits = $model->audits;
@@ -75,7 +74,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "folder":
+            case 'folder':
                 if (Folder::isAuditEnabled()) {
                     $model = Folder::find($id);
                     $audits = $model->audits;
@@ -83,7 +82,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "mail":
+            case 'mail':
                 if (Mail::isAuditEnabled()) {
                     $model = Mail::find($id);
                     $audits = $model->audits;
@@ -91,7 +90,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "media":
+            case 'media':
                 if (Media::isAuditEnabled()) {
                     $model = Media::find($id);
                     $audits = $model->audits;
@@ -99,7 +98,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "permission":
+            case 'permission':
                 if (Permission::isAuditEnabled()) {
                     $model = Permission::find($id);
                     $audits = $model->audits;
@@ -107,7 +106,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "productReview":
+            case 'productReview':
                 if (ProductReview::isAuditEnabled()) {
                     $model = ProductReview::find($id);
                     $audits = $model->audits;
@@ -115,7 +114,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "role":
+            case 'role':
                 if (Role::isAuditEnabled()) {
                     $model = Role::find($id);
                     $audits = $model->audits;
@@ -123,7 +122,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "subscribers":
+            case 'subscribers':
                 if (Subscribers::isAuditEnabled()) {
                     $model = Subscribers::find($id);
                     $audits = $model->audits;
@@ -131,7 +130,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
                 break;
-            case "user":
+            case 'user':
                 if (User::isAuditEnabled()) {
                     $model = User::find($id);
                     $audits = $model->audits;
@@ -147,6 +146,7 @@ class AuditsController extends BaseController
                     return $this->redirectNotFound();
                 }
         }
+
         return $this->view('show', compact('model', 'audits'));
     }
 }

@@ -1,9 +1,9 @@
 <?php
+
 namespace RepositoryLab\Repository\Contracts;
 
 /**
- * Interface Presentable
- * @package RepositoryLab\Repository\Contracts
+ * Interface Presentable.
  */
 interface Presentable
 {

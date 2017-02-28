@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Core\Models\Moderation;
-use App\Core\Repositories\ModerationRepository;
 use App\Core\Http\Controllers\Controller;
+use App\Core\Repositories\ModerationRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class ModerationsController
- * @package App\Core\Http\Controllers
+ * Class ModerationsController.
  */
-class ModerationController extends Controller {
-
+class ModerationController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +52,6 @@ class ModerationController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

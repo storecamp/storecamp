@@ -42,8 +42,9 @@ class LoginController extends Controller
      * @param $user
      * @return mixed
      */
-    private function redirectTo(Redirector $redirector, $user) {
-        if($user->hasRole('Admin')) {
+    private function redirectTo(Redirector $redirector, $user)
+    {
+        if ($user->hasRole('Admin')) {
             return $redirector->to($this->redirectTo);
         } else {
             return $redirector->intended($this->redirectTo);

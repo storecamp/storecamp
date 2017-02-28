@@ -2,18 +2,18 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
+use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
-use App\Core\Base\Model;
-use App\Core\Traits\GeneratesUnique;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Category
+ * App\Core\Models\Category.
  *
  * @property int $id
  * @property string $unique_id
@@ -97,14 +97,13 @@ class Category extends Model implements Transformable
         'sort_order',
         'meta_tag_title',
         'meta_tag_description',
-        'meta_tag_keywords'
+        'meta_tag_keywords',
     ];
 
     /**
      * @var array
      */
     protected $appends = ['type'];
-
 
     /**
      * Return the sluggable configuration array for this model.
@@ -115,13 +114,13 @@ class Category extends Model implements Transformable
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -150,7 +149,7 @@ class Category extends Model implements Transformable
      */
     public function getTypeAttribute()
     {
-        if(!$this->parent_id) {
+        if (! $this->parent_id) {
             return $this->attributes['type'] = 'parent';
         } else {
             return $this->attributes['type'] = 'child';
@@ -161,8 +160,9 @@ class Category extends Model implements Transformable
      * @param $data
      * @return string
      */
-    public function setTypeAttribute($data) {
-        if(!$this->parent_id) {
+    public function setTypeAttribute($data)
+    {
+        if (! $this->parent_id) {
             return $this->attributes['type'] = 'parent';
         } else {
             return $this->attributes['type'] = 'child';
@@ -174,10 +174,10 @@ class Category extends Model implements Transformable
      */
     public function getType() : string
     {
-        if($this->parent_id) {
-            return "child";
+        if ($this->parent_id) {
+            return 'child';
         } else {
-            return "parent";
+            return 'parent';
         }
     }
 
@@ -187,10 +187,10 @@ class Category extends Model implements Transformable
      */
     public function isType($type) : bool
     {
-        if($this->parent_id) {
-            return "child" == $type;
+        if ($this->parent_id) {
+            return 'child' == $type;
         } else {
-            return "parent" == $type;
+            return 'parent' == $type;
         }
     }
 

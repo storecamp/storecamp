@@ -37,7 +37,7 @@ abstract class Generator
      *
      * @param array $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->filesystem = new Filesystem;
         $this->options = $options;
@@ -62,6 +62,7 @@ abstract class Generator
     public function setFilesystem(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
+
         return $this;
     }
 
@@ -73,7 +74,7 @@ abstract class Generator
     public function getStub()
     {
         return (new Stub(
-            __DIR__ . '/Stubs/' . $this->stub . '.stub',
+            __DIR__.'/Stubs/'.$this->stub.'.stub',
             $this->getReplacements()
         )
         )->render();
@@ -89,7 +90,7 @@ abstract class Generator
         return [
             'class' => $this->getClass(),
             'namespace' => $this->getNamespace(),
-            'root_namespace' => $this->getRootNamespace()
+            'root_namespace' => $this->getRootNamespace(),
         ];
     }
 
@@ -110,7 +111,7 @@ abstract class Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . $this->getName() . '.php';
+        return $this->getBasePath().'/'.$this->getName().'.php';
     }
 
     /**
@@ -121,14 +122,13 @@ abstract class Generator
     public function getName()
     {
         $name = $this->name;
-        if (str_contains($this->name, '\\'))
-        {
+        if (str_contains($this->name, '\\')) {
             $name = str_replace('\\', '/', $this->name);
         }
-        if (str_contains($this->name, '/'))
-        {
+        if (str_contains($this->name, '/')) {
             $name = str_replace('/', '/', $this->name);
         }
+
         return Str::studly(str_replace(' ', '/', ucwords(str_replace('/', ' ', $name))));
     }
 
@@ -140,18 +140,15 @@ abstract class Generator
     public function getFor()
     {
         $for = $this->for;
-        if (str_contains($this->for, '\\'))
-        {
+        if (str_contains($this->for, '\\')) {
             $for = str_replace('\\', '/', $this->for);
         }
-        if (str_contains($this->for, '/'))
-        {
+        if (str_contains($this->for, '/')) {
             $for = str_replace('/', '/', $this->for);
         }
+
         return Str::studly(str_replace(' ', '/', ucwords(str_replace('/', ' ', $for))));
     }
-
-
 
     /**
      * Get class name.
@@ -191,26 +188,26 @@ abstract class Generator
      */
     public function getConfigGeneratorClassPath($class, $directoryPath = false)
     {
-        switch($class) {
-            case ('models' === $class):
+        switch ($class) {
+            case 'models' === $class:
                 $path = config('generators.generator.paths.models', 'Entities');
                 break;
-            case ('controllers' === $class):
+            case 'controllers' === $class:
                 $path = config('generators.generator.paths.controllers', 'cControlers');
                 break;
-            case ('repositories' === $class):
+            case 'repositories' === $class:
                 $path = config('generators.generator.paths.repositories', 'Repositories');
                 break;
-            case ('interfaces' === $class):
+            case 'interfaces' === $class:
                 $path = config('generators.generator.paths.interfaces', 'Repositories');
                 break;
-            case ('presenters' === $class):
+            case 'presenters' === $class:
                 $path = config('generators.generator.paths.presenters', 'Presenters');
                 break;
-            case ('transformers' === $class):
+            case 'transformers' === $class:
                 $path = config('generators.generator.paths.transformers', 'Transformers');
                 break;
-            default;
+            default:
                 $path = '';
         }
 
@@ -233,10 +230,13 @@ abstract class Generator
         $segments = $this->getSegments();
         array_pop($segments);
         $rootNamespace = $this->getRootNamespace();
-        if ($rootNamespace == false)
-            return null;
-        return 'namespace ' . rtrim($rootNamespace . implode($segments, '\\'), '\\') . ';';
+        if ($rootNamespace == false) {
+            return;
+        }
+
+        return 'namespace '.rtrim($rootNamespace.implode($segments, '\\'), '\\').';';
     }
+
     /**
      * Setup some hook.
      *
@@ -256,14 +256,13 @@ abstract class Generator
     public function run()
     {
         $this->setUp();
-        if ($this->filesystem->exists($path = $this->getPath()) && ! $this->force)
-        {
+        if ($this->filesystem->exists($path = $this->getPath()) && ! $this->force) {
             throw new FileAlreadyExistsException($path);
         }
-        if ( ! $this->filesystem->isDirectory($dir = dirname($path)))
-        {
+        if (! $this->filesystem->isDirectory($dir = dirname($path))) {
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
+
         return $this->filesystem->put($path, $this->getStub());
     }
 
@@ -281,7 +280,7 @@ abstract class Generator
      * Determinte whether the given key exist in options array.
      *
      * @param  string $key
-     * @return boolean
+     * @return bool
      */
     public function hasOption($key)
     {
@@ -297,8 +296,10 @@ abstract class Generator
      */
     public function getOption($key, $default = null)
     {
-        if ( ! $this->hasOption($key))
+        if (! $this->hasOption($key)) {
             return $default;
+        }
+
         return $this->options[$key] ?: $default;
     }
 
@@ -322,10 +323,10 @@ abstract class Generator
      */
     public function __get($key)
     {
-        if (property_exists($this, $key))
-        {
+        if (property_exists($this, $key)) {
             return $this->{$key};
         }
+
         return $this->option($key);
     }
 }

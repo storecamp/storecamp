@@ -25,9 +25,8 @@ class Site
      * @param View $view
      * @return View
      */
-    public function compose(View $view) {
-
+    public function compose(View $view)
+    {
         return $view->with('auth', $this->auth);
     }
-
 }

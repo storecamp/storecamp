@@ -2,10 +2,10 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
+use App\Core\Contracts\CouponInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Support\Nestedset\QueryBuilder;
-use App\Core\Contracts\CouponInterface;
-use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -42,12 +42,13 @@ class Coupon extends Model implements Transformable, CouponInterface
     }
 
     /**
-     * perform some actions on model boot
+     * perform some actions on model boot.
      */
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
+
     /**
      * Scopes class by coupon code.
      *
@@ -67,6 +68,4 @@ class Coupon extends Model implements Transformable, CouponInterface
     {
         return $query->where('code', $code)->first();
     }
-
-
 }

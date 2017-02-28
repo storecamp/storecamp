@@ -2,10 +2,10 @@
 
 namespace App\Core\Components\Auditing;
 
+use App\Core\Components\Auditing\Contracts\Dispatcher;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Manager;
 use InvalidArgumentException;
-use App\Core\Components\Auditing\Contracts\Dispatcher;
 
 class AuditorManager extends Manager implements Dispatcher
 {
@@ -51,7 +51,7 @@ class AuditorManager extends Manager implements Dispatcher
             $auditable = clone $auditable;
 
             // Review audit
-            if (!$this->auditReview($auditable, $auditor)) {
+            if (! $this->auditReview($auditable, $auditor)) {
                 continue;
             }
 

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -47,9 +46,9 @@ class ProductsFormRequest extends FormRequest
             'meta_tag_keywords' => 'string|min:2',
             'sort_order' => 'numeric|max:10',
             'weight' => 'string|min:1',
-            'brand_name' => 'string|min:2,max:255'
+            'brand_name' => 'string|min:2,max:255',
         ];
+
         return $rules;
     }
-
 }

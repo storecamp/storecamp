@@ -15,7 +15,6 @@ class VerifyCsrfToken extends BaseVerifier
         //
     ];
 
-
     protected function tokensMatch($request)
     {
         $sessionToken = $request->session()->token();
@@ -28,7 +27,7 @@ class VerifyCsrfToken extends BaseVerifier
         if (! is_string($sessionToken) || ! is_string($token)) {
             return false;
         }
+
         return hash_equals($sessionToken, $token);
     }
-
 }

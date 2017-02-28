@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access\Traits;
+<?php
 
-/**
+namespace App\Core\Access\Traits;
+
+/*
  * This file is part of Entrust,
  * a role & permission management solution for StoreCamp.
  *
@@ -12,7 +14,6 @@ use Illuminate\Support\Facades\Config;
 
 trait AccessRoleTrait
 {
-
     /**
      * Many-to-Many relations with the user model.
      *
@@ -45,8 +46,8 @@ trait AccessRoleTrait
     {
         parent::boot();
 
-        static::deleting(function($role) {
-            if (!method_exists(Config::get('access.role'), 'bootSoftDeletes')) {
+        static::deleting(function ($role) {
+            if (! method_exists(Config::get('access.role'), 'bootSoftDeletes')) {
                 $role->users()->sync([]);
                 $role->perms()->sync([]);
             }
@@ -64,7 +65,7 @@ trait AccessRoleTrait
      */
     public function savePermissions($inputPermissions)
     {
-        if (!empty($inputPermissions)) {
+        if (! empty($inputPermissions)) {
             $this->perms()->sync($inputPermissions);
         } else {
             $this->perms()->detach();
@@ -100,11 +101,13 @@ trait AccessRoleTrait
      */
     public function detachPermission($permission)
     {
-        if (is_object($permission))
+        if (is_object($permission)) {
             $permission = $permission->getKey();
+        }
 
-        if (is_array($permission))
+        if (is_array($permission)) {
             $permission = $permission['id'];
+        }
 
         $this->perms()->detach($permission);
     }
@@ -124,7 +127,7 @@ trait AccessRoleTrait
     }
 
     /**
-     * Detach multiple permissions from current role
+     * Detach multiple permissions from current role.
      *
      * @param mixed $permissions
      *

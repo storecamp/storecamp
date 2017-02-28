@@ -2,7 +2,6 @@
 
 namespace App\Core\Support\Cart;
 
-
 use App\Core\Contracts\Buyable;
 
 interface CartItemContract
@@ -29,7 +28,7 @@ interface CartItemContract
 
     /**
      * Returns the formatted subtotal.
-     * Subtotal is price for whole CartItem without TAX
+     * Subtotal is price for whole CartItem without TAX.
      *
      * @param int    $decimals
      * @param string $decimalPoint
@@ -40,7 +39,7 @@ interface CartItemContract
 
     /**
      * Returns the formatted total.
-     * Total is price for whole CartItem with TAX
+     * Total is price for whole CartItem with TAX.
      *
      * @param int    $decimals
      * @param string $decimalPoint

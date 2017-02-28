@@ -2,16 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Http\Controllers\Controller;
 use App\Core\Repositories\StaticPagesRepository;
 use Illuminate\Http\Request;
-use App\Core\Http\Controllers\Controller;
 
 /**
- * Class StaticsController
- * @package App\Core\Http\Controllers
+ * Class StaticsController.
  */
-class StaticController extends Controller {
-
+class StaticController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +53,6 @@ class StaticController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

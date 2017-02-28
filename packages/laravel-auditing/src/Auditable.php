@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Request;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class Auditable
- * @package App\Core\Components\Auditing
+ * Class Auditable.
  */
 trait Auditable
 {
@@ -99,7 +98,7 @@ trait Auditable
         $this->updatedData = $this->attributes;
 
         foreach ($this->updatedData as $attribute => $val) {
-            if (gettype($val) == 'object' && !method_exists($val, '__toString')) {
+            if (gettype($val) == 'object' && ! method_exists($val, '__toString')) {
                 unset($this->originalData[$attribute]);
 
                 unset($this->updatedData[$attribute]);
@@ -286,9 +285,9 @@ trait Auditable
         $changesToTecord = [];
 
         foreach ($this->dirtyData as $attribute => $value) {
-            if ($this->isAttributeAuditable($attribute) && !is_array($value)) {
+            if ($this->isAttributeAuditable($attribute) && ! is_array($value)) {
                 // Check whether the current value is difetente the original value
-                if (!isset($this->originalData[$attribute]) ||
+                if (! isset($this->originalData[$attribute]) ||
                     $this->originalData[$attribute] != $this->updatedData[$attribute]) {
                     $changesToTecord[$attribute] = $value;
                 }
@@ -399,7 +398,7 @@ trait Auditable
             // If visible is set, set to null any attributes which are not in visible
             if (count($visible) > 0) {
                 foreach ($attributes as $attribute => &$value) {
-                    if (!in_array($attribute, $visible)) {
+                    if (! in_array($attribute, $visible)) {
                         $value = null;
                     }
                 }
@@ -427,7 +426,7 @@ trait Auditable
      */
     public static function isAuditEnabled()
     {
-        if (App::runningInConsole() && !Config::get('auditing.audit_console')) {
+        if (App::runningInConsole() && ! Config::get('auditing.audit_console')) {
             return false;
         }
 

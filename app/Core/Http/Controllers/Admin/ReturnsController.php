@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Core\Models\Returns;
-use App\Core\Repositories\ReturnsRepository;
 use App\Core\Http\Controllers\Controller;
+use App\Core\Repositories\ReturnsRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class ReturnssController
- * @package App\Core\Http\Controllers
+ * Class ReturnssController.
  */
-class ReturnsController extends Controller {
-
+class ReturnsController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +52,6 @@ class ReturnsController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

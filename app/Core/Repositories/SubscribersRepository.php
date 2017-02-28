@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface SubscribersRepository
- * @package namespace SXC\Repositories;
+ * Interface SubscribersRepository.
  */
 interface SubscribersRepository extends RepositoryInterface
 {
@@ -30,7 +29,6 @@ interface SubscribersRepository extends RepositoryInterface
      */
     public function deleteSubscription($request, $type, $subscription_id);
 
-
     /**
      * @param $email
      * @return mixed
@@ -41,6 +39,5 @@ interface SubscribersRepository extends RepositoryInterface
      * @param null $type
      * @return mixed
      */
-    public function getNewsList($type=null);
-
+    public function getNewsList($type = null);
 }

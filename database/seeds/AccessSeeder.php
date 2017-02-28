@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\Core\Models\Role;
 use App\Core\Models\Permission;
+use App\Core\Models\Role;
+use Illuminate\Database\Seeder;
 
 class AccessSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class AccessSeeder extends Seeder
      */
     public function run()
     {
-        if (!Role::find(1)) {
+        if (! Role::find(1)) {
             Role::create([
                 'name' => 'Admin',
                 'display_name' => 'admin',
@@ -27,9 +27,8 @@ class AccessSeeder extends Seeder
             ]);
         }
 
-        if (!Permission::find(1)) {
-
-            $permissionsAdmin = array(
+        if (! Permission::find(1)) {
+            $permissionsAdmin = [
                 'All of the above',
                 'Delete Users',
                 'Manage AdminPanel',
@@ -42,28 +41,26 @@ class AccessSeeder extends Seeder
                 'Can Update',
                 'Buy products',
                 'Manage own products',
-                'Write productReview'
-            );
+                'Write productReview',
+            ];
             foreach ($permissionsAdmin as $permission) {
                 $perm = Permission::updateOrCreate([
                     'name' => $permission,
                     'display_name' => $permission,
-                    'description' => $permission
+                    'description' => $permission,
                 ]);
                 $roleSAdmin = Role::find(1);
 
                 $roleSAdmin->attachPermission($perm, new Role);
-
             }
             $listIds = Permission::all()->pluck('id');
 
             $roleClient = Role::find(2);
             foreach ($listIds as $key => $permission) {
-                if ($key >= 10 && $key <= 12)
-
+                if ($key >= 10 && $key <= 12) {
                     $roleClient->attachPermission(Permission::find($permission));
+                }
             }
-
         }
     }
 }

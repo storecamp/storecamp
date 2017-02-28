@@ -4,13 +4,11 @@ namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Media
+ * App\Core\Models\Media.
  *
  * @property int $id
  * @property string $disk
@@ -54,7 +52,7 @@ class Media extends \Plank\Mediable\Media implements Transformable
     protected $guarded = ['id'];
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {

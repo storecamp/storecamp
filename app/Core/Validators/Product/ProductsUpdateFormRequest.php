@@ -4,10 +4,8 @@ namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductsUpdateFormRequest extends FormRequest{
-
-
-
+class ProductsUpdateFormRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,12 +32,12 @@ class ProductsUpdateFormRequest extends FormRequest{
             'date_available' => 'date',
             'model' => 'string|min:2',
             'quantity' => 'numeric',
-            'sku' => 'string|unique:products,sku,' . $this->get('id') ?? $this->get('unique_id'),
-            'upc' => 'string|unique:products,upc,' . $this->get('id') ?? $this->get('unique_id'),
-            'ean' => 'string|unique:products,ean,' . $this->get('id') ?? $this->get('unique_id'),
-            'jan' => 'string|unique:products,jan,' . $this->get('id') ?? $this->get('unique_id'),
-            'isbn' => 'string|unique:products,isbn,' . $this->get('id') ?? $this->get('unique_id'),
-            'mpn' => 'string|unique:products,mpn,' . $this->get('id') ?? $this->get('unique_id'),
+            'sku' => 'string|unique:products,sku,'.$this->get('id') ?? $this->get('unique_id'),
+            'upc' => 'string|unique:products,upc,'.$this->get('id') ?? $this->get('unique_id'),
+            'ean' => 'string|unique:products,ean,'.$this->get('id') ?? $this->get('unique_id'),
+            'jan' => 'string|unique:products,jan,'.$this->get('id') ?? $this->get('unique_id'),
+            'isbn' => 'string|unique:products,isbn,'.$this->get('id') ?? $this->get('unique_id'),
+            'mpn' => 'string|unique:products,mpn,'.$this->get('id') ?? $this->get('unique_id'),
             'length' => 'string|min:1',
             'width'=> 'string|min:1',
             'height'=> 'string|min:1',
@@ -48,11 +46,9 @@ class ProductsUpdateFormRequest extends FormRequest{
             'meta_tag_keywords' => 'string|min:2',
             'sort_order' => 'numeric|max:10',
             'weight' => 'string|min:1',
-            'product_attribute.*.attr_description_id' => ""
+            'product_attribute.*.attr_description_id' => '',
         ];
 
         return $rules;
-
     }
-
 }

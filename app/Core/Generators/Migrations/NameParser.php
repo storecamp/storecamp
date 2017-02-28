@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Core\Generators\Migrations;
 
 /**
- * Class NameParser
- * @package App\Core\Generators\Migrations
+ * Class NameParser.
  */
 class NameParser
 {
@@ -27,23 +27,24 @@ class NameParser
     protected $actions = [
         'create' => [
             'create',
-            'make'
+            'make',
         ],
         'delete' => [
             'delete',
-            'remove'
+            'remove',
         ],
         'add' => [
             'add',
             'update',
             'append',
-            'insert'
+            'insert',
         ],
         'drop' => [
             'destroy',
-            'drop'
-        ]
+            'drop',
+        ],
     ];
+
     /**
      * The constructor.
      *
@@ -54,6 +55,7 @@ class NameParser
         $this->name = $name;
         $this->data = $this->fetchData();
     }
+
     /**
      * Get original migration name.
      *
@@ -63,6 +65,7 @@ class NameParser
     {
         return $this->name;
     }
+
     /**
      * Get schema type or action.
      *
@@ -72,6 +75,7 @@ class NameParser
     {
         return head($this->data);
     }
+
     /**
      * Get table name.
      *
@@ -81,6 +85,7 @@ class NameParser
     {
         return $this->getTableName();
     }
+
     /**
      * Get the table will be used.
      *
@@ -89,8 +94,10 @@ class NameParser
     public function getTableName()
     {
         $matches = array_reverse($this->getMatches());
+
         return array_shift($matches);
     }
+
     /**
      * Get matches data from regex.
      *
@@ -102,6 +109,7 @@ class NameParser
 
         return $matches;
     }
+
     /**
      * Get name pattern.
      *
@@ -127,6 +135,7 @@ class NameParser
                 break;
         }
     }
+
     /**
      * Fetch the migration name to an array data.
      *
@@ -136,6 +145,7 @@ class NameParser
     {
         return explode('_', $this->name);
     }
+
     /**
      * Get the array data.
      *
@@ -145,6 +155,7 @@ class NameParser
     {
         return $this->data;
     }
+
     /**
      * Determine whether the given type is same with the current schema action or type.
      *
@@ -155,6 +166,7 @@ class NameParser
     {
         return $type == $this->getAction();
     }
+
     /**
      * Determine whether the current schema action is a adding action.
      *
@@ -164,6 +176,7 @@ class NameParser
     {
         return in_array($this->getAction(), $this->actions['add']);
     }
+
     /**
      * Determine whether the current schema action is a deleting action.
      *
@@ -173,6 +186,7 @@ class NameParser
     {
         return in_array($this->getAction(), $this->actions['delete']);
     }
+
     /**
      * Determine whether the current schema action is a creating action.
      *
@@ -182,6 +196,7 @@ class NameParser
     {
         return in_array($this->getAction(), $this->actions['create']);
     }
+
     /**
      * Determine whether the current schema action is a dropping action.
      *

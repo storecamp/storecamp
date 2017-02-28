@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProductReviewTable extends Migration
 {
@@ -36,7 +36,7 @@ class CreateProductReviewTable extends Migration
      */
     public function down()
     {
-        Schema::drop('product_reviews', function(Blueprint $table) {
+        Schema::drop('product_reviews', function (Blueprint $table) {
             $table->dropForeign('product_reviews_user_id_foreign');
             $table->dropForeign('product_reviews_product_id_foreign');
             $table->dropSoftDeletes();

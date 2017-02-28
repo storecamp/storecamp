@@ -3,6 +3,7 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\Buyable;
+use app\Core\Contracts\CartSystemContract;
 use App\Core\Exceptions\CartAlreadyStoredException;
 use App\Core\Exceptions\InvalidRowIDException;
 use App\Core\Exceptions\UnknownModelException;
@@ -10,17 +11,13 @@ use App\Core\Exceptions\UserNotLoggedInException;
 use App\Core\Repositories\CartRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Support\Cart\CartItem;
-use app\Core\Contracts\CartSystemContract;
-use App\Core\Support\Cart\CartItemContract;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
 
 /**
- * Class CartSystem
- *
- * @package app\Core\Logic
+ * Class CartSystem.
  */
 class CartSystem implements CartSystemContract
 {
@@ -95,13 +92,14 @@ class CartSystem implements CartSystemContract
      * @param bool $withAggregations
      * @return Collection
      */
-    public function show(array $data, bool $withAggregations=true)
+    public function show(array $data, bool $withAggregations = true)
     {
         if (isset($data['instance'])) {
             $cart = $this->instance($data['instance'])->content();
         } else {
             $cart = $this->content();
         }
+
         return $cart;
     }
 
@@ -129,6 +127,7 @@ class CartSystem implements CartSystemContract
     public function setCurrency(string $currency): CartSystem
     {
         $this->currency = $currency;
+
         return $this;
     }
 
@@ -144,10 +143,11 @@ class CartSystem implements CartSystemContract
      * @param string $currency
      * @return CartSystem
      */
-    public function withCurrency(string $currency=null): CartSystem
+    public function withCurrency(string $currency = null): CartSystem
     {
         $this->currency = $currency ?? $this->currency;
         $this->withCurrency = true;
+
         return $this;
     }
 
@@ -161,8 +161,10 @@ class CartSystem implements CartSystemContract
     {
         $instance = $instance ?: self::DEFAULT_INSTANCE;
         $this->instance = sprintf('%s.%s', 'cart', $instance);
+
         return $this;
     }
+
     /**
      * Get the current cart instance.
      *
@@ -197,6 +199,7 @@ class CartSystem implements CartSystemContract
 
         $this->events->fire('cart.added', $cartItem);
         $this->session->put($this->instance, $content);
+
         return $cartItem;
     }
 
@@ -227,14 +230,17 @@ class CartSystem implements CartSystemContract
         }
         if ($cartItem->qty <= 0) {
             $this->remove($cartItem->rowId);
+
             return;
         } else {
             $content->put($cartItem->rowId, $cartItem);
         }
         $this->events->fire('cart.updated', $cartItem);
         $this->session->put($this->instance, $content);
+
         return $cartItem;
     }
+
     /**
      * Remove the cart item with the given rowId from the cart.
      *
@@ -249,6 +255,7 @@ class CartSystem implements CartSystemContract
         $this->events->fire('cart.removed', $cartItem);
         $this->session->put($this->instance, $content);
     }
+
     /**
      * Get a cart item from the cart by its rowId.
      *
@@ -259,10 +266,12 @@ class CartSystem implements CartSystemContract
     {
         $content = $this->getContent();
         dd($content);
-        if ( ! $content->has($rowId))
+        if (! $content->has($rowId)) {
             throw new InvalidRowIDException("The cart does not contain rowId {$rowId}.");
+        }
         return $content->get($rowId);
     }
+
     /**
      * Destroy the current cart instance.
      *
@@ -272,6 +281,7 @@ class CartSystem implements CartSystemContract
     {
         $this->session->remove($this->instance);
     }
+
     /**
      * Get the content of the cart.
      *
@@ -283,12 +293,13 @@ class CartSystem implements CartSystemContract
             return new Collection([]);
         }
         $content = $this->session->get($this->instance);
+
         return $content;
     }
 
     /**
      * recheck items in the cart
-     * with products table
+     * with products table.
      *
      * @param $content
      * @return mixed
@@ -297,16 +308,17 @@ class CartSystem implements CartSystemContract
     {
         foreach ($content as $item) {
             $cartProduct = $item->getProduct();
-            if (!$cartProduct) {
+            if (! $cartProduct) {
                 $content->pull($item->rowId);
                 $this->events->fire('cart.removed', $item);
                 $this->session->put($this->instance, $content);
             }
         }
         $content = $this->session->get($this->instance);
-        if (!$content) {
+        if (! $content) {
             return new Collection();
         }
+
         return $content;
     }
 
@@ -318,6 +330,7 @@ class CartSystem implements CartSystemContract
     public function count()
     {
         $content = $this->getContent();
+
         return $content->sum('qty');
     }
 
@@ -336,8 +349,10 @@ class CartSystem implements CartSystemContract
             return $total + ($cartItem->qty * $cartItem->priceTax);
         }, 0);
         $currency = $this->withCurrency ? $this->currency.' ' : null;
-        return $currency . cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
+
+        return $currency.cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
     }
+
     /**
      * Get the total tax of the items in the cart.
      *
@@ -353,8 +368,10 @@ class CartSystem implements CartSystemContract
             return $tax + ($cartItem->qty * $cartItem->tax);
         }, 0);
         $currency = $this->withCurrency ? $this->currency.' ' : null;
-        return $currency . cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
+
+        return $currency.cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
     }
+
     /**
      * Get the subtotal (total - tax) of the items in the cart.
      *
@@ -374,7 +391,8 @@ class CartSystem implements CartSystemContract
             }
         }, 0);
         $currency = $this->withCurrency ? $this->currency.' ' : null;
-        return $currency . cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
+
+        return $currency.cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
     }
 
     /**
@@ -386,6 +404,7 @@ class CartSystem implements CartSystemContract
     public function search(\Closure $search): Collection
     {
         $content = $this->getContent();
+
         return $content->filter($search);
     }
 
@@ -398,7 +417,7 @@ class CartSystem implements CartSystemContract
      */
     public function associate($rowId, $model)
     {
-        if(is_string($model) && ! class_exists($model)) {
+        if (is_string($model) && ! class_exists($model)) {
             throw new UnknownModelException("The supplied model {$model} does not exist.");
         }
         $cartItem = $this->find($rowId);
@@ -407,6 +426,7 @@ class CartSystem implements CartSystemContract
         $content->put($cartItem->rowId, $cartItem);
         $this->session->put($this->instance, $content);
     }
+
     /**
      * Set the tax rate for the cart item with the given rowId.
      *
@@ -424,7 +444,7 @@ class CartSystem implements CartSystemContract
     }
 
     /**
-     * TODO implement db transaction
+     * TODO implement db transaction.
      *
      * Transforms cart into an order.
      * Returns created order.
@@ -439,12 +459,12 @@ class CartSystem implements CartSystemContract
             $statusCode = config('sales.order_status_placement');
         }
         if ($this->auth->user()->guest()) {
-            throw new UserNotLoggedInException("Order placement requires logged in user.");
+            throw new UserNotLoggedInException('Order placement requires logged in user.');
         }
         // Create order
-        $order = call_user_func( config('sales.order') . '::create', [
+        $order = call_user_func(config('sales.order').'::create', [
             'user_id'       => $this->auth->user()->id,
-            'statusCode'    => $statusCode
+            'statusCode'    => $statusCode,
         ]);
         $cart = $this->store($this->content()->rowId());
         $cart->order_id = $order->id;
@@ -473,9 +493,10 @@ class CartSystem implements CartSystemContract
             'unique_id' => $identifier,
             'user_id' => $this->auth->user()->id,
             'instance' => $this->currentInstance(),
-            'content' => json_encode($content)
+            'content' => json_encode($content),
         ]);
         $this->events->fire('cart.stored');
+
         return $cart;
     }
 
@@ -487,7 +508,7 @@ class CartSystem implements CartSystemContract
      */
     public function restore($identifier)
     {
-        if( ! $this->storedCartWithIdentifierExists($identifier)) {
+        if (! $this->storedCartWithIdentifierExists($identifier)) {
             return;
         }
         $stored = $this->cartRepository
@@ -504,6 +525,7 @@ class CartSystem implements CartSystemContract
         $this->instance($currentInstance);
         $this->cartRepository->delete($identifier);
     }
+
     /**
      * Magic method to make accessing the total, tax and subtotal properties possible.
      *
@@ -512,19 +534,19 @@ class CartSystem implements CartSystemContract
      */
     public function __get($attribute)
     {
-        if($attribute === 'total') {
+        if ($attribute === 'total') {
             return $this->total();
         }
-        if($attribute === 'tax') {
+        if ($attribute === 'tax') {
             return $this->tax();
         }
-        if($attribute === 'subtotal') {
+        if ($attribute === 'subtotal') {
             return $this->subtotal();
         }
-        return null;
     }
+
     /**
-     * Get the carts content, if there is no cart content set yet, return a new empty Collection
+     * Get the carts content, if there is no cart content set yet, return a new empty Collection.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -534,6 +556,7 @@ class CartSystem implements CartSystemContract
             ? $this->session->get($this->instance)
             : new Collection();
         $content = $this->checkItems($content);
+
         return $content;
     }
 
@@ -561,8 +584,10 @@ class CartSystem implements CartSystemContract
         }
         $cartItem->setCurrency($this->currency);
         $cartItem->setTaxRate(config('sales.tax_percent'));
+
         return $cartItem;
     }
+
     /**
      * Check if the item is a multidimensional array or an array of Buyables.
      *
@@ -571,7 +596,10 @@ class CartSystem implements CartSystemContract
      */
     private function isMulti($item): bool
     {
-        if ( ! is_array($item)) return false;
+        if (! is_array($item)) {
+            return false;
+        }
+
         return is_array(head($item)) || head($item) instanceof Buyable;
     }
 

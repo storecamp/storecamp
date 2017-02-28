@@ -2,16 +2,16 @@
 
 namespace App\Core\Models;
 
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
-use RepositoryLab\Repository\Contracts\Transformable;
-use RepositoryLab\Repository\Traits\TransformableTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use RepositoryLab\Repository\Contracts\Transformable;
+use RepositoryLab\Repository\Traits\TransformableTrait;
 
 class Thread extends Model implements Transformable
 {
@@ -22,7 +22,7 @@ class Thread extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**
@@ -52,7 +52,7 @@ class Thread extends Model implements Transformable
     protected $with = ['parentMessage'];
 
     /**
-     * "Users" table name to use for manual queries
+     * "Users" table name to use for manual queries.
      *
      * @var string|null
      */
@@ -75,7 +75,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Messages relationship
+     * Messages relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -87,12 +87,13 @@ class Thread extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function productReview(){
-
-        return $this->belongsTo(ProductReview::class, "product_reviews_id");
+    public function productReview()
+    {
+        return $this->belongsTo(ProductReview::class, 'product_reviews_id');
     }
+
     /**
-     * Returns the latest message from a thread
+     * Returns the latest message from a thread.
      *
      * @return mixed
      */
@@ -102,7 +103,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Participants relationship
+     * Participants relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -112,7 +113,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns the user object that created the thread
+     * Returns the user object that created the thread.
      *
      * @return mixed
      */
@@ -122,7 +123,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns all of the latest threads by updated_at date
+     * Returns all of the latest threads by updated_at date.
      *
      * @return mixed
      */
@@ -132,7 +133,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns an array of user ids that are associated with the thread
+     * Returns an array of user ids that are associated with the thread.
      *
      * @param null $userId
      * @return array
@@ -149,7 +150,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns threads that the user is associated with
+     * Returns threads that the user is associated with.
      *
      * @param $query
      * @param $userId
@@ -164,7 +165,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns threads with new messages that the user is associated with
+     * Returns threads with new messages that the user is associated with.
      *
      * @param $query
      * @param $userId
@@ -177,14 +178,14 @@ class Thread extends Model implements Transformable
             ->whereNull('participants.deleted_at')
             ->where(function ($query) {
                 $query->where('threads.updated_at', '>',
-                    $this->getConnection()->raw($this->getConnection()->getTablePrefix() . 'participants.last_read'))
+                    $this->getConnection()->raw($this->getConnection()->getTablePrefix().'participants.last_read'))
                     ->orWhereNull('participants.last_read');
             })
             ->select('threads.*');
     }
 
     /**
-     * Returns threads between given user ids
+     * Returns threads between given user ids.
      *
      * @param $query
      * @param $participants
@@ -200,7 +201,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Adds users to this thread
+     * Adds users to this thread.
      *
      * @param array|Collection $participants list of all participants
      * @return void
@@ -209,7 +210,7 @@ class Thread extends Model implements Transformable
     {
         if (count($participants)) {
             foreach ($participants as $user) {
-                if($user instanceof User) {
+                if ($user instanceof User) {
                     Participant::firstOrCreate([
                         'user_id' => $user->id,
                         'thread_id' => $this->id,
@@ -225,7 +226,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Adds users to this thread
+     * Adds users to this thread.
      *
      * @param array $participants list of all participants
      * @return void
@@ -241,10 +242,11 @@ class Thread extends Model implements Transformable
             }
         }
     }
+
     /**
-     * Mark a thread as read for a user
+     * Mark a thread as read for a user.
      *
-     * @param integer $userId
+     * @param int $userId
      */
     public function markAsRead($userId)
     {
@@ -258,9 +260,9 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * See if the current thread is unread by the user
+     * See if the current thread is unread by the user.
      *
-     * @param integer $userId
+     * @param int $userId
      * @return bool
      */
     public function isUnread($userId)
@@ -278,7 +280,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Finds the participant record from a user id
+     * Finds the participant record from a user id.
      *
      * @param $userId
      * @return mixed
@@ -290,7 +292,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Restores all participants within a thread that has a new message
+     * Restores all participants within a thread that has a new message.
      */
     public function activateAllParticipants()
     {
@@ -301,32 +303,32 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Generates a string of participant information
+     * Generates a string of participant information.
      *
      * @param null $userId
      * @param array $columns
      * @return string
      */
-    public function participantsString($userId=null, $columns=['name'])
+    public function participantsString($userId = null, $columns = ['name'])
     {
         $selectString = $this->createSelectString($columns);
 
         $participantNames = $this->getConnection()->table($this->getUsersTable())
-            ->join('participants', $this->getUsersTable() . '.id', '=', 'participants.user_id')
+            ->join('participants', $this->getUsersTable().'.id', '=', 'participants.user_id')
             ->where('participants.thread_id', $this->id)
             ->select($this->getConnection()->raw($selectString));
 
         if ($userId !== null) {
-            $participantNames->where($this->getUsersTable() . '.id', '!=', $userId);
+            $participantNames->where($this->getUsersTable().'.id', '!=', $userId);
         }
 
-        $userNames = $participantNames->lists($this->getUsersTable() . '.name');
+        $userNames = $participantNames->lists($this->getUsersTable().'.name');
 
         return implode(', ', $userNames);
     }
 
     /**
-     * Checks to see if a user is a current participant of the thread
+     * Checks to see if a user is a current participant of the thread.
      *
      * @param $userId
      * @return bool
@@ -342,7 +344,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Generates a select string used in participantsString()
+     * Generates a select string used in participantsString().
      *
      * @param $columns
      * @return string
@@ -354,23 +356,23 @@ class Thread extends Model implements Transformable
         switch ($dbDriver) {
             case 'pgsql':
             case 'sqlite':
-                $columnString = implode(" || ' ' || " . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . ".", $columns);
-                $selectString = "(" . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . "." . $columnString . ") as name";
+                $columnString = implode(" || ' ' || ".$this->getConnection()->getTablePrefix().$this->getUsersTable().'.', $columns);
+                $selectString = '('.$this->getConnection()->getTablePrefix().$this->getUsersTable().'.'.$columnString.') as name';
                 break;
             case 'sqlsrv':
-                $columnString = implode(" + ' ' + " . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . ".", $columns);
-                $selectString = "(" . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . "." . $columnString . ") as name";
+                $columnString = implode(" + ' ' + ".$this->getConnection()->getTablePrefix().$this->getUsersTable().'.', $columns);
+                $selectString = '('.$this->getConnection()->getTablePrefix().$this->getUsersTable().'.'.$columnString.') as name';
                 break;
             default:
-                $columnString = implode(", ' ', " . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . ".", $columns);
-                $selectString = "concat(" . $this->getConnection()->getTablePrefix() . $this->getUsersTable() . "." . $columnString . ") as name";
+                $columnString = implode(", ' ', ".$this->getConnection()->getTablePrefix().$this->getUsersTable().'.', $columns);
+                $selectString = 'concat('.$this->getConnection()->getTablePrefix().$this->getUsersTable().'.'.$columnString.') as name';
         }
 
         return $selectString;
     }
 
     /**
-     * Sets the "users" table name
+     * Sets the "users" table name.
      *
      * @param $tableName
      */
@@ -380,7 +382,7 @@ class Thread extends Model implements Transformable
     }
 
     /**
-     * Returns the "users" table name to use in manual queries
+     * Returns the "users" table name to use in manual queries.
      *
      * @return string
      */
@@ -391,8 +393,7 @@ class Thread extends Model implements Transformable
         }
 
         $userModel = Config::get('messenger.user_model');
+
         return $this->usersTable = (new $userModel)->getTable();
     }
-
-
 }

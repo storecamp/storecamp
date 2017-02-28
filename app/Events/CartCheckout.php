@@ -5,26 +5,25 @@ namespace App\Events;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class CartCheckout
- * @package App\Events
+ * Class CartCheckout.
  */
 class CartCheckout
 {
-	use SerializesModels;
+    use SerializesModels;
 
-	/**
+    /**
      * Cart ID.
      * @var int
      */
-	public $id;
+    public $id;
 
      /**
-     * Flag that indicates if the checkout was successful or not.
-     * @var bool
-     */
+      * Flag that indicates if the checkout was successful or not.
+      * @var bool
+      */
      public $success;
 
-	/**
+    /**
      * Create a new event instance.
      *
      * @param int  $id      Order ID.
@@ -32,9 +31,9 @@ class CartCheckout
      *
      * @return void
      */
-	public function __construct($id, $success)
-	{
-		$this->id = $id;
+    public function __construct($id, $success)
+    {
+        $this->id = $id;
         $this->success = $success;
-	}
+    }
 }

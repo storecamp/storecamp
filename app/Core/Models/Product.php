@@ -2,15 +2,15 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
+use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
-use App\Core\Base\Model;
-use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Plank\Mediable\Mediable;
@@ -18,7 +18,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Product
+ * App\Core\Models\Product.
  *
  * @property int $id
  * @property string $unique_id
@@ -149,7 +149,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'attr_description_id',
         'product_id',
         'value',
-        'brand_name'
+        'brand_name',
     ];
     /**
      * The database table used by the model.
@@ -183,13 +183,13 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -201,7 +201,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function productReview(): HasMany
     {
-        return $this->hasMany(ProductReview::class, "product_id");
+        return $this->hasMany(ProductReview::class, 'product_id');
     }
 
     /**
@@ -218,7 +218,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function attributeGroupDescription(): BelongsToMany
     {
         return $this->belongsToMany(AttributeGroupDescription::class,
-            "product_attribute", "product_id", "attr_description_id")->withPivot("value");
+            'product_attribute', 'product_id', 'attr_description_id')->withPivot('value');
     }
 
     /**
@@ -256,9 +256,9 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function getAvailability(): string
     {
         if ($this->availability) {
-            return "enabled";
+            return 'enabled';
         } else {
-            return "disabled";
+            return 'disabled';
         }
     }
 
@@ -267,11 +267,11 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function getStockStatus(): string
     {
-        return config('constants.stock-statuses.' . $this->stock_status);
+        return config('constants.stock-statuses.'.$this->stock_status);
     }
 
     /**
-     * get the product category
+     * get the product category.
      *
      * @return mixed
      */
@@ -285,7 +285,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setStockStatusAttribute($stock_status)
     {
-        if (!$stock_status) {
+        if (! $stock_status) {
             $this->attributes['stock_status'] = 0;
         } else {
             $this->attributes['stock_status'] = $stock_status;
@@ -297,7 +297,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setLengthAttribute($length)
     {
-        if (!$length) {
+        if (! $length) {
             $this->attributes['length'] = 0.00000000;
         } else {
             $this->attributes['length'] = $length;
@@ -309,7 +309,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setWidthAttribute($width)
     {
-        if (!$width) {
+        if (! $width) {
             $this->attributes['width'] = 0.00000000;
         } else {
             $this->attributes['width'] = $width;
@@ -321,7 +321,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setHeightAttribute($height)
     {
-        if (!$height) {
+        if (! $height) {
             $this->attributes['height'] = 0.00000000;
         } else {
             $this->attributes['height'] = $height;
@@ -333,7 +333,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setWeightAttribute($weight)
     {
-        if (!$weight) {
+        if (! $weight) {
             $this->attributes['weight'] = 0.0000;
         } else {
             $this->attributes['weight'] = $weight;
@@ -345,7 +345,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setDateAvailableAttribute($date)
     {
-        if (!$date) {
+        if (! $date) {
             $this->attributes['date_available'] = Carbon::now();
         } else {
             $this->attributes['date_available'] = $date;
@@ -401,7 +401,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         return $query->orderBy('created_at', 'desc');
     }
 
-
     /**
      * @param $query
      * @return mixed
@@ -423,17 +422,20 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
 
     /**
      * get all products
-     * by the given category
+     * by the given category.
      *
      * @param $query
      * @param Category|null $category
      * @return mixed
      */
-    public function scopeCategorized($query, $category=null)
+    public function scopeCategorized($query, $category = null)
     {
-        if ( is_null($category) ) return $query->with('categories');
+        if (is_null($category)) {
+            return $query->with('categories');
+        }
         $categoryIds = $category->getDescendants(['id'])->pluck('id')->toArray();
         array_unshift($categoryIds, $category->id);
+
         return $query->with('categories')
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
@@ -445,10 +447,10 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function getRatingCounter()
     {
         $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
-        if (!empty($reviews)) {
-            return array_sum($reviews)/(count($reviews) + 1);
+        if (! empty($reviews)) {
+            return array_sum($reviews) / (count($reviews) + 1);
         } else {
-           return $reviews;
+            return $reviews;
         }
     }
 }

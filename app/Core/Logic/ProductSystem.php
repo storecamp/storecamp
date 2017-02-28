@@ -2,17 +2,14 @@
 
 namespace App\Core\Logic;
 
-
 use App\Core\Contracts\ProductSystemContract;
-use App\Core\Models\Category;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\CategoryRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 
 /**
- * Class ProductSystem
- * @package App\Core\Logic
+ * Class ProductSystem.
  */
 class ProductSystem implements ProductSystemContract
 {
@@ -48,7 +45,7 @@ class ProductSystem implements ProductSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $products = $this->productRepository->with($with);
             } else {
                 $products = $this->productRepository;
@@ -56,12 +53,13 @@ class ProductSystem implements ProductSystemContract
             $products = $products->findOrFail($id);
             $products->view();
         } else {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $products = $this->productRepository->with($with)->newest()->paginate();
             } else {
                 $products = $this->productRepository->newest()->paginate();
             }
         }
+
         return $products;
     }
 
@@ -76,11 +74,12 @@ class ProductSystem implements ProductSystemContract
         // receive CategoryRepository from IOC container
         $categoryInstance = app(CategoryRepository::class);
         $category = $categoryInstance->findOrFail($category);
-        if (!empty($with)) {
+        if (! empty($with)) {
             $products = $this->productRepository->with($with)->categorized($category)->paginate();
         } else {
             $products = $this->productRepository->categorized($category)->paginate();
         }
+
         return $products;
     }
 
@@ -93,7 +92,7 @@ class ProductSystem implements ProductSystemContract
         $formAttributes = isset($data['product_attribute']) ? $data['product_attribute'] : null;
         unset($data['product_attribute']);
 
-        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
         $product = $this->productRepository->create($data);
         $this->syncMediaFiles($product, $selectedFiles, 'gallery');
@@ -104,10 +103,11 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $formAttributes[$key]["value"]]);
+                    $this->attributeGroupDescriptionRepository->find(intval($attr['attr_description_id'])), ['value' => $formAttributes[$key]['value']]);
                 $attributes[] = $attribute;
             }
         }
+
         return $product;
     }
 
@@ -120,7 +120,7 @@ class ProductSystem implements ProductSystemContract
     {
         $formAttributes = isset($data['product_attribute']) ? $data['product_attribute'] : null;
         unset($data['product_attribute']);
-        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
         $product = $this->productRepository->update($data, $id);
         $this->syncMediaFiles($product, $selectedFiles, 'gallery');
@@ -137,10 +137,11 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $formAttributes[$key]["value"]]);
+                    $this->attributeGroupDescriptionRepository->find($attr['attr_description_id']), ['value' => $formAttributes[$key]['value']]);
                 $attributes[] = $attribute;
             }
         }
+
         return $product;
     }
 
@@ -152,7 +153,7 @@ class ProductSystem implements ProductSystemContract
     public function delete($id, array $data = []): int
     {
         $deleted = $this->productRepository->delete($id);
+
         return $deleted;
     }
-
 }

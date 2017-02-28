@@ -2,15 +2,15 @@
 
 namespace App\Core\Gateways;
 
-use App\Core\Models\Cart;
-use App\Core\Models\Orders;
-use App\Core\Support\PaymentGateway;
-use Throwable;
-use Omnipay\Omnipay;
-use Omnipay\Common\CreditCard;
 use App\Core\Exceptions\CheckoutException;
 use App\Core\Exceptions\GatewayException;
 use App\Core\Exceptions\ShopException;
+use App\Core\Models\Cart;
+use App\Core\Models\Orders;
+use App\Core\Support\PaymentGateway;
+use Omnipay\Common\CreditCard;
+use Omnipay\Omnipay;
+use Throwable;
 
 class GatewayOmnipay extends PaymentGateway
 {
@@ -42,7 +42,7 @@ class GatewayOmnipay extends PaymentGateway
      * Additional options for authorize and purchase methods.
      * @var array
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
      * Returns paypal url for approval.
@@ -113,13 +113,13 @@ class GatewayOmnipay extends PaymentGateway
      */
     public function onCheckout($cart)
     {
-        if (!isset($this->omnipay))
+        if (! isset($this->omnipay)) {
             throw new ShopException('Omnipay gateway not set.', 0);
-
-        if ($this->isCreditCard && !isset($this->creditCard))
+        }
+        if ($this->isCreditCard && ! isset($this->creditCard)) {
             throw new GatewayException('Credit Card not set.', 1);
+        }
         try {
-
             $response = $this->omnipay->authorize(array_merge([
                 'amount' => $cart->total,
                 'currency' => config('sales.currency'),
@@ -127,14 +127,12 @@ class GatewayOmnipay extends PaymentGateway
                 'returnUrl' => $this->callbackSuccess,
             ], $this->options))->send();
 
-            if (!$response->isSuccessful()) {
+            if (! $response->isSuccessful()) {
                 throw new CheckoutException($response->getMessage(), 1);
             }
-
         } catch (Throwable $e) {
-
             throw new CheckoutException(
-                'Exception caught while attempting authorize.' . "\n" .
+                'Exception caught while attempting authorize.'."\n".
                 $e->getMessage(),
                 1
             );
@@ -151,11 +149,10 @@ class GatewayOmnipay extends PaymentGateway
      */
     public function onCharge($order)
     {
-        if (!isset($this->omnipay))
+        if (! isset($this->omnipay)) {
             throw new ShopException('Omnipay gateway not set.', 0);
-
+        }
         try {
-
             $response = $this->omnipay->purchase(array_merge([
                 'amount' => $order->total,
                 'currency' => config('sales.currency'),
@@ -165,36 +162,26 @@ class GatewayOmnipay extends PaymentGateway
             ], $this->options))->send();
 
             if ($response->isSuccessful()) {
-
                 $this->transactionId = $response->getTransactionReference();
 
                 $this->detail = 'Success';
-
-
             } elseif ($response->isRedirect()) {
-
                 $this->statusCode = 'pending';
 
                 $this->approvalUrl = $response->getRedirectUrl();
 
                 $this->detail = sprintf('Pending approval: %s', $response->getRedirectUrl());
-
             } else {
-
                 throw new GatewayException($response->getMessage(), 1);
-
             }
 
             return true;
-
         } catch (Throwable $e) {
-
             throw new ShopException(
                 $e->getMessage(),
                 1000,
                 $e
             );
-
         }
 
         return false;
@@ -208,34 +195,25 @@ class GatewayOmnipay extends PaymentGateway
     public function onCallbackSuccess($order, $data = null)
     {
         try {
-
             $response = $this->omnipay->completePurchase([
                 'transactionId' => $order->transactionId,
             ])->send();
 
             if ($response->isSuccessful()) {
-
                 $this->statusCode = 'completed';
 
                 $this->transactionId = $this->omnipay->getTransactionId();
 
                 $this->detail = 'Success';
-
             } else {
-
                 throw new GatewayException($response->getMessage(), 1);
-
             }
-
         } catch (\Throwable $e) {
-
             throw new GatewayException(
                 $e->getMessage(),
                 1000,
                 $e
             );
-
         }
     }
-
 }

@@ -2,18 +2,17 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class AttributeGroup
+ * Class AttributeGroup.
  *
- * @package App\Core\Models
  * @property int $id
  * @property string $unique_id
  * @property string $name
@@ -43,6 +42,7 @@ class AttributeGroup extends Model implements Transformable
     {
         parent::boot();
     }
+
     /**
      * @var array
      */
@@ -50,14 +50,10 @@ class AttributeGroup extends Model implements Transformable
     /**
      * @var string
      */
-    protected $table = "attributes_group";
+    protected $table = 'attributes_group';
 
-    /**
-     *
-     */
     public function attributeGroupDescription()
     {
-        $this->hasMany(AttributeGroupDescription::class, "attributes_group_id");
+        $this->hasMany(AttributeGroupDescription::class, 'attributes_group_id');
     }
-
 }

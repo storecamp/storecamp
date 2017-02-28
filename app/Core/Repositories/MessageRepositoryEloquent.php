@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\MessageRepository;
 use App\Core\Models\Message;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class MessageRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class MessageRepositoryEloquent.
  */
 class MessageRepositoryEloquent extends BaseRepository implements MessageRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class MessageRepositoryEloquent extends BaseRepository implements MessageReposit
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

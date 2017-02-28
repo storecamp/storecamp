@@ -3,6 +3,7 @@
 namespace App\Core\Support\Cacheable;
 
 use Illuminate\Database\Eloquent\Builder;
+
 /**
  * @mixin \Illuminate\Database\Query\Builder
  */
@@ -26,6 +27,7 @@ class EloquentBuilder extends Builder
             if (count($models) > 0) {
                 $models = $builder->eagerLoadRelations($models);
             }
+
             return $builder->getModel()->newcollection($models);
         };
         // Check if cache is enabled
@@ -36,6 +38,7 @@ class EloquentBuilder extends Builder
         $result = call_user_func($closure);
         // We're done, let's clean up!
         $builder->getModel()->resetCacheConfig();
+
         return $result;
     }
 }

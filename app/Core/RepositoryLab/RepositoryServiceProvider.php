@@ -5,8 +5,7 @@ namespace RepositoryLab\Repository;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RepositoryServiceProvider
- * @package RepositoryLab\Repository\Providers
+ * Class RepositoryServiceProvider.
  */
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -16,21 +15,21 @@ class RepositoryServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
     /**
-     *
      * @return void
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/repository.php' => config_path('repository.php')
+            __DIR__.'/config/repository.php' => config_path('repository.php'),
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__ . '/config/repository.php', 'repository'
+            __DIR__.'/config/repository.php', 'repository'
         );
 
-        $this->loadTranslationsFrom(__DIR__ . '/lang', 'repository');
+        $this->loadTranslationsFrom(__DIR__.'/lang', 'repository');
     }
 
     /**

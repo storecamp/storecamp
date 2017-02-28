@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCampaignListTable extends Migration
 {
@@ -21,7 +21,6 @@ class CreateCampaignListTable extends Migration
 
             $table->timestamps();
             $table->primary(['subscriber_id', 'campaign_id']);
-
         });
     }
 
@@ -32,7 +31,7 @@ class CreateCampaignListTable extends Migration
      */
     public function down()
     {
-        Schema::drop('campaign_subscribers', function(Blueprint $table) {
+        Schema::drop('campaign_subscribers', function (Blueprint $table) {
             $table->dropForeign('campaign_subscribers_subscriber_id_foreign');
             $table->dropForeign('campaign_subscribers_campaign_id_foreign');
         });

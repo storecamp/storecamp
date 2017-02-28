@@ -4,26 +4,24 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Components\Flash\Flash;
 use App\Core\Contracts\AttributeGroupSystemContract;
-use App\Core\Models\AttributeGroup;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\AttributeGroupRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
- * Class AttributeGroupsController
- * @package App\Core\Http\Controllers\Admin
+ * Class AttributeGroupsController.
  */
 class AttributeGroupsController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.attribute_groups.";
+    public $viewPathBase = 'admin.attribute_groups.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/attribute_groups";
+    public $errorRedirectPath = 'admin/attribute_groups';
 
     /**
      * @var AttributeGroupRepository
@@ -42,13 +40,12 @@ class AttributeGroupsController extends BaseController
      * AttributeGroupsController constructor.
      * @param AttributeGroupSystemContract $attributeGroupSystem
      */
-    function __construct(AttributeGroupSystemContract $attributeGroupSystem)
+    public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
     {
         $this->attributeGroupSystem = $attributeGroupSystem;
         $this->groupRepository = $attributeGroupSystem->group;
         $this->groupDescriptionRepository = $attributeGroupSystem->description;
     }
-
 
     /**
      * @param Request $request
@@ -70,6 +67,7 @@ class AttributeGroupsController extends BaseController
     public function create()
     {
         $groupAttributes = $this->groupRepository->all()->pluck('name', 'id');
+
         return $this->view('create', compact('groupAttributes'));
     }
 
@@ -82,9 +80,9 @@ class AttributeGroupsController extends BaseController
         try {
             $data = $request->all();
             $group = $this->attributeGroupSystem->createGroup($data);
+
             return redirect('admin/attribute_groups');
-        } catch
-        (\Throwable $exception) {
+        } catch (\Throwable $exception) {
             return $this->redirectNotFound($exception);
         }
     }
@@ -99,6 +97,7 @@ class AttributeGroupsController extends BaseController
         try {
             $data = $request->all();
             $groupAttributes = $this->attributeGroupSystem->presentGroup($data, $id);
+
             return $this->view('show', compact('groupAttributes'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -115,6 +114,7 @@ class AttributeGroupsController extends BaseController
         try {
             $data = $request->all();
             $groupAttribute = $this->attributeGroupSystem->presentGroup($data, $id);
+
             return $this->view('edit', compact('groupAttribute'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -148,9 +148,10 @@ class AttributeGroupsController extends BaseController
     {
         try {
             $deleted = $this->groupRepository->delete($id);
-            if (!$deleted) {
-                Flash::warning("Item not deleted. Some error appeared!");
+            if (! $deleted) {
+                Flash::warning('Item not deleted. Some error appeared!');
             }
+
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -158,7 +159,7 @@ class AttributeGroupsController extends BaseController
     }
 
     /**
-     * get groups name in json format
+     * get groups name in json format.
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -166,12 +167,13 @@ class AttributeGroupsController extends BaseController
     public function getJson(Request $request)
     {
         $query = $this->parserSearchValue($request->get('search'));
-        $attrGroup = $this->groupRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
+        $attrGroup = $this->groupRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
         $attrGroupArr = [];
         foreach ($attrGroup as $key => $attrGroupItem) {
             $attrGroupArr[$key]['text'] = $attrGroupItem['name'];
             $attrGroupArr[$key]['id'] = $attrGroupItem['id'];
         }
+
         return \Response::json($attrGroupArr);
     }
 }

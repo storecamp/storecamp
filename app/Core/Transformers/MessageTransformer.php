@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Message;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class MessageTransformer
- * @package namespace App\Core\Transformers;
+ * Class MessageTransformer.
  */
 class MessageTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Message entity
+     * Transform the \Message entity.
      * @param \Message $model
      *
      * @return array
@@ -26,7 +24,7 @@ class MessageTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

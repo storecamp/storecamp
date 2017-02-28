@@ -5,26 +5,25 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Core\Contracts\AccessSystemContract;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Core\Validators\Role\RolesFormRequest;
 use App\Core\Validators\Role\RolesUpdateFormRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 /**
- * Class RolesController
- * @package App\Core\Http\Controllers
+ * Class RolesController.
  */
 class RolesController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.roles.";
+    public $viewPathBase = 'admin.roles.';
 
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/roles";
+    public $errorRedirectPath = 'admin/roles';
 
     /**
      * @var RolesRepository
@@ -47,7 +46,6 @@ class RolesController extends BaseController
         $this->rolesRepository = $accessSystem->rolesRepository;
         $this->permissionRepository = $accessSystem->permissionRepository;
         $this->middleware('isAdmin');
-
     }
 
     /**
@@ -96,8 +94,8 @@ class RolesController extends BaseController
     {
         $data = $request->all();
         $role = $this->accessSystem->presentRoles($data, $id);
-        return $this->view('show', compact('role'));
 
+        return $this->view('show', compact('role'));
     }
 
     /**
@@ -111,7 +109,8 @@ class RolesController extends BaseController
             $data = $request->all();
             $role = $this->accessSystem->presentRoles($data, $id);
             $permissions = $this->permissionRepository->all()->pluck('name', 'id');
-            $selectedPerms = $role->perms()->orderBy("id")->pluck("name", "id");
+            $selectedPerms = $role->perms()->orderBy('id')->pluck('name', 'id');
+
             return $this->view('edit', compact('role', 'permissions', 'selectedPerms'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -130,28 +129,27 @@ class RolesController extends BaseController
             $this->accessSystem->updateRole($data, $id);
 
             return redirect('admin/roles');
-
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
 
     /**
-     * get permissions name in json format
+     * get permissions name in json format.
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-
     public function getPermsJson(Request $request)
     {
         $query = $this->parserSearchValue($request->get('search'));
-        $permGroup = $this->permissionRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
+        $permGroup = $this->permissionRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
         $permGroupArr = [];
         foreach ($permGroup as $key => $attrGroupItem) {
             $permGroupArr[$key]['text'] = $attrGroupItem['name'];
             $permGroupArr[$key]['id'] = $attrGroupItem['id'];
         }
+
         return \Response::json($permGroupArr);
     }
 
@@ -163,9 +161,10 @@ class RolesController extends BaseController
     {
         try {
             $deleted = $this->accessSystem->deleteRole($id);
-            if (!$deleted) {
-                \Flash::warning("Sorry role is not deleted");
+            if (! $deleted) {
+                \Flash::warning('Sorry role is not deleted');
             }
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

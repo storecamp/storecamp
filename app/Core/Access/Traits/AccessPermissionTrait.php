@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access\Traits;
+<?php
 
-/**
+namespace App\Core\Access\Traits;
+
+/*
  * This file is part of Access,
  * a role & permission management solution for Syrinx.
  *
@@ -33,8 +35,8 @@ trait AccessPermissionTrait
     {
         parent::boot();
 
-        static::deleting(function($permission) {
-            if (!method_exists(config('access.permission'), 'bootSoftDeletes')) {
+        static::deleting(function ($permission) {
+            if (! method_exists(config('access.permission'), 'bootSoftDeletes')) {
                 $permission->roles()->sync([]);
             }
 

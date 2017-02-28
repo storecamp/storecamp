@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 /**
- * Class FolderTableSeeder
+ * Class FolderTableSeeder.
  */
 class FolderTableSeeder extends Seeder
 {
@@ -31,17 +31,17 @@ class FolderTableSeeder extends Seeder
         \App\Core\Models\Folder::create([
             'name' => '',
             'parent_id' => null,
-            'locked' => true
+            'locked' => true,
         ]);
 
         \App\Core\Models\Folder::create([
             'name' => '',
             'parent_id' => null,
             'disk' => 'mails',
-            'locked' => true
+            'locked' => true,
         ]);
 
-        $uploadsPath = public_path("uploads");
-        $this->synchronizer->synchronizeWithFiles($uploadsPath, "local");
+        $uploadsPath = public_path('uploads');
+        $this->synchronizer->synchronizeWithFiles($uploadsPath, 'local');
     }
 }

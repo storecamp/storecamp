@@ -2,18 +2,17 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class Subscribers
+ * Class Subscribers.
  *
- * @package App\Core\Models
  * @property int $id
  * @property string $name
  * @property string $email
@@ -42,7 +41,7 @@ class Subscribers extends Model implements Transformable
     /**
      * @var string
      */
-    protected $table = "subscribers";
+    protected $table = 'subscribers';
 
     /**
      * @var array
@@ -50,11 +49,11 @@ class Subscribers extends Model implements Transformable
     protected $fillable = [
         'name',
         'email',
-        'unique_id'
+        'unique_id',
     ];
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {
@@ -66,16 +65,15 @@ class Subscribers extends Model implements Transformable
      */
     public function campaign()
     {
-        return $this->belongsToMany(Campaign::class, "campaign_subscribers", 'subscriber_id', 'campaign_id')->withTimestamps();
+        return $this->belongsToMany(Campaign::class, 'campaign_subscribers', 'subscriber_id', 'campaign_id')->withTimestamps();
     }
 
     /**
      * @param $query
      * @param $mail
      */
-    public function scopeMails($query, $mail) {
-
-        $query->where("email", $mail);
+    public function scopeMails($query, $mail)
+    {
+        $query->where('email', $mail);
     }
-    
 }

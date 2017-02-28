@@ -26,7 +26,7 @@ class PermissionsUpdateFormRequest extends Request
         return [
            'name' => 'required',
             'slug' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ];
     }
 }

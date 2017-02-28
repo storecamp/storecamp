@@ -2,12 +2,11 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Core\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
- * Class AdminController
- * @package App\Core\Http\Controllers\Admin
+ * Class AdminController.
  */
 class AdminController extends Controller
 {
@@ -16,7 +15,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware("role:Admin");
+        $this->middleware('role:Admin');
     }
 
     /**
@@ -24,15 +23,11 @@ class AdminController extends Controller
      */
     public function htmlElements()
     {
-        return view("admin.htmlElements.elements");
+        return view('admin.htmlElements.elements');
     }
 
-    /**
-     *
-     */
     public function index()
     {
-
     }
 
     /**
@@ -61,7 +56,7 @@ class AdminController extends Controller
      */
     public function show(Request $request)
     {
-        return view("admin.dashboard");
+        return view('admin.dashboard');
     }
 
     /**

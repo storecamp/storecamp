@@ -4,21 +4,17 @@ namespace App\Core\Generators\Migrations;
 
 use Illuminate\Contracts\Support\Arrayable;
 
-
-    /**
-     * Class RulesParser
-     * @package Prettus\Repository\Generators\Migrations
-     */
+/**
+ * Class RulesParser.
+ */
 class RulesParser implements Arrayable
 {
-
     /**
      * The set of rules.
      *
      * @var string
      */
     protected $rules;
-
 
     /**
      * Create new instance.
@@ -88,7 +84,6 @@ class RulesParser implements Arrayable
         });
     }
 
-
     /**
      * Get column attributes.
      *
@@ -99,8 +94,6 @@ class RulesParser implements Arrayable
      */
     public function getAttributes($column, $rules)
     {
-
-        return str_replace($column . '=>', '', $rules);
+        return str_replace($column.'=>', '', $rules);
     }
-
 }

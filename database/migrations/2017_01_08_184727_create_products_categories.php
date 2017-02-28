@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateProductsCategories extends Migration
 {
@@ -13,7 +13,7 @@ class CreateProductsCategories extends Migration
      */
     public function up()
     {
-        Schema::create('products_categories', function(Blueprint $table) {
+        Schema::create('products_categories', function (Blueprint $table) {
             $table->integer('product_id');
             $table->integer('category_id');
             $table->primary(['product_id', 'category_id']);
@@ -28,7 +28,7 @@ class CreateProductsCategories extends Migration
      */
     public function down()
     {
-        Schema::drop('products_categories', function(Blueprint $table) {
+        Schema::drop('products_categories', function (Blueprint $table) {
             $table->dropPrimary('products_categories_product_id_primary');
             $table->dropPrimary('products_categories_category_id_primary');
         });

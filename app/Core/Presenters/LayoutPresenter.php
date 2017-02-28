@@ -6,14 +6,12 @@ use App\Core\Transformers\LayoutTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class LayoutPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class LayoutPresenter.
  */
 class LayoutPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

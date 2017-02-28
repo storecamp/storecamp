@@ -2,15 +2,15 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
-use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Mail
+ * App\Core\Models\Mail.
  *
  * @property int $id
  * @property string $unique_id
@@ -40,11 +40,11 @@ class Mail extends Model implements Transformable
     use GeneratesUnique;
     use CacheableEloquent;
 
-    protected $table = "mails";
-    protected $fillable = ["from", "to", "subject", "message", "user_id"];
+    protected $table = 'mails';
+    protected $fillable = ['from', 'to', 'subject', 'message', 'user_id'];
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {

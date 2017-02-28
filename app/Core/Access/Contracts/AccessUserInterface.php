@@ -1,13 +1,13 @@
-<?php namespace App\Core\Access\Contracts;
+<?php
+
+namespace App\Core\Access\Contracts;
 
 /**
  * This file is part of Access,
  * a role & permission management solution for Syrinx.
  *
  * @license MIT
- * @package App\Core\Access
  */
-
 interface AccessUserInterface
 {
     /**
@@ -26,7 +26,7 @@ interface AccessUserInterface
      * @return bool
      */
     public function hasRole($name, $requireAll = false);
-    
+
     /**
      * Check if user has a permission by its name.
      *
@@ -36,7 +36,7 @@ interface AccessUserInterface
      * @return bool
      */
     public function may($permission, $requireAll = false);
-    
+
     /**
      * Checks role(s) and permission(s).
      *
@@ -49,30 +49,30 @@ interface AccessUserInterface
      * @return array|bool
      */
     public function ability($roles, $permissions, $options = []);
-    
+
     /**
      * Alias to eloquent many-to-many relation's attach() method.
      *
      * @param mixed $role
      */
     public function attachRole($role);
-    
+
     /**
      * Alias to eloquent many-to-many relation's detach() method.
      *
      * @param mixed $role
      */
     public function detachRole($role);
-    
+
     /**
-     * Attach multiple roles to a user
+     * Attach multiple roles to a user.
      *
      * @param mixed $roles
      */
     public function attachRoles($roles);
-    
+
     /**
-     * Detach multiple roles from a user
+     * Detach multiple roles from a user.
      *
      * @param mixed $roles
      */

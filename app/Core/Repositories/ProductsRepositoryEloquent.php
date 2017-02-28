@@ -2,14 +2,12 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\ProductsRepository;
 use App\Core\Models\Product;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ProductsRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class ProductsRepositoryEloquent.
  */
 class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepository
 {
@@ -21,11 +19,11 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         'model' => 'like',
         'price' => 'like',
         'quantity' => '=',
-        'stock_status' => '='
+        'stock_status' => '=',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -35,7 +33,7 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

@@ -7,13 +7,12 @@ use App\Core\Repositories\OrdersRepository;
 use Illuminate\Http\Request;
 
 /**
- * Class OrdersControllersController
- * @package App\Core\Http\Controllers
+ * Class OrdersControllersController.
  */
 class OrdersController extends BaseController
 {
-    public $viewPathBase = "admin.orders.";
-    public $errorRedirectPath = "admin.orders";
+    public $viewPathBase = 'admin.orders.';
+    public $errorRedirectPath = 'admin.orders';
     /**
      * @var OrdersSystemContract
      */
@@ -68,7 +67,6 @@ class OrdersController extends BaseController
      */
     public function show(Request $request)
     {
-
     }
 
     /**

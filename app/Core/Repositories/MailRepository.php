@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface MailRepository
- * @package namespace App\Core\Repositories;
+ * Interface MailRepository.
  */
 interface MailRepository extends RepositoryInterface
 {
@@ -20,7 +19,6 @@ interface MailRepository extends RepositoryInterface
      * @return mixed
      */
     public function resolveMailHistory($uid);
-
 
     /**
      * @param $file

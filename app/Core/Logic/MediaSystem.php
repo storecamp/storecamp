@@ -2,7 +2,6 @@
 
 namespace App\Core\Logic;
 
-
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Models\Folder;
 use App\Core\Repositories\FolderRepository;
@@ -12,8 +11,7 @@ use Illuminate\Http\Request;
 use Plank\Mediable\MediaUploader;
 
 /**
- * Class MediaSystem
- * @package App\Core\Logic
+ * Class MediaSystem.
  */
 class MediaSystem implements MediaSystemContract
 {
@@ -88,13 +86,14 @@ class MediaSystem implements MediaSystemContract
      */
     public function disk(string $name)
     {
-        if (!empty($name)) {
+        if (! empty($name)) {
             $this->folder->setDisk($name);
             $this->setDisk($name);
         } else {
             $this->folder->setDisk($this->disk);
             $this->setDisk($this->disk);
         }
+
         return $this;
     }
 
@@ -112,12 +111,12 @@ class MediaSystem implements MediaSystemContract
         $this->setDisk($disk);
         $model = $this->media->getModel();
         $parentsPath = $this->folder->disk($disk)->getParentFoldersPath($folder);
-        $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
+        $folderPath = $parentsPath ? $parentsPath.'/'.$folder->name : $folder->name;
         $count = $folder->files->count();
         if ($getAll) {
             $this->media->setSkipPaginate(true);
         }
-        if (!empty($dataTypes)) {
+        if (! empty($dataTypes)) {
             $this->media->setDataTypes($dataTypes);
         }
         $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
@@ -128,7 +127,7 @@ class MediaSystem implements MediaSystemContract
             'directories' => $directories,
             'media' => $media,
             'count' => $count,
-            'path' => $folder->name
+            'path' => $folder->name,
         ];
     }
 
@@ -145,17 +144,18 @@ class MediaSystem implements MediaSystemContract
         $parentFolderId = $request->folder ? $request->folder : $this->folder->getDefaultFolder($disk)->unique_id;
         $parentFolder = $folderDisk->find($parentFolderId);
         $parentFoldersPath = $folderDisk->getParentFoldersPath($parentFolder);
-        $parentPath = $parentFoldersPath ? $parentFoldersPath . '/' . $parentFolder->name : $parentFolder->name;
-        $newFolder = $parentPath ? $folderDisk->getDiskRoot() . '/' . $parentPath . '/' . $new_path : $folderDisk->getDiskRoot() . '/' . $new_path;
-        $newFolderPath = $parentPath ? $parentPath . '/' . $new_path : $new_path;
-        if (!$this->filesystem->isDirectory($newFolder)) {
+        $parentPath = $parentFoldersPath ? $parentFoldersPath.'/'.$parentFolder->name : $parentFolder->name;
+        $newFolder = $parentPath ? $folderDisk->getDiskRoot().'/'.$parentPath.'/'.$new_path : $folderDisk->getDiskRoot().'/'.$new_path;
+        $newFolderPath = $parentPath ? $parentPath.'/'.$new_path : $new_path;
+        if (! $this->filesystem->isDirectory($newFolder)) {
             $this->filesystem->makeDirectory($newFolder, 0775, true);
             $folder = $this->folder->getModel()->create([
                 'name' => $new_path,
                 'path_on_disk' => $newFolderPath,
                 'parent_id' => $parentFolder->id,
-                'disk' => $disk
+                'disk' => $disk,
             ]);
+
             return $folder;
         } else {
             return $this->folder->getDefaultFolder($disk);
@@ -173,8 +173,8 @@ class MediaSystem implements MediaSystemContract
         $folderDisk = $this->folder->disk($disk);
         $folder = $request->folder ? $folderDisk->find($request->folder) : $this->defaultFolder;
         $parentFoldersPath = $folderDisk->getParentFoldersPath($folder);
-        $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
-        $folderFullPath = $folderDisk->getDiskRoot() . '/' . $folderPath;
+        $folderPath = $parentFoldersPath ? $parentFoldersPath.'/'.$folder->name : $folder->name;
+        $folderFullPath = $folderDisk->getDiskRoot().'/'.$folderPath;
         $file = $request->file('file');
         $filename = $this->transliteration->clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
         $media = $this->mediaUploader->fromSource($file)
@@ -182,6 +182,7 @@ class MediaSystem implements MediaSystemContract
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();
+
         return $media;
     }
 
@@ -198,10 +199,10 @@ class MediaSystem implements MediaSystemContract
 
         $renameFolder = $folderDisk->find($request->folder);
         $parentFoldersPath = $folderDisk->getParentFoldersPath($renameFolder);
-        $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $renameFolder->name : $renameFolder->name;
-        $beRenamedToPath = $parentFoldersPath ? $parentFoldersPath . '/' . $new_name : $new_name;
-        $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
-        $newFolder = $folderDisk->getDiskRoot() . '/' . $beRenamedToPath;
+        $renamedPath = $parentFoldersPath ? $parentFoldersPath.'/'.$renameFolder->name : $renameFolder->name;
+        $beRenamedToPath = $parentFoldersPath ? $parentFoldersPath.'/'.$new_name : $new_name;
+        $selectedFolder = $folderDisk->getDiskRoot().'/'.$renamedPath;
+        $newFolder = $folderDisk->getDiskRoot().'/'.$beRenamedToPath;
 
         if ($this->filesystem->isDirectory($selectedFolder)) {
             $medias = $this->media->inDirectory($folderDisk->getDisk(), $renamedPath);
@@ -234,18 +235,19 @@ class MediaSystem implements MediaSystemContract
         $folderFile = $folderDisk->find($file->directory_id);
         $parentFoldersPath = $folderDisk->getParentFoldersPath($folderFile);
 
-        $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folderFile->name : $folderFile->name;
-        $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
+        $renamedPath = $parentFoldersPath ? $parentFoldersPath.'/'.$folderFile->name : $folderFile->name;
+        $selectedFolder = $folderDisk->getDiskRoot().'/'.$renamedPath;
         if ($this->filesystem->isDirectory($selectedFolder)) {
-            if (!$this->filesystem->exists($selectedFolder . $file->filename . '.' . $file->extension)) {
-                throw new \Exception("Sorry File not found", 404);
+            if (! $this->filesystem->exists($selectedFolder.$file->filename.'.'.$file->extension)) {
+                throw new \Exception('Sorry File not found', 404);
             }
-            $this->filesystem->move($selectedFolder . $file->filename . '.' . $file->extension,
-                $selectedFolder . $new_name . '.' . $file->extension);
+            $this->filesystem->move($selectedFolder.$file->filename.'.'.$file->extension,
+                $selectedFolder.$new_name.'.'.$file->extension);
 
             $file->filename = $new_name;
             $file->save();
         }
+
         return $folderFile;
     }
 
@@ -260,8 +262,8 @@ class MediaSystem implements MediaSystemContract
     {
         $this->setDisk($disk);
         $deleted = $this->folder->disk($disk)->delete($folder);
-        if (!$deleted) {
-            throw new \Exception("Folder is not deleted", 500);
+        if (! $deleted) {
+            throw new \Exception('Folder is not deleted', 500);
         }
     }
 
@@ -275,15 +277,15 @@ class MediaSystem implements MediaSystemContract
         $media = $this->media->find($id);
         $mediaClone = $media;
         $deleted = $this->media->delete($id);
-        if (!$deleted) {
-            throw new \Exception("Folder is not deleted", 500);
+        if (! $deleted) {
+            throw new \Exception('Folder is not deleted', 500);
         }
-        return $mediaClone;
 
+        return $mediaClone;
     }
 
     /**
-     * preRender files
+     * preRender files.
      *
      * @param $model
      * @param string $path
@@ -293,17 +295,16 @@ class MediaSystem implements MediaSystemContract
      * @param string $disk
      * @return array
      */
-    private function filesPreRender($model, $path = "", $tag = "", $request, $folder, $disk = '')
+    private function filesPreRender($model, $path, $tag, $request, $folder, $disk = '')
     {
         $folderInstance = $this->folder->disk($disk);
         if ($tag) {
             $media = $this->media->inDirectory($folderInstance->getDisk(), $path, $tag);
-
         } else {
             $media = $this->media->inDirectory($folderInstance->getDisk(), $path);
         }
-        $media = ["media" => $media, "path" => $path, "tag" => $tag, "folderInstance" => $folder, 'disk' => $disk];
+        $media = ['media' => $media, 'path' => $path, 'tag' => $tag, 'folderInstance' => $folder, 'disk' => $disk];
+
         return $media;
     }
-
 }

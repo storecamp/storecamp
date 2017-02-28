@@ -2,12 +2,8 @@
 
 namespace App\Core\Contracts;
 
-
-use App\Core\Models\Product;
-
 /**
- * Interface ProductSystemContract
- * @package App\Core\Contracts
+ * Interface ProductSystemContract.
  */
 interface ProductSystemContract extends BaseLogicContract
 {

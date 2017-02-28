@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Returns;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class ReturnTransformer
- * @package namespace App\Core\Transformers;
+ * Class ReturnTransformer.
  */
 class ReturnsTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Returns entity
+     * Transform the \Returns entity.
      * @param \Returns $model
      *
      * @return array
@@ -26,7 +24,7 @@ class ReturnsTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

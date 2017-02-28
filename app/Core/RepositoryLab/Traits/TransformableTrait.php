@@ -1,11 +1,12 @@
-<?php namespace RepositoryLab\Repository\Traits;
+<?php
+
+namespace RepositoryLab\Repository\Traits;
 
 /**
- * Class TransformableTrait
- * @package RepositoryLab\Repository\Traits
+ * Class TransformableTrait.
  */
-trait TransformableTrait {
-
+trait TransformableTrait
+{
     /**
      * @return array
      */
@@ -13,5 +14,4 @@ trait TransformableTrait {
     {
         return $this->toArray();
     }
-
 }

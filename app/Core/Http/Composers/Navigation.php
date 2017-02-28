@@ -3,12 +3,10 @@
 namespace App\Core\Http\Composers;
 
 use App\Core\Contracts\CartSystemContract;
-use Illuminate\Auth\AuthManager;
 use Illuminate\View\View;
 
 /**
- * Class Navigation
- * @package App\Core\Http\Composers
+ * Class Navigation.
  */
 class Navigation
 {
@@ -33,5 +31,4 @@ class Navigation
     {
         $view->with('navigation', ['cartSystem' => $this->cartSystem]);
     }
-
 }

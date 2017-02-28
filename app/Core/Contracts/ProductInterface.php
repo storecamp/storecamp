@@ -2,7 +2,6 @@
 
 namespace app\Core\Contracts;
 
-
 use App\Core\Models\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,8 +14,9 @@ interface ProductInterface
      * @return array
      */
     public function sluggable(): array;
+
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot();
 
@@ -66,11 +66,12 @@ interface ProductInterface
     public function getStockStatus(): string;
 
     /**
-     * get the product category
+     * get the product category.
      *
      * @return mixed
      */
     public function getFirstCategory(): Category;
+
     /**
      * @param $stock_status
      */
@@ -120,6 +121,7 @@ interface ProductInterface
      * @param $query
      */
     public function scopePublished($query);
+
     /**
      * @param $query
      * @return mixed
@@ -141,7 +143,7 @@ interface ProductInterface
 
     /**
      * get all products
-     * by the given category
+     * by the given category.
      *
      * @param $query
      * @param Category|null $category

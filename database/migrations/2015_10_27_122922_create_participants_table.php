@@ -21,10 +21,8 @@ class CreateParticipantsTable extends Migration
             $table->timestamp('last_read');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -33,7 +31,7 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('participants', function(Blueprint $table) {
+        Schema::drop('participants', function (Blueprint $table) {
             $table->dropForeign('participants_thread_id_foreign');
             $table->dropForeign('participants_user_id_foreign');
             $table->dropSoftDeletes();

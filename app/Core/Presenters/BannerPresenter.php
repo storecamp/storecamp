@@ -6,14 +6,12 @@ use App\Core\Transformers\BannerTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class BannerPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class BannerPresenter.
  */
 class BannerPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

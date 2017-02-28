@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\AttributeGroup;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class AttributeGroupTransformer
- * @package namespace App\Core\Transformers;
+ * Class AttributeGroupTransformer.
  */
 class AttributeGroupTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \AttributeGroup entity
+     * Transform the \AttributeGroup entity.
      * @param \AttributeGroup $model
      *
      * @return array
@@ -26,7 +24,7 @@ class AttributeGroupTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

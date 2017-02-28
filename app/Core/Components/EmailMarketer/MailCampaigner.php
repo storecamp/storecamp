@@ -3,16 +3,15 @@
 namespace App\Core\Components\EmailMarketer;
 
 use Illuminate\Console\Command;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Mail\Mailer;
+use Illuminate\Routing\UrlGenerator;
 use League\Csv\Reader;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class MailCampaigner extends Command
 {
-
     /**
      * The console command name.
      *
@@ -37,7 +36,6 @@ class MailCampaigner extends Command
      */
     public function __construct(Filesystem $file, Mailer $mailer, UrlGenerator $urlhelper)
     {
-
         parent::__construct();
         $this->file = $file;
         $this->mailer = $mailer;
@@ -54,7 +52,7 @@ class MailCampaigner extends Command
         $file = $this->argument('file');
         $mails = $this->mailFromFile($file);
         $c = count($mails);
-        print_r("total : " . $c . "\n");
+        print_r('total : '.$c."\n");
         $emails = [];
         $start = $this->option('start');
         $end = $this->option('end');
@@ -68,25 +66,24 @@ class MailCampaigner extends Command
                 echo $this->info("\n Maximum reached");
                 break;
             }
-            echo ($num . ',') . "<br/>";
+            echo($num.',').'<br/>';
             $name = isset($mails[$num][1]) ? trim($mails[$num][1]) : null;
             $this->sendMail($view, $subject, trim($mails[$num][0]), $senderAddr, $senderName, $name);
             $bar->advance();
-            echo "# " . $num . " - subscriber done!";
+            echo '# '.$num.' - subscriber done!';
         }
         $bar->finish();
         $this->info("\n All done");
     }
 
     /**
-     * Use to send mails to each emails
+     * Use to send mails to each emails.
      *
-     * @var string $view template to use
+     * @var string template to use
      * @var string $subject template to use
      * @var string $receiverEmail receiver's email address
      * @var string $senderEmail sender's email address
      * @var string $senderName sender's name
-     *
      */
     public function sendMail($view, $subject, $receiverEmail, $senderEmail, $senderName = null, $name = null)
     {
@@ -143,5 +140,4 @@ class MailCampaigner extends Command
 // 		$mails=array_filter($mails);
         return $result;
     }
-
 }

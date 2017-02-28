@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -62,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => 'web',
             'namespace' => 'App\Core\Http\Controllers',
         ], function ($router) {
-            require app_path("/Core/Http/routes/web.php");
+            require app_path('/Core/Http/routes/web.php');
         });
     }
 
@@ -88,7 +88,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => 'App\Core\Http\Controllers',
             'prefix' => 'api',
         ], function ($router) {
-            require app_path("/Core/Http/routes/api.php");
+            require app_path('/Core/Http/routes/api.php');
         });
     }
 }

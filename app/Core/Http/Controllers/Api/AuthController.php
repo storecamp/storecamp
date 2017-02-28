@@ -2,15 +2,14 @@
 
 namespace App\Core\Http\Controllers\Api;
 
+use App\Core\Http\Controllers\Controller;
 use App\Core\Models\User;
 use Illuminate\Http\Request;
-use App\Core\Http\Controllers\Controller;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -22,7 +21,7 @@ class AuthController extends Controller
 
         try {
             // attempt to verify the credentials and create a token for the user
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -40,23 +39,15 @@ class AuthController extends Controller
     public function getAuthenticatedUser()
     {
         try {
-
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
             }
-
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
             return response()->json(['token_expired'], $e->getStatusCode());
-
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
             return response()->json(['token_invalid'], $e->getStatusCode());
-
         } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-
             return response()->json(['token_absent'], $e->getStatusCode());
-
         }
 
         // the token is valid and we have found the user via the sub claim
@@ -72,7 +63,7 @@ class AuthController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
             'password' => 'required|min:8',
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         if ($validator->fails()) {
@@ -86,11 +77,10 @@ class AuthController extends Controller
         try {
             $user = User::create($credentials);
             $token_creds = $request->only('email', 'password');
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'msg' => $e->getMessage()], 409);
         }
-        if (!$token = JWTAuth::attempt($token_creds)) {
+        if (! $token = JWTAuth::attempt($token_creds)) {
             return response()->json(['error' => 'invalid_credentials'], 401);
         } else {
             return response()->json(compact('user', 'token'));
@@ -105,7 +95,5 @@ class AuthController extends Controller
         $users = User::all();
 
         return response()->json(compact('users'));
-
     }
-
 }

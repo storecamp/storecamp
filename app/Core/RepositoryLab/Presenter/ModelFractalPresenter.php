@@ -1,24 +1,24 @@
 <?php
+
 namespace RepositoryLab\Repository\Presenter;
 
 use Exception;
 use RepositoryLab\Repository\Transformer\ModelTransformer;
 
 /**
- * Class ModelFractalPresenter
- * @package RepositoryLab\Repository\Presenter
+ * Class ModelFractalPresenter.
  */
-class ModelFractalPresenter extends FractalPresenter {
-
+class ModelFractalPresenter extends FractalPresenter
+{
     /**
-     * Transformer
+     * Transformer.
      *
      * @return ModelTransformer
      * @throws Exception
      */
     public function getTransformer()
     {
-        if ( !class_exists('League\Fractal\Manager') ){
+        if (! class_exists('League\Fractal\Manager')) {
             throw new Exception("Package required. Please install: 'composer require league/fractal' (0.12.*)");
         }
 

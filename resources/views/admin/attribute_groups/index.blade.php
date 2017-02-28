@@ -1,4 +1,4 @@
-﻿@extends('admin/app')
+@extends('admin/app')
 @section('breadcrumb')
         {!! Breadcrumbs::render('attribute groups', 'Attribute Groups') !!}
     @endsection
@@ -43,7 +43,7 @@
                                        title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>
                                 </td>
                             </tr>
-                            <?php $no++;?>
+                            <?php $no++; ?>
                         @endforeach
                         </tbody>
                     </table>

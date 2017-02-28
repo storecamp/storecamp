@@ -3,9 +3,8 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\LogViewerSystemContract;
-use Illuminate\Http\Request;
-
 use Arcanedev\LogViewer\Http\Controllers\Controller as LogBaseController;
+use Illuminate\Http\Request;
 
 class LogViewerController extends LogBaseController
 {
@@ -18,6 +17,7 @@ class LogViewerController extends LogBaseController
     protected $viewerSystem;
 
     protected $showRoute = 'log-viewer::logs.show';
+
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
@@ -31,8 +31,9 @@ class LogViewerController extends LogBaseController
 
     public function view($view, $data = [], $mergeData = [])
     {
-        return view('admin.logs.' . $view, $data, $mergeData);
+        return view('admin.logs.'.$view, $data, $mergeData);
     }
+
     /**
      * Show the dashboard.
      *
@@ -40,10 +41,10 @@ class LogViewerController extends LogBaseController
      */
     public function index()
     {
-        $data     = $this->viewerSystem->dashboard();
-        $stats     = $data['stats'];
+        $data = $this->viewerSystem->dashboard();
+        $stats = $data['stats'];
         $chartData = $data['chartData'];
-        $percents  = $data['percents'];
+        $percents = $data['percents'];
 
         return $this->view('dashboard', compact('chartData', 'percents', 'stats'));
     }
@@ -57,10 +58,10 @@ class LogViewerController extends LogBaseController
      */
     public function listLogs(Request $request)
     {
-        $data     = $this->viewerSystem->showLogs($request);
-        $stats   = $data['stats'];
+        $data = $this->viewerSystem->showLogs($request);
+        $stats = $data['stats'];
         $headers = $data['headers'];
-        $rows    = $data['rows'];
+        $rows = $data['rows'];
 
         return $this->view('logs', compact('headers', 'rows', 'footer', 'stats'));
     }
@@ -74,11 +75,12 @@ class LogViewerController extends LogBaseController
      */
     public function show($date)
     {
-        $data     = $this->viewerSystem->show($date);
-        $stats   = $data['stats'];
-        $log     = $data['log'];
-        $levels  = $data['levels'];
-        $entries =  $data['entries'];
+        $data = $this->viewerSystem->show($date);
+        $stats = $data['stats'];
+        $log = $data['log'];
+        $levels = $data['levels'];
+        $entries = $data['entries'];
+
         return $this->view('show', compact('log', 'levels', 'entries', 'stats'));
     }
 
@@ -108,7 +110,7 @@ class LogViewerController extends LogBaseController
     }
 
     /**
-     * Download the log
+     * Download the log.
      *
      * @param  string  $date
      *
@@ -130,13 +132,14 @@ class LogViewerController extends LogBaseController
      */
     public function delete(Request $request)
     {
-        if ( ! $request->ajax())
+        if (! $request->ajax()) {
             abort(405, 'Method Not Allowed');
+        }
 
-        $deleted =  $this->viewerSystem->delete($request);
+        $deleted = $this->viewerSystem->delete($request);
 
         return response()->json([
-            'result' => $deleted ? 'success' : 'error'
+            'result' => $deleted ? 'success' : 'error',
         ]);
     }
 }

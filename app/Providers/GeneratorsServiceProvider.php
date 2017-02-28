@@ -23,6 +23,5 @@ class GeneratorsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
     }
 }

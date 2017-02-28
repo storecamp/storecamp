@@ -24,7 +24,7 @@ class ReplyProductReviewFormRequest extends FormRequest
     public function rules()
     {
         return [
-            "reply_message" => "required|string|min:10,max:1000",
+            'reply_message' => 'required|string|min:10,max:1000',
         ];
     }
 }

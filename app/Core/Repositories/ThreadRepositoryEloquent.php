@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\ThreadRepository;
 use App\Core\Models\Thread;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ThreadRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class ThreadRepositoryEloquent.
  */
 class ThreadRepositoryEloquent extends BaseRepository implements ThreadRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class ThreadRepositoryEloquent extends BaseRepository implements ThreadRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

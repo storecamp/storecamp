@@ -2,10 +2,8 @@
 
 namespace App\Core\Contracts;
 
-
 interface ProductReviewSystemContract extends BaseLogicContract
 {
-
     /**
      * @param $id
      * @param array $data
@@ -31,7 +29,7 @@ interface ProductReviewSystemContract extends BaseLogicContract
      * @param int $messageId
      * @return mixed
      */
-    public function editMessage(array $data,int $messageId);
+    public function editMessage(array $data, int $messageId);
 
     /**
      * @param int $messageId

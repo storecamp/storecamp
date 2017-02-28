@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core\Generators\Commands;
 
 use App\Core\Generators\MigrationGenerator;
@@ -9,7 +10,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class EntityCommand extends Command
 {
-
     /**
      * The name of command.
      *
@@ -40,7 +40,7 @@ class EntityCommand extends Command
             'name'       => $this->argument('name'),
             '--fillable' => $this->option('fillable'),
             '--rules'    => $this->option('rules'),
-            '--force'    => $this->option('force')
+            '--force'    => $this->option('force'),
         ]);
 
         if ($this->confirm('Would you like to create a Presenter? [y|N]')) {
@@ -49,11 +49,11 @@ class EntityCommand extends Command
                 '--force' => $this->option('force'),
             ]);
         }
-        if($this->confirm('Would you like to create a Migration? [y|N]')) {
+        if ($this->confirm('Would you like to create a Migration? [y|N]')) {
             (new MigrationGenerator([
-                'name'  => "create_".$this->argument('name'),
+                'name'  => 'create_'.$this->argument('name'),
                 'action' => null,
-                'table'  => $this->argument('name')."Table",
+                'table'  => $this->argument('name').'Table',
                 'fields_up'  => null,
                 'fields_down'  => null,
                 'force' => $this->option('force'),
@@ -83,7 +83,7 @@ class EntityCommand extends Command
         return [
             ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
             ['rules', null, InputOption::VALUE_OPTIONAL, 'The rules of validation attributes.', null],
-            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null]
+            ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null],
         ];
     }
 }

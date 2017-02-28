@@ -5,11 +5,10 @@ namespace App\Core\Generators;
 use App\Core\Generators\Migrations\SchemaParser;
 
 /**
- * Class ModelGenerator
- * @package App\Core\Generators
+ * Class ModelGenerator.
  */
-class ControllerGenerator extends Generator {
-
+class ControllerGenerator extends Generator
+{
     /**
      * Get stub name.
      *
@@ -42,7 +41,6 @@ class ControllerGenerator extends Generator {
      *
      * @return string
      */
-
     public function getBasePath()
     {
         return config('generators.generator.controllerBasePath', app_path());
@@ -55,7 +53,7 @@ class ControllerGenerator extends Generator {
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getFor() . '/' . $this->getName(). str_studly($this->getPathConfigNode()) . '.php';
+        return $this->getBasePath().'/'.parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.$this->getFor().'/'.$this->getName().str_studly($this->getPathConfigNode()).'.php';
     }
 
     /**
@@ -75,13 +73,15 @@ class ControllerGenerator extends Generator {
      */
     public function getFillable()
     {
-        if ( ! $this->fillable) return '[]';
+        if (! $this->fillable) {
+            return '[]';
+        }
         $results = '['.PHP_EOL;
 
-        foreach ($this->getSchemaParser()->toArray() as $column => $value)
-        {
+        foreach ($this->getSchemaParser()->toArray() as $column => $value) {
             $results .= "\t\t'{$column}',".PHP_EOL;
         }
-        return $results . "\t" . ']';
+
+        return $results."\t".']';
     }
 }

@@ -35,7 +35,7 @@ class ClearTablesCommand extends Command
      */
     public function handle()
     {
-//        if ($this->confirm('Would you like to clear all Tables? [y|N]')) {
+        //        if ($this->confirm('Would you like to clear all Tables? [y|N]')) {
         if (\App::environment('local', 'staging', 'testing')) {
             // set tables don't want to truncate here
 
@@ -45,13 +45,13 @@ class ClearTablesCommand extends Command
                 if ($name == 'migrations') {
                     continue;
                 }
-                \DB::statement("SET foreign_key_checks=0");
+                \DB::statement('SET foreign_key_checks=0');
                 \DB::table($name)->truncate();
-                $this->info("table " . $name );
-                $this->warn(" - truncated");
+                $this->info('table '.$name);
+                $this->warn(' - truncated');
             }
         } else {
-            $this->warn("Tables not cleared. Not allowed on production env");
+            $this->warn('Tables not cleared. Not allowed on production env');
         }
 //        }
     }

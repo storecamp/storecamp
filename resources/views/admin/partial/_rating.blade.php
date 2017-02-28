@@ -1,5 +1,5 @@
 <select name="rating" id="rating">
-    <?php $i = 1;?>
+    <?php $i = 1; ?>
     @for($i; $i <= 5; $i++)
         @if(isset($selected))
             @if($selected == $i)

@@ -2,10 +2,8 @@
 
 namespace App\Core\Contracts;
 
-
 /**
- * Interface AttributeGroupSystemContract
- * @package App\Core\Contracts
+ * Interface AttributeGroupSystemContract.
  */
 interface AttributeGroupSystemContract
 {

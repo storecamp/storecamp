@@ -1,11 +1,10 @@
 <?php
+
 namespace App\Core\Generators;
 
 /**
- * Class TransformerGenerator
- * @package App\Core\Generators
+ * Class TransformerGenerator.
  */
-
 class TransformerGenerator extends Generator
 {
     /**
@@ -32,7 +31,7 @@ class TransformerGenerator extends Generator
      */
     public function getRootNamespace()
     {
-        return parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode());
+        return parent::getRootNamespace().parent::getConfigGeneratorClassPath($this->getPathConfigNode());
     }
 
     /**
@@ -52,7 +51,7 @@ class TransformerGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Transformer.php';
+        return $this->getBasePath().'/'.parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.$this->getName().'Transformer.php';
     }
 
     /**
@@ -63,8 +62,9 @@ class TransformerGenerator extends Generator
     public function getReplacements()
     {
         $modelGenerator = new ModelGenerator();
-        return array_merge(parent::getReplacements(),[
-            'model_namespace' => $modelGenerator->getRootNamespace()
+
+        return array_merge(parent::getReplacements(), [
+            'model_namespace' => $modelGenerator->getRootNamespace(),
         ]);
     }
 }

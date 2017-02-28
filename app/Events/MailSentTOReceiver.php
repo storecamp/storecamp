@@ -2,9 +2,7 @@
 
 namespace App\Events;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class MailSentTOReceiver extends Event
 {
@@ -28,6 +26,6 @@ class MailSentTOReceiver extends Event
      */
     public function broadcastOn()
     {
-        return ["campaign-email-sent"];
+        return ['campaign-email-sent'];
     }
 }

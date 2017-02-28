@@ -2,18 +2,14 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Media;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\MediaRepository;
-use App\Core\Models\Media;
-use RepositoryLab\Repository\Traits\CacheableRepository;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class MediaRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class MediaRepositoryEloquent.
  */
 class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 {
@@ -88,11 +84,11 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     protected $fieldSearchable = [
         'filename' => 'like',
         'extension' => 'like',
-        'aggregate_type' => 'like'
+        'aggregate_type' => 'like',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -112,7 +108,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -121,7 +117,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 
     /**
      * method rewrite from
-     * Media scopeInDirectory()
+     * Media scopeInDirectory().
      *
      * @param $disk
      * @param $directory
@@ -140,11 +136,11 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         }
         if ($recursive) {
             $directory = str_replace(['%', '_'], ['\%', '\_'], $directory);
-            $model = $model->where('directory', 'like', $directory . '%');
+            $model = $model->where('directory', 'like', $directory.'%');
         } else {
             $model = $model->where('directory', '=', $directory);
         }
-        if (!empty($dataTypes)) {
+        if (! empty($dataTypes)) {
             $model = $model->whereIn('aggregate_type', $dataTypes);
         }
         if ($this->isSkipPaginate()) {
@@ -153,6 +149,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
             $model = $model->paginate($this->perPage);
         }
         $this->resetModel();
+
         return $this->parserResult($model);
     }
 }

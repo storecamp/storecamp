@@ -2,10 +2,9 @@
 
 namespace App\Core\Traits;
 
-use Auth;
 use App\Core\Logic\ShopSystem;
+use Auth;
 use Illuminate\Support\Facades\Config;
-use InvalidArgumentException;
 
 trait CartItemTrait
 {
@@ -16,7 +15,7 @@ trait CartItemTrait
      */
     public function getHasObjectAttribute()
     {
-        return array_key_exists('class', $this->attributes) && !empty($this->attributes['class']);
+        return array_key_exists('class', $this->attributes) && ! empty($this->attributes['class']);
     }
 
     /**
@@ -36,7 +35,7 @@ trait CartItemTrait
      */
     public function getObjectAttribute()
     {
-        return $this->hasObject ? call_user_func($this->attributes['class'] . '::find', $this->attributes['reference_id']) : null;
+        return $this->hasObject ? call_user_func($this->attributes['class'].'::find', $this->attributes['reference_id']) : null;
     }
 
     /**
@@ -46,7 +45,10 @@ trait CartItemTrait
      */
     public function getDisplayNameAttribute()
     {
-        if ($this->hasObject) return $this->object->displayName;
+        if ($this->hasObject) {
+            return $this->object->displayName;
+        }
+
         return $this->getBuyableDescription()
             ? $this->getBuyableDescription()
             : (array_key_exists('name', $this->attributes)
@@ -72,12 +74,19 @@ trait CartItemTrait
      */
     public function getShopUrlAttribute()
     {
-        if ($this->hasObject) return $this->object->shopUrl;
-        if (!property_exists($this, 'itemRouteName') && !property_exists($this, 'itemRouteParams')) return '#';
+        if ($this->hasObject) {
+            return $this->object->shopUrl;
+        }
+        if (! property_exists($this, 'itemRouteName') && ! property_exists($this, 'itemRouteParams')) {
+            return '#';
+        }
         $params = [];
         foreach (array_keys($this->attributes) as $attribute) {
-            if (in_array($attribute, $this->itemRouteParams)) $params[$attribute] = $this->attributes[$attribute];
+            if (in_array($attribute, $this->itemRouteParams)) {
+                $params[$attribute] = $this->attributes[$attribute];
+            }
         }
+
         return empty($this->itemRouteName) ? '#' : \route($this->itemRouteName, $params);
     }
 
@@ -145,7 +154,10 @@ trait CartItemTrait
      */
     public function getWasPurchasedAttribute()
     {
-        if (Auth::guest()) return false;
+        if (Auth::guest()) {
+            return false;
+        }
+
         return Auth::user()
                 ->orders()
                 ->whereSKU($this->attributes['sku'])

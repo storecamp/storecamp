@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class YoutubeServiceProviderLaravel5 extends ServiceProvider
 {
-
     protected $defer = true;
 
     /**
@@ -33,7 +32,6 @@ class YoutubeServiceProviderLaravel5 extends ServiceProvider
         });
     }
 
-
     /**
      * Get the services provided by the provider.
      *
@@ -43,6 +41,4 @@ class YoutubeServiceProviderLaravel5 extends ServiceProvider
     {
         return ['App\Core\APIs\Youtube\Youtube'];
     }
-
-
 }

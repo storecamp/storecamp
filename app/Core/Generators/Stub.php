@@ -3,8 +3,7 @@
 namespace App\Core\Generators;
 
 /**
- * Class Stub
- * @package App\Core\Generators
+ * Class Stub.
  */
 class Stub
 {
@@ -62,6 +61,7 @@ class Stub
     public function setPath($path)
     {
         $this->path = $path;
+
         return $this;
     }
 
@@ -72,7 +72,7 @@ class Stub
      */
     public function getPath()
     {
-        return static::$basePath . $this->path;
+        return static::$basePath.$this->path;
     }
 
     /**
@@ -94,10 +94,10 @@ class Stub
     public function getContents()
     {
         $contents = file_get_contents($this->getPath());
-        foreach ($this->replaces as $search => $replace)
-        {
-            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
+        foreach ($this->replaces as $search => $replace) {
+            $contents = str_replace('$'.strtoupper($search).'$', $replace, $contents);
         }
+
         return $contents;
     }
 
@@ -110,6 +110,7 @@ class Stub
     {
         return $this->getContents();
     }
+
     /**
      * Set replacements array.
      *
@@ -119,6 +120,7 @@ class Stub
     public function replace(array $replaces = [])
     {
         $this->replaces = $replaces;
+
         return $this;
     }
 

@@ -82,7 +82,7 @@ return [
         'en',
         'ru',
         'fr',
-        'es'
+        'es',
     ],
 
     /*
@@ -186,7 +186,6 @@ return [
         //Instances Providers
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
 
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
         App\Providers\PresentersServiceProvider::class,

@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Promocode;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class PromocodeTransformer
- * @package namespace App\Core\Transformers;
+ * Class PromocodeTransformer.
  */
 class PromocodeTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Promocode entity
+     * Transform the \Promocode entity.
      * @param \Promocode $model
      *
      * @return array
@@ -26,7 +24,7 @@ class PromocodeTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface MessageRepository
- * @package namespace App\Core\Repositories;
+ * Interface MessageRepository.
  */
 interface MessageRepository extends RepositoryInterface
 {

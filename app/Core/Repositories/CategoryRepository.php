@@ -3,9 +3,9 @@
 namespace App\Core\Repositories;
 
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
+
 /**
- * Interface CategoryRepository
- * @package namespace App\Core\Repositories;
+ * Interface CategoryRepository.
  */
 interface CategoryRepository extends RepositoryInterface
 {

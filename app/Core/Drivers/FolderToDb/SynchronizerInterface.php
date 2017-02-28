@@ -5,17 +5,16 @@ namespace App\Drivers\FolderToDb;
 use App\Core\Models\Folder;
 
 /**
- * Interface SynchronizerInterface
- * @package App\Drivers\FolderToDb
+ * Interface SynchronizerInterface.
  */
-interface SynchronizerInterface {
-
+interface SynchronizerInterface
+{
     /**
      * @param string $folderPath
      * @param string $disk
      * @return Folder
      */
-    public function findOrCreateByFolderPath(string $folderPath, $disk = 'local') : Folder ;
+    public function findOrCreateByFolderPath(string $folderPath, $disk = 'local') : Folder;
 
     /**
      * @param string $path
@@ -34,7 +33,7 @@ interface SynchronizerInterface {
      * @param bool $withFolderName
      * @return array
      */
-    public function directoriesIterate(string $root, bool $withFolderName = false ) : array;
+    public function directoriesIterate(string $root, bool $withFolderName = false) : array;
 
     /**
      * @param string $root

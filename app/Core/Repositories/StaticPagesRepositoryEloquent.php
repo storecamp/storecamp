@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\StaticPagesRepository;
 use App\Core\Models\StaticPages;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class StaticPagesRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class StaticPagesRepositoryEloquent.
  */
 class StaticPagesRepositoryEloquent extends BaseRepository implements StaticPagesRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class StaticPagesRepositoryEloquent extends BaseRepository implements StaticPage
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

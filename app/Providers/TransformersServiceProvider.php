@@ -13,7 +13,6 @@ class TransformersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 
     /**
@@ -32,7 +31,7 @@ class TransformersServiceProvider extends ServiceProvider
             'Layout',
             'Promocode',
             'Returns',
-            'StaticPages'
+            'StaticPages',
         ];
         foreach ($models as $model) {
             $this->app->bind("App\\Core\\Transformers\\{$model}Transformer");

@@ -15,7 +15,7 @@ return [
     |
     */
     'pagination'=>[
-        'limit'=>10
+        'limit'=>10,
     ],
 
     /*
@@ -32,9 +32,9 @@ return [
     */
     'fractal'=>[
         'params'=>[
-            'include'=>'include'
+            'include'=>'include',
         ],
-        'serializer' => League\Fractal\Serializer\JsonApiSerializer::class
+        'serializer' => League\Fractal\Serializer\JsonApiSerializer::class,
     ],
 
     /*
@@ -166,18 +166,18 @@ return [
 
                 //Enable, disable clearing the cache when you delete an item
                 'delete'=>true,
-            ]
+            ],
         ],
         'params' => [
             //Request parameter that will be used to bypass the cache repository
-            'skipCache'=>'skipCache'
+            'skipCache'=>'skipCache',
         ],
         'allowed'=>[
             //Allow caching only for some methods
             'only'  =>['all', 'paginate', 'find'],
 
             //Allow caching for all available methods, except
-            'except'=>null
+            'except'=>null,
         ],
     ],
     /*
@@ -205,7 +205,7 @@ return [
         |
         */
         'acceptedConditions'=>[
-            '=','like'
+            '=', 'like',
         ],
         /*
         |--------------------------------------------------------------------------
@@ -245,8 +245,8 @@ return [
             'filter'        =>'filter',
             'orderBy'       =>'orderBy',
             'sortedBy'      =>'sortedBy',
-            'with'          =>'with'
-        ]
+            'with'          =>'with',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
@@ -263,7 +263,7 @@ return [
             'controllers'=> 'Controllers',
             'interfaces'=>'Repositories',
             'transformers'=>'Transformers',
-            'presenters'=>'Presenters'
-        ]
-    ]
+            'presenters'=>'Presenters',
+        ],
+    ],
 ];

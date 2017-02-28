@@ -26,7 +26,7 @@ class PermissionsFormRequest extends Request
         return [
             'name' => 'required|unique:permissions,name',
             'slug' => 'required|unique:permissions,slug',
-            'description' => 'required|unique:permissions,description'
+            'description' => 'required|unique:permissions,description',
         ];
     }
 }

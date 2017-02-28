@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\View\Factory as ViewFactory;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {

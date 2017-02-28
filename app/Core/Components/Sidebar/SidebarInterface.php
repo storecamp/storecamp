@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace App\Core\Components\Sidebar;
 
-interface SidebarInterface{
+interface SidebarInterface
+{
+    public function getLastInstances();
 
-	public function getLastInstances();
-
-	public function formLastModelsCollection();
+    public function formLastModelsCollection();
 }

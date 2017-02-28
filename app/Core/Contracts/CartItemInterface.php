@@ -2,10 +2,8 @@
 
 namespace App\Core\Contracts;
 
-
 interface CartItemInterface
 {
-
     /**
      * One-to-One relations with the user model.
      *
@@ -40,7 +38,7 @@ interface CartItemInterface
      * @return mixed
      */
     public function getObjectAttribute();
-    
+
     /**
      * Returns item name.
      *
@@ -82,5 +80,4 @@ interface CartItemInterface
      * @return bool
      */
     public function getWasPurchasedAttribute();
-
 }

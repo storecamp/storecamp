@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access;
+<?php
 
-/**
+namespace App\Core\Access;
+
+/*
  * This file is part of Access,
  * a role & permission management solution for Syrinx.
  *
@@ -59,7 +61,8 @@ class AccessRole extends Model implements AccessRoleInterface
      */
     public function isAppsDefault(): bool
     {
-        $isDefault = ($this->name === "Client") || ($this->name === "Admin") ? true : false;
+        $isDefault = ($this->name === 'Client') || ($this->name === 'Admin') ? true : false;
+
         return $isDefault;
     }
 }

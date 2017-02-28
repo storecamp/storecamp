@@ -1,17 +1,14 @@
 <?php
 
 namespace App\Core\Components\EmailMarketer;
-use App\Core\Components\EmailMarketer\MailCampaigner;
-
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Service provider to add the console command to laravel
+ * Service provider to add the console command to laravel.
  */
 class EmailMarketerServiceProvider extends ServiceProvider
 {
-
     /**
      * Register the application services.
      *
@@ -21,6 +18,7 @@ class EmailMarketerServiceProvider extends ServiceProvider
     {
         $this->registerEmailCommandGenerator();
     }
+
     /**
      * Register the mail:campaign command.
      */

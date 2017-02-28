@@ -1,14 +1,14 @@
 <?php
+
 namespace RepositoryLab\Repository\Contracts;
 
 /**
- * Interface PresenterInterface
- * @package RepositoryLab\Repository\Contracts
+ * Interface PresenterInterface.
  */
 interface PresenterInterface
 {
     /**
-     * Prepare data to present
+     * Prepare data to present.
      *
      * @param $data
      * @return mixed

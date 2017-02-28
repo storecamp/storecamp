@@ -66,7 +66,7 @@ class NestedSet
      */
     public static function getDefaultColumns()
     {
-        return [ self::LFT, self::RGT, self::PARENT_ID ];
+        return [self::LFT, self::RGT, self::PARENT_ID];
     }
 
     /**
@@ -78,7 +78,6 @@ class NestedSet
      */
     public static function isNode($node)
     {
-        return is_object($node) && in_array(NodeTrait::class, (array)$node);
+        return is_object($node) && in_array(NodeTrait::class, (array) $node);
     }
-
 }

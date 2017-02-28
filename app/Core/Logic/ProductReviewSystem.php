@@ -10,8 +10,7 @@ use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
 
 /**
- * Class ProductReviewSystem
- * @package App\Core\Logic
+ * Class ProductReviewSystem.
  */
 class ProductReviewSystem implements ProductReviewSystemContract
 {
@@ -61,12 +60,13 @@ class ProductReviewSystem implements ProductReviewSystemContract
         if ($id) {
             $reviews = $this->productReview->find($id);
         } else {
-            if (!empty($with)) {
+            if (! empty($with)) {
                 $reviews = $this->productReview->with($with)->paginate();
             } else {
                 $reviews = $this->productReview->paginate();
             }
         }
+
         return $reviews;
     }
 
@@ -78,6 +78,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function replyProductReview($id, array $data)
     {
         $productReview = $this->productReview->replyProductReview($id, $data['reply_message']);
+
         return $productReview;
     }
 
@@ -94,6 +95,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
         } else {
             $productReview->hidden = 0;
         }
+
         return $productReview->save();
     }
 
@@ -128,9 +130,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function deleteMessage(int $messageId, array $data = [])
     {
         $deleted = $this->message->find($messageId)->delete();
+
         return $deleted;
     }
-
 
     /**
      * @param array $data
@@ -144,13 +146,14 @@ class ProductReviewSystem implements ProductReviewSystemContract
         $subject = $product->title;
         $thread = $review->comments()->create(
             [
-                'subject' => $subject
+                'subject' => $subject,
             ]);
         $user = new User();
-        $adminArr = $user->getUsersByRole("Admin");
-        if($adminArr) {
+        $adminArr = $user->getUsersByRole('Admin');
+        if ($adminArr) {
             $thread->addParticipants($adminArr);
         }
+
         return $review;
     }
 
@@ -162,6 +165,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function update(array $data, $reviewId)
     {
         $review = $this->productReview->update($data, $reviewId);
+
         return $review;
     }
 
@@ -173,6 +177,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function delete($id, array $data = []): int
     {
         $deleted = $this->productReview->delete($id);
+
         return $deleted;
     }
 }

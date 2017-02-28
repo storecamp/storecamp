@@ -6,12 +6,10 @@ use App\Core\Models\Campaign;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class CompaignTransformer
- * @package namespace App\Core\Transformers;
+ * Class CompaignTransformer.
  */
 class CampaignTransformer extends TransformerAbstract
 {
-
     /**
      * @param Campaign $model
      * @return array
@@ -24,7 +22,7 @@ class CampaignTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

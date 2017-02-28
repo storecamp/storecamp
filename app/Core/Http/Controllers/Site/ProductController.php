@@ -3,19 +3,17 @@
 namespace App\Core\Http\Controllers\Site;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Core\Models\Product;
-use App\Core\Repositories\ProductsRepository;
 
 /**
- * Class ProductsController
- * @package App\Core\Http\Controllers
+ * Class ProductsController.
  */
 class ProductController extends BaseController
 {
-    public $viewPathBase = "site.product.";
-    public $errorRedirectPath = "site::products";
+    public $viewPathBase = 'site.product.';
+    public $errorRedirectPath = 'site::products';
 
     private $productSystem;
     private $productRepository;
@@ -36,11 +34,12 @@ class ProductController extends BaseController
             $data = $request->all();
             if ($category) {
                 $products = $this->productSystem->categorized($data, $category, []);
-                $categoryInstance = app("App\\Core\\Repositories\\CategoryRepository");
+                $categoryInstance = app('App\\Core\\Repositories\\CategoryRepository');
                 $category = $categoryInstance->find($category);
             } else {
                 $products = $this->productSystem->present($data, null);
             }
+
             return $this->view('index', compact('products', 'category'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -61,6 +60,7 @@ class ProductController extends BaseController
             $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
             $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
             $category = $product->categories->first();
+
             return $this->view('show', compact('product', 'category', 'mostViewed'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

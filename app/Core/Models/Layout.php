@@ -2,14 +2,14 @@
 
 namespace App\Core\Models;
 
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Base\Model;
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Layout
+ * App\Core\Models\Layout.
  *
  * @mixin \Eloquent
  */
@@ -23,7 +23,6 @@ class Layout extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
-
 }

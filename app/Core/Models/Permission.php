@@ -1,17 +1,15 @@
 <?php
 
-
 namespace App\Core\Models;
 
 use App\Core\Access\AccessPermission;
 use App\Core\Components\Auditing\Auditable;
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Permission
+ * App\Core\Models\Permission.
  *
  * @property int $id
  * @property string $unique_id
@@ -40,7 +38,7 @@ class Permission extends AccessPermission implements Transformable
     use Auditable;
 
     /**
-     * bootable methods fix
+     * bootable methods fix.
      */
     public static function boot()
     {

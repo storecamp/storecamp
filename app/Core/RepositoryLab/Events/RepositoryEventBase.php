@@ -1,12 +1,12 @@
 <?php
+
 namespace RepositoryLab\Repository\Events;
 
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class RepositoryEventBase
- * @package RepositoryLab\Repository\Events
+ * Class RepositoryEventBase.
  */
 abstract class RepositoryEventBase
 {
@@ -31,8 +31,8 @@ abstract class RepositoryEventBase
      */
     public function __construct(RepositoryInterface $repository, Model $model)
     {
-        $this->repository   = $repository;
-        $this->model        = $model;
+        $this->repository = $repository;
+        $this->model = $model;
     }
 
     /**

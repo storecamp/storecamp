@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\TransactionRepository;
 use App\Core\Models\Transaction;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class TransactionRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class TransactionRepositoryEloquent.
  */
 class TransactionRepositoryEloquent extends BaseRepository implements TransactionRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class TransactionRepositoryEloquent extends BaseRepository implements Transactio
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

@@ -2,22 +2,20 @@
 
 namespace App\Core\Repositories;
 
-use Carbon\Carbon;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use App\Core\Models\ProductReview;
-use Illuminate\Container\Container as Application;
-use Illuminate\Contracts\Bus\Dispatcher;
-use App\Core\Models\Thread;
 use App\Core\Models\Message;
 use App\Core\Models\Participant;
+use App\Core\Models\ProductReview;
+use App\Core\Models\Thread;
+use Carbon\Carbon;
+use Illuminate\Container\Container as Application;
+use Illuminate\Contracts\Bus\Dispatcher;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ProductReviewRepositoryEloquent
- * @package App\Core\Repositories
+ * Class ProductReviewRepositoryEloquent.
  */
 class ProductReviewRepositoryEloquent extends BaseRepository implements ProductReviewRepository
 {
-
     /**
      * @var RolesRepository
      */
@@ -68,43 +66,41 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     protected $fieldSearchable = [
         'rating' => '=',
-        'hidden' => '='
+        'hidden' => '=',
     ];
 
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
     public function model()
     {
         $productReview = ProductReview::class;
+
         return $productReview;
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(\RepositoryLab\Repository\Criteria\RequestCriteria::class));
-
     }
-
 
     /**
      * @return ProductReview
      */
     public function getModel()
     {
-
         $model = new ProductReview();
 
         return $model;
     }
 
     /**
-     * return the number of user's products
+     * return the number of user's products.
      * @return mixed
      */
     public function countUserProductReviews()
@@ -113,7 +109,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     }
 
     /**
-     * get all Products
+     * get all Products.
      * @return mixed
      */
     public function getAll()
@@ -122,7 +118,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     }
 
     /**
-     * get all current logged in user Reviews
+     * get all current logged in user Reviews.
      * @return mixed
      */
     public function getAllUsers()
@@ -131,7 +127,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     }
 
     /**
-     * get the specific to user id feedbacks
+     * get the specific to user id feedbacks.
      * @param $id
      * @return mixed
      */
@@ -139,7 +135,6 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     {
         return $this->getModel()->latest('created_at')->usersById($id)->paginate();
     }
-
 
     /**
      * @param $id
@@ -165,11 +160,12 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $participant = $this->participant->firstOrCreate(
             [
                 'thread_id' => $thread->id,
-                'user_id' => $user_id
+                'user_id' => $user_id,
             ]
         );
         $participant->last_read = new Carbon();
         $participant->save();
+
         return $productReview;
     }
 }

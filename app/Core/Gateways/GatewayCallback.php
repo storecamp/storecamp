@@ -2,7 +2,6 @@
 
 namespace App\Core\Gateways;
 
-use App\Core\Gateways\GatewayPass;
 use App\Core\Models\Orders;
 
 class GatewayCallback extends GatewayPass
@@ -21,8 +20,9 @@ class GatewayCallback extends GatewayPass
      */
     public function onCharge($order)
     {
-        $this->statusCode   = 'pending';
-        $this->detail       = 'pending response, token:' .  $this->token;
+        $this->statusCode = 'pending';
+        $this->detail = 'pending response, token:'.$this->token;
+
         return parent::onCharge($order);
     }
 
@@ -36,9 +36,9 @@ class GatewayCallback extends GatewayPass
      */
     public function onCallbackSuccess($order, $data = null)
     {
-        $this->statusCode   = 'completed';
-        $this->detail       = 'success callback';
-        $this->didCallback  = true;
+        $this->statusCode = 'completed';
+        $this->detail = 'success callback';
+        $this->didCallback = true;
     }
 
     /**
@@ -51,13 +51,13 @@ class GatewayCallback extends GatewayPass
      */
     public function onCallbackFail($order, $data = null)
     {
-        $this->statusCode   = 'failed';
-        $this->detail       = 'failed callback';
-        $this->didCallback  = true;
+        $this->statusCode = 'failed';
+        $this->detail = 'failed callback';
+        $this->didCallback = true;
     }
 
     /**
-     * Returns successful callback URL
+     * Returns successful callback URL.
      * @return false
      */
     public function getCallbackSuccess()
@@ -66,7 +66,7 @@ class GatewayCallback extends GatewayPass
     }
 
     /**
-     * Returns fail callback URL
+     * Returns fail callback URL.
      * @return false
      */
     public function getCallbackFail()
@@ -75,7 +75,7 @@ class GatewayCallback extends GatewayPass
     }
 
     /**
-     * Returns successful callback URL
+     * Returns successful callback URL.
      * @return false
      */
     public function getDidCallback()

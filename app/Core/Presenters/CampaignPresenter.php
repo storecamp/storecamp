@@ -6,14 +6,12 @@ use App\Core\Transformers\CampaignTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class CampaignPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class CampaignPresenter.
  */
 class CampaignPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

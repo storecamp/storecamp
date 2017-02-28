@@ -15,10 +15,8 @@ class UserServiceProvider extends ServiceProvider
     public function boot()
     {
         User::created(function ($user) {
-
         });
         User::creating(function ($user) {
-
         });
     }
 

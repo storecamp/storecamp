@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use App\Core\Components\Flash\Flash;
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 /**
- * Class ProductsController
- * @package App\Core\Http\Controllers
+ * Class ProductsController.
  */
 class ProductsController extends BaseController
 {
@@ -23,11 +21,11 @@ class ProductsController extends BaseController
     /**
      * @var string
      */
-    public $viewPathBase = "admin.products.";
+    public $viewPathBase = 'admin.products.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/products";
+    public $errorRedirectPath = 'admin/products';
 
     /**
      * @var ProductSystemContract
@@ -47,7 +45,7 @@ class ProductsController extends BaseController
     {
         $this->categoryRepository = $categoryRepository;
         $this->productSystem = $productSystem;
-        $this->productRepository= $this->productSystem->productRepository;
+        $this->productRepository = $this->productSystem->productRepository;
     }
 
     /**
@@ -59,6 +57,7 @@ class ProductsController extends BaseController
         $data = $request->all();
         $products = $this->productSystem->present($data, null, $with = ['categories', 'media']);
         $no = $products->firstItem();
+
         return $this->view('index', compact('products', 'no'));
     }
 
@@ -69,7 +68,8 @@ class ProductsController extends BaseController
     {
         $categories = $this->categoryRepository->all();
         $chosenCategory = null;
-        $preferredTag = "gallery";
+        $preferredTag = 'gallery';
+
         return $this->view('create', compact('categories', 'chosenCategory', 'preferredTag'));
     }
 
@@ -82,6 +82,7 @@ class ProductsController extends BaseController
         try {
             $data = $request->all();
             $product = $this->productSystem->create($data);
+
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -100,6 +101,7 @@ class ProductsController extends BaseController
         try {
             $data = $request->all();
             $product = $this->productSystem->present($data, $id, ['media']);
+
             return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -117,13 +119,13 @@ class ProductsController extends BaseController
             $data = $request->all();
             $product = $this->productSystem->present($data, $id, ['attributeGroupDescription', 'categories']);
             $categories = $this->categoryRepository->all();
-            $pictures = array();
+            $pictures = [];
             $chosenCategory = $product->categories->first();
-            $attributesList = $product->attributeGroupDescription->pluck("name", "id");
-            $preferredTag = "gallery";
+            $attributesList = $product->attributeGroupDescription->pluck('name', 'id');
+            $preferredTag = 'gallery';
+
             return $this->view('edit', compact('product', 'categories', 'pictures',
                 'chosenCategory', 'attributesList', 'preferredTag'));
-
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -143,9 +145,9 @@ class ProductsController extends BaseController
         try {
             $data = $request->all();
             $this->productSystem->update($data, $id);
-            return redirect('admin/products');
 
-        }  catch (ModelNotFoundException $e) {
+            return redirect('admin/products');
+        } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
             return $this->redirectError($e);
@@ -162,28 +164,31 @@ class ProductsController extends BaseController
     {
         try {
             $deleted = $this->productSystem->delete($id);
-            if (!$deleted) {
-                \Flash::warning("Sorry product is not deleted");
+            if (! $deleted) {
+                \Flash::warning('Sorry product is not deleted');
             }
+
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
     }
+
     public function getSelect(Request $request)
     {
-        if(strlen(trim($request->get('search'))) > 0) {
+        if (strlen(trim($request->get('search'))) > 0) {
             $query = $this->parserSearchValue($request->get('search'));
-            $products = $this->productRepository->getModel()->where("title", "like", $query)
+            $products = $this->productRepository->getModel()->where('title', 'like', $query)
                 ->select('title', 'id')->get();
             $productGroupArr = [];
             foreach ($products as $key => $attrGroupItem) {
                 $productGroupArr[$key]['text'] = $attrGroupItem['title'];
                 $productGroupArr[$key]['id'] = $attrGroupItem['id'];
             }
+
             return \Response::json($productGroupArr);
         } else {
-            return \Response::json("enter more symbols");
+            return \Response::json('enter more symbols');
         }
     }
 }

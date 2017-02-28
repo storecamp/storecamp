@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Http\Controllers\Controller;
 use App\Core\Repositories\PromocodeRepository;
 use Illuminate\Http\Request;
-use App\Core\Models\Promocode;
-use App\Core\Http\Controllers\Controller;
 
 /**
- * Class PromocodessController
- * @package App\Core\Http\Controllers
+ * Class PromocodessController.
  */
-class PromocodesController extends Controller {
-
+class PromocodesController extends Controller
+{
     private $repository;
 
     /**
@@ -55,7 +53,6 @@ class PromocodesController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**

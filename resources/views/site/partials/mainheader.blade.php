@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $auth \Illuminate\Auth\AuthManager
+ * @var \Illuminate\Auth\AuthManager
  */
 $user = $auth->user() ? $auth->user() : null; ?>
 <header class="main-header">

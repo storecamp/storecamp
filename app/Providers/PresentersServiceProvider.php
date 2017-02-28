@@ -5,8 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class PresentersServiceProvider
- * @package App\Providers
+ * Class PresentersServiceProvider.
  */
 class PresentersServiceProvider extends ServiceProvider
 {
@@ -36,9 +35,9 @@ class PresentersServiceProvider extends ServiceProvider
             'Layout',
             'Promocode',
             'Returns',
-            'StaticPages'
+            'StaticPages',
         ];
-        foreach($models as $model) {
+        foreach ($models as $model) {
             $this->app->bind("App\\Core\\Presenters\\{$model}Presenter");
         }
     }

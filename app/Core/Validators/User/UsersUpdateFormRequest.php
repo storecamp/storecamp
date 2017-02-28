@@ -27,13 +27,12 @@ class UsersUpdateFormRequest extends Request
 
         $rules = [
             'name' => 'required',
-            'email' => 'required|unique:users,id,' . $id
+            'email' => 'required|unique:users,id,'.$id,
         ];
         if ($this->has('password')) {
             $rules['password'] = 'required|min:6|max:20';
         }
 
-              return $rules;
-
+        return $rules;
     }
 }

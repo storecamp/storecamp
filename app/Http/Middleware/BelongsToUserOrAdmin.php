@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Flash;
 use App\Core\Models\Message;
 use Closure;
+use Flash;
 
 class BelongsToUserOrAdmin
 {
@@ -23,15 +23,16 @@ class BelongsToUserOrAdmin
         if (\Auth::user()->isAdmin()) {
             return $next($request);
         }
-        if($message->count()) {
+        if ($message->count()) {
             $messageCount = $message->where('user_id', \Auth::user()->id);
-            if($messageCount){
+            if ($messageCount) {
                 return $next($request);
             }
         }
-        if($request->ajax()) {
-            return response()->json("Sorry. You Are not allowed to edit this message", 403);
+        if ($request->ajax()) {
+            return response()->json('Sorry. You Are not allowed to edit this message', 403);
         }
+
         return redirect()->back()->with(Flash::error("The message not found or doesn't belongs to you"));
     }
 }

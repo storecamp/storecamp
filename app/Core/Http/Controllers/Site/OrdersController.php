@@ -4,19 +4,16 @@ namespace App\Core\Http\Controllers\Site;
 
 use App\Core\Contracts\OrdersSystemContract;
 use App\Core\Logic\OrdersSystem;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Request;
 use App\Core\Models\Orders;
-use App\Core\Repositories\OrdersRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class OrderssController
- * @package App\Http\Controllers
+ * Class OrderssController.
  */
-class OrdersController extends BaseController {
-
-    public $viewPathBase = "site.orders.";
-    public $errorRedirectPath = "site::order";
+class OrdersController extends BaseController
+{
+    public $viewPathBase = 'site.orders.';
+    public $errorRedirectPath = 'site::order';
 
     private $ordersSystem;
 

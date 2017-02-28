@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateMetaAttributesTable extends Migration
 {
@@ -15,10 +14,9 @@ class CreateMetaAttributesTable extends Migration
     {
         $root = config('meta.modelsPath');
         $files = $this->resolveModelFiles($root);
-        foreach ($files as $prefix)
-        {
-            $tableName = $prefix .'_'.config('meta.table_prefix');
-            echo $tableName .'<br>';
+        foreach ($files as $prefix) {
+            $tableName = $prefix.'_'.config('meta.table_prefix');
+            echo $tableName.'<br>';
             \Schema::create($tableName, function (Blueprint $table) {
                 $table->increments('meta_id');
                 $table->string('meta_key');
@@ -33,7 +31,6 @@ class CreateMetaAttributesTable extends Migration
                 'create index '.$tableName.'_index_value on '.$tableName.' (meta_key, meta_value(20))'
             );
         }
-
     }
 
     /**
@@ -46,7 +43,7 @@ class CreateMetaAttributesTable extends Migration
         $root = app_path().'/Core/Models/';
         $files = $this->resolveModelFiles($root);
         foreach ($files as $prefix) {
-            $tableName = $prefix . '_' . config('meta.table_prefix');
+            $tableName = $prefix.'_'.config('meta.table_prefix');
             \Schema::drop($tableName);
         }
     }
@@ -58,6 +55,7 @@ class CreateMetaAttributesTable extends Migration
         foreach ($files as $file) {
             $newFiles[] = \Illuminate\Support\Str::snake($file);
         }
+
         return $newFiles;
     }
 }

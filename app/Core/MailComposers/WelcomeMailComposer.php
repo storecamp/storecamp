@@ -2,12 +2,11 @@
 
 namespace App\Core\MailComposers;
 
-use CodeZero\Mailer\MailComposer;
 use App\Core\Models\Product;
+use CodeZero\Mailer\MailComposer;
 
 class WelcomeMailComposer extends MailComposer
 {
-
     /**
      * @param $email
      * @param $name
@@ -25,5 +24,4 @@ class WelcomeMailComposer extends MailComposer
 
         return $this->getMail($toEmail, $toName, $subject, $view, $data, $options);
     }
-
 }

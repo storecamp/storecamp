@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface MediaRepository
- * @package namespace App\Core\Repositories;
+ * Interface MediaRepository.
  */
 interface MediaRepository extends RepositoryInterface
 {

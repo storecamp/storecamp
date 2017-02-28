@@ -6,14 +6,12 @@ use App\Core\Transformers\ThreadTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class ThreadPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class ThreadPresenter.
  */
 class ThreadPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

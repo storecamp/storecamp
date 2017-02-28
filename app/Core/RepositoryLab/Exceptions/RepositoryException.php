@@ -1,13 +1,12 @@
 <?php
+
 namespace RepositoryLab\Repository\Exceptions;
 
-use \Exception;
+use Exception;
 
 /**
- * Class RepositoryException
- * @package RepositoryLab\Repository\Exceptions
+ * Class RepositoryException.
  */
 class RepositoryException extends Exception
 {
-
 }

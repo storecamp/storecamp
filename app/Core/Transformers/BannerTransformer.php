@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Banner;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class BannerTransformer
- * @package namespace App\Core\Transformers;
+ * Class BannerTransformer.
  */
 class BannerTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Banner entity
+     * Transform the \Banner entity.
      * @param \Banner $model
      *
      * @return array
@@ -26,7 +24,7 @@ class BannerTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

@@ -9,12 +9,9 @@ namespace App\Core\Contracts;
  * @author Alejandro Mostajo
  * @copyright Amsgames, LLC
  * @license MIT
- * @package App\Core
  */
-
 interface CouponInterface
 {
-
     /**
      * Scopes class by coupon code.
      *
@@ -28,5 +25,4 @@ interface CouponInterface
      * @return this
      */
     public function scopeFindByCode($query, $code);
-
 }

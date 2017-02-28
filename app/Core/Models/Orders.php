@@ -2,20 +2,20 @@
 
 namespace App\Core\Models;
 
+use App\Core\Base\Model;
 use App\Core\Contracts\OrderInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CalculationsTrait;
-use App\Core\Base\Model;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use \Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Orders
+ * App\Core\Models\Orders.
  *
  * @property int $id
  * @property string $unique_id
@@ -44,13 +44,13 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     protected $table;
 
-
     /**
      * Fillable attributes for mass assignment.
      *
      * @var array
      */
     protected $fillable = ['user_id', 'statusCode'];
+
     /**
      * Creates a new instance of the model.
      *
@@ -61,6 +61,7 @@ class Orders extends Model implements Transformable, OrderInterface
         parent::__construct($attributes);
         $this->table = config('sales.order_table');
     }
+
     /**
      * Boot the user model
      * Attach event listener to remove the relationship records when trying to delete
@@ -71,10 +72,11 @@ class Orders extends Model implements Transformable, OrderInterface
     public static function boot()
     {
         parent::boot();
-        static::deleting(function($user) {
-            if (!method_exists(config('auth.providers.users.model'), 'bootSoftDeletingTrait')) {
+        static::deleting(function ($user) {
+            if (! method_exists(config('auth.providers.users.model'), 'bootSoftDeletingTrait')) {
                 $user->items()->sync([]);
             }
+
             return true;
         });
     }
@@ -96,6 +98,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->hasMany(config('sales.transaction'), 'order_id');
     }
+
     /**
      * Returns flag indicating if order is lock and cant be modified by the user.
      * An order is locked the moment it enters pending status.
@@ -116,10 +119,11 @@ class Orders extends Model implements Transformable, OrderInterface
      *
      * @return Builder
      */
-    public function scopeWhereUser($query, $userId): Builder {
-
+    public function scopeWhereUser($query, $userId): Builder
+    {
         return $query->where('user_id', $userId);
     }
+
     /**
      * Scopes class by product sku.
      * Optionally, scopes by status.
@@ -133,12 +137,13 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $query->join(
             config('sales.cart_table'),
-            config('sales.cart_table') . '.order_id',
+            config('sales.cart_table').'.order_id',
             '=',
-            $this->table . '.id'
+            $this->table.'.id'
         )
-            ->where(config('sales.cart_table') . '.sku', $sku);
+            ->where(config('sales.cart_table').'.sku', $sku);
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -152,6 +157,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $query = $query->where('statusCode', $statusCode);
     }
+
     /**
      * Scopes class by status codes.
      *
@@ -164,6 +170,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $query = $query->whereIn('statusCode', $statusCodes);
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -176,9 +183,10 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function scopeFindByUser($query, $userId, $statusCode = null): Builder
     {
-        if (!empty($status)) {
+        if (! empty($status)) {
             $query = $query->whereStatus($status);
         }
+
         return $query->whereUser($userId)->get();
     }
 
@@ -190,6 +198,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == $statusCode;
     }
+
     /**
      * Returns flag indicating if order is completed.
      *
@@ -199,6 +208,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'completed';
     }
+
     /**
      * Returns flag indicating if order has failed.
      *
@@ -208,6 +218,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'failed';
     }
+
     /**
      * Returns flag indicating if order is canceled.
      *
@@ -217,6 +228,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'canceled';
     }
+
     /**
      * Returns flag indicating if order is in process.
      *
@@ -226,6 +238,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'in_process';
     }
+
     /**
      * Returns flag indicating if order is in creation.
      *
@@ -235,6 +248,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         return $this->attributes['statusCode'] == 'in_creation';
     }
+
     /**
      * Returns flag indicating if order is in creation.
      *
@@ -256,7 +270,7 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function placeTransaction(string $gateway, $transactionId, string $detail = null, $token = null)
     {
-        return call_user_func(config('sales.transaction') . '::create', [
+        return call_user_func(config('sales.transaction').'::create', [
             'order_id'          => $this->attributes['id'],
             'gateway'           => $gateway,
             'transaction_id'    => $transactionId,
@@ -266,7 +280,7 @@ class Orders extends Model implements Transformable, OrderInterface
     }
 
     /**
-     * Retrieves product from order;
+     * Retrieves product from order;.
      *
      * @param string $sku SKU of product.
      *
@@ -274,11 +288,11 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     private function getItem(string $sku)
     {
-        $className  = config('sales.product');
-        $item       = new $className();
+        $className = config('sales.product');
+        $item = new $className();
+
         return $item->where('sku', $sku)
             ->where('order_id', $this->attributes['id'])
             ->first();
     }
-
 }

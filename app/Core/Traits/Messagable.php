@@ -9,7 +9,7 @@ use App\Core\Models\Thread;
 trait Messagable
 {
     /**
-     * Message relationship
+     * Message relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -19,7 +19,7 @@ trait Messagable
     }
 
     /**
-     * Thread relationship
+     * Thread relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
@@ -29,7 +29,7 @@ trait Messagable
     }
 
     /**
-     * Returns the new messages count for user
+     * Returns the new messages count for user.
      *
      * @return int
      */
@@ -39,7 +39,7 @@ trait Messagable
     }
 
     /**
-     * Returns all threads with new messages
+     * Returns all threads with new messages.
      *
      * @return array
      */
@@ -48,13 +48,13 @@ trait Messagable
         $threadsWithNewMessages = [];
         $participants = Participant::where('user_id', $this->id)->pluck('last_read', 'thread_id');
 
-        /**
+        /*
          * @todo: see if we can fix this more in the future.
          * Illuminate\Foundation is not available through composer, only in laravel/framework which
          * I don't want to include as a dependency for this package...it's overkill. So let's
          * exclude this check in the testing environment.
          */
-        if (config('app.env') == 'testing' || !str_contains(\Illuminate\Foundation\Application::VERSION, '5.0')) {
+        if (config('app.env') == 'testing' || ! str_contains(\Illuminate\Foundation\Application::VERSION, '5.0')) {
             $participants = $participants->all();
         }
 

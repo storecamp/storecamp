@@ -2,12 +2,11 @@
 
 namespace App\Core\Support;
 
-
+use App\Core\Contracts\PaymentGatewayInterface;
 use App\Core\Models\Orders;
-use JsonSerializable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use App\Core\Contracts\PaymentGatewayInterface;
+use JsonSerializable;
 
 abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jsonable, JsonSerializable
 {
@@ -67,11 +66,11 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
      */
     public function __construct($id = '')
     {
-        $this->id            = $id;
+        $this->id = $id;
         $this->transactionId = uniqid();
-        $this->token         = uniqid();
+        $this->token = uniqid();
     }
-    
+
     /**
      * Called on cart checkout.
      *
@@ -83,7 +82,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
 
     /**
      * Called by sales when payment gateway calls callback url.
-     * Success result
+     * Success result.
      *
      * @param Orders $order Order.
      * @param mixed $data  Callback data.
@@ -96,7 +95,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
 
     /**
      * Called by sales when payment gateway calls callback url.
-     * Failed result
+     * Failed result.
      *
      * @param Order $order Order.
      * @param mixed $data  Callback data.
@@ -108,7 +107,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
     }
 
     /**
-     * Sets callback urls
+     * Sets callback urls.
      *
      * @param Order $order Order.
      */
@@ -120,7 +119,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
             'token'     => $this->token,
         ]);
 
-        $this->callbackFail    = route(config('sales.callback_route'), [
+        $this->callbackFail = route(config('sales.callback_route'), [
             'status'    => 'fail',
             'id'        => $order->id,
             'token'     => $this->token,
@@ -208,6 +207,4 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
     {
         return $this->toJson();
     }
-
-
 }

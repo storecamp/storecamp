@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Core\Validators;
 
 use Illuminate\Foundation\Http\FormRequest as Request;
@@ -20,9 +19,10 @@ class MailFormRequest extends Request
     /**
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            'message' => 'required|min:25,max:5000'
+            'message' => 'required|min:25,max:5000',
         ];
     }
 }

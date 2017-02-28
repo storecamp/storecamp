@@ -4,26 +4,25 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\UsersSystemContract;
 use App\Core\Repositories\RolesRepository;
-use Illuminate\Http\Request;
 use App\Core\Repositories\UserRepository;
-use App\Core\Validators\User\UsersUpdateFormRequest;
 use App\Core\Validators\User\UsersFormRequest;
+use App\Core\Validators\User\UsersUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 /**
- * Class UsersController
- * @package App\Core\Http\Controllers
+ * Class UsersController.
  */
 class UsersController extends BaseController
 {
     /**
      * @var string
      */
-    public $viewPathBase = "admin.users.";
+    public $viewPathBase = 'admin.users.';
     /**
      * @var string
      */
-    public $errorRedirectPath = "admin/users";
+    public $errorRedirectPath = 'admin/users';
 
     /**
      * @var UsersSystemContract
@@ -70,6 +69,7 @@ class UsersController extends BaseController
     public function create()
     {
         $roles = $this->rolesRepository->all()->pluck('name', 'id');
+
         return $this->view('create', compact('roles'));
     }
 
@@ -82,9 +82,11 @@ class UsersController extends BaseController
         try {
             $data = $request->all();
             $user = $this->usersSystem->create($data);
+
             return redirect('admin/users');
         } catch (\Exception $exception) {
             \Flash::error($exception->getCode(), $exception->getMessage());
+
             return redirect()->to($this->errorRedirectPath)->withErrors($exception);
         }
     }
@@ -100,6 +102,7 @@ class UsersController extends BaseController
             $data = $request->all();
             $user = $this->usersSystem->present($data, $id);
             $role = $user->getRole();
+
             return $this->view('show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -135,13 +138,15 @@ class UsersController extends BaseController
     public function update(UsersUpdateFormRequest $request, $id)
     {
         try {
-            $data = !$request->has('password') ? $request->except('password') : $request->all();
+            $data = ! $request->has('password') ? $request->except('password') : $request->all();
             $user = $this->usersSystem->update($data, $id);
+
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Exception $exception) {
             \Flash::error($exception->getCode(), $exception->getMessage());
+
             return redirect()->to($this->errorRedirectPath)->withErrors($exception);
         }
     }
@@ -154,9 +159,10 @@ class UsersController extends BaseController
     {
         try {
             $deleted = $this->usersSystem->delete($id);
-            if (!$deleted) {
-                \Flash::warning("Sorry user is not deleted");
+            if (! $deleted) {
+                \Flash::warning('Sorry user is not deleted');
             }
+
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

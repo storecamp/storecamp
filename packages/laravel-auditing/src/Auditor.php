@@ -2,8 +2,8 @@
 
 namespace App\Core\Components\Auditing;
 
-use Illuminate\Support\Facades\Config;
 use App\Core\Components\Auditing\Contracts\Dispatcher;
+use Illuminate\Support\Facades\Config;
 
 trait Auditor
 {

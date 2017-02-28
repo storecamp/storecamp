@@ -1,19 +1,20 @@
-<?php namespace RepositoryLab\Validator\Contracts;
+<?php
+
+namespace RepositoryLab\Validator\Contracts;
 
 use Illuminate\Contracts\Support\MessageBag;
 use RepositoryLab\Validator\Exceptions\ValidatorException;
 
 /**
- * Interface ValidatorInterface
- * @package RepositoryLab\Validator\Contracts
+ * Interface ValidatorInterface.
  */
-interface ValidatorInterface {
-
+interface ValidatorInterface
+{
     const RULE_CREATE = 'create';
     const RULE_UPDATE = 'update';
 
     /**
-     * Set Id
+     * Set Id.
      *
      * @param $id
      * @return $this
@@ -21,7 +22,7 @@ interface ValidatorInterface {
     public function setId($id);
 
     /**
-     * With
+     * With.
      *
      * @param array
      * @return $this
@@ -29,39 +30,38 @@ interface ValidatorInterface {
     public function with(array $input);
 
     /**
-     * Pass the data and the rules to the validator
+     * Pass the data and the rules to the validator.
      *
      * @param string $action
-     * @return boolean
+     * @return bool
      */
-    public function passes( $action = null );
-
+    public function passes($action = null);
 
     /**
-     * Pass the data and the rules to the validator or throws ValidatorException
+     * Pass the data and the rules to the validator or throws ValidatorException.
      *
      * @throws ValidatorException
      * @param string $action
-     * @return boolean
+     * @return bool
      */
-    public function passesOrFail( $action = null );
+    public function passesOrFail($action = null);
 
     /**
-     * Errors
+     * Errors.
      *
      * @return array
      */
     public function errors();
 
     /**
-     * Errors
+     * Errors.
      *
      * @return MessageBag
      */
     public function errorsBag();
 
     /**
-     * Set Rules for Validation
+     * Set Rules for Validation.
      *
      * @param array $rules
      * @return $this
@@ -69,7 +69,7 @@ interface ValidatorInterface {
     public function setRules(array $rules);
 
     /**
-     * Get rule for validation by action ValidatorInterface::RULE_CREATE or ValidatorInterface::RULE_UPDATE
+     * Get rule for validation by action ValidatorInterface::RULE_CREATE or ValidatorInterface::RULE_UPDATE.
      *
      * Default rule: ValidatorInterface::RULE_CREATE
      *

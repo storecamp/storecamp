@@ -4,7 +4,6 @@ namespace App\Core\Contracts;
 
 interface AccessSystemContract
 {
-
     /**
      * @param array $data
      * @param null $id
@@ -60,5 +59,4 @@ interface AccessSystemContract
      * @return int
      */
     public function deletePermission($id, array $data = []): int;
-
 }

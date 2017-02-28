@@ -15,8 +15,7 @@ trait GeneratesUnique
      *
      * @var string
      */
-    public static $uniqueColumn = "unique_id";
-
+    public static $uniqueColumn = 'unique_id';
 
     /**
      * Binds creating/saving events to create UUIDs (and also prevent them from being overwritten).
@@ -32,7 +31,7 @@ trait GeneratesUnique
 
         static::saving(function (Model $model) {
             // What's that, trying to change the UUID huh?  Nope, not gonna happen.
-            if(!empty($model->getOriginal('unique_id'))) {
+            if (! empty($model->getOriginal('unique_id'))) {
                 $original_uuid = $model->getOriginal('unique_id');
 
                 if ($original_uuid !== $model->unique_id) {
@@ -57,7 +56,7 @@ trait GeneratesUnique
      */
     public function scopeUuid($query, $unique_id, $first = true)
     {
-        if (!is_string($unique_id) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $unique_id) !== 1)) {
+        if (! is_string($unique_id) || (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $unique_id) !== 1)) {
             throw (new ModelNotFoundException)->setModel(get_class($this));
         }
 
@@ -79,7 +78,7 @@ trait GeneratesUnique
      */
     public function scopeIdOrUuId($query, $id_or_uuid, $first = true)
     {
-        if (!is_string($id_or_uuid) && !is_numeric($id_or_uuid)) {
+        if (! is_string($id_or_uuid) && ! is_numeric($id_or_uuid)) {
             throw (new ModelNotFoundException)->setModel(get_class($this));
         }
 
@@ -94,5 +93,4 @@ trait GeneratesUnique
 
         return $first ? $search->firstOrFail() : $search;
     }
-
 }

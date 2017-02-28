@@ -2,12 +2,10 @@
 
 namespace App\Core\Contracts;
 
-
 use App\Core\Models\User;
 
 /**
- * Interface UsersSystemContract
- * @package App\Core\Contracts
+ * Interface UsersSystemContract.
  */
 interface UsersSystemContract
 {

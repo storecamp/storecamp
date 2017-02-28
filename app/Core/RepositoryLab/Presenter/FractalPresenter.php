@@ -1,21 +1,21 @@
 <?php
+
 namespace RepositoryLab\Repository\Presenter;
 
 use Exception;
-use RepositoryLab\Repository\Contracts\PresenterInterface;
-use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use League\Fractal\Manager;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\SerializerAbstract;
+use RepositoryLab\Repository\Contracts\PresenterInterface;
 
 /**
- * Class FractalPresenter
- * @package RepositoryLab\Repository\Presenter
+ * Class FractalPresenter.
  */
 abstract class FractalPresenter implements PresenterInterface
 {
@@ -44,11 +44,11 @@ abstract class FractalPresenter implements PresenterInterface
      */
     public function __construct()
     {
-        if ( !class_exists('League\Fractal\Manager') ){
-            throw new Exception( trans('repository::packages.league_fractal_required') );
+        if (! class_exists('League\Fractal\Manager')) {
+            throw new Exception(trans('repository::packages.league_fractal_required'));
         }
 
-        $this->fractal  = new Manager();
+        $this->fractal = new Manager();
         $this->parseIncludes();
         $this->setupSerializer();
     }
@@ -60,7 +60,7 @@ abstract class FractalPresenter implements PresenterInterface
     {
         $serializer = $this->serializer();
 
-        if ( $serializer instanceof SerializerAbstract ){
+        if ($serializer instanceof SerializerAbstract) {
             $this->fractal->setSerializer(new $serializer());
         }
 
@@ -72,37 +72,37 @@ abstract class FractalPresenter implements PresenterInterface
      */
     protected function parseIncludes()
     {
+        $request = app('Illuminate\Http\Request');
+        $paramIncludes = config('repository.fractal.params.include', 'include');
 
-        $request        = app('Illuminate\Http\Request');
-        $paramIncludes  = config('repository.fractal.params.include','include');
-
-        if ( $request->has( $paramIncludes ) ) {
-            $this->fractal->parseIncludes( $request->get( $paramIncludes ) );
+        if ($request->has($paramIncludes)) {
+            $this->fractal->parseIncludes($request->get($paramIncludes));
         }
 
         return $this;
     }
 
     /**
-     * Get Serializer
+     * Get Serializer.
      *
      * @return SerializerAbstract
      */
     public function serializer()
     {
         $serializer = config('repository.fractal.serializer', 'League\\Fractal\\Serializer\\DataArraySerializer');
+
         return new $serializer();
     }
 
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */
     abstract public function getTransformer();
 
     /**
-     * Prepare data to present
+     * Prepare data to present.
      *
      * @param $data
      * @return mixed
@@ -110,13 +110,13 @@ abstract class FractalPresenter implements PresenterInterface
      */
     public function present($data)
     {
-        if ( !class_exists('League\Fractal\Manager') ){
-            throw new Exception( trans('repository::packages.league_fractal_required') );
+        if (! class_exists('League\Fractal\Manager')) {
+            throw new Exception(trans('repository::packages.league_fractal_required'));
         }
 
-        if ( $data instanceof EloquentCollection ) {
+        if ($data instanceof EloquentCollection) {
             $this->resource = $this->transformCollection($data);
-        } elseif ( $data instanceof AbstractPaginator ) {
+        } elseif ($data instanceof AbstractPaginator) {
             $this->resource = $this->transformPaginator($data);
         } else {
             $this->resource = $this->transformItem($data);
@@ -152,6 +152,7 @@ abstract class FractalPresenter implements PresenterInterface
         $collection = $paginator->getCollection();
         $resource = new Collection($collection, $this->getTransformer(), $this->resourceKeyCollection);
         $resource->setPaginator(new IlluminatePaginatorAdapter($paginator));
+
         return $resource;
     }
 }

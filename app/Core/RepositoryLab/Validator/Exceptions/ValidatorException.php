@@ -1,15 +1,16 @@
-<?php namespace RepositoryLab\Validator\Exceptions;
+<?php
+
+namespace RepositoryLab\Validator\Exceptions;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\MessageBag;
 
 /**
- * Class ValidatorException
- * @package RepositoryLab\Validator\Exceptions
+ * Class ValidatorException.
  */
-class ValidatorException extends \Exception implements Jsonable, Arrayable {
-
+class ValidatorException extends \Exception implements Jsonable, Arrayable
+{
     /**
      * @var MessageBag
      */
@@ -18,14 +19,16 @@ class ValidatorException extends \Exception implements Jsonable, Arrayable {
     /**
      * @param MessageBag $messageBag
      */
-    public function __construct(MessageBag $messageBag){
+    public function __construct(MessageBag $messageBag)
+    {
         $this->messageBag = $messageBag;
     }
 
     /**
      * @return MessageBag
      */
-    public function getMessageBag(){
+    public function getMessageBag()
+    {
         return $this->messageBag;
     }
 
@@ -38,7 +41,7 @@ class ValidatorException extends \Exception implements Jsonable, Arrayable {
     {
         return [
             'error'=>'validation_exception',
-            'error_description'=>$this->getMessageBag()
+            'error_description'=>$this->getMessageBag(),
         ];
     }
 
@@ -52,5 +55,4 @@ class ValidatorException extends \Exception implements Jsonable, Arrayable {
     {
         return json_encode($this->toArray(), $options);
     }
-
 }

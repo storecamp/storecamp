@@ -1,6 +1,8 @@
-<?php namespace App\Core\Access;
+<?php
 
-/**
+namespace App\Core\Access;
+
+/*
  * This file is part of Access,
  * a role & permission management solution for Laravel.
  *
@@ -52,5 +54,4 @@ class AccessPermission extends Model implements AccessPermissionInterface
         parent::__construct($attributes);
         $this->table = Config::get('access.permissions_table');
     }
-
 }
