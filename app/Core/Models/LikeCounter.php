@@ -2,8 +2,8 @@
 
 namespace App\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -14,8 +14,9 @@ class LikeCounter extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
+
     /**
      * @var string
      */

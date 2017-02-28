@@ -108,7 +108,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use ViewCounterTrait;
     use Likeable;
 
-
     /**
      * Custom field name to define the item's name.
      * @var string

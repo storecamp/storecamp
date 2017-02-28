@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface LikeRepository
- * @package namespace App\Core\Repositories;
+ * Interface LikeRepository.
  */
 interface LikeRepository extends RepositoryInterface
 {

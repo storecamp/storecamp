@@ -2,9 +2,9 @@
 
 namespace App\Core\Models;
 
+use App\Core\Traits\GeneratesUnique;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -15,7 +15,7 @@ class Like extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**
@@ -58,7 +58,7 @@ class Like extends Model implements Transformable
     {
         $query = $likeable->likes();
 
-        if (!empty($to)) {
+        if (! empty($to)) {
             $range = [new Carbon($from), new Carbon($to)];
         } else {
             $range = [
@@ -107,7 +107,7 @@ class Like extends Model implements Transformable
      */
     protected function cast(Model $likeable, $value = 1)
     {
-        if (!$likeable->exists) {
+        if (! $likeable->exists) {
             return false;
         }
 

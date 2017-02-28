@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Like;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class LikeTransformer
- * @package namespace App\Core\Transformers;
+ * Class LikeTransformer.
  */
 class LikeTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Like entity
+     * Transform the \Like entity.
      * @param Like $model
      *
      * @return array
@@ -26,7 +24,7 @@ class LikeTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Core\Traits;
-
 
 use App\Core\Models\Like;
 use App\Core\Models\LikeCounter;
 
 /**
- * Class Likeable
- * @package App\Core\Traits
+ * Class Likeable.
  */
 trait Likeable
 {
@@ -82,6 +79,7 @@ trait Likeable
         $this->likes()->save($like);
 
         $this->incrementCounter();
+
         return true;
     }
 
@@ -92,11 +90,12 @@ trait Likeable
      */
     public function dislike($likedBy): bool
     {
-        if (!$like = $this->getLikedRecord($likedBy)) {
+        if (! $like = $this->getLikedRecord($likedBy)) {
             return false;
         }
         $like->delete();
         $this->decrementCounter();
+
         return true;
     }
 
@@ -178,7 +177,7 @@ trait Likeable
     public function isLiked($model): bool
     {
         if ($model !== null) {
-            return (bool)$this->likes()
+            return (bool) $this->likes()
                 ->where('liked_by_id', $model->id)
                 ->where('liked_by_type', get_class($model))
                 ->count();

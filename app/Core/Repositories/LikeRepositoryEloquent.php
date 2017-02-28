@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\LikeRepository;
 use App\Core\Models\Like;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class LikeRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class LikeRepositoryEloquent.
  */
 class LikeRepositoryEloquent extends BaseRepository implements LikeRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class LikeRepositoryEloquent extends BaseRepository implements LikeRepository
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
