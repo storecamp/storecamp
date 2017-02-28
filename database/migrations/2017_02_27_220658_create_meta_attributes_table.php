@@ -6,7 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateMetaAttributesTable extends Migration
 {
-    protected $table = 'meta';
     /**
      * Run the migrations.
      *
@@ -14,11 +13,11 @@ class CreateMetaAttributesTable extends Migration
      */
     public function up()
     {
-        $root = app_path().'/Core/Models/';
+        $root = config('meta.modelsPath');
         $files = $this->resolveModelFiles($root);
         foreach ($files as $prefix)
         {
-            $tableName = $prefix .'_'.$this->table;
+            $tableName = $prefix .'_'.config('meta.table_prefix');
             echo $tableName .'<br>';
             \Schema::create($tableName, function (Blueprint $table) {
                 $table->increments('meta_id');
@@ -47,28 +46,14 @@ class CreateMetaAttributesTable extends Migration
         $root = app_path().'/Core/Models/';
         $files = $this->resolveModelFiles($root);
         foreach ($files as $prefix) {
-            $tableName = $prefix . '_' . $this->table;
+            $tableName = $prefix . '_' . config('meta.table_prefix');
             \Schema::drop($tableName);
         }
     }
-    private function getFilesByFormat($root, $format = 'php', $skipFormatEnding = true)
-    {
-        $Directory = new \RecursiveDirectoryIterator($root);
-        $Iterator = new \RecursiveIteratorIterator($Directory);
-        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
-        $files = [];
-        foreach ($Regex as $file) {
-            if ($skipFormatEnding) {
-                $files[] = explode('.'.$format, basename($file[0]))[0];
-            } else {
-                $files[] = basename($file[0]);
-            }
-        }
-        return $files;
-    }
+
     private function resolveModelFiles($root)
     {
-        $files = $this->getFilesByFormat($root, $format = 'php', true);
+        $files = getFilesByFormat($root, $format = 'php', true);
         $newFiles = [];
         foreach ($files as $file) {
             $newFiles[] = \Illuminate\Support\Str::snake($file);

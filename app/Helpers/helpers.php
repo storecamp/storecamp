@@ -177,3 +177,12 @@ if(!function_exists('pushParentCategoryBreadcrumbs')){
         return;
     }
 }
+
+if(!function_exists('getFilesByFormat')) {
+    function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
+    {
+        $files = app('App\Drivers\FolderToDb\SynchronizerInterface')
+            ->getFilesByFormat($root, $format, $skipFormatEnding);
+        return $files;
+    }
+}
