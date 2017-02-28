@@ -108,8 +108,8 @@ class ProductController extends BaseController
                     return \Response::json([$type, $object->getLikeCount()]);
                 } else {
                     \Flash::info($type . '! Product DisLiked.');
+                    return redirect()->back();
                 }
-                return redirect()->back();
             } else {
                 if ($object->like(\Auth::user()))
                     $type = "liked";
@@ -124,8 +124,13 @@ class ProductController extends BaseController
                 }
             }
         } else {
-            \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
-            return \Response::json("error");
+            if ($request->ajax()) {
+                \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
+                return \Response::json("error");
+            } else {
+                \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
+                return redirect()->to(route('login'));
+            }
         }
     }
 }
