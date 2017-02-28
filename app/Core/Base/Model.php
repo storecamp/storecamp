@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 abstract class Model extends Eloquent
 {
-
+    public $useSlug = false;
     protected static function boot()
     {
         parent::boot();
@@ -42,6 +42,7 @@ abstract class Model extends Eloquent
      * @param $id
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|Eloquent|null|static
+     * @throws \Exception
      */
     public function finder($id, $columns = ['*'])
     {
@@ -54,7 +55,18 @@ abstract class Model extends Eloquent
             $newQuery->where($this->getQualifiedKeyName(), '=', $id);
             return $newQuery->first($columns);
         } else {
-            return $newQuery->where('unique_id', '=', $id)->first($columns);
+            if ($this->useSlug) {
+                if (isset($this->slug) || !empty($this->slug)) {
+                    $this->primaryKey = "slug";
+                    return $newQuery->where($this->getQualifiedKeyName(), '=', $id)->first($columns);
+                } else {
+                    throw new \Exception('Please specify slug field in the model', 404);
+                }
+            }
+            $this->primaryKey = "unique_id";
+            $newQuery = $this->newQuery();
+            $newQuery->where($this->getQualifiedKeyName(), '=', $id);
+            return $newQuery->first($columns);
         }
     }
 }

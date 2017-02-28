@@ -211,6 +211,28 @@ class Synchronizer implements SynchronizerInterface
     }
 
     /**
+     * @param string $root
+     * @param string $format
+     * @param bool $skipFormatEnding
+     * @return array
+     */
+    public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
+    {
+        $Directory = new \RecursiveDirectoryIterator($root);
+        $Iterator = new \RecursiveIteratorIterator($Directory);
+        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
+        $files = [];
+        foreach ($Regex as $file) {
+            if ($skipFormatEnding) {
+                $files[] = explode('.'.$format, basename($file[0]))[0];
+            } else {
+                $files[] = basename($file[0]);
+            }
+        }
+        return $files;
+    }
+
+    /**
      * @param $root
      * @param $disk
      */

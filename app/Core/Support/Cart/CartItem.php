@@ -82,7 +82,7 @@ class CartItem implements Arrayable, CartItemContract
     public function getProduct(): ?Product
     {
         $productString = $this->associatedModel;
-        $product = new $productString;
+        $product = new $productString();
         $product = $product->find($this->id);
         return $product;
     }

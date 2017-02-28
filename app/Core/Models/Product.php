@@ -5,7 +5,6 @@ namespace App\Core\Models;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
-use App\Core\Logic\ShopSystem;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use Carbon\Carbon;

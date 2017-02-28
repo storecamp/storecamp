@@ -120,7 +120,6 @@
   "extra": {
     "merge-plugin": {
       "require": [
-        "packages/vinkla/hashids/composer.json",
         "packages/laravel-auditing/composer.json"
       ],
       "recurse": true,

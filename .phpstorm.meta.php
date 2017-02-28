@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-27.
+    * Generated on 2017-02-28.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -137,9 +137,6 @@ namespace PHPSTORM_META {
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'toastr' instanceof \nilsenj\Toastr\Toastr,
-            'hashids.factory' instanceof \Vinkla\Hashids\HashidsFactory,
-            'hashids' instanceof \Vinkla\Hashids\HashidsManager,
-            'hashids.connection' instanceof \Hashids\Hashids,
             'apidoc.generate' instanceof \Mpociot\ApiDoc\Commands\GenerateDocumentation,
             'apidoc.update' instanceof \Mpociot\ApiDoc\Commands\UpdateDocumentation,
             'active' instanceof \storecamp\htmlelements\Active,
@@ -401,9 +398,6 @@ namespace PHPSTORM_META {
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'toastr' instanceof \nilsenj\Toastr\Toastr,
-            'hashids.factory' instanceof \Vinkla\Hashids\HashidsFactory,
-            'hashids' instanceof \Vinkla\Hashids\HashidsManager,
-            'hashids.connection' instanceof \Hashids\Hashids,
             'apidoc.generate' instanceof \Mpociot\ApiDoc\Commands\GenerateDocumentation,
             'apidoc.update' instanceof \Mpociot\ApiDoc\Commands\UpdateDocumentation,
             'active' instanceof \storecamp\htmlelements\Active,
@@ -665,9 +659,6 @@ namespace PHPSTORM_META {
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'toastr' instanceof \nilsenj\Toastr\Toastr,
-            'hashids.factory' instanceof \Vinkla\Hashids\HashidsFactory,
-            'hashids' instanceof \Vinkla\Hashids\HashidsManager,
-            'hashids.connection' instanceof \Hashids\Hashids,
             'apidoc.generate' instanceof \Mpociot\ApiDoc\Commands\GenerateDocumentation,
             'apidoc.update' instanceof \Mpociot\ApiDoc\Commands\UpdateDocumentation,
             'active' instanceof \storecamp\htmlelements\Active,
@@ -929,9 +920,6 @@ namespace PHPSTORM_META {
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'toastr' instanceof \nilsenj\Toastr\Toastr,
-            'hashids.factory' instanceof \Vinkla\Hashids\HashidsFactory,
-            'hashids' instanceof \Vinkla\Hashids\HashidsManager,
-            'hashids.connection' instanceof \Hashids\Hashids,
             'apidoc.generate' instanceof \Mpociot\ApiDoc\Commands\GenerateDocumentation,
             'apidoc.update' instanceof \Mpociot\ApiDoc\Commands\UpdateDocumentation,
             'active' instanceof \storecamp\htmlelements\Active,

@@ -281,6 +281,14 @@ class CartSystem implements CartSystemContract
         if (is_null($this->session->get($this->instance))) {
             return new Collection([]);
         }
+//        $content = $this->session->get($this->instance);
+//
+//        foreach ($content as $item) {
+//            $cartProduct = $item->getProduct();
+//            if (!$cartProduct) {
+//                $this->remove($item->rowId);
+//            }
+//        }
         return $this->session->get($this->instance);
     }
     /**
@@ -340,7 +348,11 @@ class CartSystem implements CartSystemContract
     {
         $content = $this->getContent();
         $subTotal = $content->reduce(function ($subTotal, CartItem $cartItem) {
-            return $subTotal + ($cartItem->qty * $cartItem->product->price);
+            if ($cartItem->product) {
+                return $subTotal + ($cartItem->qty * $cartItem->product->price);
+            } else {
+                return 0;
+            }
         }, 0);
         $currency = $this->withCurrency ? $this->currency.' ' : null;
         return $currency . cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);

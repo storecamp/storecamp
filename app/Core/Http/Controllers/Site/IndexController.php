@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Site;
 
+use App\Core\Models\Product;
 use Illuminate\Http\Request;
 
 /**
@@ -12,6 +13,7 @@ class IndexController extends BaseController
 {
     public $viewPathBase = 'site.home.';
     public $errorRedirectPath = 'site::';
+
 
     /**
      * @param Request $request

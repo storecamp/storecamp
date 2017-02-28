@@ -23,12 +23,13 @@
                     </thead>
                     <tbody>
                     @foreach($cart as $row)
-                        <tr>
+                        @if ($row->product)
+                            <tr>
                             <td class="">
                                 <div class="media">
                                     <a class="thumbnail pull-left" href="{{route('site::products::show', $row->id)}}">
                                         <?php
-                                        $productMedia = $row->product->getMedia('gallery');
+                                            $productMedia = $row->product->getMedia('gallery');
                                         ?>
                                         <img class="media-object"
                                              src="{{$productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif")}}"
@@ -60,6 +61,9 @@
                                 {!! Form::close() !!}
                             </td>
                         </tr>
+                        @else
+                            <h3 class="text-center text-warning">Sorry product not found</h3>
+                        @endif
                     @endforeach
                     <tr>
                         <td>  </td>

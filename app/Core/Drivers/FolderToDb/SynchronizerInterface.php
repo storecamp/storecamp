@@ -36,4 +36,11 @@ interface SynchronizerInterface {
      */
     public function directoriesIterate(string $root, bool $withFolderName = false ) : array;
 
+    /**
+     * @param string $root
+     * @param string $format
+     * @param bool $skipFormatEnding
+     * @return array
+     */
+    public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array;
 }
