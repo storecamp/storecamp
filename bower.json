@@ -45,6 +45,7 @@
     "bower-jquery-sparkline": "^2.1.3",
     "jquery-bar-rating": "antennaio/jquery-bar-rating#^1.2.1",
     "bourbon": "^4.3.2",
-    "magnific-popup": "^1.1.0"
+    "magnific-popup": "^1.1.0",
+    "owl.carousel": "^2.2.0"
   }
 }
