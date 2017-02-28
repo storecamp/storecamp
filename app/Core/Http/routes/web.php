@@ -23,6 +23,10 @@ $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Ro
                 'uses' => 'Site\ProductController@show',
                 'as' => 'show',
             ]);
+
+            $router->get('like_dis/{class_name}/{object_id}',
+                array('uses' => 'Site\ProductController@likeDis', 'as' => 'like_dis'))
+                ->where('object_id', '[0-9]+');
         });
 
         $router->group(['prefix' => 'cart', 'as' => 'cart::'], function (\Illuminate\Routing\Router $router) {

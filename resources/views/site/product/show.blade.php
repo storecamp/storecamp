@@ -80,6 +80,7 @@
                 </button>
                 <hr>
                 <div class="col-md-12">
+                    @include("site.partials.like-btn", [$model = $product, $route = route('site::products::like_dis', array('class_name' => get_class($product), 'object_id' => $product->id))])
                     <button class="btn btn-default product-add-to-wishList">Add to Wish List</button>
                     <button class="btn btn-default product-add-to-compare">Add to Compare</button>
                 </div>

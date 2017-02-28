@@ -44,7 +44,7 @@ class CreateMetaAttributesTable extends Migration
         $files = $this->resolveModelFiles($root);
         foreach ($files as $prefix) {
             $tableName = $prefix.'_'.config('meta.table_prefix');
-            \Schema::drop($tableName);
+            \Schema::dropIfExists($tableName);
         }
     }
 

@@ -9,6 +9,7 @@ use App\Core\Contracts\ProductInterface;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
+use App\Core\Traits\Likeable;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -105,6 +106,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use CartItemTrait;
     use CacheableEloquent;
     use ViewCounterTrait;
+    use Likeable;
+
 
     /**
      * Custom field name to define the item's name.

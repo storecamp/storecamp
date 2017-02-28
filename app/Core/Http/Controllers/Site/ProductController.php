@@ -12,10 +12,22 @@ use Illuminate\Http\Request;
  */
 class ProductController extends BaseController
 {
+    /**
+     * @var string
+     */
     public $viewPathBase = 'site.product.';
+    /**
+     * @var string
+     */
     public $errorRedirectPath = 'site::products';
 
+    /**
+     * @var ProductSystemContract
+     */
     private $productSystem;
+    /**
+     * @var
+     */
     private $productRepository;
 
     /**
@@ -28,6 +40,11 @@ class ProductController extends BaseController
         $this->productRepository = $productSystem->productRepository;
     }
 
+    /**
+     * @param Request $request
+     * @param null $category
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function index(Request $request, $category = null)
     {
         try {
@@ -66,6 +83,49 @@ class ProductController extends BaseController
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
             return $this->redirectError($e);
+        }
+    }
+
+    /**
+     * like-Action to call with class_name and object_id
+     *
+     * @param Request $request
+     * @param $class_name
+     * @param $object_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function likeDis(Request $request, $class_name, $object_id)
+    {
+        if (\Auth::user()) {
+            $object = $class_name::find($object_id);
+            if ($object->liked(\Auth::user())) {
+                if ($object->dislike(\Auth::user())) {
+                    $type = "disliked";
+                } else {
+                    $type = "error";
+                }
+                if ($request->ajax()) {
+                    return \Response::json([$type, $object->getLikeCount()]);
+                } else {
+                    \Flash::info($type . '! Product DisLiked.');
+                }
+                return redirect()->back();
+            } else {
+                if ($object->like(\Auth::user()))
+                    $type = "liked";
+                else {
+                    $type = "error";
+                }
+                if ($request->ajax()) {
+                    return \Response::json([$type, $object->getLikeCount(), 'message' => 'like']);
+                } else {
+                    \Flash::info($type . '! Product Liked.');
+                    return redirect()->back();
+                }
+            }
+        } else {
+            \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
+            return \Response::json("error");
         }
     }
 }

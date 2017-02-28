@@ -4,7 +4,6 @@
 namespace App\Core\Traits;
 
 
-use App\Core\Base\Model;
 use App\Core\Models\Like;
 use App\Core\Models\LikeCounter;
 
@@ -71,7 +70,7 @@ trait Likeable
      *
      * @return bool
      */
-    public function shouldLike(Model $likedBy): bool
+    public function shouldLike($likedBy): bool
     {
         if ($this->getLikedRecord($likedBy)) {
             return false;
@@ -91,7 +90,7 @@ trait Likeable
      *
      * @return bool
      */
-    public function dislike(Model $likedBy): bool
+    public function dislike($likedBy): bool
     {
         if (!$like = $this->getLikedRecord($likedBy)) {
             return false;
@@ -107,7 +106,7 @@ trait Likeable
      *
      * @return mixed
      */
-    public function scopeWhereLiked($query, Model $model)
+    public function scopeWhereLiked($query, $model)
     {
         return $query->whereHas('likes', function ($query) use ($model) {
             $query->where('liked_by_id', $model->id);
@@ -151,7 +150,7 @@ trait Likeable
      *
      * @return mixed
      */
-    public function getLikedRecord(Model $model)
+    public function getLikedRecord($model)
     {
         return $this->likes()
             ->where('liked_by_id', $model->id)
@@ -176,7 +175,7 @@ trait Likeable
      * @param Model $model
      * @return bool
      */
-    public function isLiked(Model $model): bool
+    public function isLiked($model): bool
     {
         if ($model !== null) {
             return (bool)$this->likes()

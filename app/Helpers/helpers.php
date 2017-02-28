@@ -182,3 +182,11 @@ if (! function_exists('getFilesByFormat')) {
         return $files;
     }
 }
+
+if (! function_exists('getBaseClassName')) {
+    function getBaseClassName($class)
+    {
+        $path = explode('\\', get_class($class));
+        return \Illuminate\Support\Str::snake(array_pop($path));
+    }
+}
