@@ -87,7 +87,7 @@ class ProductController extends BaseController
     }
 
     /**
-     * like-Action to call with class_name and object_id
+     * like-Action to call with class_name and object_id.
      *
      * @param Request $request
      * @param $class_name
@@ -100,35 +100,39 @@ class ProductController extends BaseController
             $object = $class_name::find($object_id);
             if ($object->liked(\Auth::user())) {
                 if ($object->dislike(\Auth::user())) {
-                    $type = "disliked";
+                    $type = 'disliked';
                 } else {
-                    $type = "error";
+                    $type = 'error';
                 }
                 if ($request->ajax()) {
                     return \Response::json([$type, $object->getLikeCount()]);
                 } else {
-                    \Flash::info($type . '! Product DisLiked.');
+                    \Flash::info($type.'! Product DisLiked.');
+
                     return redirect()->back();
                 }
             } else {
-                if ($object->like(\Auth::user()))
-                    $type = "liked";
-                else {
-                    $type = "error";
+                if ($object->like(\Auth::user())) {
+                    $type = 'liked';
+                } else {
+                    $type = 'error';
                 }
                 if ($request->ajax()) {
                     return \Response::json([$type, $object->getLikeCount(), 'message' => 'like']);
                 } else {
-                    \Flash::info($type . '! Product Liked.');
+                    \Flash::info($type.'! Product Liked.');
+
                     return redirect()->back();
                 }
             }
         } else {
             if ($request->ajax()) {
-                \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
-                return \Response::json("error");
+                \Toastr::warning('please login or register to LIKE or DISLIKE!', $title = 'login required', $options = []);
+
+                return \Response::json('error');
             } else {
-                \Toastr::warning("please login or register to LIKE or DISLIKE!", $title = "login required", $options = []);
+                \Toastr::warning('please login or register to LIKE or DISLIKE!', $title = 'login required', $options = []);
+
                 return redirect()->to(route('login'));
             }
         }

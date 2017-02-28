@@ -6,14 +6,12 @@ use App\Core\Transformers\LikeCounterTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class LikeCounterPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class LikeCounterPresenter.
  */
 class LikeCounterPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */
