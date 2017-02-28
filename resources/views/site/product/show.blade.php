@@ -124,7 +124,7 @@
                 </div>
                 <!-- Nav tabs -->
             </div>
-            @include('site.partials.slider')
+            @include('site.partials.slider', [$mostViewed])
         </div>
     </div>
 @endsection

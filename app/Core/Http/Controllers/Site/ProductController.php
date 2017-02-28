@@ -51,7 +51,8 @@ class ProductController extends BaseController
     {
         $data = $request->all();
         $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
+        $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
         $category = $product->categories->first();
-        return $this->view('show', compact('product', 'category'));
+        return $this->view('show', compact('product', 'category', 'mostViewed'));
     }
 }

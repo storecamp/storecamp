@@ -304,6 +304,9 @@ class CartSystem implements CartSystemContract
             }
         }
         $content = $this->session->get($this->instance);
+        if (!$content) {
+            return new Collection();
+        }
         return $content;
     }
 

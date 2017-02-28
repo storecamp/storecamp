@@ -27,6 +27,36 @@ trait ViewCounterTrait
     }
 
     /**
+     * @return mixed
+     */
+    public function get_counters()
+    {
+        $class = $this->counter();
+        return $this->hasMany(get_class($class), 'object_id')->where('class_name', snake_case(get_class($this)))->get();
+    }
+
+    /**
+     * @param array $get
+     * @return mixed
+     */
+    public function instance_counters($get = ["*"])
+    {
+        $counters = Counter::where('class_name', '=', snake_case(get_class($this)))->get($get);
+        return $counters;
+    }
+
+    /**
+     * @param $limit
+     * @param array $get
+     * @return mixed
+     */
+    public function max_instance_counters($limit = 5, $get = ["*"])
+    {
+        $counters = Counter::where('class_name', '=', snake_case(get_class($this)))->orderBy('view_counter')->take($limit)->get($get);
+        return $counters;
+    }
+
+    /**
      * Return authentificated users who viewed we know
      *
      * @return Integer
@@ -65,6 +95,12 @@ trait ViewCounterTrait
         return ($counter->view_counter != null) ? $counter->view_counter : 0;
     }
 
+
+    public function scopeMostViewed($query, $limit)
+    {
+        $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
+        return $query->whereIn('id', $counterIds)->limit($limit);
+    }
     /**
      * Is object already viewed by user?
      *
