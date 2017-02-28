@@ -2,7 +2,7 @@
 
 namespace App\Core\Presenters;
 
-use App\\Core\Transformers\OrdersTransformer;
+use App\Core\Transformers\OrdersTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
