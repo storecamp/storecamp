@@ -300,7 +300,6 @@ return [
         'Flash' => \Laracasts\Flash\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => nilsenj\Toastr\Facades\Toastr::class,
-        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'Accordion' => 'storecamp\htmlelements\Facades\Accordion',
         'Alert' => 'storecamp\htmlelements\Facades\Alert',
         'Badge' => 'storecamp\htmlelements\Facades\Badge',

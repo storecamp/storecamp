@@ -1,7 +1,13 @@
 <?php
-
-$this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Routing\Router $router) {
-
+// ===============================================
+// localed routes SECTION =================================
+// ===============================================
+$locale = Request::segment(1);
+if (!in_array($locale, config('app.languages'))) {
+    $locale = '';
+}
+\Lang::setLocale($locale);
+$this->group(['prefix' => $locale], function (\Illuminate\Routing\Router $router) {
     /*
      * Client Site routes
      */
@@ -93,9 +99,14 @@ $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Ro
         $router->post('callback/payment/{status}/{id}/{shoptoken}',
             ['as' => 'callback', 'uses' => 'Site\CallbackController@process']
         );
+
         $router->get('like_dis/{class_name}/{object_id}',
             ['uses' => 'Site\TogglesController@likeDis', 'as' => 'like_dis'])
             ->where('object_id', '[0-9]+');
+
+        $this->get('/language/{key}', [
+            'as' => 'toggleLanguage',
+            'uses' => 'Site\TogglesController@toggleLanguage']);
     });
 
     /*
@@ -769,6 +780,7 @@ $this->group(['middleware' => 'DetectBrowserLanguage'], function (\Illuminate\Ro
         $this->get('toggleBan/{class_name}/{object_id}',
             ['uses' => 'Admin\TogglesController@toggleBan', 'as' => 'toggleBan'])
             ->where('object_id', '[0-9]+');
+
     });
 
     $this->group(
