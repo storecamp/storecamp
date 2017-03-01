@@ -240,6 +240,7 @@ return [
         JeroenG\Packager\PackagerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class
     ],
 
     /*
@@ -326,6 +327,7 @@ return [
         'Thumbnail' => 'storecamp\htmlelements\Facades\Thumbnail',
         'Menu' => \storecamp\htmlelements\Facades\Menu::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
     ],
 
 ];

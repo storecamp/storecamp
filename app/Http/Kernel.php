@@ -6,6 +6,7 @@ use App\Core\Access\Middleware\AccessPermission;
 use App\Core\Access\Middleware\AccessRole;
 use App\Http\Middleware\BelongsToUserOrAdmin;
 use App\Http\Middleware\CheckIfUserBanned;
+use App\Http\Middleware\checkLocale;
 use App\Http\Middleware\DetectBrowserLanguage;
 use App\Http\Middleware\FolderLocked;
 use App\Http\Middleware\UserAdditionalInfo;
@@ -73,5 +74,10 @@ class Kernel extends HttpKernel
         'folderLocked' => FolderLocked::class,
         'belongsToUserOrAdmin' => BelongsToUserOrAdmin::class,
         'DetectBrowserLanguage' => DetectBrowserLanguage::class,
+        'locale' => checkLocale::class,
+        'checkBannedUser' => CheckIfUserBanned::class,
+        'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class
     ];
 }

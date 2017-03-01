@@ -8,7 +8,7 @@ use Illuminate\View\View;
 class AdminNavigation
 {
     public $auth;
-
+    public $locale;
     /**
      * AdminNavigation constructor.
      * @param AuthManager $authManager
@@ -16,6 +16,7 @@ class AdminNavigation
     public function __construct(AuthManager $authManager)
     {
         $this->auth = $authManager;
+        $this->locale = \LaravelLocalization::getCurrentLocale();
     }
 
     /**
@@ -23,6 +24,6 @@ class AdminNavigation
      */
     public function compose(View $view)
     {
-        $view->with('auth', $this->auth);
+        $view->with('navigation', ['auth' => $this->auth, 'locale' => $this->locale]);
     }
 }

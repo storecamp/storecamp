@@ -14,6 +14,7 @@ class Navigation
      * @var CartSystemContract
      */
     public $cartSystem;
+    public $locale;
 
     /**
      * Navigation constructor.
@@ -22,6 +23,7 @@ class Navigation
     public function __construct(CartSystemContract $cartSystem)
     {
         $this->cartSystem = $cartSystem;
+        $this->locale = \LaravelLocalization::getCurrentLocale();
     }
 
     /**
@@ -29,6 +31,6 @@ class Navigation
      */
     public function compose(View $view)
     {
-        $view->with('navigation', ['cartSystem' => $this->cartSystem]);
+        $view->with('navigation', ['cartSystem' => $this->cartSystem, 'locale' => $this->locale]);
     }
 }

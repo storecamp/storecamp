@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-28.
+    * Generated on 2017-03-01.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -169,6 +169,7 @@ namespace PHPSTORM_META {
             'htmlelements::tabbable' instanceof \storecamp\htmlelements\Tabbable,
             'htmlelements::table' instanceof \storecamp\htmlelements\Table,
             'htmlelements::thumbnail' instanceof \storecamp\htmlelements\Thumbnail,
+            'Mcamara\LaravelLocalization\LaravelLocalization' instanceof \Mcamara\LaravelLocalization\LaravelLocalization,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
@@ -431,6 +432,7 @@ namespace PHPSTORM_META {
             'htmlelements::tabbable' instanceof \storecamp\htmlelements\Tabbable,
             'htmlelements::table' instanceof \storecamp\htmlelements\Table,
             'htmlelements::thumbnail' instanceof \storecamp\htmlelements\Thumbnail,
+            'Mcamara\LaravelLocalization\LaravelLocalization' instanceof \Mcamara\LaravelLocalization\LaravelLocalization,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
@@ -693,6 +695,7 @@ namespace PHPSTORM_META {
             'htmlelements::tabbable' instanceof \storecamp\htmlelements\Tabbable,
             'htmlelements::table' instanceof \storecamp\htmlelements\Table,
             'htmlelements::thumbnail' instanceof \storecamp\htmlelements\Thumbnail,
+            'Mcamara\LaravelLocalization\LaravelLocalization' instanceof \Mcamara\LaravelLocalization\LaravelLocalization,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
@@ -955,6 +958,7 @@ namespace PHPSTORM_META {
             'htmlelements::tabbable' instanceof \storecamp\htmlelements\Tabbable,
             'htmlelements::table' instanceof \storecamp\htmlelements\Table,
             'htmlelements::thumbnail' instanceof \storecamp\htmlelements\Thumbnail,
+            'Mcamara\LaravelLocalization\LaravelLocalization' instanceof \Mcamara\LaravelLocalization\LaravelLocalization,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,

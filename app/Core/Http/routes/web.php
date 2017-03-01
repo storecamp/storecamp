@@ -1,13 +1,8 @@
 <?php
-// ===============================================
-// localed routes SECTION =================================
-// ===============================================
-$locale = Request::segment(1);
-if (!in_array($locale, config('app.languages'))) {
-    $locale = '';
-}
-\Lang::setLocale($locale);
-$this->group(['prefix' => $locale], function (\Illuminate\Routing\Router $router) {
+
+Auth::routes();
+
+$this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
     /*
      * Client Site routes
      */
@@ -109,10 +104,6 @@ $this->group(['prefix' => $locale], function (\Illuminate\Routing\Router $router
             'uses' => 'Site\TogglesController@toggleLanguage']);
     });
 
-    /*
-     * @param $this \Illuminate\Routing\Route
-     */
-    Auth::routes();
 
     $this->get('/htmlElements', [
         'uses' => 'Admin\AdminController@htmlElements',

@@ -13,6 +13,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->composer('*', 'App\Core\Http\Composers\Auth');
         view()->composer('site.*', 'App\Core\Http\Composers\Site');
         view()->composer('site.partials.sidebar', 'App\Core\Http\Composers\Sidebar');
         view()->composer('partials.mainheader', 'App\Core\Http\Composers\AdminNavigation');

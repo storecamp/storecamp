@@ -74,24 +74,8 @@ class TogglesController extends BaseController
     public function toggleLanguage(Request $request, $key)
     {
         $previous = \URL::previous();
-        $domainUrl = \URL::to(null);
-        $strippedUrl = explode($domainUrl, $previous)[1];
-        $strippedUrl = explode('/', $strippedUrl);
-        $strippedUrl = $strippedUrl[count($strippedUrl) - 1];
-        $user = $this->auth->user();
-        $keyLang = explode('/', $strippedUrl)[0];
-        if (in_array($keyLang, config('app.languages'))) {
-            $strippedUrl = explode('/', $strippedUrl);
-            $strippedUrl = $key . '/' . $strippedUrl[count($strippedUrl) - 1];
-        } else {
-            $strippedUrl = $key . '/' . $strippedUrl;
-        }
+        $url = \LaravelLocalization::getLocalizedURL($key, $previous);
 
-        if ($user) {
-            $user->locale = $key;
-            $user->save();
-        }
-        $replacedUrl = $domainUrl . '/' . $strippedUrl;
-        return redirect()->to($replacedUrl)->withCookie(cookie('locale', $key, 525600));
+        return redirect()->to($url)->withCookie(cookie('locale', $key, 525600));
     }
 }
