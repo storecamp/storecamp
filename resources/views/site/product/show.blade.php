@@ -76,8 +76,8 @@
                 <div class="col-md-6">
                     <div class="product-sku">{{ $product->sku }}</div>
                 </div>
-                <button class="btn btn-default product-add-to-cart"><em class="fa fa-cart-plus"></em> Add to cart
-                </button>
+                <button class="btn btn-default product-add-to-cart"><em class="fa fa-cart-plus"></em> Add to cart</button>
+                {!! Form::close() !!}
                 <hr>
                 <div class="col-md-12">
                     @include("site.partials.like-btn", [$model = $product, $route = route('site::like_dis', array('class_name' => getBaseClassName($product, false), 'object_id' => $product->id))])
@@ -102,7 +102,6 @@
                     </ul>
                 </div>
                 </div>
-                {!! Form::close() !!}
             </div>
             <div class="col-lg-12">
                 <div class="nav-tabs-custom product-tabs-container">
