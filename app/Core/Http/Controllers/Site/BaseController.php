@@ -16,6 +16,7 @@ abstract class BaseController extends Controller
         $flash = app('\Laracasts\Flash\FlashNotifier');
         $flash->{$type}($message);
     }
+
     /**
      * @param $view
      * @param array $data

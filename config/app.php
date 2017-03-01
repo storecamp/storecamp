@@ -240,7 +240,7 @@ return [
         JeroenG\Packager\PackagerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
-        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
     ],
 
     /*

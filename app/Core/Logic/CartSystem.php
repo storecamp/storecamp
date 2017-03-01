@@ -268,6 +268,7 @@ class CartSystem implements CartSystemContract
         if (! $content->has($rowId)) {
             throw new InvalidRowIDException("The cart does not contain rowId {$rowId}.");
         }
+
         return $content->get($rowId);
     }
 

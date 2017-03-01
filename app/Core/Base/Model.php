@@ -15,7 +15,7 @@ abstract class Model extends Eloquent
      * @var bool
      */
     public $useSlug = false;
-    public $uniqueId =  'unique_id';
+    public $uniqueId = 'unique_id';
 
     protected static function boot()
     {

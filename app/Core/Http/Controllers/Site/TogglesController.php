@@ -5,8 +5,7 @@ namespace App\Core\Http\Controllers\Site;
 use Illuminate\Http\Request;
 
 /**
- * Class TogglesController
- * @package App\Http\Controllers
+ * Class TogglesController.
  */
 class TogglesController extends BaseController
 {
@@ -21,7 +20,6 @@ class TogglesController extends BaseController
         $this->auth = $auth;
     }
 
-
     /**
      * like-Action to call with class_name and object_id.
      *
@@ -33,7 +31,7 @@ class TogglesController extends BaseController
     public function likeDis(Request $request, $class_name, $object_id)
     {
         if ($this->auth->user()) {
-            $class = 'App\Core\Models\\' . $class_name;
+            $class = 'App\Core\Models\\'.$class_name;
             $object = $class::find($object_id);
             if ($object->liked($this->auth->user())) {
                 if ($object->dislike($this->auth->user())) {
@@ -44,7 +42,7 @@ class TogglesController extends BaseController
                 if ($request->ajax()) {
                     return response()->json([$type, $object->getLikeCount()]);
                 } else {
-                    \Flash::info($type . '! ' . $class_name . ' DisLiked.');
+                    \Flash::info($type.'! '.$class_name.' DisLiked.');
 
                     return redirect()->back();
                 }
@@ -57,7 +55,8 @@ class TogglesController extends BaseController
                 if ($request->ajax()) {
                     return response()->json([$type, $object->getLikeCount(), 'message' => 'like']);
                 } else {
-                    \Flash::info($type . '! ' . $class_name . ' Liked.');
+                    \Flash::info($type.'! '.$class_name.' Liked.');
+
                     return redirect()->back();
                 }
             }
@@ -66,6 +65,7 @@ class TogglesController extends BaseController
                 return response()->json(['message' => 'user not authorized'], 401);
             } else {
                 \Toastr::warning('Please login or register to LIKE or DISLIKE!', $title = 'login required', $options = []);
+
                 return redirect()->to(route('login'));
             }
         }
