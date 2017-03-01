@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ class Like extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     public static function boot()
     {

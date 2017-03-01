@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -11,6 +12,7 @@ class LikeCounter extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
 
     public static function boot()
     {
