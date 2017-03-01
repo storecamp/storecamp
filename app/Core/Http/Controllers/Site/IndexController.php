@@ -18,6 +18,15 @@ class IndexController extends BaseController
      */
     public function home(Request $request)
     {
+        $root = app_path().'/Core/Models/';
+        $files = \File::allFiles($root);
+
+        $filesArr = [];
+        foreach ($files as $file) {
+            $fileName = explode('.php',$file->getBasename());
+            $filesArr[] = $fileName[0];
+        }
+        dd($filesArr);
         return $this->view('index');
     }
 }

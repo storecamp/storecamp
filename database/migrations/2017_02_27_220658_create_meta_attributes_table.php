@@ -50,7 +50,7 @@ class CreateMetaAttributesTable extends Migration
 
     private function resolveModelFiles($root)
     {
-        $files = getFilesByFormat($root, $format = 'php', true);
+        $files = getFileNames($root);
         $newFiles = [];
         foreach ($files as $file) {
             $newFiles[] = \Illuminate\Support\Str::snake($file);

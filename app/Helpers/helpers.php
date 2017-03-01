@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('resolveModelName')) {
+if (!function_exists('resolveModelName')) {
     /**
      * @param $model
      * @return string
@@ -13,7 +13,7 @@ if (! function_exists('resolveModelName')) {
     }
 }
 
-if (! function_exists('determineActiveDBandResolveDown')) {
+if (!function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
@@ -31,7 +31,7 @@ if (! function_exists('determineActiveDBandResolveDown')) {
     }
 }
 
-if (! function_exists('determineActiveDBandResolveDown')) {
+if (!function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
@@ -49,7 +49,7 @@ if (! function_exists('determineActiveDBandResolveDown')) {
     }
 }
 
-if (! function_exists('formatBytes')) {
+if (!function_exists('formatBytes')) {
 
     /**
      * @param $bytes
@@ -68,11 +68,11 @@ if (! function_exists('formatBytes')) {
         $bytes /= pow(1024, $pow);
 //         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, $precision).' '.$units[$pow];
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
 
-if (! function_exists('buildSelect')) {
+if (!function_exists('buildSelect')) {
 
     /**
      * @param $actionUrl
@@ -92,7 +92,7 @@ if (! function_exists('buildSelect')) {
     }
 }
 
-if (! function_exists('cartNumberFormat')) {
+if (!function_exists('cartNumberFormat')) {
     /**
      * Get the Formated number.
      *
@@ -121,7 +121,7 @@ if (! function_exists('cartNumberFormat')) {
     }
 }
 
-if (! function_exists('shopFormat')) {
+if (!function_exists('shopFormat')) {
     /**
      * @param string $value
      * @return string
@@ -132,7 +132,7 @@ if (! function_exists('shopFormat')) {
     }
 }
 
-if (! function_exists('pushParentCategoryBreadcrumbs')) {
+if (!function_exists('pushParentCategoryBreadcrumbs')) {
     /**
      * @param $category
      * @param $breadcrumbs
@@ -149,7 +149,7 @@ if (! function_exists('pushParentCategoryBreadcrumbs')) {
     }
 }
 
-if (! function_exists('getFilesByFormat')) {
+if (!function_exists('getFilesByFormat')) {
     function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
         $files = app('App\Drivers\FolderToDb\SynchronizerInterface')
@@ -159,7 +159,7 @@ if (! function_exists('getFilesByFormat')) {
     }
 }
 
-if (! function_exists('getBaseClassName')) {
+if (!function_exists('getBaseClassName')) {
     function getBaseClassName($class, $snake = true)
     {
         $path = explode('\\', get_class($class));
@@ -168,5 +168,18 @@ if (! function_exists('getBaseClassName')) {
         } else {
             return array_pop($path);
         }
+    }
+}
+
+if (!function_exists('getFileNames')) {
+    function getFileNames($root)
+    {
+        $files = \File::allFiles($root);
+        $filesArr = [];
+        foreach ($files as $file) {
+            $fileName = explode('.php', $file->getBasename());
+            $filesArr[] = $fileName[0];
+        }
+        return $filesArr;
     }
 }
