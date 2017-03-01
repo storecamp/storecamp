@@ -2,7 +2,7 @@
 
 Auth::routes();
 
-$this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
+$this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
     /*
      * Client Site routes
      */
@@ -101,9 +101,8 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => [ 
 
         $this->get('/language/{key}', [
             'as' => 'toggleLanguage',
-            'uses' => 'Site\TogglesController@toggleLanguage']);
+            'uses' => 'Site\TogglesController@toggleLanguage', ]);
     });
-
 
     $this->get('/htmlElements', [
         'uses' => 'Admin\AdminController@htmlElements',
@@ -111,10 +110,9 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => [ 
     ]);
 
     $this->group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
-
         $this->get('dashboard', [
             'uses' => 'Admin\AdminController@show',
-            'as' => 'dashboard']);
+            'as' => 'dashboard', ]);
         $this->get('/', [
             'uses' => 'Admin\AdminController@show',
             'as' => 'dashboard',
@@ -771,40 +769,39 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => [ 
         $this->get('toggleBan/{class_name}/{object_id}',
             ['uses' => 'Admin\TogglesController@toggleBan', 'as' => 'toggleBan'])
             ->where('object_id', '[0-9]+');
-
     });
 
     $this->group(
         ['prefix' => '/admin/log-viewer'], function () {
-        $this->get('/', [
+            $this->get('/', [
             'as' => 'log-viewer::dashboard',
             'uses' => 'Admin\LogViewerController@index',
         ]);
-        $this->group(['prefix' => '/logs'], function () {
-            $this->get('/', [
+            $this->group(['prefix' => '/logs'], function () {
+                $this->get('/', [
                 'as' => 'log-viewer::logs.list',
                 'uses' => 'Admin\LogViewerController@listLogs',
             ]);
-            $this->delete('delete', [
+                $this->delete('delete', [
                 'as' => 'log-viewer::logs.delete',
                 'uses' => 'Admin\LogViewerController@delete',
             ]);
-        });
+            });
 
-        $this->group(['prefix' => '/{date}'], function () {
-            $this->get('/', [
+            $this->group(['prefix' => '/{date}'], function () {
+                $this->get('/', [
                 'as' => 'log-viewer::logs.show',
                 'uses' => 'Admin\LogViewerController@show',
             ]);
 
-            $this->get('download', [
+                $this->get('download', [
                 'as' => 'log-viewer::logs.download',
                 'uses' => 'Admin\LogViewerController@download',
             ]);
-            $this->get('{level}', [
+                $this->get('{level}', [
                 'as' => 'log-viewer::logs.filter',
                 'uses' => 'Admin\LogViewerController@showByLevel',
             ]);
+            });
         });
-    });
 });

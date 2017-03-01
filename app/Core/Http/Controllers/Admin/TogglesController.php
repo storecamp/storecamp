@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Core\Http\Controllers\Admin;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
- * Class TogglessController
- * @package App\Http\Controllers
+ * Class TogglessController.
  */
-class TogglesController extends BaseController {
-
+class TogglesController extends BaseController
+{
     /**
      * @param Request $request
      * @param $class_name
@@ -20,38 +20,41 @@ class TogglesController extends BaseController {
     {
         $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
         try {
-
-            $class = 'App\Core\Models\\' . $class_name;
+            $class = 'App\Core\Models\\'.$class_name;
             $object = $class::find($object_id);
             if ($class_name == 'User') {
-                if (!\Auth::user()->hasRole('Admin')) {
+                if (! \Auth::user()->hasRole('Admin')) {
                     $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
+
                     return redirect()->back();
                 } else {
                     if ($object->banned === 0) {
-                        $this->flash('warning', (strtolower($class_name) . ' Banned'));
+                        $this->flash('warning', (strtolower($class_name).' Banned'));
                         $object->banned = 1;
                     } else {
-                        $this->flash('info', (strtolower($class_name). ' UnBanned'));
+                        $this->flash('info', (strtolower($class_name).' UnBanned'));
                         $object->banned = 0;
                     }
                     $object->save();
                 }
+
                 return redirect()->back();
             }
-            if (\Auth::user()->id === $object->user->id || !\Auth::user()->hasRole('Admin')) {
+            if (\Auth::user()->id === $object->user->id || ! \Auth::user()->hasRole('Admin')) {
                 $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
+
                 return redirect()->back();
             } else {
                 if ($object->banned === false) {
-                    $this->flash('warning', (strtolower($class_name) . ' Banned'));
+                    $this->flash('warning', (strtolower($class_name).' Banned'));
                     $object->banned = true;
                 } else {
-                    $this->flash('info', (strtolower($class_name). ' UnBanned'));
+                    $this->flash('info', (strtolower($class_name).' UnBanned'));
                     $object->banned = false;
                 }
                 $object->save();
             }
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

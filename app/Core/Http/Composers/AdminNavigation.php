@@ -9,6 +9,7 @@ class AdminNavigation
 {
     public $auth;
     public $locale;
+
     /**
      * AdminNavigation constructor.
      * @param AuthManager $authManager

@@ -8,6 +8,7 @@ if (! function_exists('resolveModelName')) {
     function resolveModelName($model): string
     {
         $reflection = new \ReflectionClass($model);
+
         return $reflection->getShortName();
     }
 }

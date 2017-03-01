@@ -25,12 +25,14 @@ class CheckIfUserBanned
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if (!$this->authManager->guest() && ($this->authManager->user()->banned == true)) {
+        if (! $this->authManager->guest() && ($this->authManager->user()->banned == true)) {
             $username = $this->authManager->user()->name;
             $this->authManager->logout();
             \Toastr::error('you are banned', $title = $username, $options = []);
+
             return redirect()->to('/');
         }
+
         return $response;
     }
 }
