@@ -44,6 +44,17 @@
                                     <a class="btn btn-default edit" href="{{ route('admin::users::edit', $user->unique_id) }}"
                                        title="Edit">
                                         <em class="fa fa-pencil-square-o"></em></a>
+                                        @if($user->banned === 0)
+                                        <a class="btn btn-default text-warning"
+                                           href="{!!  route('admin::toggleBan', array('class_name' => getBaseClassName($user, false), 'object_id' => $user->id)) !!}">
+                                            ban
+                                        </a>
+                                        @else
+                                        <a class="btn btn-warning text-warning"
+                                           href="{!!  route('admin::toggleBan', array('class_name' => getBaseClassName($user, false), 'object_id' => $user->id)) !!}">
+                                            unban
+                                        </a>
+                                        @endif
                                     <a class="btn btn-danger delete text-warning"
                                        href="{{ route('admin::users::get::delete', $user->unique_id) }}"
                                        title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>

@@ -15,6 +15,7 @@ abstract class Model extends Eloquent
      * @var bool
      */
     public $useSlug = false;
+    public $uniqueId =  'unique_id';
 
     protected static function boot()
     {
@@ -100,7 +101,7 @@ abstract class Model extends Eloquent
                     throw new \Exception('Please specify slug field in the model', 404);
                 }
             }
-            $this->primaryKey = 'unique_id';
+            $this->primaryKey = $this->uniqueId;
             $newQuery = $this->newQuery();
             $newQuery->where($this->getQualifiedKeyName(), '=', $id);
 

@@ -4,7 +4,6 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 abstract class BaseController extends Controller
@@ -13,29 +12,39 @@ abstract class BaseController extends Controller
     public $errorRedirectPath = 'admin';
 
     /**
+     * @param $type
+     * @param $message
+     */
+    public function flash($type, $message)
+    {
+        $flash = app('\Laracasts\Flash\FlashNotifier');
+        $flash->{$type}($message);
+    }
+
+    /**
      * @param $view
      * @param array $data
      * @param array $mergeData
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function view($view, array $data = [], array $mergeData = []) : View
+    protected function view($view, array $data = [], array $mergeData = []): View
     {
-        return view($this->viewPathBase.$view, $data, $mergeData);
+        return view($this->viewPathBase . $view, $data, $mergeData);
     }
 
     /**
      * @param $e
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function redirectNotFound($e = null) : RedirectResponse
+    protected function redirectNotFound($e = null): RedirectResponse
     {
         if (isset($e)) {
-            \Flash::error('Not Found! Server message is - '.$e->getMessage().' and code is - '.$e->getCode());
+            $this->flash('error', 'Not Found! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
 
             return redirect($this->errorRedirectPath);
         } else {
-            return redirect($this->errorRedirectPath)
-                ->with(\Flash::error('Sorry Item Not Found!'));
+            $this->flash('error','Sorry Item Not Found!');
+            return redirect($this->errorRedirectPath);
         }
     }
 
@@ -43,22 +52,20 @@ abstract class BaseController extends Controller
      * @param $e
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function redirectError($e = null) : RedirectResponse
+    protected function redirectError($e = null): RedirectResponse
     {
         if (isset($e)) {
             if (request()->ajax()) {
-                return response()->json('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode(), $e->getCode());
+                return response()->json('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode(), $e->getCode());
             }
-            \Flash::error('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode());
-
+            $this->flash('error', 'Error appeared! Server message is - ' .'<b>'. $e->getMessage() . '</b>' .' and code is - ' .'<b>'. $e->getCode(). '</b>');
             return redirect($this->errorRedirectPath);
         } else {
             if (request()->ajax()) {
                 return response()->json('Sorry Error found!', 404);
             }
-
-            return redirect($this->errorRedirectPath)
-                ->with(\Flash::error('Sorry Error found!'));
+            $this->flash('error','Sorry Error found!');
+            return redirect($this->errorRedirectPath);
         }
     }
 
@@ -76,10 +83,8 @@ abstract class BaseController extends Controller
                     return $s[0];
                 }
             }
-
             return;
         }
-
-        return '%'.trim($search).'%';
+        return '%' . trim($search) . '%';
     }
 }

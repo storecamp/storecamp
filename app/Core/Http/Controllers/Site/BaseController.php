@@ -11,6 +11,11 @@ abstract class BaseController extends Controller
     public $viewPathBase = 'site.';
     public $errorRedirectPath = 'site';
 
+    public function flash($type, $message)
+    {
+        $flash = app('\Laracasts\Flash\FlashNotifier');
+        $flash->{$type}($message);
+    }
     /**
      * @param $view
      * @param array $data

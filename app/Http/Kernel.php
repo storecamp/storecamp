@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Core\Access\Middleware\AccessPermission;
 use App\Core\Access\Middleware\AccessRole;
 use App\Http\Middleware\BelongsToUserOrAdmin;
+use App\Http\Middleware\CheckIfUserBanned;
 use App\Http\Middleware\DetectBrowserLanguage;
 use App\Http\Middleware\FolderLocked;
 use App\Http\Middleware\UserAdditionalInfo;
@@ -36,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            CheckIfUserBanned::class
         ],
 
         'api' => [

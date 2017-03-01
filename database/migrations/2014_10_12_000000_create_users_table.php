@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->char('ip', 40)->nullable();
             $table->string('password');
             $table->string('slug')->nullable();
+            $table->boolean('banned')->default(false);
             $table->string('logo_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
