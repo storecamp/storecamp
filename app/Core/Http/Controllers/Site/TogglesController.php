@@ -42,7 +42,7 @@ class TogglesController extends BaseController
                 if ($request->ajax()) {
                     return response()->json([$type, $object->getLikeCount()]);
                 } else {
-                    \Flash::info($type.'! '.$class_name.' DisLiked.');
+                    $this->flash('info', $type.'! '.$class_name.' DisLiked.');
 
                     return redirect()->back();
                 }
@@ -55,7 +55,7 @@ class TogglesController extends BaseController
                 if ($request->ajax()) {
                     return response()->json([$type, $object->getLikeCount(), 'message' => 'like']);
                 } else {
-                    \Flash::info($type.'! '.$class_name.' Liked.');
+                    $this->flash('info', $type.'! '.$class_name.' Liked.');
 
                     return redirect()->back();
                 }

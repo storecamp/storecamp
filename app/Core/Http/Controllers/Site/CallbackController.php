@@ -22,12 +22,11 @@ class CallbackController extends Controller
     /**
      * Process payment callback.
      *
-     * @param Request $request   Request.
-     * @param string  $status    Callback status.
-     * @param int     $id        Order ID.
-     * @param string  $shoptoken Transaction token for security.
-     *
-     * @return redirect
+     * @param Request $request
+     * @param $status
+     * @param $id
+     * @param $shoptoken
+     * @return \Illuminate\Http\RedirectResponse
      */
     protected function process(Request $request, $status, $id, $shoptoken)
     {
@@ -38,9 +37,9 @@ class CallbackController extends Controller
                 'shoptoken' => $shoptoken,
             ],
             [
-                'id'        => 'required|exists:'.config('shop.order_table').',id',
+                'id'        => 'required|exists:'.config('sales.order_table').',id',
                 'status'    => 'required|in:success,fail',
-                'shoptoken' => 'required|exists:'.config('shop.transaction_table').',token,order_id,'.$id,
+                'shoptoken' => 'required|exists:'.config('sales.transaction_table').',token,order_id,'.$id,
             ]
         );
 
@@ -48,7 +47,7 @@ class CallbackController extends Controller
             abort(404);
         }
 
-        $order = call_user_func(config('shop.order').'::find', $id);
+        $order = call_user_func(config('sales.order').'::find', $id);
 
         $transaction = $order->transactions()->where('token', $shoptoken)->first();
 
@@ -58,6 +57,6 @@ class CallbackController extends Controller
 
         $transaction->save();
 
-        return redirect()->route(config('shop.callback_redirect_route'), ['order' => $order->id]);
+        return redirect()->route(config('sales.callback_redirect_route'), ['order' => $order->id]);
     }
 }
