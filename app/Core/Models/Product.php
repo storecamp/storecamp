@@ -96,6 +96,29 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMediaMatchAll($tags = array())
+ * @property float $tax
+ * @property string $brand_name
+ * @property-read string $display_name
+ * @property-read string $display_price
+ * @property-read string $display_shipping
+ * @property-read string $display_tax
+ * @property-read bool $has_object
+ * @property-read bool $is_shoppable
+ * @property-read int|null $like_count
+ * @property-read mixed $object
+ * @property-read mixed $shop_id
+ * @property-read string $shop_url
+ * @property-read bool $was_purchased
+ * @property-read \App\Core\Models\LikeCounter $likeCounter
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Like[] $likes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findBySKU($sku)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product mostViewed($limit)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereBrandName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereLiked($model)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereTax($value)
  */
 class Product extends Model implements Transformable, Buyable, ProductInterface
 {

@@ -28,6 +28,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign uuid($unique_id, $first = true)
  */
 class Campaign extends Model implements Transformable
 {

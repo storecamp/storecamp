@@ -83,7 +83,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'order' => 'App\Core\Models\Order',
+    'order' => 'App\Core\Models\Orders',
 
     /*
     |--------------------------------------------------------------------------

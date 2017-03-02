@@ -13,6 +13,40 @@ use Illuminate\Support\Facades\Config;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Core\Models\Thread
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property string $subject
+ * @property int $commentable_id
+ * @property string $commentable_type
+ * @property int $parent_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $commentable
+ * @property-read mixed $latest_message
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Message[] $messages
+ * @property-read \App\Core\Models\Message $parentMessage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
+ * @property-read \App\Core\Models\ProductReview $productReview
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread between($participants)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUser($userId)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUserWithNewMessages($userId)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereCommentableId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereCommentableType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereSubject($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Thread extends Model implements Transformable
 {
     use TransformableTrait;

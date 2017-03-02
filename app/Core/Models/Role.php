@@ -32,6 +32,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property string $deleted_at
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role uuid($unique_id, $first = true)
  */
 class Role extends AccessRole implements Transformable
 {

@@ -12,6 +12,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * App\Core\Models\Promocode.
  *
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Promocode idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Promocode uuid($unique_id, $first = true)
  */
 class Promocode extends Model implements Transformable
 {

@@ -8,6 +8,35 @@ use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Core\Models\Message
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property int $thread_id
+ * @property int $user_id
+ * @property int $parent_id
+ * @property string $body
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Thread[] $childThread
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
+ * @property-read \App\Core\Models\Thread $thread
+ * @property-read \App\Core\Models\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereThreadId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Message extends Model implements Transformable
 {
     use TransformableTrait;

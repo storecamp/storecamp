@@ -12,6 +12,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * App\Core\Models\Layout.
  *
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Layout idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Layout uuid($unique_id, $first = true)
  */
 class Layout extends Model implements Transformable
 {

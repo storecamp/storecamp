@@ -64,6 +64,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereRgt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category withMediaMatchAll($tags = array())
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category uuid($unique_id, $first = true)
  */
 class Category extends Model implements Transformable
 {

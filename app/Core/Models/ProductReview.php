@@ -49,6 +49,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read Thread[] $comments
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview uuid($unique_id, $first = true)
  */
 class ProductReview extends Model implements Transformable
 {

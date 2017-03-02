@@ -65,6 +65,16 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMediaMatchAll($tags = array())
+ * @property string $locale
+ * @property bool $banned
+ * @property-read \App\Core\Models\Cart $cart
+ * @property-read int $shop_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Orders[] $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereBanned($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereLocale($value)
  */
 class User extends Authenticatable implements
     Transformable,

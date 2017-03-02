@@ -32,6 +32,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail uuid($unique_id, $first = true)
  */
 class Mail extends Model implements Transformable
 {

@@ -41,6 +41,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property bool $locked
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereLocked($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder uuid($unique_id, $first = true)
  */
 class Folder extends Model implements Transformable
 {
