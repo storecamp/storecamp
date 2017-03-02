@@ -53,12 +53,11 @@ class ProductSystem implements ProductSystemContract
             $products = $products->findOrFail($id);
         } else {
             if (! empty($with)) {
-                $products = $this->productRepository->with($with)->newest()->paginate();
+                $products = $this->productRepository->newest()->with($with)->paginate();
             } else {
                 $products = $this->productRepository->newest()->paginate();
             }
         }
-
         return $products;
     }
 

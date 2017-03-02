@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Core\Base\UserAuth as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;

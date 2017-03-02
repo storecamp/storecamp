@@ -100,13 +100,6 @@ trait ViewCounterTrait
         return ($counter->view_counter != null) ? $counter->view_counter : 0;
     }
 
-    public function scopeMostViewed($query, $limit)
-    {
-        $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
-
-        return $query->whereIn('id', $counterIds)->limit($limit);
-    }
-
     /**
      * Is object already viewed by user?
      *

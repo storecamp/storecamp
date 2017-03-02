@@ -15,10 +15,6 @@ interface ProductInterface
      */
     public function sluggable(): array;
 
-    /**
-     * bootable methods fix.
-     */
-    public static function boot();
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

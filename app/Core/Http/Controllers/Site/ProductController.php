@@ -47,10 +47,9 @@ class ProductController extends BaseController
      */
     public function index(Request $request, $category = null)
     {
-//        try {
+        try {
             $data = $request->all();
-        if ($category) {
-            $product = new Product();
+            if ($category) {
                 $products = $this->productSystem->categorized($data, $category, ['media']);
                 $categoryInstance = app('App\\Core\\Repositories\\CategoryRepository');
                 $category = $categoryInstance->find($category);
@@ -59,12 +58,13 @@ class ProductController extends BaseController
             }
 
             return $this->view('index', compact('products', 'category'));
-//        } catch (ModelNotFoundException $e) {
-//            return $this->redirectNotFound($e);
-//        } catch (\Throwable $e) {
-//            return $this->redirectError($e);
-//        }
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
+
 
     /**
      * @param Request $request
@@ -73,18 +73,18 @@ class ProductController extends BaseController
      */
     public function show(Request $request, $productId)
     {
-        try {
+//        try {
             $data = $request->all();
             $product = $this->productSystem->present($data, $productId, ['categories', 'productReview', 'media']);
-            $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
+            $mostViewed = $this->productRepository->getModel()->MostViewed(5)->get();
             $category = $product->categories->first();
             $product->view();
 
             return $this->view('show', compact('product', 'category', 'mostViewed'));
-        } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound($e);
-        } catch (\Throwable $e) {
-            return $this->redirectError($e);
-        }
+//        } catch (ModelNotFoundException $e) {
+//            return $this->redirectNotFound($e);
+//        } catch (\Throwable $e) {
+//            return $this->redirectError($e);
+//        }
     }
 }

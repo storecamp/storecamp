@@ -193,14 +193,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     }
 
     /**
-     * bootable methods fix.
-     */
-    public static function boot()
-    {
-        parent::boot();
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function productReview(): HasMany
@@ -446,6 +438,14 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
     }
+
+    public function scopeMostViewed($query, $limit)
+    {
+        $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
+
+        return $query->whereIn('id', $counterIds)->limit($limit);
+    }
+
 
     /**
      * @return float|int
