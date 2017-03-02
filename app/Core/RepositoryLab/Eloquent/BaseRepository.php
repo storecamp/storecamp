@@ -156,14 +156,13 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function __call($method, $parameters)
     {
-        if ($this->isBaseMethod($method)) {
+        if($this->isBaseMethod($method)) {
             return $this->$method(...$parameters);
         }
-        if ($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
+        if($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
             $this->applyCriteria();
             $this->applyScope();
-//            dd($method);
-            if (! empty($parameters)) {
+            if(!empty($parameters)) {
                 $methodName = $this->prepareSopePrefix($method);
                 $this->model = $this->model->$methodName($this->getModel()->newQuery(), ...$parameters);
             } else {
@@ -431,10 +430,11 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
+        $newQuery = $this->model->newQuery();
         if (is_numeric($id)) {
-            $model = $this->model->where('id', '=', $id)->first();
+            $model = $newQuery->where('id', '=', $id)->first($columns);
         } else {
-            $model = $this->model->where('unique_id', '=', $id)->first();
+            $model = $newQuery->where('unique_id', '=', $id)->first($columns);
         }
         if (is_array($id)) {
             if (count($model) == count(array_unique($id))) {
@@ -464,7 +464,11 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
+        if (is_string($columns)) {
+            $columns = [$columns];
+        }
         $result = $this->find($id, $columns);
+
         if (is_array($id)) {
             if (count($result) == count(array_unique($id))) {
                 $this->resetModel();

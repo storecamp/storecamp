@@ -19,7 +19,7 @@ class ProductController extends BaseController
     /**
      * @var string
      */
-    public $errorRedirectPath = 'site::products';
+    public $errorRedirectPath = 'site::products::index';
 
     /**
      * @var ProductSystemContract
@@ -47,22 +47,23 @@ class ProductController extends BaseController
      */
     public function index(Request $request, $category = null)
     {
-        try {
+//        try {
             $data = $request->all();
-            if ($category) {
-                $products = $this->productSystem->categorized($data, $category, []);
+        if ($category) {
+            $product = new Product();
+                $products = $this->productSystem->categorized($data, $category, ['media']);
                 $categoryInstance = app('App\\Core\\Repositories\\CategoryRepository');
                 $category = $categoryInstance->find($category);
             } else {
-                $products = $this->productSystem->present($data, null);
+                $products = $this->productSystem->present($data, null, ['media']);
             }
 
             return $this->view('index', compact('products', 'category'));
-        } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound($e);
-        } catch (\Throwable $e) {
-            return $this->redirectError($e);
-        }
+//        } catch (ModelNotFoundException $e) {
+//            return $this->redirectNotFound($e);
+//        } catch (\Throwable $e) {
+//            return $this->redirectError($e);
+//        }
     }
 
     /**
@@ -74,9 +75,10 @@ class ProductController extends BaseController
     {
         try {
             $data = $request->all();
-            $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
+            $product = $this->productSystem->present($data, $productId, ['categories', 'productReview', 'media']);
             $mostViewed = $this->productRepository->getModel()->mostViewed(5)->get();
             $category = $product->categories->first();
+            $product->view();
 
             return $this->view('show', compact('product', 'category', 'mostViewed'));
         } catch (ModelNotFoundException $e) {

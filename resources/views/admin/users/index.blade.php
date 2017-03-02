@@ -37,7 +37,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>
-                                    @foreach ($user->roles()->get() as $role)
+                                    @foreach ($user->roles as $role)
                                         {{ $role->name }}
                                     @endforeach</td>
                                 <td class="text-center">

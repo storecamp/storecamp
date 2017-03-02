@@ -766,6 +766,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 ]);
             });
         });
+
         $this->get('toggleBan/{class_name}/{object_id}',
             ['uses' => 'Admin\TogglesController@toggleBan', 'as' => 'toggleBan'])
             ->where('object_id', '[0-9]+');

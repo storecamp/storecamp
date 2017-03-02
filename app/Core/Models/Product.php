@@ -6,6 +6,7 @@ use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
+use App\Core\Repositories\CategoryRepository;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
@@ -86,7 +87,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product newest()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product drafted()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product bySlugOrId($id)
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product categorized(\App\Core\Models\Category $category = null)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product categorized($category = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
@@ -160,6 +161,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     protected $table;
 
+
     /**
      * Creates a new instance of the model.
      *
@@ -168,7 +170,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('shop.product_table');
+        $this->table = config('sales.product_table');
     }
 
     /**
@@ -435,6 +437,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         if (is_null($category)) {
             return $query->with('categories');
         }
+        $categoryInstance = app(CategoryRepository::class);
+        $category = $categoryInstance->findOrFail($category);
         $categoryIds = $category->getDescendants(['id'])->pluck('id')->toArray();
         array_unshift($categoryIds, $category->id);
 

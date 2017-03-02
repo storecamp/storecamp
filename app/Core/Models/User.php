@@ -111,6 +111,11 @@ class User extends Authenticatable implements
     protected $dates = ['deleted_at', 'created_at'];
 
     /**
+     * @var array
+     */
+    protected $with = ['roles'];
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array

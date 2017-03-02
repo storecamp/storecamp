@@ -51,7 +51,6 @@ class ProductSystem implements ProductSystemContract
                 $products = $this->productRepository;
             }
             $products = $products->findOrFail($id);
-            $products->view();
         } else {
             if (! empty($with)) {
                 $products = $this->productRepository->with($with)->newest()->paginate();
@@ -71,15 +70,11 @@ class ProductSystem implements ProductSystemContract
      */
     public function categorized(array $data, $category, array $with = [])
     {
-        // receive CategoryRepository from IOC container
-        $categoryInstance = app(CategoryRepository::class);
-        $category = $categoryInstance->findOrFail($category);
         if (! empty($with)) {
-            $products = $this->productRepository->with($with)->categorized($category)->paginate();
+            $products = $this->productRepository->categorized($category)->with($with)->paginate();
         } else {
             $products = $this->productRepository->categorized($category)->paginate();
         }
-
         return $products;
     }
 

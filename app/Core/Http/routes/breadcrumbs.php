@@ -2,7 +2,7 @@
 
 // Home
 Breadcrumbs::register('/', function ($breadcrumbs) {
-    $breadcrumbs->push('Site', url('/'));
+    $breadcrumbs->push('Site', route('site::'));
 });
 
 // / > About

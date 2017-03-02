@@ -15,10 +15,22 @@ abstract class BaseController extends Controller
      * @param $type
      * @param $message
      */
-    public function flash($type, $message)
+    public function flash(string $type, $message)
     {
         $flash = app('\Laracasts\Flash\FlashNotifier');
         $flash->{$type}($message);
+    }
+
+    /**
+     * @param string $type
+     * @param $message
+     * @param null|string $title
+     * @param array $options
+     */
+    public function toastr(string $type, $message, ?string $title = null, $options = [])
+    {
+        $toastr = app('\nilsenj\Toastr\Toastr');
+        $toastr->add($type, $message, $title, $options);
     }
 
     /**

@@ -74,7 +74,8 @@ class TogglesController extends BaseController
     public function toggleLanguage(Request $request, $key)
     {
         $previous = \URL::previous();
-        $url = \LaravelLocalization::getLocalizedURL($key, $previous);
+        $localization = app('Mcamara\LaravelLocalization\LaravelLocalization');
+        $url = $localization->getLocalizedURL($key, $previous);
 
         return redirect()->to($url)->withCookie(cookie('locale', $key, 525600));
     }

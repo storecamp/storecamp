@@ -44,6 +44,10 @@ abstract class Model extends Eloquent
      */
     public function __call($method, $parameters)
     {
+        if (in_array($method, ['increment', 'decrement'])) {
+            return $this->$method(...$parameters);
+        }
+
         if ($method == 'find') {
             $this->finder(...$parameters);
         }
@@ -53,7 +57,7 @@ abstract class Model extends Eloquent
             return $this->getMetaRelation($file);
         }
 
-        return parent::__call($method, $parameters);
+        return parent::__call($method, ...$parameters);
     }
 
     /**

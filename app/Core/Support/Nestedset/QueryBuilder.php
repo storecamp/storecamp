@@ -980,6 +980,9 @@ class QueryBuilder extends Builder
     {
         $builder = $this->applyScopes();
         $closure = function () use ($builder, $columns) {
+            if (is_string($columns)) {
+                $columns = [$columns];
+            }
             $models = $builder->getModels($columns);
             // if we actually found models we will also eager load any relationships that
             // have been specified as needing to be eager loaded, which will solve the
@@ -992,6 +995,9 @@ class QueryBuilder extends Builder
         };
         // Check if cache is enabled
         if ($builder->getModel()->getCacheLifetime()) {
+            if (is_string($columns)) {
+                $columns = [$columns];
+            }
             return $builder->getModel()->cacheQuery($builder, $columns, $closure);
         }
         // Cache disabled, just execute query & return result
