@@ -22,14 +22,21 @@ class Synchronizer implements SynchronizerInterface
     protected $media;
 
     /**
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $file;
+
+    /**
      * Synchronizer constructor.
      * @param MediaRepository $media
      * @param FolderRepository $folder
+     * @param \Illuminate\Filesystem\Filesystem $file
      */
-    public function __construct(MediaRepository $media, FolderRepository $folder)
+    public function __construct(MediaRepository $media, FolderRepository $folder, \Illuminate\Filesystem\Filesystem $file)
     {
         $this->folder = $folder;
         $this->media = $media;
+        $this->file = $file;
     }
 
     /**
@@ -113,9 +120,9 @@ class Synchronizer implements SynchronizerInterface
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                foreach (\File::files($this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk) as $file) {
+                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk) as $file) {
                     $iter++;
-                    $fileName = \File::basename($file);
+                    $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
                     $mediaFile = $this->media->findWhere([
@@ -134,8 +141,8 @@ class Synchronizer implements SynchronizerInterface
                 $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
                 $folderParentInstance->parent_id = $rootFolder->id;
                 $folderParentInstance->save();
-                foreach (\File::files($this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk) as $file) {
-                    $fileName = \File::basename($file);
+                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk) as $file) {
+                    $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
                     $mediaFile = $this->media->findWhere([
@@ -236,8 +243,8 @@ class Synchronizer implements SynchronizerInterface
     private function rootFolderFilesSearch($root, $disk)
     {
         $rootFolder = $this->resolveRootFolder($disk);
-        foreach (\File::files($root) as $file) {
-            $fileName = \File::basename($file);
+        foreach ($this->file->files($root) as $file) {
+            $fileName = $this->file->basename($file);
             $fileNameClean = explode('.', $fileName);
             array_pop($fileNameClean);
             $mediaFile = $this->media->findWhere([
@@ -259,8 +266,8 @@ class Synchronizer implements SynchronizerInterface
      */
     private function resolveRootFolder($disk = 'local', $root = ''): Folder
     {
-        if (! empty($root) && ! \File::isDirectory($root)) {
-            \File::makeDirectory($root);
+        if (! empty($root) && ! $this->file->isDirectory($root)) {
+            $this->file->makeDirectory($root);
         }
         $rootFolder = $this->folder->findWhere([
             ['disk', '=', $disk],
@@ -268,7 +275,7 @@ class Synchronizer implements SynchronizerInterface
             ['path_on_disk', '=', null],
         ]);
         if ($rootFolder->count() == 0) {
-            return $rootFolder = \App\Core\Models\Folder::create([
+            return $rootFolder =    $this->folder->create([
                 'name' => '',
                 'parent_id' => null,
                 'disk' => $disk,

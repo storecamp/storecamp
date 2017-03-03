@@ -5,6 +5,7 @@ namespace App\Core\Http\Controllers\Site;
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -69,22 +70,21 @@ class ProductController extends BaseController
     /**
      * @param Request $request
      * @param $productId
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View|RedirectResponse
      */
     public function show(Request $request, $productId)
     {
-//        try {
+        try {
             $data = $request->all();
             $product = $this->productSystem->present($data, $productId, ['categories', 'productReview', 'media']);
-            $mostViewed = $this->productRepository->getModel()->MostViewed(5)->get();
+            $mostViewed = $this->productRepository->mostViewed(5)->model->get();
             $category = $product->categories->first();
             $product->view();
-
             return $this->view('show', compact('product', 'category', 'mostViewed'));
-//        } catch (ModelNotFoundException $e) {
-//            return $this->redirectNotFound($e);
-//        } catch (\Throwable $e) {
-//            return $this->redirectError($e);
-//        }
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
 }

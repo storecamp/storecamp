@@ -237,7 +237,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function attributeGroupDescription(): BelongsToMany
     {
         return $this->belongsToMany(AttributeGroupDescription::class,
-            'product_attribute', 'product_id', 'attr_description_id')->withPivot('value');
+            'product_attribute', 'product_id', 'attr_description_id')
+            ->withPivot('value');
     }
 
     /**
@@ -465,7 +466,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     public function scopeMostViewed($query, $limit)
     {
         $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
-
         return $query->whereIn('id', $counterIds)->limit($limit);
     }
 

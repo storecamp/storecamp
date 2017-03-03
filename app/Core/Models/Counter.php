@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -32,6 +33,8 @@ class Counter extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
+    use CacheableEloquent;
+
     protected $table = 'counter';
     protected $fillable = ['class_name', 'object_id'];
 

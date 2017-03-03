@@ -53,6 +53,10 @@ trait Likeable
         return $this->likeCounter ? $this->likeCounter->count : 0;
     }
 
+    /**
+     * @param $user
+     * @return bool
+     */
     public function like($user): bool
     {
         if ($user !== null) {

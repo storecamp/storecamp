@@ -36,7 +36,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     /**
      * @var Model
      */
-    protected $model;
+    public $model;
 
     /**
      * @var array
@@ -162,13 +162,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         if($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
             $this->applyCriteria();
             $this->applyScope();
-            if(!empty($parameters)) {
-                $methodName = $this->prepareSopePrefix($method);
-                $this->model = $this->model->$methodName($this->getModel()->newQuery(), ...$parameters);
-            } else {
-                $this->model = $this->model->$method($this->getModel()->newQuery(), ...$parameters);
-            }
-
+            $this->model = $this->model->$method(...$parameters);
             return $this;
         }
     }
