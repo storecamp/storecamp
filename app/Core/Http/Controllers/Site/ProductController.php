@@ -3,7 +3,6 @@
 namespace App\Core\Http\Controllers\Site;
 
 use App\Core\Contracts\ProductSystemContract;
-use App\Core\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

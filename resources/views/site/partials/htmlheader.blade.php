@@ -4,7 +4,11 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="shortcut icon" href="{{asset('icon.gif')}}" type="image/gif">
-
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->

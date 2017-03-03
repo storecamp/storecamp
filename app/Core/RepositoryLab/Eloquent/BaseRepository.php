@@ -991,4 +991,15 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         return method_exists($this, Str::studly($key));
     }
+
+    /**
+     * determine if the method belongs to this class.
+     *
+     * @param $key
+     * @return bool
+     */
+    private function isModelsMethod($key)
+    {
+        return method_exists($this->model, Str::studly($key));
+    }
 }

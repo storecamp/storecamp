@@ -1,5 +1,6 @@
 <div class="col-lg-4 col-md-4 col-sm-4 xs-4">
-    <div class="like">
+    <?php $liked = $model->liked($auth->user()); ?>
+    <div class="like {{$liked ? "liked" : "disliked"}}">
         <span class="label label-info pull-right">
             {{$model->getLikeCount()}}
         </span>
@@ -9,10 +10,10 @@
            data_class_name="{{getBaseClassName($model)}}"
            data_object_id="{{$model->id}}"
            class="like-btn btn btn-default pull-right">
-            @if($model->liked(Auth::user()))
+            @if($liked)
                 <span class="text-muted like-message"></span>
             @endif
-            @if($model->liked(Auth::user()))
+            @if($liked)
                 <i class="fa fa-heart text-danger "></i>
             @else
                 <i class="fa fa-heart-o"></i>

@@ -60,6 +60,17 @@ trait ViewCounterTrait
     }
 
     /**
+     * @param $query
+     * @param $limit
+     * @return mixed
+     */
+    public function scopeMostViewed($query, $limit)
+    {
+        $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
+        return $query->whereIn('id', $counterIds)->limit($limit);
+    }
+
+    /**
      * Return authentificated users who viewed we know.
      *
      * @return int

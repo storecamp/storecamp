@@ -3,7 +3,6 @@
 namespace App\Drivers\FolderToDb;
 
 use App\Core\Models\Folder;
-use App\Core\Models\Media;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
 

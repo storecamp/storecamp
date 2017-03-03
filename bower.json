@@ -46,6 +46,8 @@
     "jquery-bar-rating": "antennaio/jquery-bar-rating#^1.2.1",
     "bourbon": "^4.3.2",
     "magnific-popup": "^1.1.0",
-    "owl.carousel": "^2.2.0"
+    "owl.carousel": "^2.2.0",
+    "moment": "^2.17.1",
+    "codemirror": "^5.24.2"
   }
 }

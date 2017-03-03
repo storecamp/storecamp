@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Site;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -9,6 +10,9 @@ use Illuminate\Http\Request;
  */
 class TogglesController extends BaseController
 {
+    /**
+     * @var \Illuminate\Contracts\Auth\Factory
+     */
     protected $auth;
 
     /**
@@ -40,7 +44,7 @@ class TogglesController extends BaseController
                     $type = 'error';
                 }
                 if ($request->ajax()) {
-                    return response()->json([$type, $object->getLikeCount()]);
+                    return response()->json(['type' => $type, 'counter' => $object->getLikeCount(), 'message' => 'dislike']);
                 } else {
                     $this->flash('info', $type.'! '.$class_name.' DisLiked.');
 
@@ -53,7 +57,7 @@ class TogglesController extends BaseController
                     $type = 'error';
                 }
                 if ($request->ajax()) {
-                    return response()->json([$type, $object->getLikeCount(), 'message' => 'like']);
+                    return response()->json(['type' => $type,'counter' => $object->getLikeCount(), 'message' => 'like']);
                 } else {
                     $this->flash('info', $type.'! '.$class_name.' Liked.');
 
@@ -71,6 +75,11 @@ class TogglesController extends BaseController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $key
+     * @return RedirectResponse
+     */
     public function toggleLanguage(Request $request, $key)
     {
         $previous = \URL::previous();

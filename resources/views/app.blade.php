@@ -28,7 +28,7 @@ desired effect
 -->
 @yield('styles-add')
 <body class="hold-transition layout-top-nav">
-<div class="wrapper">
+<div id="app" class="wrapper">
     @include('site.partials.mainheader')
     <div class="container-fluid">
         <!-- Content Wrapper. Contains page content -->

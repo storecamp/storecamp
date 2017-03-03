@@ -12,7 +12,6 @@
 ###
 
 _init = ->
-
   ### Layout
   # ======
   # Fixes the layout height in case min-height fails.
@@ -34,7 +33,7 @@ _init = ->
         return
       return
     fix: ->
-#Get window height and the wrapper height
+  #Get window height and the wrapper height
       neg = $('.main-header').outerHeight() + $('.main-footer').outerHeight()
       window_height = $(window).height()
       sidebar_height = $('.sidebar').height()
