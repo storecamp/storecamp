@@ -32,8 +32,3 @@
         <li class="action-btn"><a href="#0">+ Button</a></li>
     </ul>
 </nav>
-@push('scripts-add_on')
-<script src="{{asset('custom_vendors/site_sidebar/modernizr.js')}}"></script>
-<script src="{{asset('custom_vendors/site_sidebar/jquery.menu-aim.js')}}"></script>
-<script src="{{asset('custom_vendors/site_sidebar/index.js')}}"></script> <!-- Resource jQuery -->
-@endpush

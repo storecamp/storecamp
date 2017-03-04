@@ -149,6 +149,13 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
     }
 }
 
+if(! function_exists('getCategoryFullPath')) {
+    function getCategoryFullPath(\App\Core\Models\Category $category, string $type = 'string')
+    {
+        return \App\Core\Logic\CategorySystem::getCategoryFullPath($category, $type);
+    }
+}
+
 if (!function_exists('getFilesByFormat')) {
     /**
      * @param string $root

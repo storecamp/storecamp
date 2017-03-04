@@ -3,6 +3,7 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
 use App\Core\Traits\MediableCore;
 
@@ -91,5 +92,28 @@ class CategorySystem implements CategorySystemContract
         $deleted = $this->categoryRepository->delete($id);
 
         return $deleted;
+    }
+
+    // SYSTEM HELPERS SECTION
+
+    /**
+     * string $type = "string" | "array"
+     *
+     * @param Category $category
+     * @param string $type
+     * @return string
+     */
+    public static function getCategoryFullPath(Category $category, string $type = 'string')
+    {
+        $parents = [];
+        foreach ($category->ancestors()->get() as $parent) {
+            $parents[] = $parent->name;
+        }
+        array_push($parents, $category->name);
+        if ($type == 'string') {
+            $parents = implode('/', $parents);
+        }
+
+        return $parents;
     }
 }

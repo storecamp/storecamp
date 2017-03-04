@@ -278,7 +278,8 @@ class Synchronizer implements SynchronizerInterface
      */
     public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
-        $Directory = new \RecursiveDirectoryIterator($root);
+        $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS;
+        $Directory = new \RecursiveDirectoryIterator($root, $flags);
         $Iterator = new \RecursiveIteratorIterator($Directory,
             \RecursiveIteratorIterator::SELF_FIRST,
             \RecursiveIteratorIterator::CATCH_GET_CHILD);

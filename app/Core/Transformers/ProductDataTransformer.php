@@ -3,6 +3,7 @@
 namespace App\Core\Transformers;
 
 
+use App\Core\Logic\CategorySystem;
 use App\Core\Models\Product;
 use League\Fractal\TransformerAbstract;
 
@@ -14,7 +15,7 @@ class ProductDataTransformer extends TransformerAbstract
             'id' => $product->id,
             'model' => $product->model,
             'title' => $product->title,
-            'category' => $product->categories ? $product->categories->first()->name : "no category  provided",
+            'category' => $product->categories->count() ? CategorySystem::getCategoryFullPath($product->categories->first()) : "no category  provided",
             'price' => $product->price,
             'quantity' => $product->quantity,
             'availability' => $product->getAvailability(),

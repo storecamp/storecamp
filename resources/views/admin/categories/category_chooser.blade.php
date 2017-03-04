@@ -7,6 +7,7 @@
                 <a class="btn btn-app choose-parent {{$parent ? $parent->id == $category->id ? "active": "" : ""}}" role="button"
                    data-choose-name="{{$category->name}}"
                    data-choose-id="{{$category->id}}"
+                   data-choose-path="{{\App\Core\Logic\CategorySystem::getCategoryFullPath($category)}}"
                 >
                     <i class="fa fa-link"></i>
                     <span class="badge bg-green">{{count($children)}}</span>

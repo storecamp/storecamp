@@ -44,6 +44,7 @@ elixir((mix) => {
         './public/plugins/fastclick/lib/fastclick.js',
         './public/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
         './public/plugins/iCheck/icheck.min.js',
+        './public/plugins/summernote/dist/summernote.min.js',
         './public/plugins/plyr/dist/plyr.js',
         './public/plugins/dropzone/dist/dropzone.js',
         './public/plugins/select2/dist/js/select2.full.min.js',
