@@ -463,12 +463,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->whereIn('products_categories.category_id', $categoryIds);
     }
 
-    public function scopeMostViewed($query, $limit)
-    {
-        $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
-        return $query->whereIn('id', $counterIds)->limit($limit);
-    }
-
 
     /**
      * @return float|int

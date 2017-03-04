@@ -11,7 +11,6 @@
             @forelse($filters as $filter)
                 <li><a href="#"><span class="fa fa-circle-o fa-fw text-danger"></span> Important</a></li>
             @empty
-                <li class="text-center text-warning">no filters provided</li>
             @endforelse
         </ul>
     @endif

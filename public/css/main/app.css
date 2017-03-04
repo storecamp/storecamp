@@ -392,16 +392,15 @@ Primary style
 -------------------------------- */
 .sidebar-nav-trigger {
   /* navigation trigger - visible on mobile devices only */
-  float: right;
+  float: left;
   position: relative;
   display: block;
-  width: 34px;
-  height: 44px;
-  margin-right: 5%;
-  /* hide text */
+  /* width: 34px; */
+  /* height: 44px; */
+  /* margin-right: 5%; */
   overflow: hidden;
   white-space: nowrap;
-  color: transparent;
+  /* color: transparent; */
 }
 
 .sidebar-nav-trigger span, .sidebar-nav-trigger span::before, .sidebar-nav-trigger span::after {
@@ -472,79 +471,7 @@ Primary style
 
 @media only screen and (min-width: 768px) {
   .sidebar-nav-trigger {
-    display: none;
-  }
-}
-
-.sidebar-search {
-  position: relative;
-  margin: 1.2em 5% 0.6em;
-}
-
-.sidebar-search.is-hidden {
-  opacity: 0;
-}
-
-.sidebar-search::before {
-  /* lens icon */
-}
-
-.sidebar-search input {
-  padding-left: 32px;
-  width: 100%;
-  height: 36px;
-  border: none;
-  border-radius: .25em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-}
-
-.sidebar-search input:focus {
-  outline: none;
-}
-
-@media only screen and (min-width: 768px) {
-  .sidebar-search {
-    float: left;
-    display: inline-block;
-    width: 250px;
-    height: 100%;
-    margin: 0 0 0 2.5em;
-  }
-  .sidebar-search.is-hidden {
-    /* reset style */
-    opacity: 1;
-  }
-  .sidebar-search::before {
-    background-position: 0 -16px;
-    left: 1em;
-  }
-  .sidebar-search form, .sidebar-search input {
-    height: 100%;
-    width: 100%;
-  }
-  .sidebar-search input {
-    border: none;
-    padding-left: 2.6em;
-    border-radius: 0;
-    background-color: #f8f8f8;
-    border-left: 1px solid #f9f9f9;
-    color: #3e454c;
-  }
-  .sidebar-search input::-webkit-input-placeholder {
-    color: #fafafa;
-  }
-  .sidebar-search input::-moz-placeholder {
-    color: #fafafa;
-  }
-  .sidebar-search input:-moz-placeholder {
-    color: #fafafa;
-  }
-  .sidebar-search input:-ms-input-placeholder {
-    color: #fafafa;
+    display: block;
   }
 }
 
@@ -623,6 +550,9 @@ Top Navigation
 }
 
 @media only screen and (min-width: 1170px) {
+  .sidebar-top-nav {
+    display: block;
+  }
   .sidebar-top-nav li:not(.has-children) a:hover {
     color: #3097D1;
   }
@@ -643,8 +573,7 @@ Sidebar
   width: 100%;
   padding: 0px 0 0;
   background-color: #f8f8f8;
-  visibility: hidden;
-  opacity: 0;
+  display: none;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -828,6 +757,7 @@ Sidebar
 @media only screen and (min-width: 1170px) {
   .site_sidebar {
     width: 100%;
+    display: block;
   }
   .site_sidebar > ul {
     padding: 0.6em 0;

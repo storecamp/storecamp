@@ -1,3 +1,4 @@
+<button class="btn btn-default sidebar-nav-trigger">show menu</button>
 <nav class="site_sidebar" data-active-parents="true">
     <ul>
         <li class="sidebar-label">Navigation</li>

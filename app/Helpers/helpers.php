@@ -150,6 +150,12 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
 }
 
 if (!function_exists('getFilesByFormat')) {
+    /**
+     * @param string $root
+     * @param string $format
+     * @param bool $skipFormatEnding
+     * @return array
+     */
     function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
         $files = app('App\Drivers\FolderToDb\SynchronizerInterface')
@@ -160,6 +166,11 @@ if (!function_exists('getFilesByFormat')) {
 }
 
 if (!function_exists('getBaseClassName')) {
+    /**
+     * @param $class
+     * @param bool $snake
+     * @return mixed|string
+     */
     function getBaseClassName($class, $snake = true)
     {
         $path = explode('\\', get_class($class));
@@ -172,6 +183,10 @@ if (!function_exists('getBaseClassName')) {
 }
 
 if (!function_exists('getFileNames')) {
+    /**
+     * @param $root
+     * @return array
+     */
     function getFileNames($root)
     {
         $files = \File::allFiles($root);

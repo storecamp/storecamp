@@ -241,6 +241,7 @@ return [
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
     ],
 
     /*

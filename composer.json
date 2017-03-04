@@ -50,7 +50,8 @@
     "omnipay/omnipay": "~2.0",
     "storecamp/htmlelements": "^1.0@dev",
     "mcamara/laravel-localization": "^1.2",
-    "artesaos/seotools": "^0.10.0"
+    "artesaos/seotools": "^0.10.0",
+    "yajra/laravel-datatables-oracle": "^6.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

@@ -272,6 +272,10 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'index',
 
             ]);
+            $this->get('data', [
+                'uses' => 'Admin\ProductsController@data',
+                'as' => 'data'
+            ]);
 
             $this->get('show/{id}', [
                 'uses' => 'Admin\ProductsController@show',

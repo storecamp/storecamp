@@ -3,11 +3,14 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\Product;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Transformers\ProductDataTransformer;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class ProductsController.
@@ -54,11 +57,19 @@ class ProductsController extends BaseController
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $products = $this->productSystem->present($data, null, $with = ['categories', 'media']);
-        $no = $products->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('products', 'no'));
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Product::with('categories');
+        return $datatables->eloquent($query)
+            ->setTransformer(new ProductDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -165,7 +176,7 @@ class ProductsController extends BaseController
         try {
             $deleted = $this->productSystem->delete($id);
             if (! $deleted) {
-                \Flash::warning('Sorry product is not deleted');
+                $this->flash('warning', 'Sorry product is not deleted');
             }
 
             return redirect('admin/products');
@@ -174,6 +185,10 @@ class ProductsController extends BaseController
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getSelect(Request $request)
     {
         if (strlen(trim($request->get('search'))) > 0) {
