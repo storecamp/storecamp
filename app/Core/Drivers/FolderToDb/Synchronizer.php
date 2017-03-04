@@ -81,8 +81,9 @@ class Synchronizer implements SynchronizerInterface
      */
     public function directoriesIterate(string $root, bool $withFolderName = false): array
     {
+        $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS;
         $iter = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::SKIP_DOTS),
+            new \RecursiveDirectoryIterator($root, $flags),
             \RecursiveIteratorIterator::SELF_FIRST,
             \RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
         );
@@ -125,12 +126,15 @@ class Synchronizer implements SynchronizerInterface
     }
 
     /**
-     * @param string $folderPath
+     * @param null|string $folderPath
      * @param string $disk
      * @return Folder
      */
-    public function findOrCreateByFolderPath(string $folderPath, $disk = 'local'): Folder
+    public function findOrCreateByFolderPath(?string $folderPath, $disk = 'local'): Folder
     {
+        if (empty($folderPath)) {
+            $folderPath = null;
+        }
         $folder = $this->folder->disk($disk)->where('path_on_disk', $folderPath)->where('disk', $disk);
         if ($folder->count() > 0) {
             return $folder->first();
@@ -195,18 +199,21 @@ class Synchronizer implements SynchronizerInterface
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk) as $file) {
+                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot() .'/'.$newFolder->path_on_disk : $newFolder->path_on_disk;
+                foreach ($this->file->files($filePath) as $file) {
                     $iter++;
                     $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
+                    $newFolderPath = $newFolder->path_on_disk ?? null;
                     $mediaFile = $this->media->findWhere([
-                        ['directory', '=', $newFolder->path_on_disk],
+                        ['directory', '=', $newFolderPath],
                         ['filename', '=', implode('', $fileNameClean)],
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $media = \MediaUploader::importPath($disk, $newFolder->path_on_disk.'/'.$fileName);
+                        $newFolderPath = $newFolder->path_on_disk ? $newFolder->path_on_disk.'/'.$fileName : $fileName;
+                        $media = \MediaUploader::importPath($disk, $newFolderPath);
                         $media->directory_id = $newFolder->id;
                         $media->save();
                     }
@@ -216,17 +223,20 @@ class Synchronizer implements SynchronizerInterface
                 $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
                 $folderParentInstance->parent_id = $rootFolder->id;
                 $folderParentInstance->save();
-                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk) as $file) {
+                $manageFilesPath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk : $folderParentInstance->path_on_disk;
+                foreach ($this->file->files($manageFilesPath) as $file) {
                     $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
+                    $folderParentInstancePath = $folderParentInstance->path_on_disk ?? null;
                     $mediaFile = $this->media->findWhere([
-                        ['directory', '=', $folderParentInstance->path_on_disk],
+                        ['directory', '=', $folderParentInstancePath],
                         ['filename', '=', $fileNameClean],
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $media = \MediaUploader::importPath($disk, $folderParentInstance->path_on_disk.'/'.$fileName);
+                        $manageRootPath = $folderParentInstancePath ? $folderParentInstancePath.'/'.$fileName : $fileName;
+                        $media = \MediaUploader::importPath($disk, $manageRootPath);
                         $media->directory_id = $folderParentInstance->id;
                         $media->save();
                     }
@@ -252,7 +262,8 @@ class Synchronizer implements SynchronizerInterface
                 ['filename', '=', implode('', $fileNameClean)],
                 ['disk', '=', $disk], ]);
             if ($mediaFile->count() == 0) {
-                $media = \MediaUploader::importPath($disk, $rootFolder->path_on_disk.'/'.$fileName);
+                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk.'/'.$fileName : $fileName;
+                $media = \MediaUploader::importPath($disk, $manageRootPath);
                 $media->directory_id = $rootFolder->id;
                 $media->save();
             }

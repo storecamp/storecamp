@@ -177,8 +177,10 @@ class MediaSystem implements MediaSystemContract
         $folderFullPath = $folderDisk->getDiskRoot().'/'.$folderPath;
         $file = $request->file('file');
         $filename = $this->transliteration->clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
+
         $media = $this->mediaUploader->fromSource($file)
             ->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
+
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();

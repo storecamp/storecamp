@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ef3a940754bfc932f7d30d79ee4258e",
+    "content-hash": "f627d3301d81f2264e66a36342ee6d03",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -2070,67 +2070,6 @@
             "time": "2015-04-20T18:58:01+00:00"
         },
         {
-            "name": "jenssegers/mongodb",
-            "version": "v3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jenssegers/laravel-mongodb.git",
-                "reference": "db1c5ea12f8da8c24a5605e2d1e3f0ff8982832c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/db1c5ea12f8da8c24a5605e2d1e3f0ff8982832c",
-                "reference": "db1c5ea12f8da8c24a5605e2d1e3f0ff8982832c",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/container": "^5.1",
-                "illuminate/database": "^5.1",
-                "illuminate/events": "^5.1",
-                "illuminate/support": "^5.1",
-                "mongodb/mongodb": "^1.0.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^0.9",
-                "orchestra/testbench": "^3.1",
-                "phpunit/phpunit": "^4.0|^5.0",
-                "satooshi/php-coveralls": "^1.0"
-            },
-            "suggest": {
-                "jenssegers/mongodb-sentry": "Add Sentry support to Laravel-MongoDB",
-                "jenssegers/mongodb-session": "Add MongoDB session support to Laravel-MongoDB"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Jenssegers\\Mongodb": "src/",
-                    "Jenssegers\\Eloquent": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jens Segers",
-                    "homepage": "https://jenssegers.com"
-                }
-            ],
-            "description": "A MongoDB based Eloquent model and Query builder for Laravel (Moloquent)",
-            "homepage": "https://github.com/jenssegers/laravel-mongodb",
-            "keywords": [
-                "database",
-                "eloquent",
-                "laravel",
-                "model",
-                "moloquent",
-                "mongo",
-                "mongodb"
-            ],
-            "time": "2017-02-23T13:17:28+00:00"
-        },
-        {
             "name": "jeremeamia/SuperClosure",
             "version": "2.3.0",
             "source": {
@@ -3093,64 +3032,6 @@
                 "silly"
             ],
             "time": "2016-09-16T11:44:03+00:00"
-        },
-        {
-            "name": "mongodb/mongodb",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mongodb/mongo-php-library.git",
-                "reference": "a307dd60e71e1291c60927ea4f3a1905146063f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/a307dd60e71e1291c60927ea4f3a1905146063f5",
-                "reference": "a307dd60e71e1291c60927ea4f3a1905146063f5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mongodb": "^1.2.0",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MongoDB\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Mikola",
-                    "email": "jmikola@gmail.com"
-                },
-                {
-                    "name": "Hannes Magnusson",
-                    "email": "bjori@mongodb.com"
-                },
-                {
-                    "name": "Derick Rethans",
-                    "email": "github@derickrethans.nl"
-                }
-            ],
-            "description": "MongoDB driver library",
-            "homepage": "https://jira.mongodb.org/browse/PHPLIB",
-            "keywords": [
-                "database",
-                "driver",
-                "mongodb",
-                "persistence"
-            ],
-            "time": "2017-02-16T18:40:32+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5328,16 +5209,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.7",
+            "version": "v2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "b5ea1ef3d8ff10c307ba8c5945c2f134e503278f"
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b5ea1ef3d8ff10c307ba8c5945c2f134e503278f",
-                "reference": "b5ea1ef3d8ff10c307ba8c5945c2f134e503278f",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/6968531206671f94377b01dc7888d5d1b858a01b",
+                "reference": "6968531206671f94377b01dc7888d5d1b858a01b",
                 "shasum": ""
             },
             "require": {
@@ -5372,7 +5253,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-02-27T17:11:23+00:00"
+            "time": "2017-03-03T20:43:42+00:00"
         },
         {
             "name": "paypal/rest-api-sdk-php",
@@ -8532,23 +8413,23 @@
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit-reverse-lookup.git",
-                "reference": "c36f5e7cfce482fde5bf8d10d41a53591e0198fe"
+                "reference": "4419fcdb5eabb9caa61a27c7a1db532a6b55dd18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
-                "reference": "c36f5e7cfce482fde5bf8d10d41a53591e0198fe",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/4419fcdb5eabb9caa61a27c7a1db532a6b55dd18",
+                "reference": "4419fcdb5eabb9caa61a27c7a1db532a6b55dd18",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5"
+                "phpunit/phpunit": "^5.7 || ^6.0"
             },
             "type": "library",
             "extra": {
@@ -8573,7 +8454,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2016-02-13T06:45:14+00:00"
+            "time": "2017-03-04T06:30:41+00:00"
         },
         {
             "name": "sebastian/comparator",
