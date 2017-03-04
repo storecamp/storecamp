@@ -568,7 +568,6 @@ Sidebar
 .site_sidebar {
   position: relative;
   height: auto;
-  display: block;
   z-index: 1;
   left: 0;
   top: 0;
@@ -690,6 +689,7 @@ Sidebar
 
 @media only screen and (min-width: 768px) {
   .site_sidebar {
+    display: block;
     position: relative;
     float: left;
     top: auto;
@@ -701,6 +701,7 @@ Sidebar
     opacity: 1;
     overflow: visible;
     max-height: none;
+    display: block;
   }
   .site_sidebar.nav-is-visible {
     box-shadow: none;
@@ -714,14 +715,13 @@ Sidebar
   }
   .site_sidebar .sidebar-label {
     /* remove labels on minified version of the sidebar */
-    display: none;
+    display: block;
   }
   .site_sidebar a {
     font-size: 1.2rem;
     text-align: center;
   }
   .site_sidebar > ul > li > a {
-    padding: calc(2.2em + 24px) 0 2.4em;
     text-align: left;
     border-bottom: none;
     font-size: 1.4rem;
@@ -741,18 +741,23 @@ Sidebar
   .site_sidebar .action-btn a {
     margin: 1em 10% 0;
   }
+  .site_sidebar ul {
+    display: block;
+  }
   .site_sidebar .count {
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    padding: 0;
-    top: 2em;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    left: calc(50% + 5px);
-    right: auto;
-    color: transparent;
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 10px;
+    padding: 0.2em 0.4em;
+    background-color: #00BCD4;
+    border-radius: .25em;
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
   }
 }
 
@@ -840,9 +845,26 @@ Sidebar
     position: absolute;
     top: 0;
     left: 100%;
-    width: 160px;
     padding: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    z-index: 1;
+  }
+  .has-children.active > ul {
+    /* if the item is active, make the subnavigation visible */
+    position: relative;
+    display: block;
+    /* reset style */
+    left: 0;
+    box-shadow: none;
+  }
+  .no-touch .site_sidebar .has-children:hover > ul,
+  .site_sidebar .has-children.hover > ul {
+    /* show subnavigation on hover */
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    z-index: 999;
   }
   .has-children ul a {
     text-align: left;
@@ -933,6 +955,15 @@ Sidebar
 
 .site_sidebar ul > li > ul li {
   border-bottom: 1px solid #bfc5ca;
+}
+
+@media only screen and (min-width: 480px) {
+  .site_sidebar.active {
+    display: block;
+  }
+  .site_sidebar.hidden {
+    display: none;
+  }
 }
 
 .extend_text_alignment, .product .product-review-counter, .product .product-price-box {

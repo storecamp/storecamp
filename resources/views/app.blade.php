@@ -39,11 +39,11 @@ desired effect
             <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
                 @include('components.flash.message')
             </div>
-            <div class="col-md-2 col-sm-3">
+            <div class="col-lg-2 col-md-3 col-sm-4">
                 @include('site.partials.sidebar')
             </div>
             <!-- Your Page Content Here -->
-            <div class="col-md-10 col-sm-9">
+            <div class="col-md-10 col-md-9 col-sm-8">
                 @yield('breadcrumbs')
                 @yield('main-content')
             </div>

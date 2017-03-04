@@ -245,7 +245,6 @@ Sidebar
 .site_sidebar {
   position: relative;
   height: auto;
-  display: block;
   z-index: 1;
   left: 0;
   top: 0;
@@ -365,6 +364,7 @@ Sidebar
   }
 
   @include MQ(M) {
+    display: block;
     position: relative;
     float: left;
     top: auto;
@@ -376,7 +376,6 @@ Sidebar
     opacity: 1;
     overflow: visible;
     max-height: none;
-
     &.nav-is-visible {
       box-shadow: none;
     }
@@ -392,16 +391,14 @@ Sidebar
 
     .sidebar-label {
       /* remove labels on minified version of the sidebar */
-      display: none;
+      display: block;
     }
-
     a {
       font-size: 1.2rem;
       text-align: center;
     }
 
     > ul > li > a {
-      padding: calc(2.2em + 24px) 0 2.4em;
       text-align: left;
       border-bottom: none;
       font-size: 1.4rem;
@@ -420,19 +417,25 @@ Sidebar
     .action-btn a {
       margin: 1em 10% 0;
     }
-
-    .count {
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
-      box-shadow: 0 0 6px rgba(#000, .2);
-      padding: 0;
-      top: 2em;
-      @include transform(translateX(-50%));
-      left: calc(50% + 5px);
-      right: auto;
-      color: transparent;
+    ul {
+      display: block;
     }
+    .count {
+      position: absolute;
+      top: 50%;
+      bottom: auto;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      right: 10px;
+      padding: 0.2em 0.4em;
+      background-color: #00BCD4;
+      border-radius: .25em;
+      color: whitesmoke;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    display: block;
   }
 
   @include MQ(L) {
@@ -521,11 +524,29 @@ Sidebar
       position: absolute;
       top: 0;
       left: 100%;
-      width: 160px;
       padding: 0;
       box-shadow: 0 2px 10px rgba(#000, .3);
+      width: 100%;
+      z-index: 1;
+
+    }
+    &.active > ul {
+      /* if the item is active, make the subnavigation visible */
+      position: relative;
+      display: block;
+      /* reset style */
+      left: 0;
+      box-shadow: none;
     }
 
+    .no-touch .site_sidebar &:hover > ul,
+    .site_sidebar &.hover > ul {
+      /* show subnavigation on hover */
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      z-index: 999;
+    }
     ul a {
       text-align: left;
       border: none;
@@ -575,6 +596,7 @@ Sidebar
         padding-left: 18px !important;
       }
     }
+
   }
 
   @include MQ(L) {
@@ -608,9 +630,8 @@ Sidebar
   }
 }
 
-.site_sidebar
-{
-  list-style: none!important;
+.site_sidebar {
+  list-style: none !important;
   ul li {
     list-style-type: none;
     border-bottom: 1px solid lighten($color-3, 50%);
@@ -627,5 +648,14 @@ Sidebar
       border-bottom: 1px solid lighten($color-3, 50%);
     }
 
+  }
+
+  @include MQ(S) {
+    &.active {
+      display: block;
+    }
+    &.hidden {
+      display: none;
+    }
   }
 }
