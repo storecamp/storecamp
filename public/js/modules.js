@@ -1254,6 +1254,37 @@
 }).call(this);
 
 (function() {
+  $.StoreCamp.sidebar = {
+    o: {
+      sidebar: 'site_sidebar',
+      toggler: 'sidebar-nav-trigger'
+    },
+    activate: function() {
+      var _this;
+      _this = this;
+      return _this.toggleSidebar();
+    },
+    toggleSidebar: function() {
+      var _this;
+      _this = this;
+      return $("." + _this.o.toggler).click(function(e) {
+        var sidebar;
+        e.preventDefault();
+        sidebar = $("." + _this.o.sidebar);
+        if (sidebar.hasClass('active')) {
+          return sidebar.removeClass('active').addClass('hidden');
+        } else {
+          return sidebar.removeClass('hidden').addClass('active');
+        }
+      });
+    }
+  };
+
+  $.StoreCamp.sidebar.activate();
+
+}).call(this);
+
+(function() {
   $.StoreCamp.templates = {
     additionalModalButtonRenderState: "",
     options: {

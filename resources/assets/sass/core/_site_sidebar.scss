@@ -89,6 +89,8 @@ Primary style
   overflow: hidden;
   white-space: nowrap;
   /* color: transparent; */
+  border: none;
+  border-radius: 0;
 
   span, span::before, span::after {
     /* hamburger icon in CSS */

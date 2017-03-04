@@ -1,5 +1,7 @@
-<button class="btn btn-default sidebar-nav-trigger">show menu</button>
-<nav class="site_sidebar" data-active-parents="true">
+<a href="#" class="btn btn-default sidebar-nav-trigger" data-toggle="offcanvas" role="button">
+    Toggle navigation
+</a>
+<nav class="site_sidebar active" data-active-parents="true">
     <ul>
         <li class="sidebar-label">Navigation</li>
         @foreach($categories as $category)

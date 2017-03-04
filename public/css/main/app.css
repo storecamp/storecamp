@@ -401,6 +401,8 @@ Primary style
   overflow: hidden;
   white-space: nowrap;
   /* color: transparent; */
+  border: none;
+  border-radius: 0;
 }
 
 .sidebar-nav-trigger span, .sidebar-nav-trigger span::before, .sidebar-nav-trigger span::after {
