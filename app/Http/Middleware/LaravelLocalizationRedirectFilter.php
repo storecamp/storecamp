@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: nilse
  * Date: 04.03.2017
- * Time: 23:16
+ * Time: 23:16.
  */
 
 namespace App\Http\Middleware;
-
 
 use Closure;
 
