@@ -9,6 +9,8 @@ use App\Http\Middleware\CheckIfUserBanned;
 use App\Http\Middleware\checkLocale;
 use App\Http\Middleware\DetectBrowserLanguage;
 use App\Http\Middleware\FolderLocked;
+use App\Http\Middleware\LaravelLocalizationRedirectFilter;
+use App\Http\Middleware\LocaleSessionRedirect;
 use App\Http\Middleware\UserAdditionalInfo;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -77,7 +79,7 @@ class Kernel extends HttpKernel
         'locale' => checkLocale::class,
         'checkBannedUser' => CheckIfUserBanned::class,
         'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-        'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-        'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'localizationRedirect' => LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect' => LocaleSessionRedirect::class,
     ];
 }

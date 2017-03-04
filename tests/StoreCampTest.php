@@ -68,7 +68,7 @@ class StoreCampTest extends TestCase
             ->type($user->email, 'email')
             ->type('passw0RD', 'password')
             ->press('Sign In')
-            ->seePageIs('/en/home')
+            ->seePageIs('/home')
             ->see($user->name);
     }
 
@@ -119,8 +119,8 @@ class StoreCampTest extends TestCase
         $user = factory(\App\Core\Models\User::class)->create();
         $this->artisan('db:seed');
         $this->actingAs($user)
-            ->visit('/')
-            ->see($user->name);
+            ->visit('/home')
+            ->see(str_limit($user->name, 20));
     }
 
     /**
@@ -135,9 +135,9 @@ class StoreCampTest extends TestCase
         $form = $this->actingAs($user)->visit('/')->getForm('logout');
 
         $this->actingAs($user)
-            ->visit('/en')
+            ->visit('/home')
             ->makeRequestUsingForm($form)
-            ->seePageIs('/en');
+            ->seePageIs('/');
     }
 
     /**
@@ -168,7 +168,7 @@ class StoreCampTest extends TestCase
             ->type('passw0RD', 'password')
             ->type('passw0RD', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/en')
+            ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
                 'name' => 'Sergi Tur Badenas',]);
     }
