@@ -2,54 +2,11 @@
 
 <!-- jQuery 2.1.4 -->
 
-<script src="{{ asset('custom_vendors/jQuery/jQuery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('/js/min/plugins.js') }}"></script>
 
 <!-- Bootstrap 3.3.2 JS -->
-<script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <!-- StoreCamp App -->
-<script src="{{ asset('/js/admin.js') }}" type="text/javascript"></script>
-<script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}" type="text/javascript"></script>
-<script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('/plugins/iCheck/icheck.min.js')}}"></script>
-<script src="{{ asset('plugins/plyr/dist/plyr.js') }}" type="text/javascript"></script>
-<script src="{{ asset('/plugins/dropzone/dist/dropzone.js') }}" type="text/javascript"></script>
-<!-- Select2 -->
-<script src="{{ asset('plugins/select2/dist/js/select2.full.min.js') }}"></script>
-<!-- InputMask -->
-<script src="{{ asset('custom_vendors/input-mask/jquery.inputmask.js') }}"></script>
-<script src="{{ asset('custom_vendors/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
-<script src="{{ asset('custom_vendors/input-mask/jquery.inputmask.extensions.js') }}"></script>
-<!-- date-range-picker -->
-<script src="{!! asset('plugins/moment/min/moment-with-locales.min.js') !!}"></script>
-<script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<!-- bootstrap datepicker -->
-<script src="{{ asset('plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
-<!-- bootstrap color picker -->
-<script src="{{ asset('plugins/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
-<!-- bootstrap time picker -->
-<script src="{{ asset('plugins/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
-<!-- SlimScroll 1.3.0 -->
-<script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<!-- iCheck 1.0.1 -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<!-- FastClick -->
-<script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
-<!-- Sparkline -->
-<script src="{{ asset('plugins/bower-jquery-sparkline/dist/jquery.sparkline.retina.js') }}"></script>
-<!-- jvectormap -->
-<script src="{{ asset('custom_vendors/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
-<script src="{{ asset('custom_vendors/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-<!-- SlimScroll 1.3.0 -->
-<script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="{{ asset('plugins/chart.js/Chart.js') }}"></script>
-<script src="{{ asset('plugins/morris.js/morris.min.js') }}"></script>
-<script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
-<script src="{{ asset('plugins/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
-<script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
-<script src="{{asset('plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
-<script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
-<script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('/js/storecamp.js') }}" type="text/javascript"></script>
 <!-- Page script -->
 <script>
     APP_URL = {!! json_encode(url('/')) !!};

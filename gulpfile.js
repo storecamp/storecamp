@@ -36,12 +36,55 @@ elixir((mix) => {
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
+    mix.scripts([
+        './public/custom_vendors/jQuery/jQuery-2.1.4.min.js',
+        './public/plugins/moment/moment.js',
+        './public/js/bootstrap.js',
+        './public/custom_vendors/site_sidebar/modernizr.js',
+        './public/plugins/fastclick/lib/fastclick.js',
+        './public/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
+        './public/plugins/iCheck/icheck.min.js',
+        './public/plugins/plyr/dist/plyr.js',
+        './public/plugins/dropzone/dist/dropzone.js',
+        './public/plugins/select2/dist/js/select2.full.min.js',
+        './public/custom_vendors/input-mask/jquery.inputmask.js',
+        './public/custom_vendors/input-mask/jquery.inputmask.date.extensions.js',
+        './public/custom_vendors/input-mask/jquery.inputmask.extensions.js',
+        './public/plugins/bootstrap-daterangepicker/daterangepicker.js',
+        './public/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+        './public/plugins/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
+        './public/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js',
+        './public/plugins/jquery-slimscroll/jquery.slimscroll.min.js',
+        './public/plugins/iCheck/icheck.min.js',
+        './public/plugins/fastclick/lib/fastclick.js',
+        './public/plugins/bower-jquery-sparkline/dist/jquery.sparkline.retina.js',
+        './public/custom_vendors/jvectormap/jquery-jvectormap-1.2.2.min.js',
+        './public/custom_vendors/jvectormap/jquery-jvectormap-world-mill-en.js',
+        './public/plugins/chart.js/Chart.js',
+        './public/plugins/morris.js/morris.min.js',
+        './public/plugins/toastr/toastr.js',
+        './public/plugins/jquery-bar-rating/dist/jquery.barrating.min.js',
+        './public/plugins/magnific-popup/dist/jquery.magnific-popup.min.js',
+        './public/plugins/datatables.net/js/jquery.dataTables.min.js',
+        './public/custom_vendors/site_sidebar/jquery.menu-aim.js'
+    ], 'public/js/plugins.js');
+
+    mix.uglify('./public/js/plugins.js', './public/js/min');
+
+    mix.scripts([
+        './public/js/admin.js',
+        './public/js/app.js'
+    ], 'public/js/storecamp.js');
+
+    mix.uglify('./public/js/storecamp.js', './public/js/min');
+
     mix.browserSync({
         proxy: 'storecamp.app'
     });
 });
+
 // create a task to serve the app
-gulp.task('serve', function() {
+gulp.task('serve', function () {
 
     // start the php server
     // make sure we use the public directory since this is Laravel
@@ -50,7 +93,6 @@ gulp.task('serve', function() {
     });
 
 });
-
 
 
 /*

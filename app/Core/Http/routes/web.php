@@ -229,18 +229,15 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'index',
 
             ]);
-
             $this->get('create', [
                 'uses' => 'Admin\RolesController@create',
                 'as' => 'create',
 
             ]);
-
             $this->get('edit/{id}', [
                 'uses' => 'Admin\RolesController@edit',
                 'as' => 'edit',
             ]);
-
             $this->put('update/{id}', [
                 'uses' => 'Admin\RolesController@update',
                 'as' => 'update',
@@ -323,6 +320,11 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                     'uses' => 'Admin\ProductReviewController@index',
                     'as' => 'index',
                 ]);
+
+            $this->get('data', [
+                'uses' => 'Admin\ProductReviewController@data',
+                'as' => 'data'
+            ]);
 
             $this->get('show/{id}',
                 [

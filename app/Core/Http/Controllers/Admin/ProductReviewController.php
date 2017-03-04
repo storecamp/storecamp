@@ -7,11 +7,13 @@ use App\Core\Models\ProductReview;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
+use App\Core\Transformers\ReviewDataTransformer;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
 use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class ProductReviewController.
@@ -62,14 +64,22 @@ class ProductReviewController extends BaseController
     public function index(Request $request)
     {
         try {
-            $data = $request->all();
-            $productReviews = $this->productReviewSystem->present($data, null, ['product', 'user', 'comments']);
-            $no = $productReviews->firstItem();
-
-            return $this->view('index', compact('productReviews', 'no'));
+            return $this->view('index');
         } catch (\Throwable $e) {
             return $this->redirectError($e);
         }
+    }
+
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = ProductReview::with(['product', 'user']);
+        return $datatables->eloquent($query)
+            ->setTransformer(new ReviewDataTransformer())
+            ->make(true);
     }
 
     /**
