@@ -19,23 +19,9 @@ var elixir = require('laravel-elixir'),
 require('laravel-elixir-js-uglify');
 elixir.config.notifications = false;
 
-// elixir.extend('test', function() {
-//     return gulp.task('tester', function() {
-//         elixir((mix) => {
-//             mix.phpUnit();
-//             mix.phpSpec();
-//         });
-//     });
-// });
-elixir((mix) => {
-    mix.less('app.less', 'public/css/app_less.css');
-    mix.less('less/AdminLTE.less', "public/css/admin_lte.css");
-    mix.less('less/skins/_all-skins.less', "public/css/admin_skins.css");
-    mix.coffee('../coffee/StoreCamp.coffee', 'public/js/admin.js');
-    mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
-    mix.coffee('../coffee/main.coffee', 'public/js/app.js');
-    mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
-    mix.sass('../sass/app.scss', 'public/css/main/app.css');
+//TODO Create __buildStyles function
+
+const __buildScripts = (mix) => {
     mix.scripts([
         './public/custom_vendors/jQuery/jQuery-2.1.4.min.js',
         './public/plugins/moment/moment.js',
@@ -78,11 +64,23 @@ elixir((mix) => {
     ], 'public/js/storecamp.js');
 
     mix.uglify('./public/js/storecamp.js', './public/js/min');
+};
 
+elixir((mix) => {
+    mix.less('app.less', 'public/css/app_less.css');
+    mix.less('less/AdminLTE.less', "public/css/admin_lte.css");
+    mix.less('less/skins/_all-skins.less', "public/css/admin_skins.css");
+    mix.coffee('../coffee/StoreCamp.coffee', 'public/js/admin.js');
+    mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
+    mix.coffee('../coffee/main.coffee', 'public/js/app.js');
+    mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
+    mix.sass('../sass/app.scss', 'public/css/main/app.css');
+    __buildScripts(mix);
     mix.browserSync({
-        proxy: 'storecamp.app'
+        proxy: 'storecamp.dev'
     });
 });
+
 
 // create a task to serve the app
 gulp.task('serve', function () {
@@ -94,7 +92,6 @@ gulp.task('serve', function () {
     });
 
 });
-
 
 /*
  |--------------------------------------------------------------------------

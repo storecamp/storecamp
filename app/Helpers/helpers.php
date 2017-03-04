@@ -199,7 +199,8 @@ if (!function_exists('getFileNames')) {
         $files = \File::allFiles($root);
         $filesArr = [];
         foreach ($files as $file) {
-            $fileName = explode('.php', $file->getBasename());
+            $extension = $file->getExtension();
+            $fileName = explode('.'.$extension, $file->getBasename());
             $filesArr[] = $fileName[0];
         }
         return $filesArr;
