@@ -2,39 +2,40 @@
 @section('breadcrumb')
     {!! Breadcrumbs::render('products', 'Products') !!}
 @endsection
+@include('admin.partial._contentheader_title', [$model = new \App\Core\Models\Product(), $message = "All Products"])
 @section('contentheader_description')
     @include('admin.partial._content-head_btns', [$routeName = "admin::products::create", $createBtn = 'Add new product'])
 @endsection
 @section("main-content")
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">List of products</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table id="products-table" class="table table-bordered">
-                    <thead>
-                    <tr>
-                    <thead>
-                    <th>Id</th>
-                    <th>Product Title</th>
-                    <th>Model</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Availability</th>
-                    <th>Stock Status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Review</th>
-                    <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <!-- /.box-body -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">List of products</h3>
         </div>
-        <!-- /.row -->
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="products-table" class="table table-bordered">
+                <thead>
+                <tr>
+                <thead>
+                <th>Id</th>
+                <th>Product Title</th>
+                <th>Model</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Availability</th>
+                <th>Stock Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Review</th>
+                <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.row -->
 @endsection
 @section('scripts-add')
     <script>

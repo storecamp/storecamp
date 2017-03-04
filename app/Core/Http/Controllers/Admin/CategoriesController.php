@@ -3,12 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Transformers\CategoriesDataTransformer;
 use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class CategoriesController.
@@ -54,11 +57,20 @@ class CategoriesController extends BaseController
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $categories = $this->categorySystem->present($data, null, ['parent', 'children', 'media']);
-        $no = $categories->firstItem();
-
         return $this->view('index', compact('categories', 'no'));
+    }
+
+    /**
+     * @param Datatables $datatables
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Category::with(['media']);
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new CategoriesDataTransformer())
+            ->make(true);
     }
 
     /**

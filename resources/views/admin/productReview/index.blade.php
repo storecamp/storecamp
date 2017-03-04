@@ -2,6 +2,7 @@
 @section('breadcrumb')
     {!! Breadcrumbs::render('reviews', 'Product reviews') !!}
 @endsection
+@include('admin.partial._contentheader_title', [$model = new \App\Core\Models\ProductReview(), $message = "All Reviews"])
 @section('contentheader_description')
     @include('admin.partial._content-head_btns', [$routeName = "admin::products::index", $createBtn = 'Get Product For Review'])
 @endsection

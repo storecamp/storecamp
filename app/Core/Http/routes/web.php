@@ -401,6 +401,11 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
 
             ]);
 
+            $this->get('data', [
+                'uses' => 'Admin\CategoriesController@data',
+                'as' => 'data',
+            ]);
+
             $this->get('create', [
                 'uses' => 'Admin\CategoriesController@create',
                 'as' => 'create',
