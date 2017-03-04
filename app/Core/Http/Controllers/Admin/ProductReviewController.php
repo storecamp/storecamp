@@ -77,6 +77,7 @@ class ProductReviewController extends BaseController
     public function data(Datatables $datatables)
     {
         $query = ProductReview::with(['product', 'user']);
+
         return $datatables->eloquent($query)
             ->setTransformer(new ReviewDataTransformer())
             ->make(true);

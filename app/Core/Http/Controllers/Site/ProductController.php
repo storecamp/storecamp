@@ -66,7 +66,6 @@ class ProductController extends BaseController
         }
     }
 
-
     /**
      * @param Request $request
      * @param $productId
@@ -80,6 +79,7 @@ class ProductController extends BaseController
             $mostViewed = $this->productRepository->mostViewed(5)->model->get();
             $category = $product->categories->first();
             $product->view();
+
             return $this->view('show', compact('product', 'category', 'mostViewed'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

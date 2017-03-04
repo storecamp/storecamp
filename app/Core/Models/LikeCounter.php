@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\LikeCounter
+ * App\Core\Models\LikeCounter.
  *
  * @property int $id
  * @property int $likeable_id

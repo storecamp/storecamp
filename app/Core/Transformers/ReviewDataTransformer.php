@@ -2,7 +2,6 @@
 
 namespace App\Core\Transformers;
 
-
 use App\Core\Models\ProductReview;
 use League\Fractal\TransformerAbstract;
 
@@ -18,7 +17,7 @@ class ReviewDataTransformer extends TransformerAbstract
             'author' => $review->user->name,
             'created_at' => $review->created_at,
             'updated_at' => $review->updated_at,
-            'action' => $this->getActions($review)
+            'action' => $this->getActions($review),
         ];
     }
 

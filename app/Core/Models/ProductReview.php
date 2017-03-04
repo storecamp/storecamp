@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
-
 /**
  * Class ProductReview.
  *

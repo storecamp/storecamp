@@ -15,7 +15,6 @@ interface ProductInterface
      */
     public function sluggable(): array;
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -35,6 +35,7 @@ abstract class Model extends Eloquent
 
             return $this->getMetaRelation($file);
         }
+
         return $this->getAttribute($key);
     }
 

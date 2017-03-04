@@ -14,7 +14,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Thread
+ * App\Core\Models\Thread.
  *
  * @property int $id
  * @property string $unique_id

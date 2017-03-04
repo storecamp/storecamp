@@ -28,9 +28,11 @@ class ShouldNotBeAdmin
             $user = $this->userRepository->find($userId);
             if ($user->hasRole('Admin')) {
                 \Flash::warning("The given user with role <b>Admin</b> is default for the app. <span class='text-danger'>To delete user change his role first!!!</span>");
+
                 return redirect()->to(\URL::previous());
             }
         }
+
         return $next($request);
     }
 }

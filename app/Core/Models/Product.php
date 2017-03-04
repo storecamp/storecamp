@@ -184,7 +184,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     protected $table;
 
-
     /**
      * Creates a new instance of the model.
      *
@@ -462,7 +461,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
     }
-
 
     /**
      * @return float|int

@@ -73,7 +73,6 @@ class Synchronizer implements SynchronizerInterface
         }
     }
 
-
     /**
      * @param string $root
      * @param bool $withFolderName
@@ -103,7 +102,7 @@ class Synchronizer implements SynchronizerInterface
                 $folderName = explode('/', $folderPath);
                 $folderName = explode('/', $folderName[count($folderName) - 1]);
                 if ($key == 0) {
-                    if (!empty(implode('', explode($paths[0], $item)))) {
+                    if (! empty(implode('', explode($paths[0], $item)))) {
                         $items[$key]['folderPath'] = $folderPath;
                         $items[$key]['folderName'] = $folderName[0];
                     }
@@ -113,7 +112,7 @@ class Synchronizer implements SynchronizerInterface
                 }
             } else {
                 if ($key == 0) {
-                    if (!empty(implode('', explode($paths[0], $item)))) {
+                    if (! empty(implode('', explode($paths[0], $item)))) {
                         $items[] = $folderPath;
                     }
                 } else {
@@ -145,6 +144,7 @@ class Synchronizer implements SynchronizerInterface
             return $this->folder->create(['name' => $folderName, 'path_on_disk' => $folderPath, 'disk' => $disk]);
         }
     }
+
     /**
      * @param string $disk
      * @param string $root
@@ -152,7 +152,7 @@ class Synchronizer implements SynchronizerInterface
      */
     private function resolveRootFolder($disk = 'local', $root = ''): Folder
     {
-        if (!empty($root) && !$this->file->isDirectory($root)) {
+        if (! empty($root) && ! $this->file->isDirectory($root)) {
             $this->file->makeDirectory($root);
         }
         $rootFolder = $this->folder->findWhere([
@@ -199,7 +199,7 @@ class Synchronizer implements SynchronizerInterface
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot() .'/'.$newFolder->path_on_disk : $newFolder->path_on_disk;
+                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk : $newFolder->path_on_disk;
                 foreach ($this->file->files($filePath) as $file) {
                     $iter++;
                     $fileName = $this->file->basename($file);
@@ -283,11 +283,11 @@ class Synchronizer implements SynchronizerInterface
         $Iterator = new \RecursiveIteratorIterator($Directory,
             \RecursiveIteratorIterator::SELF_FIRST,
             \RecursiveIteratorIterator::CATCH_GET_CHILD);
-        $Regex = new \RegexIterator($Iterator, '/^.+\.' . $format . '$/i', \RecursiveRegexIterator::GET_MATCH);
+        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
         $files = [];
         foreach ($Regex as $file) {
             if ($skipFormatEnding) {
-                $files[] = explode('.' . $format, basename($file[0]))[0];
+                $files[] = explode('.'.$format, basename($file[0]))[0];
             } else {
                 $files[] = basename($file[0]);
             }

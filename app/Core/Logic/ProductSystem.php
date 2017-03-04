@@ -4,7 +4,6 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 
@@ -58,6 +57,7 @@ class ProductSystem implements ProductSystemContract
                 $products = $this->productRepository->newest()->paginate();
             }
         }
+
         return $products;
     }
 
@@ -74,6 +74,7 @@ class ProductSystem implements ProductSystemContract
         } else {
             $products = $this->productRepository->categorized($category)->paginate();
         }
+
         return $products;
     }
 

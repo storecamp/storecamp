@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Counter
+ * App\Core\Models\Counter.
  *
  * @property string $unique_id
  * @property int $id
