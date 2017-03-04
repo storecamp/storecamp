@@ -17,7 +17,6 @@ trait ViewCounterTrait
         return $this->hasMany(get_class($class), 'object_id')->where('class_name', snake_case(get_class($this)))->get();
     }
 
-
     /**
      * @return mixed
      */
@@ -48,6 +47,7 @@ trait ViewCounterTrait
     public function scopeMostViewed($query, $limit)
     {
         $counterIds = $this->max_instance_counters($limit, ['object_id'])->pluck('object_id');
+
         return $query->whereIn('id', $counterIds)->limit($limit);
     }
 
@@ -62,7 +62,6 @@ trait ViewCounterTrait
 
         return $counters;
     }
-
 
     /**
      * Return authentificated users who viewed we know.

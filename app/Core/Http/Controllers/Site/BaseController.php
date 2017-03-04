@@ -100,6 +100,7 @@ abstract class BaseController extends Controller
 
             return;
         }
+
         return '%'.trim($search).'%';
     }
 }

@@ -998,6 +998,7 @@ class QueryBuilder extends Builder
             if (is_string($columns)) {
                 $columns = [$columns];
             }
+
             return $builder->getModel()->cacheQuery($builder, $columns, $closure);
         }
         // Cache disabled, just execute query & return result

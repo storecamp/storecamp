@@ -97,7 +97,7 @@ class CategorySystem implements CategorySystemContract
     // SYSTEM HELPERS SECTION
 
     /**
-     * string $type = "string" | "array"
+     * string $type = "string" | "array".
      *
      * @param Category $category
      * @param string $type

@@ -67,6 +67,7 @@ class ProductsController extends BaseController
     public function data(Datatables $datatables)
     {
         $query = Product::with('categories');
+
         return $datatables->eloquent($query)
             ->setTransformer(new ProductDataTransformer())
             ->make(true);

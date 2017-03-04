@@ -10,7 +10,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Cart
+ * App\Core\Models\Cart.
  *
  * @property int $id
  * @property string $unique_id

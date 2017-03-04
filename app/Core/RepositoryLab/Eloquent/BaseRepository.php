@@ -156,13 +156,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function __call($method, $parameters)
     {
-        if($this->isBaseMethod($method)) {
+        if ($this->isBaseMethod($method)) {
             return $this->$method(...$parameters);
         }
-        if($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
+        if ($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
             $this->applyCriteria();
             $this->applyScope();
             $this->model = $this->model->$method(...$parameters);
+
             return $this;
         }
     }

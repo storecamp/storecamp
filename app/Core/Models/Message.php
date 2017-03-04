@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Message
+ * App\Core\Models\Message.
  *
  * @property int $id
  * @property string $unique_id

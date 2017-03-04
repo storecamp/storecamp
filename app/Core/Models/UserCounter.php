@@ -8,7 +8,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\UserCounter
+ * App\Core\Models\UserCounter.
  *
  * @property string $unique_id
  * @property int $id

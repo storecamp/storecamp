@@ -26,19 +26,21 @@ class TogglesController extends BaseController
             if ($class_name == 'User') {
                 if ($object->hasRole('Admin')) {
                     $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
+
                     return redirect()->back();
                 } else {
-                    if(Auth::user()->hasRole('Admin')) {
+                    if (Auth::user()->hasRole('Admin')) {
                         if ($object->banned === 0) {
-                            $this->flash('warning', (strtolower($class_name) . ' Banned'));
+                            $this->flash('warning', (strtolower($class_name).' Banned'));
                             $object->banned = 1;
                         } else {
-                            $this->flash('info', (strtolower($class_name) . ' UnBanned'));
+                            $this->flash('info', (strtolower($class_name).' UnBanned'));
                             $object->banned = 0;
                         }
                         $object->save();
                     } else {
                         $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
+
                         return redirect()->back();
                     }
                 }

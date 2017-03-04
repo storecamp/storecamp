@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Base\UserAuth as Authenticatable;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
@@ -12,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use App\Core\Base\UserAuth as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;

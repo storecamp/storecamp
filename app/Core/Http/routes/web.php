@@ -271,7 +271,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ]);
             $this->get('data', [
                 'uses' => 'Admin\ProductsController@data',
-                'as' => 'data'
+                'as' => 'data',
             ]);
 
             $this->get('show/{id}', [
@@ -323,7 +323,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
 
             $this->get('data', [
                 'uses' => 'Admin\ProductReviewController@data',
-                'as' => 'data'
+                'as' => 'data',
             ]);
 
             $this->get('show/{id}',
