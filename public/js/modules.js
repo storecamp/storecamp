@@ -1080,6 +1080,47 @@
 }).call(this);
 
 (function() {
+  $.StoreCamp.product = {
+    activate: function() {
+      var _this;
+      _this = this;
+      return _this.categoryChooser();
+    },
+    categoryChooser: function() {
+      var _this, chooseOpener, chooserModal, chooserModalFooter, chosen, chosenField, removeChooser;
+      _this = this;
+      chosen = $('.choose-category');
+      chosenField = $('.chosen-category');
+      chooseOpener = $('.choose-opener');
+      chooserModal = $('#category-chooser-modal');
+      chooserModalFooter = chooserModal.find('.modal-footer');
+      chosen.on('click', function(event) {
+        var btn, chooseName, chosenId, chosenPath;
+        btn = $(event.target);
+        chosenId = btn.data('choose-id');
+        chosenPath = btn.data('choose-path');
+        chooseName = btn.data('choose-name');
+        chosenField.val(chosenId);
+        chooserModalFooter.find('.chosen-status').html(chosenPath + ' - <i class=\'fa fa-thumbs-o-up\'></i>');
+        chooseOpener.text(chosenPath);
+        chosen.closest('a').removeClass('active');
+        btn.closest('a').addClass('active');
+      });
+      removeChooser = $('.remove-chooser');
+      removeChooser.on('click', function(event) {
+        chosenField.val(null);
+        chooseOpener.text(null);
+        chosen.closest('a').removeClass('active');
+        chooserModalFooter.find('.chosen-status').html(null);
+      });
+    }
+  };
+
+  $.StoreCamp.product.activate();
+
+}).call(this);
+
+(function() {
   $.StoreCamp.productReview = {
     options: {
       confirmMessageClass: "confirmMessage",
