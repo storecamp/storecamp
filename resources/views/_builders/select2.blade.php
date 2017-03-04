@@ -18,19 +18,6 @@
             <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
         @endif
 </select>
-<<<<<<< Updated upstream
-=======
-<vue-select class="vue-select2" name="select2"
-            :options="options2" :model.sync="result2"
-            :searchable="true" language="en-US">
-</vue-select>
-
-<select class="js-example-basic-single">
-    <option value="AL">Alabama</option>
-    ...
-    <option value="WY">Wyoming</option>
-</select>
->>>>>>> Stashed changes
 @push('scripts-add_on')
 <script>
     @if($className)
@@ -62,12 +49,4 @@
         }
     });
 </script>
-<<<<<<< Updated upstream
-=======
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".js-example-basic-single").select2();
-    });
-</script>
->>>>>>> Stashed changes
 @endpush
