@@ -43,6 +43,7 @@
                 serverSide: true,
                 processing: true,
                 ajax: "{{route('admin::reviews::data')}}",
+                stateSave: true,
                 columns: [
                     {data: 'id'},
                     {data: 'product', orderable: false, searchable: false},

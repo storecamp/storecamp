@@ -3,8 +3,13 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AttributeGroupSystemContract;
+use App\Core\Models\AttributeGroup;
+use App\Core\Models\AttributeGroupDescription;
+use App\Core\Transformers\AttributeGroupDescriptionDataTransformer;
+use App\Core\Transformers\AttributeGroupsDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class AttributesController.
@@ -50,11 +55,20 @@ class AttributesController extends BaseController
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $groupDescriptions = $this->attributeGroupSystem->presentDescription($data, null, ['attributesGroup']);
-        $no = $groupDescriptions->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('groupDescriptions', 'no'));
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = AttributeGroupDescription::with('attributesGroup');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new AttributeGroupDescriptionDataTransformer())
+            ->make(true);
     }
 
     /**

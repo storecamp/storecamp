@@ -44,6 +44,7 @@
                 serverSide: true,
                 processing: true,
                 ajax: "{{route('admin::products::data')}}",
+                stateSave: true,
                 columns: [
                     {data: 'id'},
                     {data: 'title'},

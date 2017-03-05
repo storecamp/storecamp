@@ -2,12 +2,16 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use App\Core\Components\Flash\Flash;
 use App\Core\Contracts\AttributeGroupSystemContract;
+use App\Core\Models\AttributeGroup;
+use App\Core\Models\AttributeGroupDescription;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\AttributeGroupRepository;
+use App\Core\Transformers\AttributeGroupDescriptionDataTransformer;
+use App\Core\Transformers\AttributeGroupsDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class AttributeGroupsController.
@@ -59,6 +63,19 @@ class AttributeGroupsController extends BaseController
         $no = $groupAttributes->firstItem();
 
         return $this->view('index', compact('groupAttributes', 'no'));
+    }
+
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = AttributeGroup::query();
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new AttributeGroupsDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -149,7 +166,7 @@ class AttributeGroupsController extends BaseController
         try {
             $deleted = $this->groupRepository->delete($id);
             if (! $deleted) {
-                Flash::warning('Item not deleted. Some error appeared!');
+                $this->flash('warning','Item not deleted. Some error appeared!');
             }
 
             return redirect('admin/attribute_groups');

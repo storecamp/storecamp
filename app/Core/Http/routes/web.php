@@ -448,6 +448,10 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'index',
 
             ]);
+            $this->get('data', [
+                'uses' => 'Admin\AttributeGroupsController@data',
+                'as' => 'data',
+            ]);
 
             $this->get('create', [
                 'uses' => 'Admin\AttributeGroupsController@create',
@@ -494,10 +498,14 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
 
             ]);
 
+            $this->get('data', [
+                'uses' => 'Admin\AttributesController@data',
+                'as' => 'data',
+            ]);
+
             $this->get('create', [
                 'uses' => 'Admin\AttributesController@create',
                 'as' => 'create',
-
             ]);
 
             $this->get('edit/{id}', [

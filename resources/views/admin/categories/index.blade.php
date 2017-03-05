@@ -34,7 +34,6 @@
         </div>
         <!-- /.box-body -->
     </div>
-
 @endsection
 @section('scripts-add')
     <script>
@@ -43,6 +42,7 @@
                 serverSide: true,
                 processing: true,
                 ajax: "{{route('admin::categories::data')}}",
+                stateSave: true,
                 columns: [
                     {data: 'id'},
                     {data: 'name'},
