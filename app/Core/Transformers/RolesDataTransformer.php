@@ -1,15 +1,12 @@
 <?php
 
-
 namespace App\Core\Transformers;
-
 
 use App\Core\Models\Role;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class RolesDataTransformer
- * @package App\Core\Transformers
+ * Class RolesDataTransformer.
  */
 class RolesDataTransformer extends TransformerAbstract
 {
@@ -38,9 +35,10 @@ class RolesDataTransformer extends TransformerAbstract
     private function getRolePerms(Role $role)
     {
         $permissions = [];
-        foreach($role->perms as $permission) {
+        foreach ($role->perms as $permission) {
             $permissions[] = '<b style="text-decoration: underline">'.$permission->name.'</b>'.'<br>';
         }
+
         return implode('', $permissions);
     }
 

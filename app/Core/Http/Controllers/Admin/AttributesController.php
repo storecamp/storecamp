@@ -3,10 +3,8 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AttributeGroupSystemContract;
-use App\Core\Models\AttributeGroup;
 use App\Core\Models\AttributeGroupDescription;
 use App\Core\Transformers\AttributeGroupDescriptionDataTransformer;
-use App\Core\Transformers\AttributeGroupsDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
