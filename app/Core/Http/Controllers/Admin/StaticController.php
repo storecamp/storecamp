@@ -20,6 +20,8 @@ class StaticController extends Controller
     public function __construct(StaticPagesRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
+
     }
 
     public function index(Request $request)

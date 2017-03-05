@@ -55,6 +55,7 @@ class ProductReviewController extends BaseController
         $this->product = $productReviewSystem->product;
         $this->user = $productReviewSystem->user;
         $this->productReview = $productReviewSystem->productReview;
+        $this->middleware('role:Admin');
     }
 
     /**

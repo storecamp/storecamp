@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
  */
 class TogglesController extends BaseController
 {
+    public function __construct()
+    {
+        $this->middleware('role:Admin');
+    }
+
     /**
      * @param Request $request
      * @param $class_name

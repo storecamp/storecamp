@@ -47,6 +47,7 @@ class AttributeGroupsController extends BaseController
         $this->attributeGroupSystem = $attributeGroupSystem;
         $this->groupRepository = $attributeGroupSystem->group;
         $this->groupDescriptionRepository = $attributeGroupSystem->description;
+        $this->middleware('role:Admin');
     }
 
     /**

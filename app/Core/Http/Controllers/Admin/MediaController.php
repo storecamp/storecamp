@@ -63,6 +63,7 @@ class MediaController extends BaseController
         $this->repository = $this->mediaSystem->media;
         $this->folder = $this->mediaSystem->folder;
         $this->defaultFolder = $this->folder->disk('local')->first();
+        $this->middleware('role:Admin');
     }
 
     /**

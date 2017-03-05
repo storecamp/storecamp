@@ -7,6 +7,14 @@ use App\Core\Http\Controllers\Controller;
 class PagesController extends Controller
 {
     /**
+     * PagesController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('role:Admin');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response

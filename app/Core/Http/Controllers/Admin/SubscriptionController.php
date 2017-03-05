@@ -29,6 +29,7 @@ class SubscriptionController extends BaseController
     public function __construct(SubscribersRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     public function index(Request $request)

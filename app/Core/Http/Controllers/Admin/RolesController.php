@@ -48,7 +48,7 @@ class RolesController extends BaseController
         $this->accessSystem = $accessSystem;
         $this->rolesRepository = $accessSystem->rolesRepository;
         $this->permissionRepository = $accessSystem->permissionRepository;
-        $this->middleware('isAdmin');
+        $this->middleware('role:Admin');
     }
 
     /**

@@ -49,6 +49,7 @@ class ProductsController extends BaseController
         $this->categoryRepository = $categoryRepository;
         $this->productSystem = $productSystem;
         $this->productRepository = $this->productSystem->productRepository;
+        $this->middleware('role:Admin');
     }
 
     /**

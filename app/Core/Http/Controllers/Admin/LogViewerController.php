@@ -27,6 +27,7 @@ class LogViewerController extends LogBaseController
         parent::__construct();
         $this->viewerSystem = $viewerSystem;
         $this->perPage = config('log-viewer.per-page', $this->perPage);
+        $this->middleware('role:Admin');
     }
 
     public function view($view, $data = [], $mergeData = [])

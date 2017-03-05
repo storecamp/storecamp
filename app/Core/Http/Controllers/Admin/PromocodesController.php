@@ -20,6 +20,7 @@ class PromocodesController extends Controller
     public function __construct(PromocodeRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     public function index(Request $request)

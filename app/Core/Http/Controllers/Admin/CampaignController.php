@@ -37,6 +37,7 @@ class CampaignController extends BaseController
     {
         $this->mailRepository = $mailRepository;
         $this->campaignRepository = $campaignRepository;
+        $this->middleware('role:Admin');
     }
 
     /**

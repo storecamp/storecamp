@@ -50,6 +50,7 @@ class UsersController extends BaseController
         $this->usersSystem = $usersSystem;
         $this->userRepository = $usersSystem->userRepository;
         $this->rolesRepository = $usersSystem->rolesRepository;
+        $this->middleware('role:Admin');
     }
 
     /**

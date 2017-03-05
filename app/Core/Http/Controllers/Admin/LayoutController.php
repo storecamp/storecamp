@@ -19,6 +19,7 @@ class LayoutController extends Controller
     public function __construct(LayoutRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     public function index(Request $request)

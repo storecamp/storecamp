@@ -10,7 +10,9 @@ use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -97,18 +99,19 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->create($data);
-
-            return redirect('admin/categories');
         } catch (\Throwable $exception) {
             return $this->redirectError($exception);
         }
+
+        return redirect('admin/categories');
+
     }
 
     /**
      * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
-     * @return Response|Redirect
+     * @return RedirectResponse|Response
      */
     public function show(Request $request, $id)
     {
@@ -116,11 +119,11 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->present($data, $id, ['media']);
             $categories = $this->repository->all();
-
-            return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return $this->view('show', compact('category', 'categories'));
     }
 
     /**
@@ -134,10 +137,11 @@ class CategoriesController extends BaseController
             $category = $this->repository->find($id);
             $description = $category->description;
 
-            return response()->json($description);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
+
+        return response()->json($description);
     }
 
     /**
@@ -154,16 +158,17 @@ class CategoriesController extends BaseController
             $categories = $this->repository->with('parent')->all();
             $preferredTag = 'thumbnail';
 
-            return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
     }
 
     /**
      * @param CategoriesUpdateFormRequest $request
      * @param $id
-     * @return Response|Redirect
+     * @return RedirectResponse|Response
      */
     public function update(CategoriesUpdateFormRequest $request, $id)
     {
@@ -171,29 +176,30 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->update($data, $id);
 
-            return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return redirect('admin/categories');
     }
 
     /**
      * Remove the specified category from storage.
      *
      * @param $id
-     * @return Response|Redirect
+     * @return RedirectResponse|Redirect
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->categorySystem->delete($id);
             if (! $deleted) {
-                \Flash::warning('Sorry category is not deleted');
+                $this->flash('warning','Sorry category is not deleted');
             }
-
-            return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return redirect('admin/categories');
     }
 }

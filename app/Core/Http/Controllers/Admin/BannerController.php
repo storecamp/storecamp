@@ -19,6 +19,7 @@ class BannerController extends Controller
     public function __construct(BannerRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     public function index(Request $request)

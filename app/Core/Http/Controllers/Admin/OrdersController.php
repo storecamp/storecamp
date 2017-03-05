@@ -30,6 +30,7 @@ class OrdersController extends BaseController
     {
         $this->ordersSystem = $ordersSystem;
         $this->ordersRepository = $ordersSystem->ordersRepository;
+        $this->middleware('role:Admin');
     }
 
     /**

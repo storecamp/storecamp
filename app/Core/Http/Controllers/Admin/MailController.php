@@ -34,6 +34,7 @@ class MailController extends BaseController
     public function __construct(MailRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     /**
