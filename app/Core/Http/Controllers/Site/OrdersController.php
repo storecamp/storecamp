@@ -12,10 +12,24 @@ use Illuminate\Http\Request;
  */
 class OrdersController extends BaseController
 {
+    /**
+     * @var string
+     */
     public $viewPathBase = 'site.orders.';
+    /**
+     * @var string
+     */
     public $errorRedirectPath = 'site::order';
 
+    /**
+     * @var OrdersSystemContract
+     */
     private $ordersSystem;
+
+    /**
+     * @var array
+     */
+    private $statuses;
 
     /**
      * OrdersController constructor.
@@ -24,18 +38,56 @@ class OrdersController extends BaseController
     public function __construct(OrdersSystemContract $ordersSystem)
     {
         $this->ordersSystem = $ordersSystem;
+        $this->statuses = ['showPersonal', 'showAddress', 'showShipping', 'showPayment'];
     }
 
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     * @param string $status
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request, string $status = null): \Illuminate\View\View
     {
-        $showPersonal = true;
+        if (!in_array($status, $this->statuses)) {
+            if (\Auth::check()) {
+                $status = 'showAddress';
+            } else {
+                $status = 'showPersonal';
+            }
+        }
+        $getAllPreviousValue = getAllPreviousValues($status, $this->statuses);
+        if (!$getAllPreviousValue) {
+            $getAllPreviousValue = [];
+        }
 
-        return $this->view('index', compact('showPersonal'));
+        return $this->view('index', compact('status', 'getAllPreviousValue'));
     }
 
-    public function showPersonal(Request $request)
+    /**
+     * @param Request $request
+     */
+    public function createPersonal(Request $request)
     {
-        $showPersonal = true;
-        $this->view('index', compact('showPersonal'));
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function createAddress(Request $request)
+    {
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function createShipping(Request $request)
+    {
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function createPayment(Request $request)
+    {
     }
 }

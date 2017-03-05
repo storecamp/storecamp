@@ -24,7 +24,6 @@ class TogglesController extends BaseController
      */
     public function toggleBan(Request $request, $class_name, $object_id)
     {
-        $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
         try {
             $class = 'App\Core\Models\\'.$class_name;
             $object = $class::find($object_id);

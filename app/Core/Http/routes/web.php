@@ -65,28 +65,28 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
         });
 
         $router->group(['prefix' => 'order', 'as' => 'order::'], function (\Illuminate\Routing\Router $router) {
-            $router->get('index', [
+            $router->get('index/{status?}', [
                 'uses' => 'Site\OrdersController@index',
                 'as' => 'index',
             ]);
 
-            $router->get('personal', [
-                'uses' => 'Site\OrdersController@personal',
+            $router->post('personal', [
+                'uses' => 'Site\OrdersController@createPersonal',
                 'as' => 'personal',
             ]);
 
-            $router->get('address', [
-                'uses' => 'Site\OrdersController@address',
+            $router->post('address', [
+                'uses' => 'Site\OrdersController@createAddress',
                 'as' => 'address',
             ]);
 
-            $router->get('shipment', [
-                'uses' => 'Site\OrdersController@shipment',
+            $router->post('shipment', [
+                'uses' => 'Site\OrdersController@createShipping',
                 'as' => 'shipment',
             ]);
 
-            $router->get('payment', [
-                'uses' => 'Site\OrdersController@payment',
+            $router->post('payment', [
+                'uses' => 'Site\OrdersController@createPayment',
                 'as' => 'payment',
             ]);
         });
