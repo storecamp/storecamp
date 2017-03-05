@@ -2,11 +2,10 @@
 
 namespace App\Core\Transformers;
 
-
 use App\Core\Models\User;
 use League\Fractal\TransformerAbstract;
 
-class UsersDataTransformer  extends TransformerAbstract
+class UsersDataTransformer extends TransformerAbstract
 {
     /**
      * @param User $user
@@ -29,12 +28,13 @@ class UsersDataTransformer  extends TransformerAbstract
      * @param User $user
      * @return string
      */
-    private function getRoles(User $user) {
-
+    private function getRoles(User $user)
+    {
         $roles = [];
-        foreach($user->roles as $role) {
+        foreach ($user->roles as $role) {
             $roles[] = '<b style="text-decoration: underline">'.$role->name.'</b>'.'<br>';
         }
+
         return implode('', $roles);
     }
 
@@ -45,16 +45,16 @@ class UsersDataTransformer  extends TransformerAbstract
     private function getActions(User $user)
     {
         $html = '<td class="text-center">
-                <a class="btn btn-default edit" href="' . route('admin::users::edit', $user->unique_id) . '" title="Edit">
+                <a class="btn btn-default edit" href="'.route('admin::users::edit', $user->unique_id).'" title="Edit">
                 <em class="fa fa-pencil-square-o"></em></a>';
         if ($user->banned === 0) {
             $html .= '<a class="btn btn-default text-warning"
-                    href="' . route('admin::toggleBan', array('class_name' => getBaseClassName($user, false), 'object_id' => $user->id)) . '">
+                    href="'.route('admin::toggleBan', ['class_name' => getBaseClassName($user, false), 'object_id' => $user->id]).'">
                     ban
                     </a>';
         } else {
             $html .= '<a class="btn btn-warning text-warning"
-                      href="' . route('admin::toggleBan', array('class_name' => getBaseClassName($user, false), 'object_id' => $user->id)) . '">
+                      href="'.route('admin::toggleBan', ['class_name' => getBaseClassName($user, false), 'object_id' => $user->id]).'">
                       unban
                       </a>';
         }
@@ -62,7 +62,7 @@ class UsersDataTransformer  extends TransformerAbstract
                   href="'.route('admin::users::get::delete', $user->unique_id).'"
                   title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>
                   </td>';
+
         return $html;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace App\Core\Transformers;
 
-
 use App\Core\Logic\CategorySystem;
 use App\Core\Models\Category;
 use League\Fractal\TransformerAbstract;
@@ -36,9 +35,9 @@ class CategoriesDataTransformer extends TransformerAbstract
     {
         return '<a data-toggle="modal" href="#Description-modal"
            class="btn btn-xs btn-info"
-           data-desc-url="' . route('admin::categories::description', $category->unique_id) . '"
-           data-desc-id="' . $category->unique_id . '"
-           data-desc-name="' . $category->name . '">
+           data-desc-url="'.route('admin::categories::description', $category->unique_id).'"
+           data-desc-id="'.$category->unique_id.'"
+           data-desc-name="'.$category->name.'">
             show
         </a>';
     }
@@ -49,7 +48,7 @@ class CategoriesDataTransformer extends TransformerAbstract
      */
     private function getName(Category $category): string
     {
-        return CategorySystem::getCategoryFullPath($category) . '<small class="text-muted label bg-info pull-right">' . $category->getType() . '</small>';
+        return CategorySystem::getCategoryFullPath($category).'<small class="text-muted label bg-info pull-right">'.$category->getType().'</small>';
     }
 
     /**
@@ -58,10 +57,10 @@ class CategoriesDataTransformer extends TransformerAbstract
      */
     private function getActions(Category $category): string
     {
-        return '<a class="btn btn-default edit" href="' . route('admin::categories::edit', $category->unique_id) . '" title="Edit">
+        return '<a class="btn btn-default edit" href="'.route('admin::categories::edit', $category->unique_id).'" title="Edit">
             <em class="fa fa-pencil-square-o"></em>
         </a>
-        <a class="btn btn-danger delete text-warning" href="' . route('admin::categories::get::delete', $category->unique_id) . '"
+        <a class="btn btn-danger delete text-warning" href="'.route('admin::categories::get::delete', $category->unique_id).'"
            title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em>
         </a>';
     }
@@ -74,7 +73,8 @@ class CategoriesDataTransformer extends TransformerAbstract
     {
         if ($category->status) {
             return '<td><div class="label bg-green"> active</div></td>';
-        } else
+        } else {
             return '<td><div class="label bg-warning">not active</div></td>';
+        }
     }
 }

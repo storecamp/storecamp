@@ -73,6 +73,7 @@ class UsersController extends BaseController
             ->setTransformer(new UsersDataTransformer())
             ->make(true);
     }
+
     /**
      * @return \Illuminate\View\View
      */
