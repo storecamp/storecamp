@@ -3,12 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\UsersSystemContract;
+use App\Core\Models\User;
 use App\Core\Repositories\RolesRepository;
 use App\Core\Repositories\UserRepository;
+use App\Core\Transformers\UsersDataTransformer;
 use App\Core\Validators\User\UsersFormRequest;
 use App\Core\Validators\User\UsersUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class UsersController.
@@ -47,7 +50,6 @@ class UsersController extends BaseController
         $this->usersSystem = $usersSystem;
         $this->userRepository = $usersSystem->userRepository;
         $this->rolesRepository = $usersSystem->rolesRepository;
-        $this->middleware('role:Admin');
     }
 
     /**
@@ -56,13 +58,21 @@ class UsersController extends BaseController
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $users = $this->usersSystem->present($data);
-        $no = $users->firstItem();
-
-        return $this->view('index', compact('users', 'no'));
+        return $this->view('index');
     }
 
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = User::with('roles')->select('users.*');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new UsersDataTransformer())
+            ->make(true);
+    }
     /**
      * @return \Illuminate\View\View
      */

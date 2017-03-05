@@ -43,7 +43,7 @@
                 columns: [
                     {data: 'id'},
                     {data: 'name'},
-                    {data: 'attributesGroup'},
+                    {data: 'attributesGroup', name: 'attributesGroup.name'},
                     {data: 'sort_order'},
                     {
                         data: 'created_at', render: function (d) {

@@ -3,12 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AccessSystemContract;
+use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
+use App\Core\Transformers\RolesDataTransformer;
 use App\Core\Validators\Role\RolesFormRequest;
 use App\Core\Validators\Role\RolesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class RolesController.
@@ -54,11 +57,20 @@ class RolesController extends BaseController
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $roles = $this->accessSystem->presentRoles($data, null, ['perms']);
-        $no = $roles->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('roles', 'no'));
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Role::with('perms');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new RolesDataTransformer())
+            ->make(true);
     }
 
     /**

@@ -4,7 +4,7 @@
     @if($showFilters)
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-            <i class="fa fa-filter fa-fw"></i> Filters <span class="fa fa-angle-up"></span>
+            <i class="fa fa-filter fa-fw"></i> Options <span class="fa fa-angle-down"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
             <?php $filters = isset($filters) ? $filters : []; ?>

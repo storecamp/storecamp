@@ -49,7 +49,7 @@
                     {data: 'id'},
                     {data: 'title'},
                     {data: 'model'},
-                    {data: 'category', orderable: false, searchable: false},
+                    {data: 'category', name: 'categories.name'},
                     {data: 'price'},
                     {data: 'quantity'},
                     {data: 'availability'},
