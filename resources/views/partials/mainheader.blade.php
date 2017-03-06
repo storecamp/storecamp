@@ -151,8 +151,18 @@ $user = $auth->user() ? $auth->user() : null; ?>
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a class="btn btn-default btn-flat" href="{{ url('/logout') }}"
+                                   onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
                             </div>
+
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                              style="display: none;">
+                            {{ csrf_field() }}
+                            <input type="submit" value="logout" style="display: none;">
+                        </form>
                         </li>
                     </ul>
                 </li>

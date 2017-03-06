@@ -46,3 +46,9 @@ _ide_helper.php
 /public/js/admin.js.map
 /public/css/site_storecamp.css.map
 /public/css/site_plugins.css.map
+!/public/js/bootstrap.js
+/public/css/admin_plugins.css.map
+/public/css/admin_skins.css.map
+/public/css/admin_lte.css.map
+/public/css/app_less.css.map
+/public/css/admin_storecamp.css.map

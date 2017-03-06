@@ -387,6 +387,9 @@ Sidebar
     > ul {
       /* reset style */
       padding: 0;
+      li:hover ul{
+        display: block;
+      }
     }
 
     .sidebar-label {
@@ -445,6 +448,9 @@ Sidebar
     > ul {
       padding: 0.6em 0;
       list-style-type: none;
+      li:hover ul{
+        display: block;
+      }
     }
 
     > ul > li:not(.action-btn):hover > a {
@@ -461,6 +467,7 @@ Sidebar
         @include center(y);
         left: 18px;
       }
+
     }
 
     .sidebar-label {
