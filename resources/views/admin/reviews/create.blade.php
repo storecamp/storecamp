@@ -14,7 +14,7 @@
             <li class="active"><a href="#general" data-toggle="tab">General</a></li>
         </ul>
         <div class="tab-content">
-            @include('admin.productReview.form')
+            @include('admin.reviews.form')
         </div>
     </div>
 @endsection

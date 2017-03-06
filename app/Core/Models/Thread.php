@@ -30,7 +30,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Message[] $messages
  * @property-read \App\Core\Models\Message $parentMessage
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
- * @property-read \App\Core\Models\ProductReview $productReview
+ * @property-read \App\Core\Models\ProductReview $reviews
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread between($participants)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUser($userId)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUserWithNewMessages($userId)

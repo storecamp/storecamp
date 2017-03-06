@@ -384,7 +384,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'visibility',
             ]);
 
-            $this->get('markasread/productReview/{feed}', [
+            $this->get('markasread/reviews/{feed}', [
                 'uses' => 'Admin\ProductReviewController@markAsRead',
                 'as' => 'markasread',
             ]);

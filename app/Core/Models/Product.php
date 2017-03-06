@@ -52,7 +52,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Core\Models\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $reviews
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\AttributeGroupDescription[] $attributeGroupDescription
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereId($value)

@@ -41,7 +41,7 @@ class AccessSeeder extends Seeder
                 'Can Update',
                 'Buy products',
                 'Manage own products',
-                'Write productReview',
+                'Write Rreviews',
             ];
             foreach ($permissionsAdmin as $permission) {
                 $perm = Permission::updateOrCreate([

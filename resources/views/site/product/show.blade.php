@@ -116,7 +116,7 @@
                         <div class="tab-pane" id="reviews">
                             <div class="product-reviews">
                                 @foreach($product->productReview as $review)
-                                    @include('site.partials.reviews.message', ['productReview' => $review])
+                                    @include('site.partials.reviews.message', ['reviews' => $review])
                                 @endforeach
                             </div>
                         </div>

@@ -20,7 +20,7 @@ use Yajra\Datatables\Datatables;
  */
 class ProductReviewController extends BaseController
 {
-    public $viewPathBase = 'admin.productReview.';
+    public $viewPathBase = 'admin.reviews.';
     public $errorRedirectPath = 'admin/reviews/index';
     /**
      * @var ProductsRepository
@@ -34,7 +34,7 @@ class ProductReviewController extends BaseController
     /**
      * @var ProductReviewRepository
      */
-    protected $productReview;
+    protected $reviews;
 
     /**
      * @var
@@ -46,15 +46,15 @@ class ProductReviewController extends BaseController
      * @param ProductReviewSystemContract $productReviewSystem
      * @param ProductsRepository $product
      * @param UserRepository $user
-     * @param ProductReviewRepository $productReview
+     * @param ProductReviewRepository $reviews
      */
     public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
-                                UserRepository $user, ProductReviewRepository $productReview)
+                                UserRepository $user, ProductReviewRepository $reviews)
     {
         $this->productReviewSystem = $productReviewSystem;
         $this->product = $productReviewSystem->product;
         $this->user = $productReviewSystem->user;
-        $this->productReview = $productReviewSystem->productReview;
+        $this->reviews = $productReviewSystem->productReview;
         $this->middleware('role:Admin');
     }
 
@@ -93,10 +93,10 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
             $currentUserId = \Auth::user()->id;
-//            $productReview->comments->first()->markAsRead($currentUserId);
-            return $this->view('show', compact('productReview', 'currentUserId'));
+//            $reviews->comments->first()->markAsRead($currentUserId);
+            return $this->view('show', compact('review', 'currentUserId'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -161,10 +161,10 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
-            $product = $productReview->product;
+            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $product = $review->product;
 
-            return $this->view('edit', compact('productReview', 'product'));
+            return $this->view('edit', compact('review', 'product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -229,15 +229,15 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReviews = $this->productReviewSystem->replyProductReview($id, $data);
+            $reviews = $this->productReviewSystem->replyProductReview($id, $data);
             if ($request->ajax()) {
-                $message = $productReviews->comments->last()->messages->last();
+                $message = $reviews->comments->last()->messages->last();
                 $messageView = $this->view('message-item', compact('message'));
 
                 return response()->json(['message' => $messageView->render()]);
             }
 
-            return redirect()->to(route('admin::reviews::show', $productReviews->id));
+            return redirect()->to(route('admin::reviews::show', $reviews->id));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -254,7 +254,7 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->toggleVisibility($id, $data);
+            $reviews = $this->productReviewSystem->toggleVisibility($id, $data);
 
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
@@ -277,7 +277,7 @@ class ProductReviewController extends BaseController
                 $this->productReviewSystem->markAsRead($id, $data);
 
                 return response()->json(
-                    ['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()], 200);
+                    ['message' => 'reviews marked as read', 'messages_count' => \Auth::user()->newMessagesCount()], 200);
             } else {
                 return response()->json('not allowed', 400);
             }

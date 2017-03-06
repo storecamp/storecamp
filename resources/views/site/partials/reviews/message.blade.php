@@ -12,25 +12,25 @@
             <div class="col-md-12">
                 <strong>
                     <span class="text-muted">author - </span>
-                    <a href="{{ route("admin::users::show", $productReview->user->id) }}">
-                        {{$productReview->user->name}}
+                    <a href="{{ route("admin::users::show", $reviews->user->id) }}">
+                        {{$reviews->user->name}}
                     </a>
                 </strong>
-                <h4>{{ $productReview->review }}</h4>
+                <h4>{{ $reviews->review }}</h4>
                 <div class="text-muted">
-                    <small>Posted {{ $productReview->created_at->diffForHumans() }}</small>
+                    <small>Posted {{ $reviews->created_at->diffForHumans() }}</small>
                 </div>
             </div>
             <div class="col-md-6">
                 <span class="text-muted"><b>Product review point</b></span>
-                @include('admin.partial._rating', [$selected = $productReview->rating, $readOnly = "true"])
+                @include('admin.partial._rating', [$selected = $reviews->rating, $readOnly = "true"])
             </div>
         </div>
     </div>
     <hr>
     <div class="box-footer box-comments" style="display: block;">
         <b class="text-muted">comments:</b>
-        @include('site.partials.reviews.messages', [$messages = $productReview->comments->first()])
+        @include('site.partials.reviews.messages', [$messages = $reviews->comments->first()])
     </div>
     <div class="clearfix"></div>
     @include('site.partials.reviews.form')

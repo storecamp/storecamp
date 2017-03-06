@@ -14,7 +14,7 @@
             <li class="active"><a href="#general" data-toggle="tab">General</a></li>
         </ul>
         <div class="tab-content">
-            @include('admin.productReview.review_body', [$productReviews = [$productReview]])
+            @include('admin.reviews.review_body', [$reviews = [$review]])
         </div>
     </div>
 @endsection
@@ -22,14 +22,12 @@
     <script>
         $('.review-item-status.read').on({
             "click": function (event) {
-                console.log("button clicked");
                 var feedId = $(this).closest(".review-list-item").data('feed-id'),
                     feedStatus = $(this).closest(".review-list-item").data('feed-status');
-                console.log(feedStatus);
                 if (feedStatus == false) {
                     $.ajax({
                         type: 'GET',
-                        url: APP_URL + "/admin/reviews/markasread/productReview/" + feedId,
+                        url: APP_URL + "/admin/reviews/markasread/reviews/" + feedId,
 //                        data: {
 //                            'class_name': _this.o.class_name,
 //                            'object_id': _this.o.object_id
@@ -41,7 +39,7 @@
                             }
                             console.log(data);
                             if (data['message']) {
-                                var navButton = $("li.productReview");
+                                var navButton = $("li.reviews");
                                 var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .review-item-status.read');
                                 navButton.find('span').text(data['messages_count']);
                                 var sidebarstatus = $('.sidebar .review-item-status');

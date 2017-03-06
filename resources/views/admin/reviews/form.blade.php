@@ -1,7 +1,7 @@
 <div class="tab-pane active" id="general">
-@if(isset($productReview))
-    {{ Form::model($productReview, ['route' => ['admin::reviews::update',
-    $productReview->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
+@if(isset($review))
+    {{ Form::model($review, ['route' => ['admin::reviews::update',
+    $review->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
 @else
     {{ Form::open(['route' => ['admin::reviews::store', $product->id], 'method' => 'POST', "role" => "form", ]) }}
 @endif
@@ -36,7 +36,7 @@
     <h3 class="text-muted"><b>Product review point</b></h3>
     <div class="col-md-6">
         @include('admin.partial._rating', [$selected = old('rating') ?
-        old('rating') : isset($productReview) ? $productReview->rating : null])
+        old('rating') : isset($review) ? $review->rating : null])
         {!! $errors->first('rating', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group text-right">
