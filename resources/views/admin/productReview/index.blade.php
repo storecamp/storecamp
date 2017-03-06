@@ -47,9 +47,9 @@
                 stateSave: true,
                 columns: [
                     {data: 'id'},
-                    {data: 'product', orderable: false, searchable: false},
+                    {data: 'product', name: 'product.title'},
                     {data: 'rating'},
-                    {data: 'isViewed'},
+                    {data: 'isViewed', orderable: false, searchable: false},
                     {data: 'hidden'},
                     {data: 'author'},
                     {
