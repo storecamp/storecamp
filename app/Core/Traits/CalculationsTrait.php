@@ -8,7 +8,7 @@ trait CalculationsTrait
      * Property used to stored calculations.
      * @var array
      */
-    private $shopCalculations = null;
+    private $salesCalculations = null;
 
     /**
      * Returns total amount of items in cart.
@@ -17,11 +17,11 @@ trait CalculationsTrait
      */
     public function getCountAttribute(): int
     {
-        if (empty($this->shopCalculations)) {
+        if (empty($this->salesCalculations)) {
             $this->runCalculations();
         }
 
-        return round($this->shopCalculations->itemCount, 2);
+        return round($this->salesCalculations->itemCount, 2);
     }
 
     /**
@@ -31,11 +31,11 @@ trait CalculationsTrait
      */
     public function getTotalPriceAttribute(): float
     {
-        if (empty($this->shopCalculations)) {
+        if (empty($this->salesCalculations)) {
             $this->runCalculations();
         }
 
-        return round($this->shopCalculations->totalPrice, 2);
+        return round($this->salesCalculations->totalPrice, 2);
     }
 
     /**
@@ -45,11 +45,11 @@ trait CalculationsTrait
      */
     public function getTotalTaxAttribute(): float
     {
-        if (empty($this->shopCalculations)) {
+        if (empty($this->salesCalculations)) {
             $this->runCalculations();
         }
 
-        return round($this->shopCalculations->totalTax + ($this->totalPrice * config('shop.tax')), 2);
+        return round($this->salesCalculations->totalTax + ($this->totalPrice * config('sales.tax')), 2);
     }
 
     /**
@@ -59,11 +59,11 @@ trait CalculationsTrait
      */
     public function getTotalShippingAttribute(): float
     {
-        if (empty($this->shopCalculations)) {
+        if (empty($this->salesCalculations)) {
             $this->runCalculations();
         }
 
-        return round($this->shopCalculations->totalShipping, 2);
+        return round($this->salesCalculations->totalShipping, 2);
     }
 
     /**
@@ -82,7 +82,7 @@ trait CalculationsTrait
      */
     public function getTotalAttribute(): float
     {
-        if (empty($this->shopCalculations)) {
+        if (empty($this->salesCalculations)) {
             $this->runCalculations();
         }
 
@@ -96,7 +96,7 @@ trait CalculationsTrait
      */
     public function getDisplayTotalPriceAttribute(): string
     {
-        return shopFormat($this->totalPrice);
+        return salesFormat($this->totalPrice);
     }
 
     /**
@@ -106,7 +106,7 @@ trait CalculationsTrait
      */
     public function getDisplayTotalTaxAttribute(): string
     {
-        return shopFormat($this->totalTax);
+        return salesFormat($this->totalTax);
     }
 
     /**
@@ -116,7 +116,7 @@ trait CalculationsTrait
      */
     public function getDisplayTotalShippingAttribute(): string
     {
-        return shopFormat($this->totalShipping);
+        return salesFormat($this->totalShipping);
     }
 
     /**
@@ -145,7 +145,7 @@ trait CalculationsTrait
      */
     public function getCalculationsCacheKeyAttribute(): string
     {
-        return 'shop_'.$this->table.'_'.$this->attributes['id'].'_calculations';
+        return 'sales_'.$this->table.'_'.$this->attributes['id'].'_calculations';
     }
 
     /**
@@ -153,41 +153,41 @@ trait CalculationsTrait
      */
     private function runCalculations()
     {
-        if (! empty($this->shopCalculations)) {
-            return $this->shopCalculations;
+        if (! empty($this->salesCalculations)) {
+            return $this->salesCalculations;
         }
         $cacheKey = $this->calculationsCacheKey;
-        if (config('shop.cache_calculations')
+        if (config('sales.cache_calculations')
             && \Cache::has($cacheKey)
         ) {
-            $this->shopCalculations = \Cache::get($cacheKey);
+            $this->salesCalculations = \Cache::get($cacheKey);
 
-            return $this->shopCalculations;
+            return $this->salesCalculations;
         }
-        $this->shopCalculations = \DB::table($this->table)
+        $this->salesCalculations = \DB::table($this->table)
             ->select([
-                \DB::raw('sum('.config('shop.item_table').'.quantity) as itemCount'),
-                \DB::raw('sum('.config('shop.item_table').'.price * '.config('shop.item_table').'.quantity) as totalPrice'),
-                \DB::raw('sum('.config('shop.item_table').'.tax * '.config('shop.item_table').'.quantity) as totalTax'),
-                \DB::raw('sum('.config('shop.item_table').'.shipping * '.config('shop.item_table').'.quantity) as totalShipping'),
+                \DB::raw('sum('.config('sales.item_table').'.quantity) as itemCount'),
+                \DB::raw('sum('.config('sales.item_table').'.price * '.config('sales.item_table').'.quantity) as totalPrice'),
+                \DB::raw('sum('.config('sales.item_table').'.tax * '.config('sales.item_table').'.quantity) as totalTax'),
+                \DB::raw('sum('.config('sales.item_table').'.shipping * '.config('sales.item_table').'.quantity) as totalShipping'),
             ])
             ->join(
-                config('shop.item_table'),
-                config('shop.item_table').'.'.($this->table == config('shop.order_table') ? 'order_id' : $this->table.'_id'),
+                config('sales.item_table'),
+                config('sales.item_table').'.'.($this->table == config('sales.order_table') ? 'order_id' : $this->table.'_id'),
                 '=',
                 $this->table.'.id'
             )
             ->where($this->table.'.id', $this->attributes['id'])
             ->first();
-        if (config('shop.cache_calculations')) {
+        if (config('sales.cache_calculations')) {
             \Cache::put(
                 $cacheKey,
-                $this->shopCalculations,
-                config('shop.cache_calculations_minutes')
+                $this->salesCalculations,
+                config('sales.cache_calculations_minutes')
             );
         }
 
-        return $this->shopCalculations;
+        return $this->salesCalculations;
     }
 
     /**
@@ -195,9 +195,34 @@ trait CalculationsTrait
      */
     private function resetCalculations()
     {
-        $this->shopCalculations = null;
-        if (config('shop.cache_calculations')) {
+        $this->salesCalculations = null;
+        if (config('sales.cache_calculations')) {
             \Cache::forget($this->calculationsCacheKey);
+        }
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getAvgRatingCounter()
+    {
+        $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
+        if (! empty($reviews)) {
+            return round(array_sum($reviews) / (count($reviews)), 1);
+        } else {
+            return $reviews;
+        }
+    }
+    /**
+     * @return float|int
+     */
+    public function getRatingCounter()
+    {
+        $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
+        if (! empty($reviews)) {
+            return count($reviews);
+        } else {
+            return 0;
         }
     }
 }

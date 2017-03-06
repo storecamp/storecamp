@@ -11,6 +11,7 @@ use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\Likeable;
+use App\Core\Traits\ProductCalculations;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -131,6 +132,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use CacheableEloquent;
     use ViewCounterTrait;
     use Likeable;
+    use ProductCalculations;
 
     /**
      * Custom field name to define the item's name.
@@ -462,16 +464,4 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->whereIn('products_categories.category_id', $categoryIds);
     }
 
-    /**
-     * @return float|int
-     */
-    public function getRatingCounter()
-    {
-        $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
-        if (! empty($reviews)) {
-            return array_sum($reviews) / (count($reviews) + 1);
-        } else {
-            return $reviews;
-        }
-    }
 }

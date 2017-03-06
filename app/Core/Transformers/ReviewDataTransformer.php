@@ -14,13 +14,21 @@ class ReviewDataTransformer extends TransformerAbstract
             'product' => $review->product->title,
             'rating' => $this->getReviewRating($review),
             'hidden' => $this->getReviewHidden($review),
+            'isViewed' => $this->getIsViewed($review),
             'author' => $review->user->name,
             'created_at' => $review->created_at,
             'updated_at' => $review->updated_at,
             'action' => $this->getActions($review),
         ];
     }
-
+    private function getIsViewed(ProductReview $review)
+    {
+        if($review->comments->first()->isUnread(\Auth::user()->id)){
+            return "<span class=\"review-item-status label label-warning\" > not read</span>";
+        } else {
+            return "<span class=\"review-item-status label label-info\" > already read</span>";
+        };
+    }
     private function getReviewRating(ProductReview $review)
     {
         return '<span class="review-item-status label label-default">'.$review->rating.'</span>';

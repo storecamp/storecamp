@@ -1,20 +1,20 @@
 @extends('admin/app')
-    @section('breadcrumb')
-        {!! Breadcrumbs::render('reviews', 'reviews') !!}
-    @endsection
-    @section('contentheader_title')
-        All Product Reviews
-    @endsection
-    @section('contentheader_description')
-            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Back'])
-    @endsection
+@section('breadcrumb')
+    {!! Breadcrumbs::render('reviews', 'reviews') !!}
+@endsection
+@section('contentheader_title')
+    All Product Reviews
+@endsection
+@section('contentheader_description')
+    @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Back'])
+@endsection
 @section('main-content')
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#general" data-toggle="tab">General</a></li>
         </ul>
         <div class="tab-content">
-    @include('admin.productReview.review_body', [$productReviews = [$productReview]])
+            @include('admin.productReview.review_body', [$productReviews = [$productReview]])
         </div>
     </div>
 @endsection
@@ -25,7 +25,7 @@
                 console.log("button clicked");
                 var feedId = $(this).closest(".review-list-item").data('feed-id'),
                     feedStatus = $(this).closest(".review-list-item").data('feed-status');
-
+                console.log(feedStatus);
                 if (feedStatus == false) {
                     $.ajax({
                         type: 'GET',

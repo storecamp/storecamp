@@ -57,7 +57,7 @@
                         <?php $ratingCounter = $product->getRatingCounter() ?>
                         @if(!empty($ratingCounter))
                             <span class="text-muted pull-left"><b>Product review point</b></span>
-                            @include('admin.partial._rating', [$selected = $product->getRatingCounter(), $readOnly = true])
+                            @include('admin.partial._rating', [$selected = $product->getAvgRating(), $readOnly = true])
                             <span class="review-no">{{$product->getRatingCounter()}} reviews</span>
                         @else
                             <div type="text" class="product-quantity">

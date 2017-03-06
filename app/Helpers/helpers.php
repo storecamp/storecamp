@@ -150,6 +150,11 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
 }
 
 if (!function_exists('getCategoryFullPath')) {
+    /**
+     * @param \App\Core\Models\Category $category
+     * @param string $type
+     * @return string
+     */
     function getCategoryFullPath(\App\Core\Models\Category $category, string $type = 'string')
     {
         return \App\Core\Logic\CategorySystem::getCategoryFullPath($category, $type);
@@ -210,6 +215,11 @@ if (!function_exists('getFileNames')) {
 
 
 if (!function_exists('getPrevValue')) {
+    /**
+     * @param $key
+     * @param $array
+     * @return null
+     */
     function getPrevValue($key, $array)
     {
         $key = array_search($key, $array);
@@ -228,6 +238,11 @@ if (!function_exists('getPrevValue')) {
 }
 
 if (!function_exists('getNextValue')) {
+    /**
+     * @param $key
+     * @param $array
+     * @return null
+     */
     function getNextValue($key, $array)
     {
         $key = array_search($key, $array);
@@ -250,6 +265,11 @@ if (!function_exists('getNextValue')) {
 }
 
 if (!function_exists('getAllPreviousValues')) {
+    /**
+     * @param $key
+     * @param $array
+     * @return array|null
+     */
     function getAllPreviousValues($key, $array): ?array
     {
         $key = array_search($key, $array);

@@ -21,6 +21,7 @@
                 <th>Id</th>
                 <th>Review Product</th>
                 <th>Rating</th>
+                <th>isViewed</th>
                 <th>Hidden</th>
                 <th>Author</th>
                 <th>Created At</th>
@@ -48,6 +49,7 @@
                     {data: 'id'},
                     {data: 'product', orderable: false, searchable: false},
                     {data: 'rating'},
+                    {data: 'isViewed'},
                     {data: 'hidden'},
                     {data: 'author'},
                     {

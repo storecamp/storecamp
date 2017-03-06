@@ -1,7 +1,6 @@
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.1.4 -->
-
 <script src="{{ asset('custom_vendors/jQuery/jQuery-2.1.4.min.js') }}"></script>
 
 <!-- Bootstrap 3.3.2 JS -->
