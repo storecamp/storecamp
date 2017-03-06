@@ -87,5 +87,4 @@
 @endsection
 
 @section('scripts-add')
-    <script src="{{asset('app/scripts/demo/page-inbox-demo.js')}}"></script>
 @endsection

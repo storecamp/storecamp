@@ -66,6 +66,68 @@ const __buildScripts = (mix) => {
     mix.uglify('./public/js/storecamp.js', './public/js/min');
 };
 
+const __buildSiteStyles = (mix) => {
+    mix.styles([
+        './public/plugins/bootstrap/dist/css/bootstrap.min.css',
+        './public/css/font-awesome.min.css',
+        './public/css/ionicons.min.css',
+        './public/plugins/bootstrap-daterangepicker/daterangepicker.css',
+        './public/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
+        './public/plugins/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+        './public/custom_vendors/timepicker/bootstrap-timepicker.min.css',
+        './public/plugins/select2/dist/css/select2.min.css',
+        './public/plugins/toastr/toastr.css',
+        './public/plugins/iCheck/skins/all.css',
+        './public/plugins/iCheck/skins/square/blue.css',
+        './public/plugins/plyr/dist/plyr.css',
+        './public/plugins/summernote/dist/summernote.css',
+        './public/css/alt/AdminLTE-select2.min.css',
+        './public/css/alt/AdminLTE-bootstrap-social.min.css',
+        './public/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css',
+        './public/plugins/datatables.net-dt/css/jquery.dataTables.min.css'
+    ], './public/css/site_plugins.css');
+
+    mix.styles([
+        './public/css/admin_lte.css',
+        './public/css/admin_skins.css',
+        './public/css/main/app.css',
+        './public/css/app_less.css',
+    ], './public/css/site_storecamp.css');
+};
+const __buildAdminStyles = (mix) => {
+    mix.styles([
+        './public/plugins/bootstrap/dist/css/bootstrap.min.css',
+        './public/css/font-awesome.min.css',
+        './public/css/ionicons.min.css',
+        './public/plugins/bootstrap-daterangepicker/daterangepicker.css',
+        './public/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
+        './public/plugins/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+        './public/custom_vendors/timepicker/bootstrap-timepicker.min.css',
+        './public/plugins/select2/dist/css/select2.min.css',
+        './public/plugins/jvectormap/jquery-jvectormap.css',
+        './public/plugins/toastr/toastr.css',
+        './public/plugins/iCheck/skins/all.css',
+        './public/plugins/iCheck/skins/square/blue.css',
+        './public/plugins/plyr/dist/plyr.css',
+        './public/plugins/dropzone/dist/dropzone.css',
+        './public/custom_vendors/jvectormap/jquery-jvectormap-1.2.2.css',
+        './public/plugins/summernote/dist/summernote.css',
+        './public/css/alt/AdminLTE-select2.min.css',
+        './public/css/alt/AdminLTE-fullcalendar.min.css',
+        './public/css/alt/AdminLTE-bootstrap-social.min.css',
+        './public/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css',
+        './public/plugins/datatables.net-dt/css/jquery.dataTables.min.css'
+    ], './public/css/admin_plugins.css');
+
+    mix.styles([
+        './public/css/admin_lte.css',
+        './public/css/admin_skins.css',
+        './public/css/main/app.css',
+        './public/css/app_less.css',
+    ], './public/css/admin_storecamp.css');
+
+};
+
 elixir((mix) => {
     mix.less('app.less', 'public/css/app_less.css');
     mix.less('less/AdminLTE.less', "public/css/admin_lte.css");
@@ -76,11 +138,12 @@ elixir((mix) => {
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     __buildScripts(mix);
+    __buildAdminStyles(mix);
+    __buildSiteStyles(mix);
     mix.browserSync({
         proxy: 'storecamp.dev'
     });
 });
-
 
 // create a task to serve the app
 gulp.task('serve', function () {
