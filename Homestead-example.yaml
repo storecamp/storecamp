@@ -23,6 +23,7 @@ databases:
     - homestead_test
     - storecamp_test
     - storecamp
+    - tracker
 
 # blackfire:
 #     - id: foo

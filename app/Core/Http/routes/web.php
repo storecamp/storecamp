@@ -107,7 +107,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
 
         $this->get('/language/{key}', [
             'as' => 'toggleLanguage',
-            'uses' => 'Site\TogglesController@toggleLanguage', ]);
+            'uses' => 'Site\TogglesController@toggleLanguage',]);
     });
 
     $this->get('/htmlElements', [
@@ -118,12 +118,13 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
     $this->group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
         $this->get('dashboard', [
             'uses' => 'Admin\AdminController@show',
-            'as' => 'dashboard', ]);
+            'as' => 'dashboard',]);
         $this->get('/', [
             'uses' => 'Admin\AdminController@show',
             'as' => 'dashboard',
         ]);
 
+        // users
         $this->group(['prefix' => 'users', 'as' => 'users::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\UsersController@index',
@@ -166,6 +167,8 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'get::delete',
             ])->middleware('notAdmin');
         });
+
+        // media
         $this->group(['prefix' => 'media', 'as' => 'media::'], function () {
             $this->get('/index', [
                 'uses' => 'Admin\MediaController@index',
@@ -232,6 +235,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ])->middleware('folderLocked');
         });
 
+        // roles
         $this->group(['prefix' => 'roles', 'as' => 'roles::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\RolesController@index',
@@ -275,6 +279,8 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'get::delete',
             ])->middleware('notDefaultRole');
         });
+
+        // products
         $this->group(['prefix' => 'products', 'as' => 'products::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\ProductsController@index',
@@ -326,6 +332,8 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'get::select',
             ]);
         });
+
+        // reviews
         $this->group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
             $this->get('index',
                 [
@@ -400,6 +408,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ])->middleware('belongsToUserOrAdmin');
         });
 
+        // categories
         $this->group(['prefix' => 'categories', 'as' => 'categories::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\CategoriesController@index',
@@ -448,6 +457,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
+        // attribute groups
         $this->group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\AttributeGroupsController@index',
@@ -497,6 +507,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
+        // attributes
         $this->group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\AttributesController@index',
@@ -546,6 +557,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
+        // subscribers
         $this->group(['prefix' => 'subscribers', 'as' => 'subscribers::'], function () {
             $this->get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'index']);
 
@@ -583,6 +595,8 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'generate',
                 ]);
         });
+
+        // mail
         $this->group(['prefix' => 'mail', 'as' => 'mail::'], function () {
             $this->get('/',
                 ['uses' => 'Admin\MailController@index', 'as' => 'index',
@@ -603,6 +617,8 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'getTmpMails',
                 ]);
         });
+
+        //campaign
         $this->group(['prefix' => 'campaign', 'as' => 'campaign::'], function () {
             $this->get('/', ['uses' => 'Admin\CampaignController@index', 'as' => 'index']);
 
@@ -646,6 +662,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
+        // design
         $this->group(['prefix' => 'design', 'as' => 'design::'], function () {
             $this->group(['prefix' => 'layouts', 'as' => 'layouts::'], function () {
                 $this->get('/', [
@@ -781,6 +798,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             });
         });
 
+        // audits
         $this->group(['prefix' => 'audits', 'as' => 'audits::'], function () {
             $this->get('show/{model}/{id}',
                 [
@@ -788,7 +806,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'show',
                 ]);
         });
-
+        // Sales
         $this->group(['prefix' => 'sales', 'as' => 'sales::'], function () {
             $this->group(['prefix' => 'orders', 'as' => 'orders::'], function () {
                 $this->get('/', [
@@ -798,6 +816,36 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             });
         });
 
+        // Settings
+        $this->group(['as' => 'settings::', 'prefix' => 'settings'], function (\Illuminate\Routing\Router $router) {
+            $router->get('/', [
+                'uses' => 'Admin\SettingsController@index', 'as' => 'index'
+            ]);
+            $router->get('/create', [
+                'uses' => 'Admin\SettingsController@create', 'as' => 'create'
+            ]);
+
+            $router->post('/', [
+                'uses' => 'Admin\SettingsController@store', 'as' => 'store'
+            ]);
+            $router->put('/{id}', [
+                'uses' => 'Admin\SettingsController@update', 'as' => 'update'
+            ]);
+            $router->delete('{id}', [
+                'uses' => 'Admin\SettingsController@delete', 'as' => 'delete'
+            ]);
+            $router->get('{id}/move_up', [
+                'uses' => 'Admin\SettingsController@move_up', 'as' => 'move_up'
+            ]);
+            $router->get('{id}/move_down', [
+                'uses' => 'Admin\SettingsController@move_down', 'as' => 'move_down'
+            ]);
+            $router->get('{id}/delete_value', [
+                'uses' => 'Admin\SettingsController@delete_value', 'as' => 'delete_value'
+            ]);
+        });
+
+        // toggles
         $this->get('toggleBan/{class_name}/{object_id}',
             ['uses' => 'Admin\TogglesController@toggleBan', 'as' => 'toggleBan'])
             ->where('object_id', '[0-9]+');
@@ -805,35 +853,35 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
 
     $this->group(
         ['prefix' => '/admin/log-viewer'], function () {
-            $this->get('/', [
+        $this->get('/', [
             'as' => 'log-viewer::dashboard',
             'uses' => 'Admin\LogViewerController@index',
         ]);
-            $this->group(['prefix' => '/logs'], function () {
-                $this->get('/', [
+        $this->group(['prefix' => '/logs'], function () {
+            $this->get('/', [
                 'as' => 'log-viewer::logs.list',
                 'uses' => 'Admin\LogViewerController@listLogs',
             ]);
-                $this->delete('delete', [
+            $this->delete('delete', [
                 'as' => 'log-viewer::logs.delete',
                 'uses' => 'Admin\LogViewerController@delete',
             ]);
-            });
+        });
 
-            $this->group(['prefix' => '/{date}'], function () {
-                $this->get('/', [
+        $this->group(['prefix' => '/{date}'], function () {
+            $this->get('/', [
                 'as' => 'log-viewer::logs.show',
                 'uses' => 'Admin\LogViewerController@show',
             ]);
 
-                $this->get('download', [
+            $this->get('download', [
                 'as' => 'log-viewer::logs.download',
                 'uses' => 'Admin\LogViewerController@download',
             ]);
-                $this->get('{level}', [
+            $this->get('{level}', [
                 'as' => 'log-viewer::logs.filter',
                 'uses' => 'Admin\LogViewerController@showByLevel',
             ]);
-            });
         });
+    });
 });

@@ -42,4 +42,5 @@ interface SynchronizerInterface
      * @return array
      */
     public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array;
+
 }

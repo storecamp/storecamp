@@ -51,6 +51,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Thread',
             'Message',
             'Participant',
+            'Settings'
         ];
 
         foreach ($models as $repo) {

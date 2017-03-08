@@ -1,4 +1,4 @@
-<div class="btn-group">
+<div class="btn-group" style="display: inline">
     {{ link_to_route($routeName, $createBtn, [], ['class' => 'btn btn-info']) }}
     <?php $showFilters = isset($showFilters) ? $showFilters : true; ?>
     @if($showFilters)
@@ -14,4 +14,5 @@
             @endforelse
         </ul>
     @endif
+        @yield('head_btn-group')
 </div>

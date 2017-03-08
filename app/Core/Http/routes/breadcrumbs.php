@@ -83,6 +83,11 @@ Breadcrumbs::register('products', function ($breadcrumbs) {
     $breadcrumbs->push('Products', route('admin::products::index'));
 });
 
+Breadcrumbs::register('settings', function ($breadcrumbs, $page) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('settings', route('admin::settings::index'));
+});
+
 // / > [Category] > [Page]
 Breadcrumbs::register('page', function ($breadcrumbs, $page) {
     $breadcrumbs->parent('categories', $page->category);

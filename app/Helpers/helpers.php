@@ -291,3 +291,18 @@ if (!function_exists('getAllPreviousValues')) {
     }
 }
 
+if (!function_exists('setting')) {
+    function setting($key, $default = null)
+    {
+        $setting = app('\App\Core\Models\Settings');
+        return $setting->get($key, $default);
+    }
+}
+
+if (!function_exists('settingSet')) {
+    function settingSet($key, $value = null)
+    {
+        $setting = app('\App\Core\Models\Settings');
+        return $setting->set($key, $value);
+    }
+}

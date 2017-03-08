@@ -56,6 +56,10 @@ class SidebarMenuBuilder
             ->addLink('All Users', ['route' => 'admin::users::index'])
             ->addLink('Create User', ['route' => ['admin::users::create']]);
 
+        $settings = app('elements.menu.manager')
+            ->createMenu('<i class="fa fa-cogs"></i> Settings')
+            ->addLink('Settings', ['route' => 'admin::settings::index']);
+
         $mediaStorage = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-files-o"></i> MediaStorage')
             ->addLink('Media Storage', ['route' => 'admin::media::indexs']);
@@ -79,6 +83,7 @@ class SidebarMenuBuilder
             )
             ->menu('administration')
             ->setLabel('Administration')
+            ->addSubMenu($settings, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::settings::*']])
             ->addSubMenu($mediaStorage, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::media::*']])
             ->addSubMenu($access, ['id' => 'link-access', 'url_def' => ['route_pattern' => 'admin::roles::*']])
             ->addSubMenu($logsViewer, ['id' => 'link-logs', 'url_def' => ['route_pattern' => 'log-viewer::*']]);

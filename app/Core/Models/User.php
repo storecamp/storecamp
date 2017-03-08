@@ -212,6 +212,23 @@ class User extends Authenticatable implements
     /**
      * @param string $value
      */
+    public function setIsAdminAttribute($value)
+    {
+        $this->is_admin = $this->hasRole('role:Admin');
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public function getIsAdminAttribute($value)
+    {
+        return $this->hasRole('role:Admin');
+    }
+
+    /**
+     * @param string $value
+     */
     public function setRememberToken($value)
     {
         $this->remember_token = $value;
