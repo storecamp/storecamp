@@ -47,7 +47,7 @@
             {!! $caret !!}
         </a>
         @if(!$item->children->isEmpty())
-        @include('voyager::menu.bootstrap', ['items' => $item->children, 'options' => $options, 'innerLoop' => true])
+        @include('admin.tools.menu.bootstrap', ['items' => $item->children, 'options' => $options, 'innerLoop' => true])
         @endif
     </li>
 @endforeach

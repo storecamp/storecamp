@@ -49,6 +49,7 @@
     "owl.carousel": "^2.2.0",
     "components-font-awesome": "^4.7.0",
     "JSONarea": "jpdevries/JSONarea",
-    "bootstrap-toggle": "^2.2.2"
+    "bootstrap-toggle": "^2.2.2",
+    "Nestable": "dbushell/Nestable"
   }
 }

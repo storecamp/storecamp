@@ -34,7 +34,7 @@
             <span>{{ $item->title }}</span>
         </a>
         @if(!$item->children->isEmpty())
-        @include('voyager::menu.default', ['items' => $item->children, 'options' => $options])
+        @include('admin.tools.menu.default', ['items' => $item->children, 'options' => $options])
         @endif
     </li>
 @endforeach

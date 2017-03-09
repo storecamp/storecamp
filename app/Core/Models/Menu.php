@@ -50,6 +50,7 @@ class Menu extends Model implements Transformable
      */
     public static function display($menuName, $type = null, array $options = [])
     {
+        $type = 'admin';
         // GET THE MENU - sort collection in blade
         $menu = static::where('name', '=', $menuName)
             ->with('parent_items.children')
@@ -60,23 +61,15 @@ class Menu extends Model implements Transformable
             return false;
         }
 
-        event('storecamp.menu.display', $menu);
-
         // Convert options array into object
         $options = (object) $options;
 
         // Set static vars values for admin menus
         if (in_array($type, ['admin', 'admin_menu'])) {
             $permissions = Permission::all();
-            $prefix = trim(route('voyager.dashboard', [], false), '/');
-            $user_permissions = null;
+            $prefix = trim(route('admin::dashboard', [], false), '/');
 
-            if (!\Auth::guest()) {
-                $user = User::find(\Auth::id());
-                $user_permissions = $user->role->permissions->pluck('key')->toArray();
-            }
-
-            $options->user = (object) compact('permissions', 'prefix', 'user_permissions');
+            $options->user = (object) compact('prefix');
 
             // change type to blade template name - TODO funky names, should clean up later
             $type = 'menu.'.$type;
@@ -89,7 +82,7 @@ class Menu extends Model implements Transformable
         }
 
         return new \Illuminate\Support\HtmlString(
-            \Illuminate\Support\Facades\View::make($type, ['items' => $menu->parent_items, 'options' => $options])->render()
+            \Illuminate\Support\Facades\View::make('admin.tools.menu.admin', ['items' => $menu->parent_items, 'options' => $options])->render()
         );
     }
 }

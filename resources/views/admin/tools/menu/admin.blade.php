@@ -1,7 +1,6 @@
 <ol class="dd-list">
 
 @foreach ($items->sortBy('order') as $item)
-
     <li class="dd-item" data-id="{{ $item->id }}">
         <div class="pull-right item_actions">
             <div class="btn-sm btn-danger pull-right delete" data-id="{{ $item->id }}">
@@ -24,10 +23,8 @@
             {{ $item->title }} <small class="url">{{ $item->link() }}</small>
         </div>
         @if(!$item->children->isEmpty())
-            @include('voyager::menu.admin', ['items' => $item->children])
+            @include('admin.tools.menu.admin', ['items' => $item->children])
         @endif
     </li>
-
 @endforeach
-
 </ol>

@@ -306,3 +306,11 @@ if (!function_exists('settingSet')) {
         return $setting->set($key, $value);
     }
 }
+
+if (!function_exists('menu')) {
+    function menu($key)
+    {
+        $menu = app('\App\Core\Models\Menu');
+        return $menu->display($key);
+    }
+}

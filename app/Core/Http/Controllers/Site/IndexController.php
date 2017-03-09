@@ -209,21 +209,6 @@ class IndexController extends BaseController
 
         $toolsMenuItem = MenuItems::firstOrNew([
             'menu_id'    => $menu->id,
-            'title'      => 'Static Pages',
-            'url'        => route('admin::design::staticPages::index'),
-        ]);
-        if (!$toolsMenuItem->exists) {
-            $toolsMenuItem->fill([
-                'target'     => '_self',
-                'icon_class' => 'voyager-tools',
-                'color'      => null,
-                'parent_id'  => null,
-                'order'      => 14,
-            ])->save();
-        }
-
-        $toolsMenuItem = MenuItems::firstOrNew([
-            'menu_id'    => $menu->id,
             'title'      => 'Users',
             'url'        => route('admin::users::index'),
         ]);
