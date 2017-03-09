@@ -2,26 +2,25 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use App\Core\Http\Controllers\Controller;
-use App\Core\Repositories\StaticPagesRepository;
 use Illuminate\Http\Request;
+use App\Core\Models\Tools;
+use App\Core\Repositories\ToolsRepository;
+use App\Http\Controllers\Controller;
 
 /**
- * Class StaticsController.
+ * Class ToolssController
+ * @package App\Http\Controllers
  */
-class StaticController extends Controller
-{
+class ToolsController extends Controller {
+
     private $repository;
 
     /**
-     * StaticController constructor.
-     * @param StaticPagesRepository $repository
+     * @param ToolsRepository $repository
      */
-    public function __construct(StaticPagesRepository $repository)
+    public function __construct(ToolsRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware('role:Admin');
-
     }
 
     public function index(Request $request)
@@ -55,6 +54,7 @@ class StaticController extends Controller
      */
     public function show(Request $request)
     {
+
     }
 
     /**

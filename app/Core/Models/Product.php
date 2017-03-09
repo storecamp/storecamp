@@ -11,6 +11,7 @@ use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\Likeable;
+use App\Core\Traits\MediableCore;
 use App\Core\Traits\ProductCalculations;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;

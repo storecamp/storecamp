@@ -752,50 +752,6 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'get::json',
                 ]);
             });
-            $this->group(['prefix' => 'staticPages', 'as' => 'staticPages::'], function () {
-                $this->get('/', [
-                    'uses' => 'Admin\StaticController@index',
-                    'as' => 'index',
-
-                ]);
-
-                $this->get('create', [
-                    'uses' => 'Admin\StaticController@create',
-                    'as' => 'create',
-
-                ]);
-
-                $this->get('edit/{id}', [
-                    'uses' => 'Admin\StaticController@edit',
-                    'as' => 'edit',
-                ]);
-
-                $this->put('update/{id}', [
-                    'uses' => 'Admin\StaticController@update',
-                    'as' => 'update',
-                ]);
-
-                $this->delete('{id}', [
-                    'uses' => 'Admin\StaticController@destroy',
-                    'as' => 'delete',
-                ]);
-
-                $this->post('store', [
-                    'uses' => 'Admin\StaticController@store',
-                    'as' => 'store',
-                ]);
-
-                $this->get('/delete/{id}', [
-                    'uses' => 'Admin\StaticController@destroy',
-                    'as' => 'get::delete',
-                ]);
-
-                $this->get('/layouts/json', [
-
-                    'uses' => 'Admin\StaticController@getJson',
-                    'as' => 'get::json',
-                ]);
-            });
         });
 
         // audits
@@ -821,10 +777,14 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             $router->get('/', [
                 'uses' => 'Admin\SettingsController@index', 'as' => 'index'
             ]);
-            $router->get('/create', [
-                'uses' => 'Admin\SettingsController@create', 'as' => 'create'
+            $this->get('data', [
+                'uses' => 'Admin\SettingsController@data',
+                'as' => 'data',
             ]);
-
+            $router->get('/create', [
+                'uses' => 'Admin\SettingsController@create',
+                'as' => 'create'
+            ]);
             $router->post('/', [
                 'uses' => 'Admin\SettingsController@store', 'as' => 'store'
             ]);
@@ -844,6 +804,55 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'uses' => 'Admin\SettingsController@delete_value', 'as' => 'delete_value'
             ]);
         });
+
+        // Menu
+        $this->group(['as' => 'menus::', 'prefix' => 'menus'], function () {
+            $this->get('/', [
+                'uses' => 'Admin\MenuController@index', 'as' => 'index'
+            ]);
+            $this->get('data', [
+                'uses' => 'Admin\MenuController@data',
+                'as' => 'data',
+            ]);
+            $this->get('/create', [
+                'uses' => 'Admin\MenuController@create',
+                'as' => 'create'
+            ]);
+            $this->get('/store', [
+                'uses' => 'Admin\MenuController@store',
+                'as' => 'store'
+            ]);
+            $this->get('/edit/{id}', [
+                'uses' => 'Admin\MenuController@edit',
+                'as' => 'edit'
+            ]);
+            $this->get('/{id}', [
+                'uses' => 'Admin\MenuController@update', 'as' => 'update'
+            ]);
+            $this->delete('/{id}', [
+                'uses' => 'Admin\MenuController@delete', 'as' => 'delete'
+            ]);
+            $this->group(['prefix' => '{menu}'], function () {
+                $this->get('builder', [
+                    'uses' => 'Admin\MenuController@builder', 'as' => 'builder'
+                ]);
+                $this->post('order', [
+                    'uses' => 'Admin\MenuController@order_item', 'as' => 'order'
+                ]);
+                $this->group(['as' => 'item::', 'prefix' => 'item'], function () {
+                    $this->delete('{id}', [
+                        'uses' => 'Admin\MenuController@delete_menu', 'as' => 'destroy'
+                    ]);
+                    $this->post('/', [
+                        'uses' => 'Admin\MenuController@add_item', 'as' => 'add'
+                    ]);
+                    $this->put('/', [
+                        'uses' => 'Admin\MenuController@update_item', 'as' => 'update'
+                    ]);
+                });
+            });
+        });
+
 
         // toggles
         $this->get('toggleBan/{class_name}/{object_id}',

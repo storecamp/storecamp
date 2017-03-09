@@ -2,21 +2,23 @@
 
 namespace App\Core\Transformers;
 
-use App\Core\Models\Pages;
 use League\Fractal\TransformerAbstract;
+use App\Core\Models\MenuItems;
 
 /**
- * Class StaticPagesTransformer.
+ * Class MenuItemsTransformer
+ * @package namespace App\Core\Transformers;
  */
-class StaticPagesTransformer extends TransformerAbstract
+class MenuItemsTransformer extends TransformerAbstract
 {
+
     /**
-     * Transform the \StaticPages entity.
-     * @param Pages $model
+     * Transform the \MenuItems entity
+     * @param \MenuItems $model
      *
      * @return array
      */
-    public function transform(Pages $model)
+    public function transform(MenuItems $model)
     {
         return [
             'id'         => (int) $model->id,
@@ -24,7 +26,7 @@ class StaticPagesTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
+            'updated_at' => $model->updated_at
         ];
     }
 }

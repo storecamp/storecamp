@@ -1,4 +1,4 @@
-<div class="btn-group" style="display: inline">
+<div class="btn-group" style="">
     {{ link_to_route($routeName, $createBtn, [], ['class' => 'btn btn-info']) }}
     <?php $showFilters = isset($showFilters) ? $showFilters : true; ?>
     @if($showFilters)

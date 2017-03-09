@@ -2,17 +2,19 @@
 
 namespace App\Core\Transformers;
 
-use App\Core\Models\Pages;
 use League\Fractal\TransformerAbstract;
+use App\Core\Models\Pages;
 
 /**
- * Class StaticPagesTransformer.
+ * Class PagesTransformer
+ * @package namespace App\Core\Transformers;
  */
-class StaticPagesTransformer extends TransformerAbstract
+class PagesTransformer extends TransformerAbstract
 {
+
     /**
-     * Transform the \StaticPages entity.
-     * @param Pages $model
+     * Transform the \Pages entity
+     * @param \Pages $model
      *
      * @return array
      */
@@ -24,7 +26,7 @@ class StaticPagesTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
+            'updated_at' => $model->updated_at
         ];
     }
 }

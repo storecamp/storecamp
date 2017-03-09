@@ -94,6 +94,12 @@ Breadcrumbs::register('page', function ($breadcrumbs, $page) {
     $breadcrumbs->push($page->title, route('page', $page->id));
 });
 
+Breadcrumbs::register('menus', function ($breadcrumbs, $page) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('menus', route('admin::menus::index'));
+});
+
+
 // SITE Section
 // Home
 Breadcrumbs::register('Home', function ($breadcrumbs) {

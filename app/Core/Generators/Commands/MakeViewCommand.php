@@ -105,7 +105,7 @@ class MakeViewCommand extends Command
                         ['view' => $view]
                     ))->render(),
                     (new Stub(
-                        $basePath.'_stubs/view-make/create.blade.stub',
+                        $basePath.'_stubs/view-make/create.blade.php.stub',
                         ['view' => $view]
                     ))->render(),
                     (new Stub(

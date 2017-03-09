@@ -48,9 +48,7 @@ class SidebarMenuBuilder
         $design = app('elements.menu.manager')
             ->createMenu('<i class="fa  fa-paint-brush"></i> Design')
             ->addLink('Layouts', ['route' => 'admin::design::layouts::index'])
-            ->addLink('Banners', ['route' => 'admin::design::banners::index'])
-            ->addLink('Static Pages', ['route' => ['admin::design::staticPages::index']]);
-
+            ->addLink('Banners', ['route' => 'admin::design::banners::index']);
         $users = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-users"></i> Users')
             ->addLink('All Users', ['route' => 'admin::users::index'])
@@ -97,6 +95,7 @@ class SidebarMenuBuilder
             ->menu('sidebar')
             ->setLabel('MAIN NAVIGATION')
             ->addLink('<i class="fa fa-th"></i> Widgets', ['route' => 'admin::dashboard'])
+            ->addLink('<i class="fa fa-th"></i> Menus', ['route' => 'admin::menus::index'])
             ->addSubMenu($users, ['id' => 'link-users', 'url_def' => ['route_pattern' => 'admin::users::*']])
             ->addSubMenu($design, ['id' => 'link-design', 'url_def' => ['route_pattern' => 'admin::design::*']])
             ->addSubMenu($marketing, ['id' => 'link-marketing', 'url_def' => ['route_pattern' => 'admin::marketing::*']])
