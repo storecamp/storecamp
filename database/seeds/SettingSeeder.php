@@ -66,7 +66,6 @@ class SettingSeeder extends Seeder
             'order' => 7,
         ])->save();
 
-
         $settingSet = settingSet('google_analytics_client_id');
         $settingSet->fill([
             'value' => 'Google Analytics Client ID',

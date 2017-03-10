@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('resolveModelName')) {
+if (! function_exists('resolveModelName')) {
     /**
      * @param $model
      * @return string
@@ -13,7 +13,7 @@ if (!function_exists('resolveModelName')) {
     }
 }
 
-if (!function_exists('determineActiveDBandResolveDown')) {
+if (! function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
@@ -31,7 +31,7 @@ if (!function_exists('determineActiveDBandResolveDown')) {
     }
 }
 
-if (!function_exists('determineActiveDBandResolveDown')) {
+if (! function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
@@ -49,7 +49,7 @@ if (!function_exists('determineActiveDBandResolveDown')) {
     }
 }
 
-if (!function_exists('formatBytes')) {
+if (! function_exists('formatBytes')) {
 
     /**
      * @param $bytes
@@ -68,11 +68,11 @@ if (!function_exists('formatBytes')) {
         $bytes /= pow(1024, $pow);
 //         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 }
 
-if (!function_exists('buildSelect')) {
+if (! function_exists('buildSelect')) {
 
     /**
      * @param $actionUrl
@@ -92,7 +92,7 @@ if (!function_exists('buildSelect')) {
     }
 }
 
-if (!function_exists('cartNumberFormat')) {
+if (! function_exists('cartNumberFormat')) {
     /**
      * Get the Formated number.
      *
@@ -121,7 +121,7 @@ if (!function_exists('cartNumberFormat')) {
     }
 }
 
-if (!function_exists('shopFormat')) {
+if (! function_exists('shopFormat')) {
     /**
      * @param string $value
      * @return string
@@ -132,7 +132,7 @@ if (!function_exists('shopFormat')) {
     }
 }
 
-if (!function_exists('pushParentCategoryBreadcrumbs')) {
+if (! function_exists('pushParentCategoryBreadcrumbs')) {
     /**
      * @param $category
      * @param $breadcrumbs
@@ -149,7 +149,7 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
     }
 }
 
-if (!function_exists('getCategoryFullPath')) {
+if (! function_exists('getCategoryFullPath')) {
     /**
      * @param \App\Core\Models\Category $category
      * @param string $type
@@ -161,7 +161,7 @@ if (!function_exists('getCategoryFullPath')) {
     }
 }
 
-if (!function_exists('getFilesByFormat')) {
+if (! function_exists('getFilesByFormat')) {
     /**
      * @param string $root
      * @param string $format
@@ -177,7 +177,7 @@ if (!function_exists('getFilesByFormat')) {
     }
 }
 
-if (!function_exists('getBaseClassName')) {
+if (! function_exists('getBaseClassName')) {
     /**
      * @param $class
      * @param bool $snake
@@ -194,7 +194,7 @@ if (!function_exists('getBaseClassName')) {
     }
 }
 
-if (!function_exists('getFileNames')) {
+if (! function_exists('getFileNames')) {
     /**
      * @param $root
      * @return array
@@ -205,7 +205,7 @@ if (!function_exists('getFileNames')) {
         $filesArr = [];
         foreach ($files as $file) {
             $extension = $file->getExtension();
-            $fileName = explode('.' . $extension, $file->getBasename());
+            $fileName = explode('.'.$extension, $file->getBasename());
             $filesArr[] = $fileName[0];
         }
 
@@ -213,8 +213,7 @@ if (!function_exists('getFileNames')) {
     }
 }
 
-
-if (!function_exists('getPrevValue')) {
+if (! function_exists('getPrevValue')) {
     /**
      * @param $key
      * @param $array
@@ -223,21 +222,22 @@ if (!function_exists('getPrevValue')) {
     function getPrevValue($key, $array)
     {
         $key = array_search($key, $array);
-        if (!isset($array[$key])) {
-            return null;
+        if (! isset($array[$key])) {
+            return;
         }
-        $prevK = NULL;
+        $prevK = null;
         foreach ($array as $k => $v) {
             if ($k === $key) {
                 return $prevK;
             }
             $prevK = $array[$k];
         }
+
         return $prevK;
     }
 }
 
-if (!function_exists('getNextValue')) {
+if (! function_exists('getNextValue')) {
     /**
      * @param $key
      * @param $array
@@ -246,25 +246,26 @@ if (!function_exists('getNextValue')) {
     function getNextValue($key, $array)
     {
         $key = array_search($key, $array);
-        if (!isset($array[$key])) {
-            return null;
+        if (! isset($array[$key])) {
+            return;
         }
-        $nextK = NULL;
+        $nextK = null;
         foreach ($array as $k => $v) {
             if ($k === $key) {
                 return $nextK;
             }
-            if (!isset($array[$k + 2])) {
-                return null;
+            if (! isset($array[$k + 2])) {
+                return;
             } else {
                 $nextK = $array[$k + 2];
             }
         }
+
         return $nextK;
     }
 }
 
-if (!function_exists('getAllPreviousValues')) {
+if (! function_exists('getAllPreviousValues')) {
     /**
      * @param $key
      * @param $array
@@ -273,8 +274,8 @@ if (!function_exists('getAllPreviousValues')) {
     function getAllPreviousValues($key, $array): ?array
     {
         $key = array_search($key, $array);
-        if (!isset($array[$key])) {
-            return null;
+        if (! isset($array[$key])) {
+            return;
         }
         $prevK = null;
         foreach ($array as $k => $v) {
@@ -282,16 +283,17 @@ if (!function_exists('getAllPreviousValues')) {
                 return $prevK;
             }
             $count = count($array);
-            for ($i=$key; $i < $count; $i++){
+            for ($i = $key; $i < $count; $i++) {
                 unset($array[$i]);
             }
             $prevK = $array;
         }
+
         return $prevK;
     }
 }
 
-if (!function_exists('setting')) {
+if (! function_exists('setting')) {
     /**
      * @param $key
      * @param null $default
@@ -300,11 +302,12 @@ if (!function_exists('setting')) {
     function setting($key, $default = null)
     {
         $setting = app('\App\Core\Models\Settings');
+
         return $setting->get($key, $default);
     }
 }
 
-if (!function_exists('settingSet')) {
+if (! function_exists('settingSet')) {
     /**
      * @param $key
      * @param null $value
@@ -313,20 +316,22 @@ if (!function_exists('settingSet')) {
     function settingSet($key, $value = null)
     {
         $setting = app('\App\Core\Models\Settings');
+
         return $setting->set($key, $value);
     }
 }
 
-if (!function_exists('menu')) {
+if (! function_exists('menu')) {
     /**
      * @param $key
      * @param string $type
      * @param array $options
      * @return \Illuminate\Support\HtmlString
      */
-    function menu($key, $type = "default", array $options = [])
+    function menu($key, $type = 'default', array $options = [])
     {
         $menu = app('\App\Core\Components\Menu\MenuDbBuilder');
+
         return $menu->renderFromDb($key, $type, $options);
     }
 }

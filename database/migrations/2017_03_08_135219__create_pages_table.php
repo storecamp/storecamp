@@ -1,18 +1,17 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreatePagesTable extends Migration
 {
-
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
         // Create table for storing roles
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
@@ -27,16 +26,15 @@ class CreatePagesTable extends Migration
             $table->enum('status', \App\Core\Models\Pages::$statuses)->default(\App\Core\Models\Pages::STATUS_INACTIVE);
             $table->timestamps();
         });
-	}
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('pages');
-	}
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('pages');
+    }
 }

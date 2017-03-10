@@ -23,7 +23,7 @@ class MenuItems extends Model implements Transformable
         'icon_class',
         'color',
         'menu_id',
-        'parent_id'
+        'parent_id',
     ];
     protected $guarded = ['id', '_token'];
 
@@ -32,7 +32,7 @@ class MenuItems extends Model implements Transformable
      */
     public function children()
     {
-        return $this->hasMany(MenuItems::class, 'parent_id')
+        return $this->hasMany(self::class, 'parent_id')
             ->with('children');
     }
 
@@ -42,12 +42,12 @@ class MenuItems extends Model implements Transformable
      */
     public function link($absolute = false)
     {
-        if (!is_null($this->route)) {
-            if (!\Route::has($this->route)) {
+        if (! is_null($this->route)) {
+            if (! \Route::has($this->route)) {
                 return '#';
             }
 
-            $parameters = (array)$this->getParametersAttribute();
+            $parameters = (array) $this->getParametersAttribute();
 
             return route($this->route, $parameters, $absolute);
         }

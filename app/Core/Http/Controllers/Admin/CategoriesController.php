@@ -104,7 +104,6 @@ class CategoriesController extends BaseController
         }
 
         return redirect('admin/categories');
-
     }
 
     /**
@@ -136,7 +135,6 @@ class CategoriesController extends BaseController
         try {
             $category = $this->repository->find($id);
             $description = $category->description;
-
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -157,7 +155,6 @@ class CategoriesController extends BaseController
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
             $preferredTag = 'thumbnail';
-
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
@@ -175,7 +172,6 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->update($data, $id);
-
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
@@ -194,7 +190,7 @@ class CategoriesController extends BaseController
         try {
             $deleted = $this->categorySystem->delete($id);
             if (! $deleted) {
-                $this->flash('warning','Sorry category is not deleted');
+                $this->flash('warning', 'Sorry category is not deleted');
             }
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

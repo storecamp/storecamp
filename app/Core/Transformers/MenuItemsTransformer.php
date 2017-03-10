@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\MenuItems;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class MenuItemsTransformer
- * @package namespace App\Core\Transformers;
+ * Class MenuItemsTransformer.
  */
 class MenuItemsTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \MenuItems entity
+     * Transform the \MenuItems entity.
      * @param \MenuItems $model
      *
      * @return array
@@ -26,7 +24,7 @@ class MenuItemsTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

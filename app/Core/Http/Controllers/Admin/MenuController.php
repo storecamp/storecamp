@@ -4,14 +4,13 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Menu;
 use App\Core\Repositories\MenuItemsRepository;
+use App\Core\Repositories\MenuRepository;
 use App\Core\Transformers\MenusDataTransformer;
 use Illuminate\Http\Request;
-use App\Core\Repositories\MenuRepository;
 use Yajra\Datatables\Datatables;
 
 /**
- * Class MenusController
- * @package App\Http\Controllers
+ * Class MenusController.
  */
 class MenuController extends BaseController
 {
@@ -108,6 +107,7 @@ class MenuController extends BaseController
 
         return redirect()->route('admin::design::menus::index');
     }
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -147,11 +147,12 @@ class MenuController extends BaseController
             ->orderBy('order', 'DESC')
             ->first();
 
-        if (!is_null($highestOrderMenuItem)) {
+        if (! is_null($highestOrderMenuItem)) {
             $data['order'] = intval($highestOrderMenuItem->order) + 1;
         }
         $item = $this->menuItems->createOrFirst($data);
         $this->flash('success', 'Successfully Created New Menu Item.');
+
         return redirect()
             ->route('admin::design::menus::builder', [$item->menu_id]);
     }
@@ -169,6 +170,7 @@ class MenuController extends BaseController
         $menuItem->update($data);
 
         $this->flash('success', 'Successfully Updated Menu Item.');
+
         return redirect()
             ->route('admin::design::menus::builder', [$menuItem->menu_id]);
     }
@@ -209,6 +211,7 @@ class MenuController extends BaseController
     public function delete(Request $request, $id)
     {
         $deleted = $this->menu->delete($id);
+
         return back();
     }
 }

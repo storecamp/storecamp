@@ -53,7 +53,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Participant',
             'Settings',
             'Menu',
-            'MenuItems'
+            'MenuItems',
         ];
 
         foreach ($models as $repo) {

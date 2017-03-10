@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use \App\Core\Models\MenuItems;
 
 class MenuItemsSeeder extends Seeder
 {
@@ -13,7 +12,7 @@ class MenuItemsSeeder extends Seeder
     public function run()
     {
         $menu = \App\Core\Models\Menu::firstOrCreate([
-            'name' => 'admin'
+            'name' => 'admin',
         ]);
 
         $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
@@ -27,7 +26,7 @@ class MenuItemsSeeder extends Seeder
             'color' => null,
             'parent_id' => null,
             'order' => 1,
-            ''
+            '',
         ]);
     }
 }

@@ -2,14 +2,11 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 /**
- * Class ServicesController
- * @package App\Http\Controllers
+ * Class ServicesController.
  */
-class ServiceController extends BaseController {
-
+class ServiceController extends BaseController
+{
     /**
      * Settings Page.
      *

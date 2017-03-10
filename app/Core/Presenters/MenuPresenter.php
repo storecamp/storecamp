@@ -6,14 +6,12 @@ use App\Core\Transformers\MenuTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class MenuPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class MenuPresenter.
  */
 class MenuPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

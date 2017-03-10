@@ -2,18 +2,16 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Settings;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class SettingsTransformer
- * @package namespace App\Core\Transformers;
+ * Class SettingsTransformer.
  */
 class SettingsTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Settings entity
+     * Transform the \Settings entity.
      * @param \Settings $model
      *
      * @return array
@@ -26,7 +24,7 @@ class SettingsTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

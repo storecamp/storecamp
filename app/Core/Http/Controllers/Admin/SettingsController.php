@@ -7,12 +7,10 @@ use App\Core\Repositories\SettingsRepository;
 use Illuminate\Http\Request;
 
 /**
- * Class SettingsController
- * @package App\Core\Http\Controllers\Admin
+ * Class SettingsController.
  */
 class SettingsController extends BaseController
 {
-
     //TODO implement error handling
     public $viewPathBase = 'admin.settings.';
     public $errorRedirectPath = 'admin::settings::index';
@@ -110,7 +108,7 @@ class SettingsController extends BaseController
         $swapOrder = $setting->order;
         $previousSetting = $this->settings->order('order', 'DESC')->model->where('order', '<', $swapOrder)->first();
 
-        $message = "This is already at the top of the list";
+        $message = 'This is already at the top of the list';
         $type = 'error';
         if (isset($previousSetting->order)) {
             $setting->order = $previousSetting->order;
@@ -159,7 +157,6 @@ class SettingsController extends BaseController
         $previousSetting = $this->settings->order('order', 'ASC')->model->where('order', '>', $swapOrder)->first();
         $message = 'This is already at the bottom of the list';
         $type = 'error';
-
 
         if (isset($previousSetting->order)) {
             $setting->order = $previousSetting->order;
