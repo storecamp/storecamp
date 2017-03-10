@@ -44,7 +44,11 @@ class LoginController extends Controller
      */
     private function redirectTo(Redirector $redirector, $user)
     {
-        return $redirector->intended($this->redirectTo);
+        if ($user->hasRole('Admin')) {
+            return $redirector->to($this->redirectTo);
+        } else {
+            return $redirector->intended($this->redirectTo);
+        }
     }
 
     /**

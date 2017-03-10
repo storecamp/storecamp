@@ -12,7 +12,7 @@ class MenuItemsSeeder extends Seeder
     public function run()
     {
         $menu = \App\Core\Models\Menu::firstOrCreate([
-            'name' => 'admin',
+            'name' => 'modules',
         ]);
 
         $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
@@ -20,13 +20,12 @@ class MenuItemsSeeder extends Seeder
         $menuItem = $menuItemInstance->createOrFirst([
             'menu_id' => $menu->id,
             'title' => 'Modules',
-            'route' => 'admin::module',
+            'route' => 'admin::modules::index',
             'target' => '_self',
-            'icon_class' => 'fa fa-th',
+            'icon_class' => 'fa fa-list',
             'color' => null,
             'parent_id' => null,
-            'order' => 1,
-            '',
+            'order' => 1
         ]);
     }
 }
