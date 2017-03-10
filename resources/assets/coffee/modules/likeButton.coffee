@@ -43,12 +43,15 @@ $.StoreCamp.likeBTN =
               window.location.href = _this.o.redirectIfLogin
             if data.type == 'liked'
               _this._liked(formLike, button, buttonI, data)
+              toastr.success('liked' , data.message)
             if data.type == 'disliked'
               _this._disliked(formLike, button, buttonI, data)
+              toastr.success('disliked' , data.message)
             return
-          error: (data) ->
+          error: (xhr, textStatus, errorThrown) ->
             formLike.replaceWith(likeClone)
-            console.log 'error' + '   ' + data
+            console.log 'error' + '   ' + xhr
+            toastr.error(xhr.statusText, xhr.responseText)
             return
         }, 'html'
         return

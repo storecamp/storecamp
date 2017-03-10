@@ -4,7 +4,7 @@
 @endsection
 @include('admin.partial._contentheader_title', [$model = new \App\Core\Models\Menu(), $message = "Amount of Menus"])
 @section('contentheader_description')
-    @include('admin.partial._content-head_btns', [$routeName = "admin::menus::create", $createBtn = 'Add New Menu'])
+    @include('admin.partial._content-head_btns', [$routeName = "admin::design::menus::create", $createBtn = 'Add New Menu'])
     <button class="btn pull-right" style="margin-bottom: 20px;" data-toggle="collapse" href="#info" aria-expanded="false"
             aria-controls="info">
         <span class="fa fa-info"></span>info
@@ -56,7 +56,7 @@
                     </h4>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('admin::menus::index') }}" id="delete_form" method="POST">
+                    <form action="{{ route('admin::design::menus::index') }}" id="delete_form" method="POST">
                         {{ method_field("DELETE") }}
                         {{ csrf_field() }}
                         <input type="submit" class="btn btn-danger pull-right delete-confirm" value="Yes, Delete This Menu">
@@ -73,7 +73,7 @@
             $('#menus-table').DataTable({
                 serverSide: true,
                 processing: true,
-                ajax: "{{route('admin::menus::data')}}",
+                ajax: "{{route('admin::design::menus::data')}}",
                 stateSave: true,
                 columns: [
                     {data: 'id'},

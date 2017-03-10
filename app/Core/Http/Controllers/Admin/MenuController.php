@@ -26,7 +26,7 @@ class MenuController extends BaseController
     private $menuItems;
 
     public $viewPathBase = 'admin.tools.menus';
-    public $errorRedirectPath = 'admin::menu::index';
+    public $errorRedirectPath = 'admin::design::menus::index';
 
     /**
      * MenuController constructor.
@@ -94,7 +94,7 @@ class MenuController extends BaseController
         $data = $request->all();
         $menu = $this->menu->update($data, $id);
 
-        return redirect()->to('admin::menus::index');
+        return redirect()->route('admin::design::menus::index');
     }
 
     /**
@@ -106,7 +106,7 @@ class MenuController extends BaseController
         $data = $request->all();
         $menu = $this->menu->create($data);
 
-        return redirect()->to('admin::menus::index');
+        return redirect()->route('admin::design::menus::index');
     }
     /**
      * @param $id
@@ -130,7 +130,7 @@ class MenuController extends BaseController
         $this->flash('success', 'Successfully Deleted Menu Item.');
 
         return redirect()
-            ->route('admin::menus::builder', [$menu]);
+            ->route('admin::design::menus::builder', [$menu]);
     }
 
     /**
@@ -153,7 +153,7 @@ class MenuController extends BaseController
         $item = $this->menuItems->createOrFirst($data);
         $this->flash('success', 'Successfully Created New Menu Item.');
         return redirect()
-            ->route('admin::menus::builder', [$item->menu_id]);
+            ->route('admin::design::menus::builder', [$item->menu_id]);
     }
 
     /**
@@ -170,7 +170,7 @@ class MenuController extends BaseController
 
         $this->flash('success', 'Successfully Updated Menu Item.');
         return redirect()
-            ->route('admin::menus::builder', [$menuItem->menu_id]);
+            ->route('admin::design::menus::builder', [$menuItem->menu_id]);
     }
 
     /**

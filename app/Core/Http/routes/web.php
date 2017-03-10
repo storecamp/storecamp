@@ -664,6 +664,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
 
         // design
         $this->group(['prefix' => 'design', 'as' => 'design::'], function () {
+            $this->get('/index', ['uses' => 'Admin\DesignController@index', 'as' => 'index']);
             $this->group(['prefix' => 'layouts', 'as' => 'layouts::'], function () {
                 $this->get('/', [
                     'uses' => 'Admin\LayoutController@index',
@@ -752,6 +753,54 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'get::json',
                 ]);
             });
+            // Menu
+            $this->group(['as' => 'menus::', 'prefix' => 'menus'], function () {
+                $this->get('/', [
+                    'uses' => 'Admin\MenuController@index', 'as' => 'index'
+                ]);
+                $this->get('data', [
+                    'uses' => 'Admin\MenuController@data',
+                    'as' => 'data',
+                ]);
+                $this->get('/create', [
+                    'uses' => 'Admin\MenuController@create',
+                    'as' => 'create'
+                ]);
+                $this->post('/store', [
+                    'uses' => 'Admin\MenuController@store',
+                    'as' => 'store'
+                ]);
+                $this->get('/edit/{id}', [
+                    'uses' => 'Admin\MenuController@edit',
+                    'as' => 'edit'
+                ]);
+                $this->put('/update/{id}', [
+                    'uses' => 'Admin\MenuController@update',
+                    'as' => 'update'
+                ]);
+                $this->delete('/{id}', [
+                    'uses' => 'Admin\MenuController@delete', 'as' => 'delete'
+                ]);
+                $this->group(['prefix' => '{menu}'], function () {
+                    $this->get('builder', [
+                        'uses' => 'Admin\MenuController@builder', 'as' => 'builder'
+                    ]);
+                    $this->post('order', [
+                        'uses' => 'Admin\MenuController@order_item', 'as' => 'order'
+                    ]);
+                    $this->group(['as' => 'item::', 'prefix' => 'item'], function () {
+                        $this->delete('{id}', [
+                            'uses' => 'Admin\MenuController@delete_menu', 'as' => 'destroy'
+                        ]);
+                        $this->post('/', [
+                            'uses' => 'Admin\MenuController@add_item', 'as' => 'add'
+                        ]);
+                        $this->put('/', [
+                            'uses' => 'Admin\MenuController@update_item', 'as' => 'update'
+                        ]);
+                    });
+                });
+            });
         });
 
         // audits
@@ -803,54 +852,6 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             $router->get('{id}/delete_value', [
                 'uses' => 'Admin\SettingsController@delete_value', 'as' => 'delete_value'
             ]);
-        });
-
-        // Menu
-        $this->group(['as' => 'menus::', 'prefix' => 'menus'], function () {
-            $this->get('/', [
-                'uses' => 'Admin\MenuController@index', 'as' => 'index'
-            ]);
-            $this->get('data', [
-                'uses' => 'Admin\MenuController@data',
-                'as' => 'data',
-            ]);
-            $this->get('/create', [
-                'uses' => 'Admin\MenuController@create',
-                'as' => 'create'
-            ]);
-            $this->get('/store', [
-                'uses' => 'Admin\MenuController@store',
-                'as' => 'store'
-            ]);
-            $this->get('/edit/{id}', [
-                'uses' => 'Admin\MenuController@edit',
-                'as' => 'edit'
-            ]);
-            $this->get('/{id}', [
-                'uses' => 'Admin\MenuController@update', 'as' => 'update'
-            ]);
-            $this->delete('/{id}', [
-                'uses' => 'Admin\MenuController@delete', 'as' => 'delete'
-            ]);
-            $this->group(['prefix' => '{menu}'], function () {
-                $this->get('builder', [
-                    'uses' => 'Admin\MenuController@builder', 'as' => 'builder'
-                ]);
-                $this->post('order', [
-                    'uses' => 'Admin\MenuController@order_item', 'as' => 'order'
-                ]);
-                $this->group(['as' => 'item::', 'prefix' => 'item'], function () {
-                    $this->delete('{id}', [
-                        'uses' => 'Admin\MenuController@delete_menu', 'as' => 'destroy'
-                    ]);
-                    $this->post('/', [
-                        'uses' => 'Admin\MenuController@add_item', 'as' => 'add'
-                    ]);
-                    $this->put('/', [
-                        'uses' => 'Admin\MenuController@update_item', 'as' => 'update'
-                    ]);
-                });
-            });
         });
 
 

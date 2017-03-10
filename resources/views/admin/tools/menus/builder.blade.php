@@ -4,7 +4,7 @@
 @endsection
 @include('admin.partial._contentheader_title', [$model = new \App\Core\Models\Menu(), $message = "Amount of Menus"])
 @section('contentheader_description')
-    @include('admin.partial._content-head_btns', [$routeName = "admin::menus::create", $classBtn="add_item", $createBtn = 'Add New Menu Item'])
+    @include('admin.partial._content-head_btns', [$routeName = "admin::design::menus::create", $classBtn="add_item", $createBtn = 'Add New Menu Item'])
     <button class="btn pull-right" style="margin-bottom: 20px;" data-toggle="collapse" href="#info" aria-expanded="false"
             aria-controls="info">
         <span class="fa fa-info"></span>info
@@ -43,7 +43,7 @@
                         item?</h4>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('admin::menus::item::destroy', ['menu' => $menu->id, 'id' => '__id']) }}"
+                    <form action="{{ route('admin::design::menus::item::destroy', ['menu' => $menu->id, 'id' => '__id']) }}"
                           id="delete_form"
                           method="POST">
                         {{ method_field("DELETE") }}
@@ -66,7 +66,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><i class="builder-plus"></i> Create a New Menu Item</h4>
                 </div>
-                <form action="{{ route('admin::menus::item::add', ['menu' => $menu->id]) }}" id="delete_form"
+                <form action="{{ route('admin::design::menus::item::add', ['menu' => $menu->id]) }}" id="delete_form"
                       method="POST">
                     <div class="modal-body">
                         <label for="name">Title of the Menu Item</label>
@@ -113,7 +113,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><i class="builder-edit"></i> Edit Menu Item</h4>
                 </div>
-                <form action="{{ route('admin::menus::item::update', ['menu' => $menu->id]) }}" id="edit_form"
+                <form action="{{ route('admin::design::menus::item::update', ['menu' => $menu->id]) }}" id="edit_form"
                       method="POST">
                     {{ method_field("PUT") }}
                     {{ csrf_field() }}
@@ -206,7 +206,7 @@
             });
 
             $('.dd').on('change', function (e) {
-                $.post('{!!  route('admin::menus::order',['menu' => $menu->id])  !!}', {
+                $.post('{!!  route('admin::design::menus::order',['menu' => $menu->id])  !!}', {
                     order: JSON.stringify($('.dd').nestable('serialize')),
                     _token: '{{ csrf_token() }}'
                 }, function (data) {

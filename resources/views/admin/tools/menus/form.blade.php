@@ -1,7 +1,7 @@
 @if(isset($menu))
-    {{ Form::model($menu, ['route' => ['admin::menus::update', $menu->id], 'method' => 'PUT', 'files' => true]) }}
+    {{ Form::model($menu, ['route' => ['admin::design::menus::update', $menu->id], 'method' => 'PUT', 'files' => false]) }}
 @else
-    {{ Form::open(['files' => false, 'route' => 'admin::menus::store']) }}
+    {{ Form::open(['files' => false, 'route' => 'admin::design::menus::store']) }}
 @endif
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">

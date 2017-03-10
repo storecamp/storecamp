@@ -21,7 +21,7 @@ $font_1: monospace;
 //@extend-elements
 //original selectors
 //.dd-item, .dd-empty, .dd-placeholder
-%extend_1 {
+%extend_nested_1 {
   display: block;
   position: relative;
   margin: 0;
@@ -33,7 +33,7 @@ $font_1: monospace;
 
 //original selectors
 //.dd-placeholder, .dd-empty
-%extend_2 {
+%extend_nested_2 {
   margin: 5px 0;
   padding: 0;
   min-height: 30px;
@@ -77,7 +77,7 @@ $font_1: monospace;
   }
 }
 .dd-item {
-  @extend %extend_1;
+  @extend %extend_nested_1;
   > button {
     display: block;
     position: relative;
@@ -116,8 +116,8 @@ $font_1: monospace;
   }
 }
 .dd-empty {
-  @extend %extend_1;
-  @extend %extend_2;
+  @extend %extend_nested_1;
+  @extend %extend_nested_2;
   border: 1px dashed $color_pink_swan_approx;
   min-height: 100px;
   background-color: $mercury;
@@ -126,8 +126,8 @@ $font_1: monospace;
   background-position: 0 0, 30px 30px;
 }
 .dd-placeholder {
-  @extend %extend_1;
-  @extend %extend_2;
+  @extend %extend_nested_1;
+  @extend %extend_nested_2;
 }
 .dd-handle {
   display: block;

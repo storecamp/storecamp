@@ -94,11 +94,15 @@ Breadcrumbs::register('page', function ($breadcrumbs, $page) {
     $breadcrumbs->push($page->title, route('page', $page->id));
 });
 
-Breadcrumbs::register('menus', function ($breadcrumbs, $page) {
+Breadcrumbs::register('design', function ($breadcrumbs) {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Menus', route('admin::menus::index'));
+    $breadcrumbs->push('Design', route('admin::design::index'));
 });
 
+Breadcrumbs::register('menus', function ($breadcrumbs) {
+    $breadcrumbs->parent('design');
+    $breadcrumbs->push('Menus', route('admin::design::menus::index'));
+});
 
 // SITE Section
 // Home
