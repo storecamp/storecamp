@@ -48,7 +48,7 @@ class OrdersController extends BaseController
      */
     public function index(Request $request, string $status = null): \Illuminate\View\View
     {
-        if (!in_array($status, $this->statuses)) {
+        if (! in_array($status, $this->statuses)) {
             if (\Auth::check()) {
                 $status = 'showAddress';
             } else {
@@ -56,7 +56,7 @@ class OrdersController extends BaseController
             }
         }
         $getAllPreviousValue = getAllPreviousValues($status, $this->statuses);
-        if (!$getAllPreviousValue) {
+        if (! $getAllPreviousValue) {
             $getAllPreviousValue = [];
         }
 

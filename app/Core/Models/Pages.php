@@ -10,8 +10,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class Pages
- * @package App\Core\Models
+ * Class Pages.
  */
 class Pages extends Model implements Transformable
 {
@@ -24,9 +23,7 @@ class Pages extends Model implements Transformable
      * Statuses.
      */
     const STATUS_ACTIVE = 'ACTIVE';
-    /**
-     *
-     */
+
     const STATUS_INACTIVE = 'INACTIVE';
 
     /**
@@ -40,7 +37,7 @@ class Pages extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**

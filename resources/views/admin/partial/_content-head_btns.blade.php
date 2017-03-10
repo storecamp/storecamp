@@ -1,5 +1,5 @@
 <div class="btn-group" style="">
-        <?php $class = isset($classBtn) ? "btn btn-info " . $classBtn : "btn btn-info"; ?>
+        <?php $class = isset($classBtn) ? 'btn btn-info '.$classBtn : 'btn btn-info'; ?>
     {{ link_to_route($routeName, $createBtn, [], ['class' => $class ]) }}
     <?php $showFilters = isset($showFilters) ? $showFilters : true; ?>
     @if($showFilters)

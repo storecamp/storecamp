@@ -11,7 +11,6 @@ use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\Likeable;
-use App\Core\Traits\MediableCore;
 use App\Core\Traits\ProductCalculations;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
@@ -464,5 +463,4 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
     }
-
 }

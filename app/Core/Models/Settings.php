@@ -9,8 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class Settings
- * @package App\Core\Models
+ * Class Settings.
  */
 class Settings extends Model implements Transformable
 {
@@ -21,22 +20,20 @@ class Settings extends Model implements Transformable
     /**
      * @var string
      */
-    protected $table = "settings";
+    protected $table = 'settings';
     /**
      * @var array
      */
     protected $fillable = ['key', 'value', 'type', 'order'];
 
     protected $casts = [
-        'value' => 'array'
+        'value' => 'array',
     ];
     /**
      * @var bool
      */
     public $timestamps = false;
-    /**
-     *
-     */
+
     public static function boot()
     {
         parent::boot();
@@ -68,14 +65,15 @@ class Settings extends Model implements Transformable
     {
         $setting = $this->where('key', '=', $key);
 
-        if (!$setting->count()) {
+        if (! $setting->count()) {
             $this->key = $key;
-            if($value) {
+            if ($value) {
                 $this->value = $value;
-            }else {
+            } else {
                 $this->value = null;
             }
             $this->save();
+
             return $this;
         } else {
             $locked = $setting->select('locked')->first()->locked;
@@ -83,12 +81,13 @@ class Settings extends Model implements Transformable
                 throw new \Exception('Setting Cannot be updated. It is locked');
             }
             $setting = $setting->first();
-            if($value) {
+            if ($value) {
                 $setting->value = $value;
-            }else {
+            } else {
                 $setting->value = null;
             }
             $setting->save();
+
             return $setting;
         }
     }

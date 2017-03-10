@@ -6,14 +6,12 @@ use App\Core\Transformers\SettingsTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class SettingsPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class SettingsPresenter.
  */
 class SettingsPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

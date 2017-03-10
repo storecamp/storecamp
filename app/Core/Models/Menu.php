@@ -8,8 +8,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * Class Menu
- * @package App\Core\Models
+ * Class Menu.
  */
 class Menu extends Model implements Transformable
 {
@@ -21,14 +20,10 @@ class Menu extends Model implements Transformable
      */
     protected $fillable = [];
 
-    /**
-     *
-     */
     public static function boot()
     {
         parent::boot();
     }
-
 
     /**
      * @var string

@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\SettingsRepository;
 use App\Core\Models\Settings;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class SettingsRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class SettingsRepositoryEloquent.
  */
 class SettingsRepositoryEloquent extends BaseRepository implements SettingsRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class SettingsRepositoryEloquent extends BaseRepository implements SettingsRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

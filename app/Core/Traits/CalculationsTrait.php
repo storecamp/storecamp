@@ -213,6 +213,7 @@ trait CalculationsTrait
             return $reviews;
         }
     }
+
     /**
      * @return float|int
      */

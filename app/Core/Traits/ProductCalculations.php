@@ -2,7 +2,6 @@
 
 namespace App\Core\Traits;
 
-
 trait ProductCalculations
 {
     /**
@@ -17,12 +16,14 @@ trait ProductCalculations
             return $reviews;
         }
     }
+
     /**
      * @return float|int
      */
     public function getRatingCounter()
     {
         $reviewsCount = $this->productReview()->count();
+
         return $reviewsCount;
     }
 }

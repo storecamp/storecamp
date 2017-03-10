@@ -6,14 +6,12 @@ use App\Core\Transformers\PagesTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
- * Class PagesPresenter
- *
- * @package namespace App\Core\Presenters;
+ * Class PagesPresenter.
  */
 class PagesPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

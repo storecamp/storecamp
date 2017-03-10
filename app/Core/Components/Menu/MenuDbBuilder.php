@@ -2,13 +2,11 @@
 
 namespace App\Core\Components\Menu;
 
-
 use App\Core\Repositories\MenuItemsRepository;
 use App\Core\Repositories\MenuRepository;
 
 /**
- * Class MenuDbBuilder
- * @package App\Core\Components\Menu
+ * Class MenuDbBuilder.
  */
 class MenuDbBuilder
 {
@@ -38,7 +36,7 @@ class MenuDbBuilder
      * @param array $options
      * @return \Illuminate\Support\HtmlString
      */
-    public function renderFromDb($menuName = "string", $type = "default", array $options = [])
+    public function renderFromDb($menuName = 'string', $type = 'default', array $options = [])
     {
         // GET THE MENU - sort collection in blade
         $menu = $this->menu->getModel()->where('name', '=', $menuName)
@@ -47,19 +45,18 @@ class MenuDbBuilder
         // Convert options array into object
         $options = (object) $options;
         // Check for Menu Existence
-        if (!isset($menu)) {
-            throw new \App\Core\Exceptions\MenuTypeNotFound("Menu not Found", 422);
+        if (! isset($menu)) {
+            throw new \App\Core\Exceptions\MenuTypeNotFound('Menu not Found', 422);
         }
 
         if (in_array($type, ['build', 'navigation', 'default'])) {
             $view = 'admin.tools.menu.'.$type;
-
         } else {
-            throw new \App\Core\Exceptions\MenuTypeNotFound("Type not Found or Specified", 422);
+            throw new \App\Core\Exceptions\MenuTypeNotFound('Type not Found or Specified', 422);
         }
 
         return new \Illuminate\Support\HtmlString(
-            view($view, ['items' => $menu->parent_items, "options" => $options])
+            view($view, ['items' => $menu->parent_items, 'options' => $options])
         );
     }
 }

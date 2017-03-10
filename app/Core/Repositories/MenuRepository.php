@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface MenuRepository
- * @package namespace App\Core\Repositories;
+ * Interface MenuRepository.
  */
 interface MenuRepository extends RepositoryInterface
 {

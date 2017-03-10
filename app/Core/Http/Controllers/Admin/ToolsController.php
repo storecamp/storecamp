@@ -2,17 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Core\Models\Tools;
 use App\Core\Repositories\ToolsRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
- * Class ToolssController
- * @package App\Http\Controllers
+ * Class ToolssController.
  */
-class ToolsController extends Controller {
-
+class ToolsController extends Controller
+{
     private $repository;
 
     /**
@@ -54,7 +52,6 @@ class ToolsController extends Controller {
      */
     public function show(Request $request)
     {
-
     }
 
     /**
