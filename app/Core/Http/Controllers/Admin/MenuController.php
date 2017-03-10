@@ -13,8 +13,9 @@ use Yajra\Datatables\Datatables;
  * Class MenusController
  * @package App\Http\Controllers
  */
-class MenuController extends BaseController {
-
+class MenuController extends BaseController
+{
+    //TODO implement error handling
     /**
      * @var MenuRepository
      */
@@ -126,13 +127,10 @@ class MenuController extends BaseController {
     public function delete_menu($menu, $id)
     {
         $deleted = $this->menuItems->delete($id);
+        $this->flash('success', 'Successfully Deleted Menu Item.');
 
         return redirect()
-            ->route('admin::menus::builder', [$menu])
-            ->with([
-                'message'    => 'Successfully Deleted Menu Item.',
-                'alert-type' => 'success',
-            ]);
+            ->route('admin::menus::builder', [$menu]);
     }
 
     /**
@@ -170,12 +168,9 @@ class MenuController extends BaseController {
         $menuItem = $this->menuItems->findOrFail($id);
         $menuItem->update($data);
 
+        $this->flash('success', 'Successfully Updated Menu Item.');
         return redirect()
-            ->route('admin::menus::builder', [$menuItem->menu_id])
-            ->with([
-                'message'    => 'Successfully Updated Menu Item.',
-                'alert-type' => 'success',
-            ]);
+            ->route('admin::menus::builder', [$menuItem->menu_id]);
     }
 
     /**
@@ -207,13 +202,13 @@ class MenuController extends BaseController {
     }
 
     /**
-     * @param $parameters
-     * @return mixed
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request, $id)
     {
         $deleted = $this->menu->delete($id);
-
         return back();
     }
 }

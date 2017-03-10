@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
  */
 class SettingsController extends BaseController
 {
+
+    //TODO implement error handling
     public $viewPathBase = 'admin.settings.';
     public $errorRedirectPath = 'admin::settings::index';
 
