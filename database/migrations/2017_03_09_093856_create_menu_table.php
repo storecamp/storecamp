@@ -25,17 +25,16 @@ class CreateMenuTable extends Migration
             $table->string('unique_id', 36)->unique();
             $table->unsignedInteger('menu_id')->nullable();
             $table->string('title');
-            $table->string('url');
             $table->string('target')->default('_self');
             $table->string('icon_class')->nullable();
             $table->string('color')->nullable();
             $table->integer('parent_id')->nullable();
-            $table->integer('order');
+            $table->integer('order')->default(0);
             $table->string('route')->nullable()->default(null);
             $table->text('parameters')->nullable()->default(null);
             $table->timestamps();
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
-
+            $table->unique(['menu_id', 'title']);
         });
     }
 

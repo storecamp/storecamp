@@ -96,7 +96,7 @@ Breadcrumbs::register('page', function ($breadcrumbs, $page) {
 
 Breadcrumbs::register('menus', function ($breadcrumbs, $page) {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('menus', route('admin::menus::index'));
+    $breadcrumbs->push('Menus', route('admin::menus::index'));
 });
 
 

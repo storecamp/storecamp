@@ -14,7 +14,7 @@ class MenuBuilderProvider extends ServiceProvider
      */
     public function boot()
     {
-        (new SidebarMenuBuilder())->createStructure();
+        (new SidebarMenuBuilder())->createStatic();
     }
 
     /**

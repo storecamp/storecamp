@@ -292,6 +292,11 @@ if (!function_exists('getAllPreviousValues')) {
 }
 
 if (!function_exists('setting')) {
+    /**
+     * @param $key
+     * @param null $default
+     * @return null
+     */
     function setting($key, $default = null)
     {
         $setting = app('\App\Core\Models\Settings');
@@ -300,6 +305,11 @@ if (!function_exists('setting')) {
 }
 
 if (!function_exists('settingSet')) {
+    /**
+     * @param $key
+     * @param null $value
+     * @return $this
+     */
     function settingSet($key, $value = null)
     {
         $setting = app('\App\Core\Models\Settings');
@@ -308,9 +318,15 @@ if (!function_exists('settingSet')) {
 }
 
 if (!function_exists('menu')) {
-    function menu($key)
+    /**
+     * @param $key
+     * @param string $type
+     * @param array $options
+     * @return \Illuminate\Support\HtmlString
+     */
+    function menu($key, $type = "default", array $options = [])
     {
-        $menu = app('\App\Core\Models\Menu');
-        return $menu->display($key);
+        $menu = app('\App\Core\Components\Menu\MenuDbBuilder');
+        return $menu->renderFromDb($key, $type, $options);
     }
 }

@@ -10,5 +10,6 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface MenuItemsRepository extends RepositoryInterface
 {
-    //
+    public function createOrFirst(array $params);
+
 }

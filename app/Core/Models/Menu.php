@@ -16,73 +16,44 @@ class Menu extends Model implements Transformable
     use TransformableTrait;
     use GeneratesUnique;
 
+    /**
+     * @var array
+     */
     protected $fillable = [];
 
+    /**
+     *
+     */
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
 
+    /**
+     * @var string
+     */
     protected $table = 'menus';
 
+    /**
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function items()
     {
         return $this->hasMany(MenuItems::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function parent_items()
     {
         return $this->hasMany(MenuItems::class)
             ->whereNull('parent_id');
-    }
-
-    /**
-     * Display menu.
-     *
-     * @param string      $menuName
-     * @param string|null $type
-     * @param array       $options
-     *
-     * @return string
-     */
-    public static function display($menuName, $type = null, array $options = [])
-    {
-        $type = 'admin';
-        // GET THE MENU - sort collection in blade
-        $menu = static::where('name', '=', $menuName)
-            ->with('parent_items.children')
-            ->first();
-
-        // Check for Menu Existence
-        if (!isset($menu)) {
-            return false;
-        }
-
-        // Convert options array into object
-        $options = (object) $options;
-
-        // Set static vars values for admin menus
-        if (in_array($type, ['admin', 'admin_menu'])) {
-            $permissions = Permission::all();
-            $prefix = trim(route('admin::dashboard', [], false), '/');
-
-            $options->user = (object) compact('prefix');
-
-            // change type to blade template name - TODO funky names, should clean up later
-            $type = 'menu.'.$type;
-        } else {
-            if (is_null($type)) {
-                $type = 'default';
-            } elseif ($type == 'bootstrap' && !view()->exists($type)) {
-                $type = 'bootstrap';
-            }
-        }
-
-        return new \Illuminate\Support\HtmlString(
-            \Illuminate\Support\Facades\View::make('admin.tools.menu.admin', ['items' => $menu->parent_items, 'options' => $options])->render()
-        );
     }
 }

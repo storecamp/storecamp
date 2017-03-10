@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CampaignSeeder::class);
         $this->call(MailTemplatesToMediaSeeder::class);
         $this->call(SettingSeeder::class);
+        $this->call(MenuItemsSeeder::class);
 
         \Illuminate\Database\Eloquent\Model::reguard();
     }

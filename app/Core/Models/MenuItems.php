@@ -12,20 +12,34 @@ class MenuItems extends Model implements Transformable
     use TransformableTrait;
     use GeneratesUnique;
 
-    public static function boot()
-    {
-       parent::boot();
-    }
     protected $table = 'menu_items';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'order',
+        'title',
+        'route',
+        'parameters',
+        'target',
+        'icon_class',
+        'color',
+        'menu_id',
+        'parent_id'
+    ];
+    protected $guarded = ['id', '_token'];
 
+    /**
+     * @return mixed
+     */
     public function children()
     {
         return $this->hasMany(MenuItems::class, 'parent_id')
             ->with('children');
     }
 
+    /**
+     * @param bool $absolute
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
+     */
     public function link($absolute = false)
     {
         if (!is_null($this->route)) {
@@ -33,23 +47,25 @@ class MenuItems extends Model implements Transformable
                 return '#';
             }
 
-            $parameters = (array) $this->getParametersAttribute();
+            $parameters = (array)$this->getParametersAttribute();
 
             return route($this->route, $parameters, $absolute);
         }
 
-        if ($absolute) {
-            return url($this->url);
-        }
-
-        return $this->url;
+        return $this->route;
     }
 
+    /**
+     * @return mixed
+     */
     public function getParametersAttribute()
     {
         return json_decode($this->attributes['parameters']);
     }
 
+    /**
+     * @param $value
+     */
     public function setParametersAttribute($value)
     {
         if (is_array($value)) {
@@ -59,6 +75,17 @@ class MenuItems extends Model implements Transformable
         $this->attributes['parameters'] = $value;
     }
 
+    /**
+     * @param $value
+     */
+    public function setOrderAttribute($value)
+    {
+        $this->attributes['order'] = $value ?? 0;
+    }
+
+    /**
+     * @param $value
+     */
     public function setUrlAttribute($value)
     {
         if (is_null($value)) {
@@ -67,6 +94,4 @@ class MenuItems extends Model implements Transformable
 
         $this->attributes['url'] = $value;
     }
-
-
 }

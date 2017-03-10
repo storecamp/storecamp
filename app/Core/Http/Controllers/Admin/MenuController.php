@@ -141,9 +141,7 @@ class MenuController extends BaseController {
      */
     public function add_item(Request $request)
     {
-        $data = $this->prepareParameters(
-            $request->all()
-        );
+        $data = $request->except(['_method', '_token']);
 
         $data['order'] = 1;
 
@@ -154,15 +152,10 @@ class MenuController extends BaseController {
         if (!is_null($highestOrderMenuItem)) {
             $data['order'] = intval($highestOrderMenuItem->order) + 1;
         }
-
-        $item = $this->menuItems->create($data);
-
+        $item = $this->menuItems->createOrFirst($data);
+        $this->flash('success', 'Successfully Created New Menu Item.');
         return redirect()
-            ->route('admin::menus::builder', [$data['menu_id']])
-            ->with([
-                'message'    => 'Successfully Created New Menu Item.',
-                'alert-type' => 'success',
-            ]);
+            ->route('admin::menus::builder', [$item->menu_id]);
     }
 
     /**
@@ -172,9 +165,7 @@ class MenuController extends BaseController {
     public function update_item(Request $request)
     {
         $id = $request->input('id');
-        $data = $this->prepareParameters(
-            $request->except(['id'])
-        );
+        $data = $request->except(['id']);
 
         $menuItem = $this->menuItems->findOrFail($id);
         $menuItem->update($data);
@@ -219,25 +210,6 @@ class MenuController extends BaseController {
      * @param $parameters
      * @return mixed
      */
-    protected function prepareParameters($parameters)
-    {
-        switch (array_get($parameters, 'type')) {
-            case 'route':
-                $parameters['url'] = null;
-                break;
-            default:
-                $parameters['route'] = null;
-                $parameters['parameters'] = '';
-                break;
-        }
-
-        if (isset($parameters['type'])) {
-            unset($parameters['type']);
-        }
-
-        return $parameters;
-    }
-
     public function delete(Request $request, $id)
     {
         $deleted = $this->menu->delete($id);

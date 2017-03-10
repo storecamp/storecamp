@@ -5,12 +5,23 @@
 @include('admin.partial._contentheader_title', [$model = new \App\Core\Models\Menu(), $message = "Amount of Menus"])
 @section('contentheader_description')
     @include('admin.partial._content-head_btns', [$routeName = "admin::menus::create", $createBtn = 'Add New Menu'])
-        <div class="alert alert-info">
-            <strong>How To Use:</strong>
-            <p>You can output {{ !empty($menu) ? 'this' : 'a' }} menu anywhere on your site by calling <code>menu('{{ !empty($menu->first()) ? $menu->first()->name : 'name' }}')</code></p>
-        </div>
+    <button class="btn pull-right" style="margin-bottom: 20px;" data-toggle="collapse" href="#info" aria-expanded="false"
+            aria-controls="info">
+        <span class="fa fa-info"></span>info
+    </button>
 @endsection
 @section('main-content')
+    <div class="collapse" id="info">
+        <div class="alert alert-info">
+            <strong>How To Use:</strong>
+            <p>You can get the menu by its own type on your site by calling <code>menu($menu->name, 'default')</code></p>
+            <p class="text-mute"><b>types:</b>
+                <span class="text-warning">'default'</span>
+                <span class="divider"> || </span>
+                <span class="text-warning">'navigation'</span>
+            </p>
+        </div>
+    </div>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">List of Menus</h3>

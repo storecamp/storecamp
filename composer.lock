@@ -1200,12 +1200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "50bf623418be0feb3282bb50d07a4aea977fb33a"
+                "reference": "c2bf5fb8cd7e2235a000ed9765f742cf80a46157"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/50bf623418be0feb3282bb50d07a4aea977fb33a",
-                "reference": "50bf623418be0feb3282bb50d07a4aea977fb33a",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c2bf5fb8cd7e2235a000ed9765f742cf80a46157",
+                "reference": "c2bf5fb8cd7e2235a000ed9765f742cf80a46157",
                 "shasum": ""
             },
             "require": {
@@ -1264,7 +1264,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-02-25T22:09:19+00:00"
+            "time": "2017-03-09T15:46:21+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -3574,16 +3574,16 @@
         },
         {
             "name": "omnipay/authorizenet",
-            "version": "2.4.2",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-authorizenet.git",
-                "reference": "6e1990f5d22f0f8e4dfe363b89c9776d0d803c34"
+                "reference": "229bdb205384f2e3bf844cdf258927895b4858d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/6e1990f5d22f0f8e4dfe363b89c9776d0d803c34",
-                "reference": "6e1990f5d22f0f8e4dfe363b89c9776d0d803c34",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-authorizenet/zipball/229bdb205384f2e3bf844cdf258927895b4858d5",
+                "reference": "229bdb205384f2e3bf844cdf258927895b4858d5",
                 "shasum": ""
             },
             "require": {
@@ -3629,7 +3629,7 @@
                 "pay",
                 "payment"
             ],
-            "time": "2016-07-16T21:00:00+00:00"
+            "time": "2017-03-07T14:00:14+00:00"
         },
         {
             "name": "omnipay/buckaroo",
@@ -6059,16 +6059,16 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.2.4",
+            "version": "v3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
-                "reference": "2847d56f518ad5721bf85aa9174b3aa3fd12aa03"
+                "reference": "c29a5bc6ca14cfff1f5e3d7781ed74b6e898d2b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/class-loader/zipball/2847d56f518ad5721bf85aa9174b3aa3fd12aa03",
-                "reference": "2847d56f518ad5721bf85aa9174b3aa3fd12aa03",
+                "url": "https://api.github.com/repos/symfony/class-loader/zipball/c29a5bc6ca14cfff1f5e3d7781ed74b6e898d2b9",
+                "reference": "c29a5bc6ca14cfff1f5e3d7781ed74b6e898d2b9",
                 "shasum": ""
             },
             "require": {
@@ -6111,7 +6111,7 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21T17:06:35+00:00"
+            "time": "2017-02-18T17:28:00+00:00"
         },
         {
             "name": "symfony/console",
@@ -6948,16 +6948,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.4",
+            "version": "v3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/093e416ad096355149e265ea2e4cc1f9ee40ab1a",
+                "reference": "093e416ad096355149e265ea2e4cc1f9ee40ab1a",
                 "shasum": ""
             },
             "require": {
@@ -6999,7 +6999,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-16T22:46:52+00:00"
+            "time": "2017-03-07T16:47:02+00:00"
         },
         {
             "name": "that0n3guy/transliteration",

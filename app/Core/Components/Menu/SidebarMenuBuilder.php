@@ -2,12 +2,14 @@
 
 namespace App\Core\Components\Menu;
 
+use App\Core\Models\Menu;
+
 class SidebarMenuBuilder
 {
     /**
      * create sidebar menu structure.
      */
-    public function createStructure()
+    public function createStatic()
     {
         $productsMenu = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-cube"></i>Manage Products')

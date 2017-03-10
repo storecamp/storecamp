@@ -408,6 +408,7 @@ $ ->
   #Enable sidebar tree view controls
   $.StoreCamp.tree '.sidebar'
   $.StoreCamp.tree '.category'
+  $.StoreCamp.tree '.menu'
   #Enable control sidebar
   if o.enableControlSidebar
     $.StoreCamp.controlSidebar.activate()

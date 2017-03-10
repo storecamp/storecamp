@@ -215,7 +215,7 @@ $(document).ready ->
 
 # ---
 do ($) ->
-  items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar')]
+  items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar'), $('.default-menu')]
   items.forEach (item, i , arr) ->
     nav = item
     makeAnchorActive = (navigtation) ->

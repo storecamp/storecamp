@@ -12,175 +12,209 @@ class MenuItemsSeeder extends Seeder
      */
     public function run()
     {
-        if (file_exists(base_path('app/Core/Http/routes/web.php'))) {
-            require base_path('app/Core/Http/routes/web.php');
-//
-//            $menu = Menu::where('name', 'admin')->firstOrFail();
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Dashboard',
-//                'url'        => route('voyager.dashboard', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-boat',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 1,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Media',
-//                'url'        => route('voyager.media.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-images',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 5,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Posts',
-//                'url'        => route('voyager.posts.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-news',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 6,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Users',
-//                'url'        => route('voyager.users.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-person',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 3,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Categories',
-//                'url'        => route('voyager.categories.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-categories',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 8,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Pages',
-//                'url'        => route('voyager.pages.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-file-text',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 7,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Roles',
-//                'url'        => route('voyager.roles.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-lock',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 2,
-//                ])->save();
-//            }
-//
-//            $toolsMenuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Tools',
-//                'url'        => '',
-//            ]);
-//            if (!$toolsMenuItem->exists) {
-//                $toolsMenuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-tools',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 9,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Menu Builder',
-//                'url'        => route('voyager.menus.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-list',
-//                    'color'      => null,
-//                    'parent_id'  => $toolsMenuItem->id,
-//                    'order'      => 10,
-//                ])->save();
-//            }
-//
-//            $menuItem = MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Database',
-//                'url'        => route('voyager.database.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-data',
-//                    'color'      => null,
-//                    'parent_id'  => $toolsMenuItem->id,
-//                    'order'      => 11,
-//                ])->save();
-//            }
-//
-//            $menuItem = \App\Core\Models\MenuItems::firstOrNew([
-//                'menu_id'    => $menu->id,
-//                'title'      => 'Settings',
-//                'url'        => route('voyager.settings.index', [], false),
-//            ]);
-//            if (!$menuItem->exists) {
-//                $menuItem->fill([
-//                    'target'     => '_self',
-//                    'icon_class' => 'voyager-settings',
-//                    'color'      => null,
-//                    'parent_id'  => null,
-//                    'order'      => 12,
-//                ])->save();
-//            }
-        }
+        $menu = \App\Core\Models\Menu::firstOrCreate([
+            'name' => 'admin'
+        ]);
+
+        $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Dashboard',
+            'route' => 'admin::dashboard',
+            'target' => '_self',
+            'icon_class' => '',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 1,
+        ]);
+
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Products',
+            'route' => 'admin::products::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-images',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 5,
+        ]);
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Categories',
+            'route' => 'admin::categories::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-news',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 6,
+        ]);
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Attributes',
+            'route' => 'admin::attributes::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-person',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 3,
+        ]);
+
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Attribute Groups',
+            'route' => 'admin::attribute_groups::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-categories',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 8,
+        ]);
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Product Reviews',
+            'route' => 'admin::reviews::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-file-text',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 7,
+        ]);
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Categories',
+            'route' => 'admin::categories::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-lock',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 2,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Orders',
+            'route' => 'admin::sales::orders::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 9,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Subscribers',
+            'route' => 'admin::subscribers::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 10,
+        ]);
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Mail',
+            'route' => 'admin::mail::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 11,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Layouts',
+            'route' => 'admin::design::layouts::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 12,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Banners',
+            'route' => 'admin::design::banners::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 13,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Users',
+            'route' => 'admin::users::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 15,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Settings',
+            'route' => 'admin::settings::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 16,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Media Storage',
+            'route' => 'admin::media::indexs',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 17,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'All roles',
+            'route' => 'admin::roles::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 18,
+        ]);
+
+        $toolsMenuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'LogsViewer',
+            'route' => 'log-viewer::dashboard',
+            'target' => '_self',
+            'icon_class' => 'voyager-tools',
+            'color' => null,
+            'parent_id' => null,
+            'order' => 19,
+        ]);
+
+        $menuItem = $menuItemInstance->createOrFirst([
+            'menu_id' => $menu->id,
+            'title' => 'Menu Builder',
+            'route' => 'admin::menus::index',
+            'target' => '_self',
+            'icon_class' => 'voyager-list',
+            'color' => null,
+            'parent_id' => $toolsMenuItem->id,
+            'order' => 20,
+        ]);
     }
 }

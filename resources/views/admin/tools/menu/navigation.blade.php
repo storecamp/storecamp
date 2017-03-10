@@ -5,9 +5,7 @@
 @endif
 
 @foreach ($items->sortBy('order') as $item)
-    
     @php
-
         $listItemClass = null;
         $styles = null;
         $icon = null;
@@ -37,7 +35,6 @@
         if(isset($options->icon) && $options->icon == true){
             $icon = '<i class="' . $item->icon_class . '"></i>';
         }
-        
     @endphp
 
     <li class="{{ $listItemClass }}">
@@ -47,7 +44,7 @@
             {!! $caret !!}
         </a>
         @if(!$item->children->isEmpty())
-        @include('admin.tools.menu.bootstrap', ['items' => $item->children, 'options' => $options, 'innerLoop' => true])
+        @include('admin.tools.menu.navigation', ['items' => $item->children, 'options' => $options, 'innerLoop' => true])
         @endif
     </li>
 @endforeach
