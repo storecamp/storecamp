@@ -2,7 +2,6 @@
 
 namespace App\Core\Support\OrderSteps;
 
-
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
@@ -45,11 +44,14 @@ class OrderStepItem implements Arrayable
         }
     }
 
-    public function checkIfExists(): bool {
+    public function checkIfExists(): bool
+    {
         $steps = session('steps');
         if ($steps) {
             return true;
-        } return false;
+        }
+
+        return false;
     }
 
     /**
@@ -74,7 +76,8 @@ class OrderStepItem implements Arrayable
      */
     public function getStep(string $name)
     {
-        $step = $this->steps->where('step',$name);
+        $step = $this->steps->where('step', $name);
+
         return $step;
     }
 
@@ -87,24 +90,25 @@ class OrderStepItem implements Arrayable
         if (empty($steps)) {
             $items = [
                 [
-                    "step" => OrderSteps::STEPS[0],
-                    "status" => \Auth::guest() ? false : true
+                    'step' => OrderSteps::STEPS[0],
+                    'status' => \Auth::guest() ? false : true,
                 ],
                 [
-                    "step" => OrderSteps::STEPS[1],
-                    "status" => false
+                    'step' => OrderSteps::STEPS[1],
+                    'status' => false,
                 ],
                 [
-                    "step" => OrderSteps::STEPS[2],
-                    "status" => false
+                    'step' => OrderSteps::STEPS[2],
+                    'status' => false,
                 ],
                 [
-                    "step" => OrderSteps::STEPS[3],
-                    "status" => false
-                ]
+                    'step' => OrderSteps::STEPS[3],
+                    'status' => false,
+                ],
             ];
             $collection = OrderSteps::make($items);
             $this->create($collection);
+
             return $collection;
         } else {
             return $steps['steps'];
@@ -117,7 +121,7 @@ class OrderStepItem implements Arrayable
     public function getWhereNotActive()
     {
         $steps = $this->getSteps();
-        if (!empty($steps)) {
+        if (! empty($steps)) {
             return $steps->where('status', false)->first();
         }
     }
@@ -129,47 +133,53 @@ class OrderStepItem implements Arrayable
      */
     public function makeStepPassed($name): ?array
     {
-        if (!in_array($name, OrderSteps::STEPS)) {
+        if (! in_array($name, OrderSteps::STEPS)) {
             throw new \Exception('Not Steps Found by the given name');
         }
         $steps = $this->getSteps();
-        if (!empty($steps)) {
+        if (! empty($steps)) {
             $items = $steps->transform(function ($item, $key) use ($name) {
                 if ($item['step'] == $name) {
                     $item['status'] = true;
+
                     return $item;
                 } else {
                     return $item;
                 }
             });
             $orderItem = $this->update($this->rowId, $this->userId, $items);
+
             return $orderItem;
         } else {
             throw new \Exception('Not Steps Found');
         }
     }
 
-    public function create($steps) {
+    public function create($steps)
+    {
         \Session::remove('steps');
         $id = \Auth::check() ? \Auth::user()->id : 0;
         $item = [
             'rowId' => $this->rowId = $this->generateRowId($id),
             'userId' => $this->userId = $id,
-            'steps' => $this->steps = $steps
+            'steps' => $this->steps = $steps,
         ];
 
         \Session::put('steps', $item);
+
         return $item;
     }
 
-    public function update($rowId, $userId, $steps) {
+    public function update($rowId, $userId, $steps)
+    {
         $item = [
             'rowId' => $this->rowId = $rowId,
             'userId' => $this->userId = $userId,
-            'steps' => $this->steps = $steps
+            'steps' => $this->steps = $steps,
         ];
         \Session::remove('steps');
         \Session::put('steps', $item);
+
         return $item;
     }
 
@@ -192,7 +202,7 @@ class OrderStepItem implements Arrayable
         return [
             'rowId' => $this->rowId,
             'userId' => $this->userId ?? null,
-            'steps' => $this->steps
+            'steps' => $this->steps,
         ];
     }
 }

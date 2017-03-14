@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;
+
     /**
      * Bootstrap the application services.
      *

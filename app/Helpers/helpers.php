@@ -247,7 +247,7 @@ if (! function_exists('getNextValue')) {
     {
         $key = array_search($key, $array);
         if (! isset($array[$key])) {
-            return null;
+            return;
         }
         $nextK = null;
         foreach ($array as $k => $v) {
@@ -255,7 +255,7 @@ if (! function_exists('getNextValue')) {
                 return $nextK;
             }
             if (! isset($array[$k + 2])) {
-                return null;
+                return;
             } else {
                 $nextK = $array[$k + 2];
             }
@@ -275,7 +275,7 @@ if (! function_exists('getAllPreviousValues')) {
     {
         $key = array_search($key, $array);
         if (! isset($array[$key])) {
-            return null;
+            return;
         }
         $prevK = null;
         foreach ($array as $k => $v) {
