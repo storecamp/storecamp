@@ -48,8 +48,8 @@ class SidebarMenuBuilder
             ->addLink('Mail', ['route' => ['admin::mail::index']]);
 
         $design = app('elements.menu.manager')
-            ->createMenu('<i class="fa  fa-paint-brush"></i> Design')
-            ->addLink('Layouts', ['route' => 'admin::design::layouts::index'])
+            ->createMenu('<i class="fa fa-paint-brush"></i> Design')
+            ->addLink('Static Pages', ['route' => 'admin::design::pages::index'])
             ->addLink('Banners', ['route' => 'admin::design::banners::index'])
             ->addLink('Menus', ['route' => 'admin::design::menus::index']);
 

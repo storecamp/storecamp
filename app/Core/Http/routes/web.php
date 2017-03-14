@@ -665,47 +665,47 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
         // design
         $this->group(['prefix' => 'design', 'as' => 'design::'], function () {
             $this->get('/index', ['uses' => 'Admin\DesignController@index', 'as' => 'index']);
-            $this->group(['prefix' => 'layouts', 'as' => 'layouts::'], function () {
+            $this->group(['prefix' => 'pages', 'as' => 'pages::'], function () {
                 $this->get('/', [
-                    'uses' => 'Admin\LayoutController@index',
+                    'uses' => 'Admin\PagesController@index',
                     'as' => 'index',
 
                 ]);
 
                 $this->get('create', [
-                    'uses' => 'Admin\LayoutController@create',
+                    'uses' => 'Admin\PagesController@create',
                     'as' => 'create',
 
                 ]);
 
                 $this->get('edit/{id}', [
-                    'uses' => 'Admin\LayoutController@edit',
+                    'uses' => 'Admin\PagesController@edit',
                     'as' => 'edit',
                 ]);
 
                 $this->put('update/{id}', [
-                    'uses' => 'Admin\LayoutController@update',
+                    'uses' => 'Admin\PagesController@update',
                     'as' => 'update',
                 ]);
 
                 $this->delete('{id}', [
-                    'uses' => 'Admin\LayoutController@destroy',
+                    'uses' => 'Admin\PagesController@destroy',
                     'as' => 'delete',
                 ]);
 
                 $this->post('store', [
-                    'uses' => 'Admin\LayoutController@store',
+                    'uses' => 'Admin\PagesController@store',
                     'as' => 'store',
                 ]);
 
                 $this->get('/delete/{id}', [
-                    'uses' => 'Admin\LayoutController@destroy',
+                    'uses' => 'Admin\PagesController@destroy',
                     'as' => 'get::delete',
                 ]);
 
-                $this->get('/layouts/json', [
+                $this->get('/pages/json', [
 
-                    'uses' => 'Admin\LayoutController@getJson',
+                    'uses' => 'Admin\PagesController@getJson',
                     'as' => 'get::json',
                 ]);
             });
@@ -713,42 +713,32 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 $this->get('/', [
                     'uses' => 'Admin\BannerController@index',
                     'as' => 'index',
-
                 ]);
-
                 $this->get('create', [
                     'uses' => 'Admin\BannerController@create',
                     'as' => 'create',
-
                 ]);
-
                 $this->get('edit/{id}', [
                     'uses' => 'Admin\BannerController@edit',
                     'as' => 'edit',
                 ]);
-
                 $this->put('update/{id}', [
                     'uses' => 'Admin\BannerController@update',
                     'as' => 'update',
                 ]);
-
                 $this->delete('{id}', [
                     'uses' => 'Admin\BannerController@destroy',
                     'as' => 'delete',
                 ]);
-
                 $this->post('store', [
                     'uses' => 'Admin\BannerController@store',
                     'as' => 'store',
                 ]);
-
                 $this->get('/delete/{id}', [
                     'uses' => 'Admin\BannerController@destroy',
                     'as' => 'get::delete',
                 ]);
-
-                $this->get('/layouts/json', [
-
+                $this->get('/banners/json', [
                     'uses' => 'Admin\BannerController@getJson',
                     'as' => 'get::json',
                 ]);

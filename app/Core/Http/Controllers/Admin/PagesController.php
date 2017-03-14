@@ -3,8 +3,10 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class PagesController extends Controller
+class PagesController extends BaseController
 {
     /**
      * PagesController constructor.
@@ -14,13 +16,69 @@ class PagesController extends Controller
         $this->middleware('role:Admin');
     }
 
+    public function index(Request $request)
+    {
+
+    }
+
     /**
-     * Display a listing of the resource.
+     * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function index()
+    public function create(Request $request)
     {
-        return view('home');
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function show(Request $request)
+    {
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy(Request $request, $id)
+    {
+        //
     }
 }

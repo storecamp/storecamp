@@ -31,7 +31,8 @@ class MenuItemsRepositoryEloquent extends BaseRepository implements MenuItemsRep
 
     /**
      * @param array $params
-     * @return $this
+     * @return mixed
+     * @throws \Exception
      */
     public function createOrFirst(array $params)
     {
