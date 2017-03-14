@@ -55,10 +55,11 @@ class OrdersController extends BaseController
         $status = $orderSteps->getWhereNotActive();
 
         $getAllPreviousValue = getAllPreviousValues($status['step'], OrderSteps::STEPS);
-        if (!$getAllPreviousValue) {
+        if (! $getAllPreviousValue) {
             $getAllPreviousValue = [];
         }
         $status = $status['step'];
+
         return $this->view('index', compact('status', 'getAllPreviousValue'));
     }
 

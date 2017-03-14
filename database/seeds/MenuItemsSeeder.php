@@ -25,7 +25,7 @@ class MenuItemsSeeder extends Seeder
             'icon_class' => 'fa fa-list',
             'color' => null,
             'parent_id' => null,
-            'order' => 1
+            'order' => 1,
         ]);
     }
 }

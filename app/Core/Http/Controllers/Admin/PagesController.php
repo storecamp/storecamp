@@ -2,7 +2,6 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use App\Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -18,7 +17,6 @@ class PagesController extends BaseController
 
     public function index(Request $request)
     {
-
     }
 
     /**
