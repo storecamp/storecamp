@@ -269,13 +269,13 @@ if (! function_exists('getAllPreviousValues')) {
     /**
      * @param $key
      * @param $array
-     * @return array|null
+     * @return array|int
      */
-    function getAllPreviousValues($key, $array): ?array
+    function getAllPreviousValues($key, $array)
     {
         $key = array_search($key, $array);
         if (! isset($array[$key])) {
-            return null;
+            return 0;
         }
         $prevK = null;
         foreach ($array as $k => $v) {
