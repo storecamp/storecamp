@@ -13,7 +13,8 @@ interface CartSystemContract
 {
     /**
      * @param array $data
-     * @param bool $withAggregations
+     * @param bool  $withAggregations
+     *
      * @return mixed
      */
     public function show(array $data, bool $withAggregations = true);
@@ -21,6 +22,7 @@ interface CartSystemContract
     /**
      * @param array $data
      * @param $productId
+     *
      * @return mixed
      */
     public function addItem(array $data, $productId);
@@ -32,12 +34,14 @@ interface CartSystemContract
 
     /**
      * @param string $currency
+     *
      * @return CartSystem
      */
     public function setCurrency(string $currency): CartSystem;
 
     /**
      * @param string|null $currency
+     *
      * @return CartSystem
      */
     public function withCurrency(string $currency = null): CartSystem;
@@ -46,8 +50,9 @@ interface CartSystemContract
      * Add an item to the cart.
      *
      * @param $id
-     * @param null $qty
+     * @param null  $qty
      * @param array $options
+     *
      * @return array|mixed
      */
     public function add($id, $qty = null, array $options = []);
@@ -57,6 +62,7 @@ interface CartSystemContract
      *
      * @param $rowId
      * @param $qty
+     *
      * @return CartItem|void
      */
     public function update($rowId, $qty);
@@ -65,6 +71,7 @@ interface CartSystemContract
      * Remove the cart item with the given rowId from the cart.
      *
      * @param string $rowId
+     *
      * @return void
      */
     public function remove($rowId);
@@ -73,6 +80,7 @@ interface CartSystemContract
      * Get a cart item from the cart by its rowId.
      *
      * @param string $rowId
+     *
      * @return CartItem
      */
     public function find($rowId);
@@ -101,9 +109,10 @@ interface CartSystemContract
     /**
      * Get the total price of the items in the cart.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -111,9 +120,10 @@ interface CartSystemContract
     /**
      * Get the total tax of the items in the cart.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return float
      */
     public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null);
@@ -121,9 +131,10 @@ interface CartSystemContract
     /**
      * Get the subtotal (total - tax) of the items in the cart.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return float|string
      */
     public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -132,6 +143,7 @@ interface CartSystemContract
      * Search the cart content for a cart item matching the given search closure.
      *
      * @param \Closure $search
+     *
      * @return Collection
      */
     public function search(\Closure $search): Collection;
@@ -140,7 +152,8 @@ interface CartSystemContract
      * Associate the cart item with the given rowId with the given model.
      *
      * @param string $rowId
-     * @param mixed $model
+     * @param mixed  $model
+     *
      * @return void
      */
     public function associate($rowId, $model);
@@ -148,8 +161,9 @@ interface CartSystemContract
     /**
      * Set the tax rate for the cart item with the given rowId.
      *
-     * @param string $rowId
+     * @param string    $rowId
      * @param int|float $taxRate
+     *
      * @return void
      */
     public function setTax($rowId, $taxRate);
@@ -158,6 +172,7 @@ interface CartSystemContract
      * Store an the current instance of the cart.
      *
      * @param mixed $identifier
+     *
      * @return void
      */
     public function store($identifier);
@@ -166,6 +181,7 @@ interface CartSystemContract
      * Restore the cart with the given identifier.
      *
      * @param mixed $identifier
+     *
      * @return void
      */
     public function restore($identifier);

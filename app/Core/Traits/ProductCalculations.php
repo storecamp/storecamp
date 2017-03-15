@@ -10,7 +10,7 @@ trait ProductCalculations
     public function getAvgRating()
     {
         $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
-        if (! empty($reviews)) {
+        if (!empty($reviews)) {
             return round(array_sum($reviews) / (count($reviews)), 1);
         } else {
             return $reviews;

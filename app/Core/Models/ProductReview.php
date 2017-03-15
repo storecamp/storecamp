@@ -28,6 +28,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\User $user
  * @property-read \App\Core\Models\Product $product
  * @property-read Thread[] $thread
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereProductId($value)
@@ -46,8 +47,10 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview onlyHidden()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview byRating($reason)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read Thread[] $comments
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview uuid($unique_id, $first = true)
  */
@@ -144,6 +147,7 @@ class ProductReview extends Model implements Transformable
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeOnlyVisible($query)
@@ -153,6 +157,7 @@ class ProductReview extends Model implements Transformable
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeOnlyHidden($query)
@@ -163,6 +168,7 @@ class ProductReview extends Model implements Transformable
     /**
      * @param $query
      * @param $rating
+     *
      * @return mixed
      */
     public function scopeByRating($query, $rating)

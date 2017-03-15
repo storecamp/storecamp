@@ -12,6 +12,7 @@ class PagesTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Pages entity.
+     *
      * @param \Pages $model
      *
      * @return array

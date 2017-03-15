@@ -40,6 +40,7 @@ class AttributeGroupsController extends BaseController
 
     /**
      * AttributeGroupsController constructor.
+     *
      * @param AttributeGroupSystemContract $attributeGroupSystem
      */
     public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
@@ -52,6 +53,7 @@ class AttributeGroupsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -66,6 +68,7 @@ class AttributeGroupsController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -89,6 +92,7 @@ class AttributeGroupsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
@@ -106,6 +110,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -123,6 +128,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -140,6 +146,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
@@ -158,13 +165,14 @@ class AttributeGroupsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->groupRepository->delete($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 $this->flash('warning', 'Item not deleted. Some error appeared!');
             }
 
@@ -178,6 +186,7 @@ class AttributeGroupsController extends BaseController
      * get groups name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getJson(Request $request)

@@ -22,6 +22,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $deleted_at
  * @property-read \App\Core\Models\Thread $thread
  * @property-read \App\Core\Models\User $user
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant whereCreatedAt($value)

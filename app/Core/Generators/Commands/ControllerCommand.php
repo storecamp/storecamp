@@ -40,7 +40,7 @@ class ControllerCommand extends Command
 
         $this->generators->push(new ControllerGenerator([
             'name'      => $this->argument('name'),
-            'for'      => $this->argument('for'),
+            'for'       => $this->argument('for'),
             'force'     => $this->option('force'),
         ]));
 

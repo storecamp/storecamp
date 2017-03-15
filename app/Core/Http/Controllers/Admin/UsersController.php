@@ -43,6 +43,7 @@ class UsersController extends BaseController
 
     /**
      * UsersController constructor.
+     *
      * @param UsersSystemContract $usersSystem
      */
     public function __construct(UsersSystemContract $usersSystem)
@@ -55,6 +56,7 @@ class UsersController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -64,6 +66,7 @@ class UsersController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -87,6 +90,7 @@ class UsersController extends BaseController
 
     /**
      * @param UsersFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(UsersFormRequest $request)
@@ -106,6 +110,7 @@ class UsersController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -124,6 +129,7 @@ class UsersController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -145,12 +151,13 @@ class UsersController extends BaseController
     /**
      * @param UsersUpdateFormRequest $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(UsersUpdateFormRequest $request, $id)
     {
         try {
-            $data = ! $request->has('password') ? $request->except('password') : $request->all();
+            $data = !$request->has('password') ? $request->except('password') : $request->all();
             $user = $this->usersSystem->update($data, $id);
 
             return redirect('admin/users');
@@ -165,13 +172,14 @@ class UsersController extends BaseController
 
     /**
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->usersSystem->delete($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Sorry user is not deleted');
             }
 

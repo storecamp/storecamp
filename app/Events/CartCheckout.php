@@ -13,12 +13,14 @@ class CartCheckout
 
     /**
      * Cart ID.
+     *
      * @var int
      */
     public $id;
 
      /**
       * Flag that indicates if the checkout was successful or not.
+      *
       * @var bool
       */
      public $success;

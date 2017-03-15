@@ -22,6 +22,7 @@ class SettingsController extends BaseController
 
     /**
      * SettingsController constructor.
+     *
      * @param SettingsRepository $settings
      */
     public function __construct(SettingsRepository $settings)
@@ -42,6 +43,7 @@ class SettingsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
@@ -51,6 +53,7 @@ class SettingsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -73,8 +76,10 @@ class SettingsController extends BaseController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -88,6 +93,7 @@ class SettingsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($id)
@@ -100,6 +106,7 @@ class SettingsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function move_up($id)
@@ -126,6 +133,7 @@ class SettingsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete_value($id)
@@ -146,6 +154,7 @@ class SettingsController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function move_down($id)

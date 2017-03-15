@@ -41,6 +41,7 @@ class CategoriesController extends BaseController
 
     /**
      * CategoriesController constructor.
+     *
      * @param CategorySystemContract $categorySystem
      */
     public function __construct(CategorySystemContract $categorySystem)
@@ -55,6 +56,7 @@ class CategoriesController extends BaseController
      * Display a listing of categories.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -64,6 +66,7 @@ class CategoriesController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function data(Datatables $datatables)
@@ -79,6 +82,7 @@ class CategoriesController extends BaseController
      * Show the form for creating a new category.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
@@ -92,6 +96,7 @@ class CategoriesController extends BaseController
 
     /**
      * @param CategoriesFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|Redirect
      */
     public function store(CategoriesFormRequest $request)
@@ -109,6 +114,7 @@ class CategoriesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
      * @return RedirectResponse|Response
      */
@@ -127,7 +133,9 @@ class CategoriesController extends BaseController
 
     /**
      * get category description for json.
+     *
      * @param $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDescription($id)
@@ -145,6 +153,7 @@ class CategoriesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -165,6 +174,7 @@ class CategoriesController extends BaseController
     /**
      * @param CategoriesUpdateFormRequest $request
      * @param $id
+     *
      * @return RedirectResponse|Response
      */
     public function update(CategoriesUpdateFormRequest $request, $id)
@@ -183,13 +193,14 @@ class CategoriesController extends BaseController
      * Remove the specified category from storage.
      *
      * @param $id
+     *
      * @return RedirectResponse|Redirect
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->categorySystem->delete($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 $this->flash('warning', 'Sorry category is not deleted');
             }
         } catch (ModelNotFoundException $e) {

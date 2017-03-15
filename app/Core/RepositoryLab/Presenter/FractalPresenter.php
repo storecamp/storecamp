@@ -44,7 +44,7 @@ abstract class FractalPresenter implements PresenterInterface
      */
     public function __construct()
     {
-        if (! class_exists('League\Fractal\Manager')) {
+        if (!class_exists('League\Fractal\Manager')) {
             throw new Exception(trans('repository::packages.league_fractal_required'));
         }
 
@@ -105,12 +105,14 @@ abstract class FractalPresenter implements PresenterInterface
      * Prepare data to present.
      *
      * @param $data
-     * @return mixed
+     *
      * @throws Exception
+     *
+     * @return mixed
      */
     public function present($data)
     {
-        if (! class_exists('League\Fractal\Manager')) {
+        if (!class_exists('League\Fractal\Manager')) {
             throw new Exception(trans('repository::packages.league_fractal_required'));
         }
 
@@ -127,6 +129,7 @@ abstract class FractalPresenter implements PresenterInterface
 
     /**
      * @param $data
+     *
      * @return Item
      */
     protected function transformItem($data)
@@ -136,6 +139,7 @@ abstract class FractalPresenter implements PresenterInterface
 
     /**
      * @param $data
+     *
      * @return \League\Fractal\Resource\Collection
      */
     protected function transformCollection($data)
@@ -145,6 +149,7 @@ abstract class FractalPresenter implements PresenterInterface
 
     /**
      * @param AbstractPaginator|LengthAwarePaginator|Paginator $paginator
+     *
      * @return \League\Fractal\Resource\Collection
      */
     protected function transformPaginator($paginator)

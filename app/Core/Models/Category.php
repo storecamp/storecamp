@@ -33,6 +33,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Product[] $products
  * @property-read \App\Core\Models\Category $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $children
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereParentId($value)
@@ -51,11 +52,13 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category options()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property int $_lft
  * @property int $_rgt
  * @property string $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category d()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category onlyParent()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereHasMedia($tags, $match_all = false)
@@ -139,6 +142,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeOptions($query)
@@ -151,7 +155,7 @@ class Category extends Model implements Transformable
      */
     public function getTypeAttribute()
     {
-        if (! $this->parent_id) {
+        if (!$this->parent_id) {
             return $this->attributes['type'] = 'parent';
         } else {
             return $this->attributes['type'] = 'child';
@@ -160,11 +164,12 @@ class Category extends Model implements Transformable
 
     /**
      * @param $data
+     *
      * @return string
      */
     public function setTypeAttribute($data)
     {
-        if (! $this->parent_id) {
+        if (!$this->parent_id) {
             return $this->attributes['type'] = 'parent';
         } else {
             return $this->attributes['type'] = 'child';
@@ -185,6 +190,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param $type
+     *
      * @return bool
      */
     public function isType($type) : bool
@@ -214,6 +220,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeOnlyParent($query)

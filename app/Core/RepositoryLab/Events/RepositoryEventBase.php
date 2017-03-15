@@ -27,7 +27,7 @@ abstract class RepositoryEventBase
 
     /**
      * @param RepositoryInterface $repository
-     * @param Model $model
+     * @param Model               $model
      */
     public function __construct(RepositoryInterface $repository, Model $model)
     {

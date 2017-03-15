@@ -38,6 +38,7 @@ interface RepositoryCriteriaInterface
      * Find data by Criteria.
      *
      * @param CriteriaInterface $criteria
+     *
      * @return mixed
      */
     public function getByCriteria(CriteriaInterface $criteria);
@@ -46,6 +47,7 @@ interface RepositoryCriteriaInterface
      * Skip Criteria.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipCriteria($status = true);

@@ -21,6 +21,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Campaign[] $campaign
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers whereEmail($value)
@@ -30,7 +31,9 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers mails($mail)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Subscribers uuid($unique_id, $first = true)
  */

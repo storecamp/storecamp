@@ -14,8 +14,8 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'pagination'=>[
-        'limit'=>10,
+    'pagination'=> [
+        'limit'=> 10,
     ],
 
     /*
@@ -30,9 +30,9 @@ return [
     JsonApiSerializer
 
     */
-    'fractal'=>[
-        'params'=>[
-            'include'=>'include',
+    'fractal'=> [
+        'params'=> [
+            'include'=> 'include',
         ],
         'serializer' => League\Fractal\Serializer\JsonApiSerializer::class,
     ],
@@ -142,7 +142,7 @@ return [
 //            'except'=>null
 //        ]
 //    ],
-    'cache'=>[
+    'cache'=> [
         //Enable or disable cache repositories
         'enabled'   => false,
 
@@ -159,25 +159,25 @@ return [
 
             'on' => [
                 //Enable, disable clearing the cache when you create an item
-                'create'=>true,
+                'create'=> true,
 
                 //Enable, disable clearing the cache when upgrading an item
-                'update'=>true,
+                'update'=> true,
 
                 //Enable, disable clearing the cache when you delete an item
-                'delete'=>true,
+                'delete'=> true,
             ],
         ],
         'params' => [
             //Request parameter that will be used to bypass the cache repository
-            'skipCache'=>'skipCache',
+            'skipCache'=> 'skipCache',
         ],
-        'allowed'=>[
+        'allowed'=> [
             //Allow caching only for some methods
-            'only'  =>['all', 'paginate', 'find'],
+            'only'  => ['all', 'paginate', 'find'],
 
             //Allow caching for all available methods, except
-            'except'=>null,
+            'except'=> null,
         ],
     ],
     /*
@@ -188,7 +188,7 @@ return [
     | Settings of request parameters names that will be used by Criteria
     |
     */
-    'criteria'=>[
+    'criteria'=> [
         /*
         |--------------------------------------------------------------------------
         | Accepted Conditions
@@ -204,7 +204,7 @@ return [
         | $query->where('foo','like','bar')
         |
         */
-        'acceptedConditions'=>[
+        'acceptedConditions'=> [
             '=', 'like',
         ],
         /*
@@ -239,13 +239,13 @@ return [
         |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=desc
         |
         */
-        'params'=>[
-            'search'        =>'q',
-            'searchFields'  =>'searchFields',
-            'filter'        =>'filter',
-            'orderBy'       =>'orderBy',
-            'sortedBy'      =>'sortedBy',
-            'with'          =>'with',
+        'params'=> [
+            'search'        => 'q',
+            'searchFields'  => 'searchFields',
+            'filter'        => 'filter',
+            'orderBy'       => 'orderBy',
+            'sortedBy'      => 'sortedBy',
+            'with'          => 'with',
         ],
     ],
     /*
@@ -254,16 +254,16 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'generator'=>[
-        'basePath'=>base_path('FBA'),
-        'rootNamespace'=>'FBA\\',
-        'paths'=>[
-            'models'=>'Models',
-            'repositories'=>'Repositories',
-            'controllers'=> 'Controllers',
-            'interfaces'=>'Repositories',
-            'transformers'=>'Transformers',
-            'presenters'=>'Presenters',
+    'generator'=> [
+        'basePath'     => base_path('FBA'),
+        'rootNamespace'=> 'FBA\\',
+        'paths'        => [
+            'models'      => 'Models',
+            'repositories'=> 'Repositories',
+            'controllers' => 'Controllers',
+            'interfaces'  => 'Repositories',
+            'transformers'=> 'Transformers',
+            'presenters'  => 'Presenters',
         ],
     ],
 ];

@@ -32,9 +32,10 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * MailCampaignSystem constructor.
+     *
      * @param SubscribersRepository $subscriber
-     * @param MailRepository $mail
-     * @param Dispatcher $dispatcher
+     * @param MailRepository        $mail
+     * @param Dispatcher            $dispatcher
      */
     public function __construct(SubscribersRepository $subscriber, MailRepository $mail, Dispatcher $dispatcher)
     {
@@ -75,6 +76,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * @param $uid
+     *
      * @return array
      */
     public function resolveMailHistory($uid)
@@ -96,6 +98,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -114,6 +117,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
     /**
      * @param $folder
      * @param $filename
+     *
      * @return null|string
      */
     public function getHistoryTmpMail($folder, $filename)
@@ -162,8 +166,8 @@ class MailCampaignSystem implements MailCampaignSystemContract
         $this->handleCampaign($type, $sender_email, $sender_name, $viewFolder, $csvPath);
         Mail::create([
             'user_id' => \Auth::check() ? \Auth::id() : null,
-            'from' => $sender_email,
-            'to' => $type,
+            'from'    => $sender_email,
+            'to'      => $type,
             'subject' => $request->subject ? $request->subject : 'StoreCamp Online Store',
             'message' => $request->message ? $request->message : ' StoreCamp Message Here!',
         ]);
@@ -216,12 +220,13 @@ class MailCampaignSystem implements MailCampaignSystemContract
     /**
      * @param $request
      * @param $uid
+     *
      * @return array
      */
     private function putMail($request, $uid)
     {
         $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
-        if (! \File::exists($root)) {
+        if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $randomStr = str_random(5);
@@ -235,11 +240,12 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * @param $root
+     *
      * @return string
      */
     private function putCSV($root)
     {
-        if (! \File::exists($root)) {
+        if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $path = $root.str_random(5).'.csv';
@@ -250,6 +256,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * @param $file
+     *
      * @return array
      */
     private function mailFromFile($file)

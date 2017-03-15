@@ -11,6 +11,7 @@ class Sidebar
 
     /**
      * Sidebar constructor.
+     *
      * @param $categoryRepository
      */
     public function __construct(CategoryRepository $categoryRepository)
@@ -20,6 +21,7 @@ class Sidebar
 
     /**
      * @param View $view
+     *
      * @return View
      */
     public function compose(View $view)

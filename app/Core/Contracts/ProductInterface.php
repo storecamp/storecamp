@@ -46,6 +46,7 @@ interface ProductInterface
 
     /**
      * @param null $options
+     *
      * @return float
      */
     public function getBuyablePrice($options = null);
@@ -119,12 +120,14 @@ interface ProductInterface
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeNewest($query);
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeDrafted($query);
@@ -132,6 +135,7 @@ interface ProductInterface
     /**
      * @param $query
      * @param $id
+     *
      * @return mixed
      */
     public function scopeBySlugOrId($query, $id);
@@ -142,6 +146,7 @@ interface ProductInterface
      *
      * @param $query
      * @param Category|null $category
+     *
      * @return mixed
      */
     public function scopeCategorized($query, $category = null);

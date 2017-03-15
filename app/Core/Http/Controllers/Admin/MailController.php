@@ -29,6 +29,7 @@ class MailController extends BaseController
 
     /**
      * MailController constructor.
+     *
      * @param MailRepository $repository
      */
     public function __construct(MailRepository $repository)
@@ -39,6 +40,7 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -53,6 +55,7 @@ class MailController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -64,6 +67,7 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
@@ -75,6 +79,7 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function getTmpMails(Request $request)
@@ -87,6 +92,7 @@ class MailController extends BaseController
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -99,6 +105,7 @@ class MailController extends BaseController
     /**
      * @param $folder
      * @param $filename
+     *
      * @return mixed
      */
     public function getHistoryTmpMail($folder, $filename)

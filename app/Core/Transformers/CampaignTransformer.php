@@ -12,6 +12,7 @@ class CampaignTransformer extends TransformerAbstract
 {
     /**
      * @param Campaign $model
+     *
      * @return array
      */
     public function transform(Campaign $model)

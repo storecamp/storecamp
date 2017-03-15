@@ -12,6 +12,7 @@ interface SynchronizerInterface
     /**
      * @param string $folderPath
      * @param string $disk
+     *
      * @return Folder
      */
     public function findOrCreateByFolderPath(string $folderPath, $disk = 'local') : Folder;
@@ -30,7 +31,8 @@ interface SynchronizerInterface
 
     /**
      * @param string $root
-     * @param bool $withFolderName
+     * @param bool   $withFolderName
+     *
      * @return array
      */
     public function directoriesIterate(string $root, bool $withFolderName = false) : array;
@@ -38,7 +40,8 @@ interface SynchronizerInterface
     /**
      * @param string $root
      * @param string $format
-     * @param bool $skipFormatEnding
+     * @param bool   $skipFormatEnding
+     *
      * @return array
      */
     public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array;

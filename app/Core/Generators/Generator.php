@@ -39,7 +39,7 @@ abstract class Generator
      */
     public function __construct(array $options = [])
     {
-        $this->filesystem = new Filesystem;
+        $this->filesystem = new Filesystem();
         $this->options = $options;
     }
 
@@ -57,6 +57,7 @@ abstract class Generator
      * Set the filesystem instance.
      *
      * @param \Illuminate\Filesystem\Filesystem $filesystem
+     *
      * @return $this
      */
     public function setFilesystem(Filesystem $filesystem)
@@ -88,8 +89,8 @@ abstract class Generator
     public function getReplacements()
     {
         return [
-            'class' => $this->getClass(),
-            'namespace' => $this->getNamespace(),
+            'class'          => $this->getClass(),
+            'namespace'      => $this->getNamespace(),
             'root_namespace' => $this->getRootNamespace(),
         ];
     }
@@ -184,6 +185,7 @@ abstract class Generator
      * Get class-specific output paths.
      *
      * @param $class
+     *
      * @return string
      */
     public function getConfigGeneratorClassPath($class, $directoryPath = false)
@@ -250,16 +252,17 @@ abstract class Generator
     /**
      * Run the generator.
      *
-     * @return int
      * @throws FileAlreadyExistsException
+     *
+     * @return int
      */
     public function run()
     {
         $this->setUp();
-        if ($this->filesystem->exists($path = $this->getPath()) && ! $this->force) {
+        if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
             throw new FileAlreadyExistsException($path);
         }
-        if (! $this->filesystem->isDirectory($dir = dirname($path))) {
+        if (!$this->filesystem->isDirectory($dir = dirname($path))) {
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
 
@@ -279,7 +282,8 @@ abstract class Generator
     /**
      * Determinte whether the given key exist in options array.
      *
-     * @param  string $key
+     * @param string $key
+     *
      * @return bool
      */
     public function hasOption($key)
@@ -290,13 +294,14 @@ abstract class Generator
     /**
      * Get value from options by given key.
      *
-     * @param  string $key
-     * @param  string|null $default
+     * @param string      $key
+     * @param string|null $default
+     *
      * @return string
      */
     public function getOption($key, $default = null)
     {
-        if (! $this->hasOption($key)) {
+        if (!$this->hasOption($key)) {
             return $default;
         }
 
@@ -306,8 +311,9 @@ abstract class Generator
     /**
      * Helper method for "getOption".
      *
-     * @param  string $key
-     * @param  string|null $default
+     * @param string      $key
+     * @param string|null $default
+     *
      * @return string
      */
     public function option($key, $default = null)
@@ -318,7 +324,8 @@ abstract class Generator
     /**
      * Handle call to __get method.
      *
-     * @param  string $key
+     * @param string $key
+     *
      * @return string|mixed
      */
     public function __get($key)

@@ -73,7 +73,7 @@ class ControllerGenerator extends Generator
      */
     public function getFillable()
     {
-        if (! $this->fillable) {
+        if (!$this->fillable) {
             return '[]';
         }
         $results = '['.PHP_EOL;

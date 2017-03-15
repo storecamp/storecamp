@@ -20,6 +20,7 @@ class TogglesController extends BaseController
      * @param Request $request
      * @param $class_name
      * @param $object_id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function toggleBan(Request $request, $class_name, $object_id)
@@ -51,7 +52,7 @@ class TogglesController extends BaseController
 
                 return redirect()->back();
             } else {
-                if (\Auth::user()->id === $object->user->id || ! \Auth::user()->hasRole('Admin')) {
+                if (\Auth::user()->id === $object->user->id || !\Auth::user()->hasRole('Admin')) {
                     $this->flash('error', '<b>Not allowed</b>'.'Can\'t be banned!');
 
                     return redirect()->back();

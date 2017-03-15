@@ -52,6 +52,7 @@ class AdminController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function show(Request $request)
@@ -62,7 +63,8 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit($id)
@@ -73,7 +75,8 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function update($id)
@@ -84,7 +87,8 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy($id)

@@ -25,7 +25,8 @@ abstract class Model extends Eloquent
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -42,8 +43,9 @@ abstract class Model extends Eloquent
     /**
      * Dynamically set attributes on the model.
      *
-     * @param  string  $key
-     * @param  mixed  $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return void
      */
     public function __set($key, $value)
@@ -53,7 +55,8 @@ abstract class Model extends Eloquent
 
     /**
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return Meta|mixed
      */
     public function __call($method, $parameters)
@@ -77,17 +80,18 @@ abstract class Model extends Eloquent
     /**
      * Handle dynamic static method calls into the method.
      *
-     * @param  string $method
-     * @param  array $parameters
+     * @param string $method
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public static function __callStatic($method, $parameters)
     {
         if ($method == 'find') {
-            return (new static)->finder(...$parameters);
+            return (new static())->finder(...$parameters);
         }
 
-        return (new static)->$method(...$parameters);
+        return (new static())->$method(...$parameters);
     }
 
     /**
@@ -95,8 +99,10 @@ abstract class Model extends Eloquent
      *
      * @param $id
      * @param array $columns
-     * @return \Illuminate\Database\Eloquent\Collection|Eloquent|null|static
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|Eloquent|null|static
      */
     public function finder($id, $columns = ['*'])
     {
@@ -111,7 +117,7 @@ abstract class Model extends Eloquent
             return $newQuery->first($columns);
         } else {
             if ($this->useSlug) {
-                if (isset($this->slug) || ! empty($this->slug)) {
+                if (isset($this->slug) || !empty($this->slug)) {
                     $this->primaryKey = 'slug';
 
                     return $newQuery->where($this->getQualifiedKeyName(), '=', $id)->first($columns);
@@ -139,6 +145,7 @@ abstract class Model extends Eloquent
 
     /**
      * @param $file
+     *
      * @return Meta
      */
     private function getMetaRelation($file)

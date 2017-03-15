@@ -10,18 +10,21 @@ class OrderStatusChanged
 
     /**
      * Order ID.
+     *
      * @var int
      */
     public $id;
 
      /**
       * Order status code.
+      *
       * @var string
       */
      public $statusCode;
 
      /**
       * Previous order status code.
+      *
       * @var string
       */
      public $previousStatusCode;

@@ -94,11 +94,11 @@ trait NodeTrait
     {
         $this->moved = false;
 
-        if (! $this->pending && ! $this->exists) {
+        if (!$this->pending && !$this->exists) {
             $this->makeRoot();
         }
 
-        if (! $this->pending) {
+        if (!$this->pending) {
             return;
         }
 
@@ -118,7 +118,7 @@ trait NodeTrait
         static $softDelete;
 
         if (is_null($softDelete)) {
-            $instance = new static;
+            $instance = new static();
 
             return $softDelete = method_exists($instance, 'bootSoftDeletes');
         }
@@ -140,7 +140,7 @@ trait NodeTrait
     protected function actionRoot()
     {
         // Simplest case that do not affect other nodes.
-        if (! $this->exists) {
+        if (!$this->exists) {
             $cut = $this->getLowerBound() + 1;
 
             $this->setLft($cut);
@@ -183,7 +183,7 @@ trait NodeTrait
 
         $cut = $prepend ? $parent->getLft() + 1 : $parent->getRgt();
 
-        if (! $this->insertAt($cut)) {
+        if (!$this->insertAt($cut)) {
             return false;
         }
 
@@ -212,6 +212,7 @@ trait NodeTrait
      *
      * @param self $node
      * @param bool $after
+     *
      * @return bool
      */
     protected function actionBeforeOrAfter(self $node, $after = false)
@@ -226,7 +227,7 @@ trait NodeTrait
      */
     public function refreshNode()
     {
-        if (! $this->exists || static::$actionsPerformed === 0) {
+        if (!$this->exists || static::$actionsPerformed === 0) {
             return;
         }
 
@@ -294,7 +295,7 @@ trait NodeTrait
     /**
      * Get query for the node siblings and the node itself.
      *
-     * @param  array  $columns
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -350,7 +351,7 @@ trait NodeTrait
     /**
      * Get query for ancestors to the node not including the node itself.
      *
-     * @return  QueryBuilder
+     * @return QueryBuilder
      */
     public function ancestors()
     {
@@ -481,7 +482,7 @@ trait NodeTrait
     {
         $this->assertNodeExists($node)->assertNotDescendant($node);
 
-        if (! $this->isSiblingOf($node)) {
+        if (!$this->isSiblingOf($node)) {
             $this->setParent($node->getRelationValue('parent'));
         }
 
@@ -511,7 +512,7 @@ trait NodeTrait
      */
     public function insertBeforeNode(self $node)
     {
-        if (! $this->beforeNode($node)->save()) {
+        if (!$this->beforeNode($node)->save()) {
             return false;
         }
 
@@ -549,7 +550,7 @@ trait NodeTrait
                         ->skip($amount - 1)
                         ->first();
 
-        if (! $sibling) {
+        if (!$sibling) {
             return false;
         }
 
@@ -570,7 +571,7 @@ trait NodeTrait
                         ->skip($amount - 1)
                         ->first();
 
-        if (! $sibling) {
+        if (!$sibling) {
             return false;
         }
 
@@ -580,7 +581,7 @@ trait NodeTrait
     /**
      * Insert node at specific position.
      *
-     * @param  int $position
+     * @param int $position
      *
      * @return bool
      */
@@ -712,18 +713,18 @@ trait NodeTrait
     }
 
     /**
-     * @param mixed $query
+     * @param mixed  $query
      * @param string $table
      *
      * @return mixed
      */
     public function applyNestedSetScope($query, $table = null)
     {
-        if (! $scoped = $this->getScopeAttributes()) {
+        if (!$scoped = $this->getScopeAttributes()) {
             return $query;
         }
 
-        if (! $table) {
+        if (!$table) {
             $table = $this->getTable();
         }
 
@@ -749,7 +750,7 @@ trait NodeTrait
      */
     public static function scoped(array $attributes)
     {
-        $instance = new static;
+        $instance = new static();
 
         $instance->setRawAttributes($attributes);
 
@@ -784,7 +785,7 @@ trait NodeTrait
         $instance->save();
 
         // Now create children
-        $relation = new EloquentCollection;
+        $relation = new EloquentCollection();
 
         foreach ((array) $children as $child) {
             $relation->add($child = static::create($child, $instance));
@@ -802,7 +803,7 @@ trait NodeTrait
      */
     public function getNodeHeight()
     {
-        if (! $this->exists) {
+        if (!$this->exists) {
             return 2;
         }
 
@@ -854,7 +855,7 @@ trait NodeTrait
     /**
      * Get the lft key name.
      *
-     * @return  string
+     * @return string
      */
     public function getLftName()
     {
@@ -864,7 +865,7 @@ trait NodeTrait
     /**
      * Get the rgt key name.
      *
-     * @return  string
+     * @return string
      */
     public function getRgtName()
     {
@@ -874,7 +875,7 @@ trait NodeTrait
     /**
      * Get the parent id key name.
      *
-     * @return  string
+     * @return string
      */
     public function getParentIdName()
     {
@@ -884,7 +885,7 @@ trait NodeTrait
     /**
      * Get the value of the model's lft key.
      *
-     * @return  int
+     * @return int
      */
     public function getLft()
     {
@@ -894,7 +895,7 @@ trait NodeTrait
     /**
      * Get the value of the model's rgt key.
      *
-     * @return  int
+     * @return int
      */
     public function getRgt()
     {
@@ -904,7 +905,7 @@ trait NodeTrait
     /**
      * Get the value of the model's parent id key.
      *
-     * @return  int
+     * @return int
      */
     public function getParentId()
     {
@@ -1090,7 +1091,7 @@ trait NodeTrait
      */
     protected function hardDeleting()
     {
-        return ! $this->usesSoftDelete() || $this->forceDeleting;
+        return !$this->usesSoftDelete() || $this->forceDeleting;
     }
 
     /**
@@ -1169,7 +1170,7 @@ trait NodeTrait
      */
     protected function assertNodeExists(self $node)
     {
-        if (! $node->getLft() || ! $node->getRgt()) {
+        if (!$node->getLft() || !$node->getRgt()) {
             throw new LogicException('Node must exists.');
         }
 

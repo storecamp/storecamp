@@ -58,6 +58,7 @@ class OrderStepItem implements Arrayable
      * Get an attribute from the cart item or get the associated model.
      *
      * @param string $attribute
+     *
      * @return mixed
      */
     public function __get($attribute)
@@ -72,6 +73,7 @@ class OrderStepItem implements Arrayable
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function getStep(string $name)
@@ -90,19 +92,19 @@ class OrderStepItem implements Arrayable
         if (empty($steps)) {
             $items = [
                 [
-                    'step' => OrderSteps::STEPS[0],
+                    'step'   => OrderSteps::STEPS[0],
                     'status' => \Auth::guest() ? false : true,
                 ],
                 [
-                    'step' => OrderSteps::STEPS[1],
+                    'step'   => OrderSteps::STEPS[1],
                     'status' => false,
                 ],
                 [
-                    'step' => OrderSteps::STEPS[2],
+                    'step'   => OrderSteps::STEPS[2],
                     'status' => false,
                 ],
                 [
-                    'step' => OrderSteps::STEPS[3],
+                    'step'   => OrderSteps::STEPS[3],
                     'status' => false,
                 ],
             ];
@@ -121,23 +123,25 @@ class OrderStepItem implements Arrayable
     public function getWhereNotActive()
     {
         $steps = $this->getSteps();
-        if (! empty($steps)) {
+        if (!empty($steps)) {
             return $steps->where('status', false)->first();
         }
     }
 
     /**
      * @param $name
-     * @return array|null
+     *
      * @throws \Exception
+     *
+     * @return array|null
      */
     public function makeStepPassed($name): ?array
     {
-        if (! in_array($name, OrderSteps::STEPS)) {
+        if (!in_array($name, OrderSteps::STEPS)) {
             throw new \Exception('Not Steps Found by the given name');
         }
         $steps = $this->getSteps();
-        if (! empty($steps)) {
+        if (!empty($steps)) {
             $items = $steps->transform(function ($item, $key) use ($name) {
                 if ($item['step'] == $name) {
                     $item['status'] = true;
@@ -160,9 +164,9 @@ class OrderStepItem implements Arrayable
         \Session::remove('steps');
         $id = \Auth::check() ? \Auth::user()->id : 0;
         $item = [
-            'rowId' => $this->rowId = $this->generateRowId($id),
+            'rowId'  => $this->rowId = $this->generateRowId($id),
             'userId' => $this->userId = $id,
-            'steps' => $this->steps = $steps,
+            'steps'  => $this->steps = $steps,
         ];
 
         \Session::put('steps', $item);
@@ -173,9 +177,9 @@ class OrderStepItem implements Arrayable
     public function update($rowId, $userId, $steps)
     {
         $item = [
-            'rowId' => $this->rowId = $rowId,
+            'rowId'  => $this->rowId = $rowId,
             'userId' => $this->userId = $userId,
-            'steps' => $this->steps = $steps,
+            'steps'  => $this->steps = $steps,
         ];
         \Session::remove('steps');
         \Session::put('steps', $item);
@@ -185,6 +189,7 @@ class OrderStepItem implements Arrayable
 
     /**
      * @param $id
+     *
      * @return string
      */
     protected function generateRowId($id): string
@@ -200,9 +205,9 @@ class OrderStepItem implements Arrayable
     public function toArray(): array
     {
         return [
-            'rowId' => $this->rowId,
+            'rowId'  => $this->rowId,
             'userId' => $this->userId ?? null,
-            'steps' => $this->steps,
+            'steps'  => $this->steps,
         ];
     }
 }

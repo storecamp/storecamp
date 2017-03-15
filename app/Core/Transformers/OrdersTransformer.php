@@ -12,6 +12,7 @@ class OrdersTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Orders entity.
+     *
      * @param \Orders $model
      *
      * @return array

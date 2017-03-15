@@ -85,7 +85,7 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
      * Success result.
      *
      * @param Orders $order Order.
-     * @param mixed $data  Callback data.
+     * @param mixed  $data  Callback data.
      *
      * @return string
      */
@@ -180,7 +180,8 @@ abstract class PaymentGateway implements PaymentGatewayInterface, Arrayable, Jso
     /**
      * Convert the model instance to JSON.
      *
-     * @param  int  $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)

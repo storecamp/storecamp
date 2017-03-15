@@ -16,14 +16,17 @@ interface RepositoryInterface
      * Retrieve all data of repository.
      *
      * @param array $columns
+     *
      * @return mixed
      */
     public function all($columns = ['*']);
 
     /**
      * Retrieve all data of repository, paginated.
-     * @param null $limit
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
     public function paginate($limit = null, $columns = ['*']);
@@ -33,6 +36,7 @@ interface RepositoryInterface
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
     public function find($id, $columns = ['*']);
@@ -40,6 +44,7 @@ interface RepositoryInterface
     /**
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
     public function findOrFail($id, $columns = ['*']);
@@ -50,6 +55,7 @@ interface RepositoryInterface
      * @param $field
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
     public function findByField($field, $value, $columns = ['*']);
@@ -59,6 +65,7 @@ interface RepositoryInterface
      *
      * @param array $where
      * @param array $columns
+     *
      * @return mixed
      */
     public function findWhere(array $where, $columns = ['*']);
@@ -69,6 +76,7 @@ interface RepositoryInterface
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
     public function findWhereIn($field, array $values, $columns = ['*']);
@@ -79,6 +87,7 @@ interface RepositoryInterface
      * @param $field
      * @param array $values
      * @param array $columns
+     *
      * @return mixed
      */
     public function findWhereNotIn($field, array $values, $columns = ['*']);
@@ -87,6 +96,7 @@ interface RepositoryInterface
      * Save a new entity in repository.
      *
      * @param array $attributes
+     *
      * @return mixed
      */
     public function create(array $attributes);
@@ -96,6 +106,7 @@ interface RepositoryInterface
      *
      * @param array $attributes
      * @param $id
+     *
      * @return mixed
      */
     public function update(array $attributes, $id);
@@ -103,6 +114,7 @@ interface RepositoryInterface
     /**
      * @param array $attributes
      * @param array $values
+     *
      * @return mixed
      */
     public function updateOrCreate(array $attributes, array $values = []);
@@ -111,6 +123,7 @@ interface RepositoryInterface
      * Delete a entity in repository by id.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id);
@@ -119,6 +132,7 @@ interface RepositoryInterface
      * Load relations.
      *
      * @param $relations
+     *
      * @return $this
      */
     public function with($relations);
@@ -127,6 +141,7 @@ interface RepositoryInterface
      * Set hidden fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function hidden(array $fields);
@@ -135,6 +150,7 @@ interface RepositoryInterface
      * Set visible fields.
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function visible(array $fields);
@@ -143,6 +159,7 @@ interface RepositoryInterface
      * Query Scope.
      *
      * @param \Closure $scope
+     *
      * @return $this
      */
     public function scopeQuery(\Closure $scope);
@@ -158,6 +175,7 @@ interface RepositoryInterface
      * Set Presenter.
      *
      * @param $presenter
+     *
      * @return mixed
      */
     public function setPresenter($presenter);
@@ -166,6 +184,7 @@ interface RepositoryInterface
      * Skip Presenter Wrapper.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipPresenter($status = true);
@@ -182,12 +201,14 @@ interface RepositoryInterface
      * get some data attached to model from config folder.
      *
      * @param $configFileName
+     *
      * @return mixed
      */
 //    public function bindFromConfigModel($configFileName);
 
     /**
      * @param $criteria
+     *
      * @return mixed
      */
     public function pushCriteria($criteria);
@@ -195,7 +216,7 @@ interface RepositoryInterface
     /**
      * Retrieve data array for populate field select.
      *
-     * @param string $column
+     * @param string      $column
      * @param string|null $key
      *
      * @return \Illuminate\Support\Collection|array
@@ -204,8 +225,10 @@ interface RepositoryInterface
 
     /**
      * Retrieve all data of repository, simple paginated.
-     * @param null $limit
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
     public function simplePaginate($limit = null, $columns = ['*']);
@@ -221,6 +244,7 @@ interface RepositoryInterface
      * @param $key
      * @param $value
      * @param string $operator
+     *
      * @return mixed
      */
     public function where($key, $value, $operator = '=');
@@ -228,6 +252,7 @@ interface RepositoryInterface
     /**
      * @param $key
      * @param $order
+     *
      * @return mixed
      */
     public function order($key, $order);

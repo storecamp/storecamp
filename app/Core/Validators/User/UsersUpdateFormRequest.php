@@ -26,7 +26,7 @@ class UsersUpdateFormRequest extends Request
         $id = $this->id;
 
         $rules = [
-            'name' => 'required',
+            'name'  => 'required',
             'email' => 'required|unique:users,id,'.$id,
         ];
         if ($this->has('password')) {

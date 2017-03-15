@@ -10,15 +10,15 @@ class ReviewDataTransformer extends TransformerAbstract
     public function transform(ProductReview $review)
     {
         return [
-            'id' => $review->id,
-            'product' => $review->product->title,
-            'rating' => $this->getReviewRating($review),
-            'hidden' => $this->getReviewHidden($review),
-            'isViewed' => $this->getIsViewed($review),
-            'author' => $review->user->name,
+            'id'         => $review->id,
+            'product'    => $review->product->title,
+            'rating'     => $this->getReviewRating($review),
+            'hidden'     => $this->getReviewHidden($review),
+            'isViewed'   => $this->getIsViewed($review),
+            'author'     => $review->user->name,
             'created_at' => $review->created_at,
             'updated_at' => $review->updated_at,
-            'action' => $this->getActions($review),
+            'action'     => $this->getActions($review),
         ];
     }
 

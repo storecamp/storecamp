@@ -22,12 +22,14 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUserId($value)
  * @mixin \Eloquent
+ *
  * @property string $statusCode
  * @property-read string. $calculations_cache_key
  * @property-read int $count
@@ -50,6 +52,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read float $total_tax
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Transaction[] $transactions
  * @property-read \App\Core\Models\User $user
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders findByUser($userId, $statusCode = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders uuid($unique_id, $first = true)
@@ -103,7 +106,7 @@ class Orders extends Model implements Transformable, OrderInterface
     {
         parent::boot();
         static::deleting(function ($user) {
-            if (! method_exists(config('auth.providers.users.model'), 'bootSoftDeletingTrait')) {
+            if (!method_exists(config('auth.providers.users.model'), 'bootSoftDeletingTrait')) {
                 $user->items()->sync([]);
             }
 
@@ -158,8 +161,8 @@ class Orders extends Model implements Transformable, OrderInterface
      * Scopes class by product sku.
      * Optionally, scopes by status.
      *
-     * @param Builder $query  Query.
-     * @param mixed                                 $sku    Item SKU.
+     * @param Builder $query Query.
+     * @param mixed   $sku   Item SKU.
      *
      * @return Builder
      */
@@ -213,7 +216,7 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function scopeFindByUser($query, $userId, $statusCode = null): Builder
     {
-        if (! empty($status)) {
+        if (!empty($status)) {
             $query = $query->whereStatus($status);
         }
 
@@ -222,6 +225,7 @@ class Orders extends Model implements Transformable, OrderInterface
 
     /**
      * @param string $statusCode
+     *
      * @return bool
      */
     public function isStatus(string $statusCode): bool

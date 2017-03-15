@@ -65,7 +65,7 @@ class ClassCreatorCommand extends Command
                 $classFile = app_path($class.'.php');
 
                 if (file_exists($classFile)
-                    && ! $this->confirm($class.' exists. Proceed with overwriting? [Yes|no]', 'Yes')) {
+                    && !$this->confirm($class.' exists. Proceed with overwriting? [Yes|no]', 'Yes')) {
                     $this->info($class.' class creation skipped.');
                     continue;
                 }
@@ -87,7 +87,7 @@ class ClassCreatorCommand extends Command
     /**
      * Create the migration.
      *
-     * @param string $class Class name
+     * @param string $class     Class name
      * @param string $classFile Path to class file
      *
      * @return bool

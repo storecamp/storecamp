@@ -43,6 +43,7 @@ class Settings extends Model implements Transformable
      * @param $key
      * @param $group
      * @param null $default
+     *
      * @return null
      */
     public function get($key, $group, $default = null)
@@ -58,14 +59,16 @@ class Settings extends Model implements Transformable
     /**
      * @param $key
      * @param null $value
-     * @return $this
+     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function set($key, $value = null)
     {
         $setting = $this->where('key', '=', $key);
 
-        if (! $setting->count()) {
+        if (!$setting->count()) {
             $this->key = $key;
             if ($value) {
                 $this->value = $value;

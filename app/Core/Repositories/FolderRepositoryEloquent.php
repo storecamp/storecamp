@@ -41,10 +41,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * FolderRepositoryEloquent constructor.
+     *
      * @param Application $app
-     * @param Dispatcher $dispatcher
-     * @param Media $media
-     * @param Filesystem $file
+     * @param Dispatcher  $dispatcher
+     * @param Media       $media
+     * @param Filesystem  $file
      */
     public function __construct(Application $app, Dispatcher $dispatcher, Media $media, Filesystem $file)
     {
@@ -84,6 +85,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * @param $disk
+     *
      * @return FolderRepositoryEloquent
      */
     public function setDisk($disk) : FolderRepositoryEloquent
@@ -103,6 +105,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * @param $diskRoot
+     *
      * @return FolderRepositoryEloquent
      */
     public function setDiskRoot($diskRoot) : FolderRepositoryEloquent
@@ -130,11 +133,12 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * @param string $name
+     *
      * @return FolderRepositoryEloquent
      */
     public function disk(string $name): FolderRepositoryEloquent
     {
-        if (! empty($name)) {
+        if (!empty($name)) {
             $that = $this->setDisk($name);
             $that->setDiskRoot(config('filesystems.disks.'.$name.'.root'));
             $that->setRootFromProject(config('filesystems.disks.'.$name.'.rootFromProject'));
@@ -162,6 +166,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @param $disk
      * @param null $folder
+     *
      * @return null
      */
     public function getDefaultFolder($disk, $folder = null)
@@ -177,7 +182,8 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * @param Folder $folder
-     * @param array $array
+     * @param array  $array
+     *
      * @return string
      */
     public function getParentFoldersPath($folder, array $array = [])
@@ -196,6 +202,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      * rewrite of delete method.
      *
      * @param $id
+     *
      * @return int
      */
     public function delete($id)
@@ -245,7 +252,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
                 return $this->parserResult($model);
             }
-        } elseif (! is_null($model)) {
+        } elseif (!is_null($model)) {
             $this->resetModel();
 
             return $this->parserResult($model);
@@ -257,6 +264,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      * @param $key
      * @param $value
      * @param string $operator
+     *
      * @return mixed
      */
     public function where($key, $value, $operator = '=')

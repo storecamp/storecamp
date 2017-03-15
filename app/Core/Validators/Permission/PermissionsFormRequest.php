@@ -24,8 +24,8 @@ class PermissionsFormRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:permissions,name',
-            'slug' => 'required|unique:permissions,slug',
+            'name'        => 'required|unique:permissions,name',
+            'slug'        => 'required|unique:permissions,slug',
             'description' => 'required|unique:permissions,description',
         ];
     }

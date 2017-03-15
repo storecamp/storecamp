@@ -8,7 +8,7 @@ class AccessSetupTables extends Migration
     /**
      * Run the migrations.
      *
-     * @return  void
+     * @return void
      */
     public function up()
     {
@@ -66,7 +66,7 @@ class AccessSetupTables extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return  void
+     * @return void
      */
     public function down()
     {

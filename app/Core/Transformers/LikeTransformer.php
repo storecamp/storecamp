@@ -12,6 +12,7 @@ class LikeTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Like entity.
+     *
      * @param Like $model
      *
      * @return array

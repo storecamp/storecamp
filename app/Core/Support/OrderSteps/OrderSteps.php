@@ -12,8 +12,10 @@ class OrderSteps extends Collection
 
     /**
      * @param string $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function __get(string $key)
     {

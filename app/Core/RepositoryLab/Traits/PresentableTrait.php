@@ -17,6 +17,7 @@ trait PresentableTrait
 
     /**
      * @param \RepositoryLab\Repository\Contracts\PresenterInterface $presenter
+     *
      * @return $this
      */
     public function setPresenter(PresenterInterface $presenter)
@@ -41,6 +42,7 @@ trait PresentableTrait
     /**
      * @param $key
      * @param null $default
+     *
      * @return mixed|null
      */
     public function present($key, $default = null)

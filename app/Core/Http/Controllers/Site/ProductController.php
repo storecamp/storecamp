@@ -33,6 +33,7 @@ class ProductController extends BaseController
 
     /**
      * ProductController constructor.
+     *
      * @param ProductSystemContract $productSystem
      */
     public function __construct(ProductSystemContract $productSystem)
@@ -43,7 +44,8 @@ class ProductController extends BaseController
 
     /**
      * @param Request $request
-     * @param null $category
+     * @param null    $category
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request, $category = null)
@@ -69,6 +71,7 @@ class ProductController extends BaseController
     /**
      * @param Request $request
      * @param $productId
+     *
      * @return \Illuminate\View\View|RedirectResponse
      */
     public function show(Request $request, $productId)

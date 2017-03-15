@@ -9,23 +9,25 @@ class UsersDataTransformer extends TransformerAbstract
 {
     /**
      * @param User $user
+     *
      * @return array
      */
     public function transform(User $user)
     {
         return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'roles' => $this->getRoles($user),
+            'id'         => $user->id,
+            'name'       => $user->name,
+            'email'      => $user->email,
+            'roles'      => $this->getRoles($user),
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
-            'action' => $this->getActions($user),
+            'action'     => $this->getActions($user),
         ];
     }
 
     /**
      * @param User $user
+     *
      * @return string
      */
     private function getRoles(User $user)
@@ -40,6 +42,7 @@ class UsersDataTransformer extends TransformerAbstract
 
     /**
      * @param User $user
+     *
      * @return string
      */
     private function getActions(User $user)

@@ -17,6 +17,7 @@ interface SubscribersRepository extends RepositoryInterface
     /**
      * @param $request
      * @param $type
+     *
      * @return mixed
      */
     public function createSubscription($request, $type);
@@ -25,18 +26,21 @@ interface SubscribersRepository extends RepositoryInterface
      * @param $request
      * @param $type
      * @param $subscription_id
+     *
      * @return mixed
      */
     public function deleteSubscription($request, $type, $subscription_id);
 
     /**
      * @param $email
+     *
      * @return mixed
      */
     public function findSubscriber($email);
 
     /**
      * @param null $type
+     *
      * @return mixed
      */
     public function getNewsList($type = null);

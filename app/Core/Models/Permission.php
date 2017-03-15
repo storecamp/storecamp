@@ -19,6 +19,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Role[] $roles
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereName($value)
@@ -27,8 +28,10 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property string $deleted_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission uuid($unique_id, $first = true)

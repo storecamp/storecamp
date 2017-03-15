@@ -30,14 +30,15 @@ class AccessRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param Closure                  $next
      * @param  $roles
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $roles)
     {
-        if ($this->auth->guest() || ! $request->user()->hasRole(explode('|', $roles))) {
+        if ($this->auth->guest() || !$request->user()->hasRole(explode('|', $roles))) {
             return redirect('/');
         }
 

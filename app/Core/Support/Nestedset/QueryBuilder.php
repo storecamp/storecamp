@@ -25,7 +25,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param mixed $id
-     * @param bool $required
+     * @param bool  $required
      *
      * @return array
      */
@@ -38,8 +38,8 @@ class QueryBuilder extends Builder
         $data = $query->first([$this->model->getLftName(),
                                 $this->model->getRgtName(), ]);
 
-        if (! $data && $required) {
-            throw new ModelNotFoundException;
+        if (!$data && $required) {
+            throw new ModelNotFoundException();
         }
 
         return (array) $data;
@@ -51,7 +51,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param mixed $id
-     * @param bool $required
+     * @param bool  $required
      *
      * @return array
      */
@@ -135,9 +135,9 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param array $values
+     * @param array  $values
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -167,10 +167,10 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param mixed $id
+     * @param mixed  $id
      * @param string $boolean
-     * @param bool $not
-     * @param bool $andSelf
+     * @param bool   $not
+     * @param bool   $andSelf
      *
      * @return $this
      */
@@ -185,7 +185,7 @@ class QueryBuilder extends Builder
         }
 
         // Don't include the node
-        if (! $andSelf) {
+        if (!$andSelf) {
             ++$data[0];
         }
 
@@ -225,7 +225,7 @@ class QueryBuilder extends Builder
     /**
      * @param $id
      * @param string $boolean
-     * @param bool $not
+     * @param bool   $not
      *
      * @return $this
      */
@@ -241,7 +241,7 @@ class QueryBuilder extends Builder
      *
      * @param mixed $id
      * @param array $columns
-     * @param bool $andSelf
+     * @param bool  $andSelf
      *
      * @return Collection
      */
@@ -303,7 +303,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param mixed $id
+     * @param mixed  $id
      * @param string $boolean
      *
      * @return $this
@@ -318,7 +318,7 @@ class QueryBuilder extends Builder
      *
      * @since 2.0
      *
-     * @param mixed $id
+     * @param mixed  $id
      * @param string $boolean
      *
      * @return $this
@@ -475,7 +475,7 @@ class QueryBuilder extends Builder
      * Move a node to the new position.
      *
      * @param mixed $key
-     * @param int $position
+     * @param int   $position
      *
      * @return int
      */
@@ -571,7 +571,7 @@ class QueryBuilder extends Builder
      * @since 2.0
      *
      * @param string $col
-     * @param array $params
+     * @param array  $params
      *
      * @return string
      */
@@ -818,7 +818,7 @@ class QueryBuilder extends Builder
         $cut = self::reorderNodes($dictionary, $fixed);
 
         // Save nodes that have invalid parent as roots
-        while (! empty($dictionary)) {
+        while (!empty($dictionary)) {
             $dictionary[null] = reset($dictionary);
 
             unset($dictionary[key($dictionary)]);
@@ -831,7 +831,7 @@ class QueryBuilder extends Builder
 
     /**
      * @param array $dictionary
-     * @param int $fixed
+     * @param int   $fixed
      * @param $parentId
      * @param int $cut
      *
@@ -840,7 +840,7 @@ class QueryBuilder extends Builder
     protected static function reorderNodes(array &$dictionary, &$fixed,
                                            $parentId = null, $cut = 1
     ) {
-        if (! isset($dictionary[$parentId])) {
+        if (!isset($dictionary[$parentId])) {
             return $cut;
         }
 
@@ -875,8 +875,8 @@ class QueryBuilder extends Builder
      * If item data does not contain primary key, new node will be created.
      *
      * @param array $data
-     * @param bool $delete Whether to delete nodes that exists but not in the data
-     *                     array
+     * @param bool  $delete Whether to delete nodes that exists but not in the data
+     *                      array
      *
      * @return int
      */
@@ -887,7 +887,7 @@ class QueryBuilder extends Builder
 
         $this->buildRebuildDictionary($dictionary, $data, $existing);
 
-        if (! empty($existing)) {
+        if (!empty($existing)) {
             if ($delete) {
                 $this->model
                     ->newScopedQuery()
@@ -917,14 +917,14 @@ class QueryBuilder extends Builder
         $keyName = $this->model->getKeyName();
 
         foreach ($data as $itemData) {
-            if (! isset($itemData[$keyName])) {
+            if (!isset($itemData[$keyName])) {
                 $model = $this->model->newInstance();
 
                 // We will save it as raw node since tree will be fixed
                 $model->rawNode(0, 0, $parentId);
             } else {
-                if (! isset($existing[$key = $itemData[$keyName]])) {
-                    throw new ModelNotFoundException;
+                if (!isset($existing[$key = $itemData[$keyName]])) {
+                    throw new ModelNotFoundException();
                 }
 
                 $model = $existing[$key];
@@ -936,7 +936,7 @@ class QueryBuilder extends Builder
 
             $dictionary[$parentId][] = $model;
 
-            if (! isset($itemData['children'])) {
+            if (!isset($itemData['children'])) {
                 continue;
             }
 

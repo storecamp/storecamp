@@ -25,7 +25,7 @@ class ProductSystem implements ProductSystemContract
     /**
      * ProductSystem constructor.
      *
-     * @param ProductsRepository $productRepository
+     * @param ProductsRepository                  $productRepository
      * @param AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository
      */
     public function __construct(ProductsRepository $productRepository,
@@ -37,21 +37,22 @@ class ProductSystem implements ProductSystemContract
 
     /**
      * @param $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $products = $this->productRepository->with($with);
             } else {
                 $products = $this->productRepository;
             }
             $products = $products->findOrFail($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $products = $this->productRepository->newest()->with($with)->paginate();
             } else {
                 $products = $this->productRepository->newest()->paginate();
@@ -65,11 +66,12 @@ class ProductSystem implements ProductSystemContract
      * @param array $data
      * @param $category
      * @param array $with
+     *
      * @return $this|ProductsRepository
      */
     public function categorized(array $data, $category, array $with = [])
     {
-        if (! empty($with)) {
+        if (!empty($with)) {
             $products = $this->productRepository->categorized($category)->with($with)->paginate();
         } else {
             $products = $this->productRepository->categorized($category)->paginate();
@@ -80,6 +82,7 @@ class ProductSystem implements ProductSystemContract
 
     /**
      * @param $data
+     *
      * @return mixed
      */
     public function create(array $data)
@@ -109,6 +112,7 @@ class ProductSystem implements ProductSystemContract
     /**
      * @param $data
      * @param $id
+     *
      * @return mixed
      */
     public function update(array $data, $id)
@@ -143,6 +147,7 @@ class ProductSystem implements ProductSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function delete($id, array $data = []): int

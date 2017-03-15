@@ -34,10 +34,10 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * ProductReviewSystem constructor.
      *
-     * @param ProductsRepository $product
-     * @param UserRepository $user
+     * @param ProductsRepository      $product
+     * @param UserRepository          $user
      * @param ProductReviewRepository $productReview
-     * @param MessageRepository $message
+     * @param MessageRepository       $message
      */
     public function __construct(ProductsRepository $product,
                                 UserRepository $user,
@@ -51,8 +51,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function present(array $data, $id = null, array $with = [])
@@ -60,7 +61,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
         if ($id) {
             $reviews = $this->productReview->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $reviews = $this->productReview->with($with)->paginate();
             } else {
                 $reviews = $this->productReview->paginate();
@@ -73,6 +74,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param $id
      * @param $data
+     *
      * @return mixed
      */
     public function replyProductReview($id, array $data)
@@ -85,6 +87,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return mixed
      */
     public function toggleVisibility($id, array $data)
@@ -112,7 +115,8 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param array $data
-     * @param int $messageId
+     * @param int   $messageId
+     *
      * @return bool
      */
     public function editMessage(array $data, int $messageId)
@@ -123,8 +127,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
     }
 
     /**
-     * @param int $messageId
+     * @param int   $messageId
      * @param array $data
+     *
      * @return mixed
      */
     public function deleteMessage(int $messageId, array $data = [])
@@ -136,6 +141,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
@@ -160,6 +166,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param array $data
      * @param $reviewId
+     *
      * @return mixed
      */
     public function update(array $data, $reviewId)
@@ -172,6 +179,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function delete($id, array $data = []): int

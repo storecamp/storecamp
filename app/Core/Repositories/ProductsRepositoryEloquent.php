@@ -15,10 +15,10 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
      * @var array
      */
     protected $fieldSearchable = [
-        'title' => 'like',
-        'model' => 'like',
-        'price' => 'like',
-        'quantity' => '=',
+        'title'        => 'like',
+        'model'        => 'like',
+        'price'        => 'like',
+        'quantity'     => '=',
         'stock_status' => '=',
     ];
 
@@ -47,6 +47,6 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
     {
         $model = $this->model();
 
-        return new $model;
+        return new $model();
     }
 }

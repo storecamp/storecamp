@@ -40,15 +40,16 @@ class ValidatorException extends \Exception implements Jsonable, Arrayable
     public function toArray()
     {
         return [
-            'error'=>'validation_exception',
-            'error_description'=>$this->getMessageBag(),
+            'error'            => 'validation_exception',
+            'error_description'=> $this->getMessageBag(),
         ];
     }
 
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)

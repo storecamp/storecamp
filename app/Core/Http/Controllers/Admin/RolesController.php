@@ -41,6 +41,7 @@ class RolesController extends BaseController
 
     /**
      * RolesController constructor.
+     *
      * @param AccessSystemContract $accessSystem
      */
     public function __construct(AccessSystemContract $accessSystem)
@@ -53,6 +54,7 @@ class RolesController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function index(Request $request)
@@ -62,6 +64,7 @@ class RolesController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -86,6 +89,7 @@ class RolesController extends BaseController
 
     /**
      * @param RolesFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(RolesFormRequest $request)
@@ -100,6 +104,7 @@ class RolesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -113,6 +118,7 @@ class RolesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -132,6 +138,7 @@ class RolesController extends BaseController
     /**
      * @param RolesUpdateFormRequest $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(RolesUpdateFormRequest $request, $id)
@@ -150,6 +157,7 @@ class RolesController extends BaseController
      * get permissions name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getPermsJson(Request $request)
@@ -167,13 +175,14 @@ class RolesController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->accessSystem->deleteRole($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Sorry role is not deleted');
             }
 

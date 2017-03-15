@@ -10,6 +10,7 @@ class WelcomeMailComposer extends MailComposer
     /**
      * @param $email
      * @param $name
+     *
      * @return \CodeZero\Mailer\Mail
      */
     public function compose($email, $name)

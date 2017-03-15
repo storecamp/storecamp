@@ -10,6 +10,7 @@ trait SidebarTrait
 
     /**
      * SidebarTrait constructor.
+     *
      * @param $instance
      */
     public function __construct($instance)

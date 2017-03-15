@@ -9,28 +9,32 @@ interface AttributeGroupSystemContract
 {
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentGroup(array $data, $id = null, array $with = []);
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentDescription(array $data, $id = null, array $with = []);
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createGroup(array $data);
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createDescription(array $data);
@@ -38,6 +42,7 @@ interface AttributeGroupSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updateGroup(array $data, $id);
@@ -45,6 +50,7 @@ interface AttributeGroupSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updateDescription(array $data, $id);
@@ -52,6 +58,7 @@ interface AttributeGroupSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deleteGroup($id, array $data = []): int;
@@ -59,6 +66,7 @@ interface AttributeGroupSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deleteDescription($id, array $data = []): int;

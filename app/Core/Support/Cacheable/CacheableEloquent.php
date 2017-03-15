@@ -48,7 +48,7 @@ trait CacheableEloquent
      * Fire the given event for the model.
      *
      * @param string $event
-     * @param bool $halt
+     * @param bool   $halt
      *
      * @return mixed
      */
@@ -58,7 +58,7 @@ trait CacheableEloquent
      * Register an updated model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int $priority
+     * @param int             $priority
      *
      * @return void
      */
@@ -68,7 +68,7 @@ trait CacheableEloquent
      * Register a created model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int $priority
+     * @param int             $priority
      *
      * @return void
      */
@@ -78,7 +78,7 @@ trait CacheableEloquent
      * Register a deleted model event with the dispatcher.
      *
      * @param \Closure|string $callback
-     * @param int $priority
+     * @param int             $priority
      *
      * @return void
      */
@@ -115,6 +115,7 @@ trait CacheableEloquent
 
     /**
      * @param Container $container
+     *
      * @return $this
      */
     public function setContainer(Container $container)
@@ -148,7 +149,7 @@ trait CacheableEloquent
     {
         $keysFile = storage_path('framework/cache/storecamp.cacheable.json');
         $cacheKeys = $this->getCacheKeys($keysFile);
-        if (! isset($cacheKeys[$model]) || ! in_array($cacheKey, $cacheKeys[$model])) {
+        if (!isset($cacheKeys[$model]) || !in_array($cacheKey, $cacheKeys[$model])) {
             $cacheKeys[$model][] = $cacheKey;
             file_put_contents($keysFile, json_encode($cacheKeys));
         }
@@ -163,7 +164,7 @@ trait CacheableEloquent
      */
     protected function getCacheKeys($file)
     {
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             file_put_contents($file, null);
         }
 
@@ -304,29 +305,30 @@ trait CacheableEloquent
      * Generate unique cache key.
      *
      * @param Builder $builder
-     * @param array $columns
+     * @param array   $columns
+     *
      * @return string
      */
     public function generateCacheKey(Builder $builder, array $columns)
     {
         $query = $builder->getQuery();
         $vars = [
-            'aggregate' => $query->aggregate,
-            'columns' => $query->columns,
-            'distinct' => $query->distinct,
-            'from' => $query->from,
-            'joins' => $query->joins,
-            'wheres' => $query->wheres,
-            'groups' => $query->groups,
-            'havings' => $query->havings,
-            'orders' => $query->orders,
-            'limit' => $query->limit,
-            'offset' => $query->offset,
-            'unions' => $query->unions,
-            'unionLimit' => $query->unionLimit,
+            'aggregate'   => $query->aggregate,
+            'columns'     => $query->columns,
+            'distinct'    => $query->distinct,
+            'from'        => $query->from,
+            'joins'       => $query->joins,
+            'wheres'      => $query->wheres,
+            'groups'      => $query->groups,
+            'havings'     => $query->havings,
+            'orders'      => $query->orders,
+            'limit'       => $query->limit,
+            'offset'      => $query->offset,
+            'unions'      => $query->unions,
+            'unionLimit'  => $query->unionLimit,
             'unionOffset' => $query->unionOffset,
             'unionOrders' => $query->unionOrders,
-            'lock' => $query->lock,
+            'lock'        => $query->lock,
         ];
 
         return md5(json_encode([
@@ -344,9 +346,10 @@ trait CacheableEloquent
     /**
      * Cache given callback.
      *
-     * @param Builder $builder
-     * @param array $columns
+     * @param Builder  $builder
+     * @param array    $columns
      * @param \Closure $closure
+     *
      * @return mixed
      */
     public function cacheQuery(Builder $builder, array $columns, \Closure $closure)
@@ -375,6 +378,7 @@ trait CacheableEloquent
 
     /**
      * @param $query
+     *
      * @return EloquentBuilder
      */
     public function newEloquentBuilder($query)

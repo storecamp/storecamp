@@ -13,7 +13,8 @@ class NewCustomerRegisteredListener
      * send email to user and admin just get to know that new user registered.
      *
      * NewCustomerRegisteredListener constructor.
-     * @param WelcomeMailComposer $mailer
+     *
+     * @param WelcomeMailComposer           $mailer
      * @param UserRegisteredToAdminComposer $adminComposer
      */
     public function __construct(WelcomeMailComposer $mailer, UserRegisteredToAdminComposer $adminComposer)

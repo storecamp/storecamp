@@ -20,7 +20,7 @@ class FolderServiceProvider extends ServiceProvider
 
         Folder::created(function ($folder) {
             //setDiskAttribute fix
-            if (! $folder->disk) {
+            if (!$folder->disk) {
                 $folder->disk = 'local';
                 $folder->save();
             }

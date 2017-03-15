@@ -25,7 +25,7 @@ return [
     */
     'database' => [
         'connection' => env('DB_CONNECTION'),
-        'table' => 'cart',
+        'table'      => 'cart',
     ],
     /*
     |--------------------------------------------------------------------------
@@ -37,8 +37,8 @@ return [
     |
     */
     'format' => [
-        'decimals' => 2,
-        'decimal_point' => '.',
+        'decimals'           => 2,
+        'decimal_point'      => '.',
         'thousand_seperator' => ',',
     ],
 
@@ -255,32 +255,32 @@ return [
         [
             'code'                => 'in_creation',
             'name'                => 'In creation',
-            'description' => 'Order being created.',
+            'description'         => 'Order being created.',
         ],
         [
             'code'                => 'pending',
             'name'                => 'Pending',
-            'description' => 'Created / placed order pending payment or similar.',
+            'description'         => 'Created / placed order pending payment or similar.',
         ],
         [
             'code'                => 'in_process',
             'name'                => 'In process',
-            'description' => 'Completed order in process of shipping or revision.',
+            'description'         => 'Completed order in process of shipping or revision.',
         ],
         [
             'code'                => 'completed',
             'name'                => 'Completed',
-            'description' => 'Completed order. Payment and other processes have been made.',
+            'description'         => 'Completed order. Payment and other processes have been made.',
         ],
         [
             'code'                => 'failed',
             'name'                => 'Failed',
-            'description' => 'Failed order. Payment or other process failed.',
+            'description'         => 'Failed order. Payment or other process failed.',
         ],
         [
             'code'                => 'canceled',
             'name'                => 'Canceled',
-            'description' => 'Canceled order.',
+            'description'         => 'Canceled order.',
         ],
     ],
 
@@ -323,9 +323,9 @@ return [
     |
     */
     'gateways' => [
-        'omnipay'           =>  \App\Core\Gateways\GatewayOmnipay::class,
-        'paypal'            =>  Amsgames\LaravelShopGatewayPaypal\GatewayPayPal::class,
-        'paypalExpress'     =>  Amsgames\LaravelShopGatewayPaypal\GatewayPayPalExpress::class,
+        'omnipay'           => \App\Core\Gateways\GatewayOmnipay::class,
+        'paypal'            => Amsgames\LaravelShopGatewayPaypal\GatewayPayPal::class,
+        'paypalExpress'     => Amsgames\LaravelShopGatewayPaypal\GatewayPayPalExpress::class,
     ],
 
     /*

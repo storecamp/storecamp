@@ -13,6 +13,7 @@ class OrderPlaced
 
     /**
      * Order ID.
+     *
      * @var int
      */
     public $id;

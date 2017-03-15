@@ -18,7 +18,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'name' => 'like',
+        'name'         => 'like',
         'display_name' => 'like',
     ];
 
@@ -42,6 +42,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function store(array $data)
@@ -80,6 +81,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function getRoleUsers(string $name)

@@ -14,7 +14,7 @@ class ServiceController extends BaseController
      */
     public function settings()
     {
-        if (! defined('STDIN')) {
+        if (!defined('STDIN')) {
             $stdin = fopen('php://stdin', 'r');
         }
 

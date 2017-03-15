@@ -25,7 +25,7 @@ abstract class BaseController extends Controller
      * @param string $type
      * @param $message
      * @param null|string $title
-     * @param array $options
+     * @param array       $options
      */
     public function toastr(string $type, $message, ?string $title = null, $options = [])
     {
@@ -37,6 +37,7 @@ abstract class BaseController extends Controller
      * @param $view
      * @param array $data
      * @param array $mergeData
+     *
      * @return View
      */
     protected function view($view, array $data = [], array $mergeData = []) : View
@@ -46,6 +47,7 @@ abstract class BaseController extends Controller
 
     /**
      * @param $e
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function redirectNotFound($e = null) : RedirectResponse
@@ -62,6 +64,7 @@ abstract class BaseController extends Controller
 
     /**
      * @param $e
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function redirectError($e = null) : RedirectResponse
@@ -85,6 +88,7 @@ abstract class BaseController extends Controller
 
     /**
      * @param $search
+     *
      * @return null
      */
     protected function parserSearchValue($search)

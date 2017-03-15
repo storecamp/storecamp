@@ -38,6 +38,7 @@ class AttributesController extends BaseController
 
     /**
      * AttributesController constructor.
+     *
      * @param AttributeGroupSystemContract $attributeGroupSystem
      */
     public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
@@ -50,6 +51,7 @@ class AttributesController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -59,6 +61,7 @@ class AttributesController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -86,6 +89,7 @@ class AttributesController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
@@ -103,6 +107,7 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -120,6 +125,7 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -144,6 +150,7 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
@@ -162,13 +169,14 @@ class AttributesController extends BaseController
 
     /**
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->attributeGroupSystem->deleteDescription($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Item not deleted. Some error appeared!');
             }
 
@@ -184,6 +192,7 @@ class AttributesController extends BaseController
      * get groups name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getJson(Request $request)

@@ -185,12 +185,12 @@ return [
     'source_adapters' => [
         'class' => [
             Symfony\Component\HttpFoundation\File\UploadedFile::class => Plank\Mediable\SourceAdapters\UploadedFileAdapter::class,
-            Symfony\Component\HttpFoundation\File\File::class => Plank\Mediable\SourceAdapters\FileAdapter::class,
-            Psr\Http\Message\StreamInterface::class => Plank\Mediable\SourceAdapters\StreamAdapter::class,
+            Symfony\Component\HttpFoundation\File\File::class         => Plank\Mediable\SourceAdapters\FileAdapter::class,
+            Psr\Http\Message\StreamInterface::class                   => Plank\Mediable\SourceAdapters\StreamAdapter::class,
         ],
         'pattern' => [
             '^https?://' => Plank\Mediable\SourceAdapters\RemoteUrlAdapter::class,
-            '^/' => Plank\Mediable\SourceAdapters\LocalPathAdapter::class,
+            '^/'         => Plank\Mediable\SourceAdapters\LocalPathAdapter::class,
         ],
     ],
 
@@ -200,7 +200,7 @@ return [
      */
     'url_generators' => [
         'local' => Plank\Mediable\UrlGenerators\LocalUrlGenerator::class,
-        's3' => Plank\Mediable\UrlGenerators\S3UrlGenerator::class,
+        's3'    => Plank\Mediable\UrlGenerators\S3UrlGenerator::class,
     ],
 
     /*

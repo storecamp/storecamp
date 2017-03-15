@@ -39,7 +39,7 @@ class RulesParser implements Arrayable
     /**
      * Parse a string to array of formatted rules.
      *
-     * @param  string $rules
+     * @param string $rules
      *
      * @return array
      */
@@ -73,7 +73,7 @@ class RulesParser implements Arrayable
     /**
      * Get column name from rules.
      *
-     * @param  string $rules
+     * @param string $rules
      *
      * @return string
      */
@@ -87,8 +87,8 @@ class RulesParser implements Arrayable
     /**
      * Get column attributes.
      *
-     * @param  string $column
-     * @param  string $rules
+     * @param string $column
+     * @param string $rules
      *
      * @return array
      */

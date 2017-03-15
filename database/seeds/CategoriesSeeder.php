@@ -92,13 +92,13 @@ class CategoriesSeeder extends Seeder
 
         foreach (array_keys($categories) as $category) {
             $newCategory = \App\Core\Models\Category::create([
-                'name' => $category,
+                'name'        => $category,
                 'description' => $category,
             ]);
             foreach ($categories[$category] as $child) {
                 $childCategory = \App\Core\Models\Category::create([
-                    'parent_id' => $newCategory->id,
-                    'name' => $child,
+                    'parent_id'   => $newCategory->id,
+                    'name'        => $child,
                     'description' => $child,
                 ]);
             }

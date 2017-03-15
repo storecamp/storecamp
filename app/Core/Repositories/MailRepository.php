@@ -16,12 +16,14 @@ interface MailRepository extends RepositoryInterface
 
     /**
      * @param $uid
+     *
      * @return mixed
      */
     public function resolveMailHistory($uid);
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file);
@@ -29,6 +31,7 @@ interface MailRepository extends RepositoryInterface
     /**
      * @param $folder
      * @param $filename
+     *
      * @return mixed
      */
     public function getHistoryTmpMail($folder, $filename);
