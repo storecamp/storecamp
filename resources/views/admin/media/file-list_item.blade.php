@@ -1,5 +1,5 @@
 <div class="media file-item" data-file-id="{{ $file->id }}"
-     data-filename="{{ $file->filename }}"
+     data-filename="{{ $file->filename .'.'.$file->extension}}"
      data-disk="{{ $file->disk }}"
      data-file-type="{{ $file->aggregate_type }}"
      data-modified="{{ $file->updated_at }}"
@@ -21,7 +21,7 @@
         <div>
             <div class="pull-right inline items-list">
                 <a class="btn info-btn btn-default btn-xs" data-name="{{ $file->filename }}"
-                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal" type="rename"
+                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal" type="info"
                    role="button"
                    href="#info-modal">
                     <i class="fa fa-play" aria-hidden="true"></i>
@@ -43,7 +43,7 @@
                     delete
                 </a>
             </div>
-            <strong>{{ $file->filename }}</strong>
+            <strong>{{ $file->filename  .'.'.$file->extension}}</strong>
         </div>
         <div class="text-muted">
             <small>size: {{ formatBytes($file->size)}}</small>
