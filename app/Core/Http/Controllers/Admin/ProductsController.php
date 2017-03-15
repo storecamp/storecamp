@@ -41,8 +41,9 @@ class ProductsController extends BaseController
 
     /**
      * ProductsController constructor.
+     *
      * @param ProductSystemContract $productSystem
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryRepository    $categoryRepository
      */
     public function __construct(ProductSystemContract $productSystem, CategoryRepository $categoryRepository)
     {
@@ -54,6 +55,7 @@ class ProductsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -63,6 +65,7 @@ class ProductsController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -88,6 +91,7 @@ class ProductsController extends BaseController
 
     /**
      * @param Create $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Create $request)
@@ -107,6 +111,7 @@ class ProductsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -124,6 +129,7 @@ class ProductsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -151,6 +157,7 @@ class ProductsController extends BaseController
      *
      * @param Update $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Update $request, $id)
@@ -170,14 +177,15 @@ class ProductsController extends BaseController
     /**
      * Remove the specified article from storage.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->productSystem->delete($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 $this->flash('warning', 'Sorry product is not deleted');
             }
 
@@ -189,6 +197,7 @@ class ProductsController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSelect(Request $request)

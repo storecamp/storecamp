@@ -24,7 +24,7 @@ class CampaignFormRequest extends Request
     public function rules()
     {
         return [
-            'to' => 'required|numeric|min:1,max:11',
+            'to'      => 'required|numeric|min:1,max:11',
             'subject' => 'required|min:3',
             'message' => 'required|min:25,max:5000',
         ];

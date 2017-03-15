@@ -12,6 +12,7 @@ class AdminNavigation
 
     /**
      * AdminNavigation constructor.
+     *
      * @param AuthManager $authManager
      */
     public function __construct(AuthManager $authManager)

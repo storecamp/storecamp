@@ -10,25 +10,27 @@ class CategoriesDataTransformer extends TransformerAbstract
 {
     /**
      * @param Category $category
+     *
      * @return array
      */
     public function transform(Category $category)
     {
         return [
-            'id' => $category->id,
-            'name' => $this->getName($category),
-            'slug' => $category->slug,
+            'id'          => $category->id,
+            'name'        => $this->getName($category),
+            'slug'        => $category->slug,
             'description' => $this->getDescription($category),
-            'status' => $this->getStatus($category),
-            'sort_order' => $category->sort_order,
-            'created_at' => $category->created_at,
-            'updated_at' => $category->updated_at,
-            'action' => $this->getActions($category),
+            'status'      => $this->getStatus($category),
+            'sort_order'  => $category->sort_order,
+            'created_at'  => $category->created_at,
+            'updated_at'  => $category->updated_at,
+            'action'      => $this->getActions($category),
         ];
     }
 
     /**
      * @param Category $category
+     *
      * @return string
      */
     private function getDescription(Category $category): string
@@ -44,6 +46,7 @@ class CategoriesDataTransformer extends TransformerAbstract
 
     /**
      * @param Category $category
+     *
      * @return string
      */
     private function getName(Category $category): string
@@ -53,6 +56,7 @@ class CategoriesDataTransformer extends TransformerAbstract
 
     /**
      * @param Category $category
+     *
      * @return string
      */
     private function getActions(Category $category): string
@@ -67,6 +71,7 @@ class CategoriesDataTransformer extends TransformerAbstract
 
     /**
      * @param Category $category
+     *
      * @return string
      */
     private function getStatus(Category $category): string

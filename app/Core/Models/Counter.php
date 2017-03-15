@@ -18,6 +18,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property int $view_counter
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Counter idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Counter uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Counter whereClassName($value)

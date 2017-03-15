@@ -35,6 +35,7 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request)
@@ -53,6 +54,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $rowId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $rowId)
@@ -74,6 +76,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $productId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function add(Request $request, $productId)
@@ -96,6 +99,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $itemId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function remove(Request $request, $itemId)
@@ -112,6 +116,7 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request)

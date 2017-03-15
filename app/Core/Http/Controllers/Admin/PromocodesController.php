@@ -15,6 +15,7 @@ class PromocodesController extends Controller
 
     /**
      * PromocodesController constructor.
+     *
      * @param PromocodeRepository $repository
      */
     public function __construct(PromocodeRepository $repository)
@@ -50,6 +51,7 @@ class PromocodesController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function show(Request $request)
@@ -59,7 +61,8 @@ class PromocodesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit(Request $request, $id)
@@ -70,7 +73,8 @@ class PromocodesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function update(Request $request, $id)
@@ -81,7 +85,8 @@ class PromocodesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy(Request $request, $id)

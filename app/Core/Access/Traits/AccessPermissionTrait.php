@@ -36,7 +36,7 @@ trait AccessPermissionTrait
         parent::boot();
 
         static::deleting(function ($permission) {
-            if (! method_exists(config('access.permission'), 'bootSoftDeletes')) {
+            if (!method_exists(config('access.permission'), 'bootSoftDeletes')) {
                 $permission->roles()->sync([]);
             }
 

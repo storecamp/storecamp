@@ -7,6 +7,7 @@ interface ProductReviewSystemContract extends BaseLogicContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return mixed
      */
     public function replyProductReview($id, array $data);
@@ -14,6 +15,7 @@ interface ProductReviewSystemContract extends BaseLogicContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return mixed
      */
     public function toggleVisibility($id, array $data);
@@ -26,14 +28,16 @@ interface ProductReviewSystemContract extends BaseLogicContract
 
     /**
      * @param array $data
-     * @param int $messageId
+     * @param int   $messageId
+     *
      * @return mixed
      */
     public function editMessage(array $data, int $messageId);
 
     /**
-     * @param int $messageId
+     * @param int   $messageId
      * @param array $data
+     *
      * @return mixed
      */
     public function deleteMessage(int $messageId, array $data = []);

@@ -12,6 +12,7 @@ class PromocodeTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Promocode entity.
+     *
      * @param \Promocode $model
      *
      * @return array

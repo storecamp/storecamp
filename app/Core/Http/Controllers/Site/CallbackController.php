@@ -26,6 +26,7 @@ class CallbackController extends Controller
      * @param $status
      * @param $id
      * @param $shoptoken
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function process(Request $request, $status, $id, $shoptoken)

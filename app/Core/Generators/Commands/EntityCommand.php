@@ -51,12 +51,12 @@ class EntityCommand extends Command
         }
         if ($this->confirm('Would you like to create a Migration? [y|N]')) {
             (new MigrationGenerator([
-                'name'  => 'create_'.$this->argument('name'),
-                'action' => null,
-                'table'  => $this->argument('name').'Table',
-                'fields_up'  => null,
+                'name'         => 'create_'.$this->argument('name'),
+                'action'       => null,
+                'table'        => $this->argument('name').'Table',
+                'fields_up'    => null,
                 'fields_down'  => null,
-                'force' => $this->option('force'),
+                'force'        => $this->option('force'),
             ]))->run();
         }
     }

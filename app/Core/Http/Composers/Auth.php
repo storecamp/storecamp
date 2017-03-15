@@ -14,6 +14,7 @@ class Auth
 
     /**
      * Site constructor.
+     *
      * @param AuthManager $auth
      */
     public function __construct(AuthManager $auth)
@@ -23,6 +24,7 @@ class Auth
 
     /**
      * @param View $view
+     *
      * @return View
      */
     public function compose(View $view)

@@ -30,6 +30,7 @@ trait ViewCounterTrait
 
     /**
      * @param array $get
+     *
      * @return mixed
      */
     public function instance_counters($get = ['*'])
@@ -42,6 +43,7 @@ trait ViewCounterTrait
     /**
      * @param $query
      * @param $limit
+     *
      * @return mixed
      */
     public function scopeMostViewed($query, $limit)
@@ -54,6 +56,7 @@ trait ViewCounterTrait
     /**
      * @param $limit
      * @param array $get
+     *
      * @return mixed
      */
     public function max_instance_counters($limit = 5, $get = ['*'])
@@ -70,13 +73,13 @@ trait ViewCounterTrait
      */
     public function view()
     {
-        if (! $this->isViewed()) {
+        if (!$this->isViewed()) {
             if (\Auth::user()) {
                 $this->user_counters()->create([
                     'class_name' => snake_case(get_class($this)),
-                    'object_id' => $this->id,
-                    'user_id' => \Auth::user()->id,
-                    'action' => 'view',
+                    'object_id'  => $this->id,
+                    'user_id'    => \Auth::user()->id,
+                    'action'     => 'view',
                 ]);
                 $this->counter()->increment('view_counter');
 
@@ -99,9 +102,9 @@ trait ViewCounterTrait
      */
     public function isViewed()
     {
-        if (! \Auth::user()) {
+        if (!\Auth::user()) {
             $viewed = \Session::get($this->get_view_key());
-            if (! empty($viewed)) {
+            if (!empty($viewed)) {
                 return true;
             }
         } else {

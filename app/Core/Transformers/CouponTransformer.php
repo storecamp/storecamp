@@ -12,6 +12,7 @@ class CouponTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Coupon entity.
+     *
      * @param Coupon $model
      *
      * @return array

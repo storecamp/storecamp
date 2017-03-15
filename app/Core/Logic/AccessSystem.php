@@ -21,7 +21,7 @@ class AccessSystem implements AccessSystemContract
     /**
      * AccessSystem constructor.
      *
-     * @param RolesRepository $rolesRepository
+     * @param RolesRepository      $rolesRepository
      * @param PermissionRepository $permissionRepository
      */
     public function __construct(RolesRepository $rolesRepository, PermissionRepository $permissionRepository)
@@ -32,8 +32,9 @@ class AccessSystem implements AccessSystemContract
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentRoles(array $data, $id = null, array $with = [])
@@ -41,7 +42,7 @@ class AccessSystem implements AccessSystemContract
         if ($id) {
             $roles = $this->rolesRepository->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $roles = $this->rolesRepository->with($with)->paginate();
             } else {
                 $roles = $this->rolesRepository->paginate();
@@ -53,8 +54,9 @@ class AccessSystem implements AccessSystemContract
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentPermissions(array $data, $id = null, array $with = [])
@@ -62,7 +64,7 @@ class AccessSystem implements AccessSystemContract
         if ($id) {
             $permissions = $this->permissionRepository->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $permissions = $this->permissionRepository->with($with)->paginate();
             } else {
                 $permissions = $this->permissionRepository->paginate();
@@ -74,6 +76,7 @@ class AccessSystem implements AccessSystemContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createRole(array $data)
@@ -85,6 +88,7 @@ class AccessSystem implements AccessSystemContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createPermission(array $data)
@@ -97,6 +101,7 @@ class AccessSystem implements AccessSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updateRole(array $data, $id)
@@ -112,6 +117,7 @@ class AccessSystem implements AccessSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updatePermission(array $data, $id)
@@ -124,6 +130,7 @@ class AccessSystem implements AccessSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deleteRole($id, array $data = []): int
@@ -136,6 +143,7 @@ class AccessSystem implements AccessSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deletePermission($id, array $data = []): int

@@ -35,6 +35,7 @@ class OrdersController extends BaseController
 
     /**
      * OrdersController constructor.
+     *
      * @param OrdersSystemContract $ordersSystem
      */
     public function __construct(OrdersSystemContract $ordersSystem)
@@ -45,7 +46,8 @@ class OrdersController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $status
+     * @param string  $status
+     *
      * @return \Illuminate\View\View
      */
     public function index(Request $request, string $status = null): \Illuminate\View\View
@@ -55,7 +57,7 @@ class OrdersController extends BaseController
         $status = $orderSteps->getWhereNotActive();
 
         $getAllPreviousValue = getAllPreviousValues($status['step'], OrderSteps::STEPS);
-        if (! $getAllPreviousValue) {
+        if (!$getAllPreviousValue) {
             $getAllPreviousValue = [];
         }
         $status = $status['step'];

@@ -18,14 +18,14 @@ class MenuItemsSeeder extends Seeder
         $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
 
         $menuItem = $menuItemInstance->createOrFirst([
-            'menu_id' => $menu->id,
-            'title' => 'Modules',
-            'route' => 'admin::modules::index',
-            'target' => '_self',
+            'menu_id'    => $menu->id,
+            'title'      => 'Modules',
+            'route'      => 'admin::modules::index',
+            'target'     => '_self',
             'icon_class' => 'fa fa-list',
-            'color' => null,
-            'parent_id' => null,
-            'order' => 1,
+            'color'      => null,
+            'parent_id'  => null,
+            'order'      => 1,
         ]);
     }
 }

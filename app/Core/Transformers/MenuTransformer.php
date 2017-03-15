@@ -12,6 +12,7 @@ class MenuTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Menu entity.
+     *
      * @param \Menu $model
      *
      * @return array

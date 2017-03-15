@@ -12,24 +12,26 @@ class RolesDataTransformer extends TransformerAbstract
 {
     /**
      * @param Role $role
+     *
      * @return array
      */
     public function transform(Role $role)
     {
         return [
-            'id' => $role->id,
-            'name' => $role->name,
+            'id'           => $role->id,
+            'name'         => $role->name,
             'display_name' => $role->display_name,
-            'description' => $role->description,
-            'permissions' => $this->getRolePerms($role),
-            'created_at' => $role->created_at,
-            'updated_at' => $role->updated_at,
-            'action' => $this->getActions($role),
+            'description'  => $role->description,
+            'permissions'  => $this->getRolePerms($role),
+            'created_at'   => $role->created_at,
+            'updated_at'   => $role->updated_at,
+            'action'       => $this->getActions($role),
         ];
     }
 
     /**
      * @param Role $role
+     *
      * @return string
      */
     private function getRolePerms(Role $role)
@@ -44,6 +46,7 @@ class RolesDataTransformer extends TransformerAbstract
 
     /**
      * @param Role $role
+     *
      * @return string
      */
     private function getActions(Role $role)

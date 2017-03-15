@@ -113,7 +113,7 @@ Breadcrumbs::register('Home', function ($breadcrumbs) {
 // / > Site
 Breadcrumbs::register('Products', function ($breadcrumbs, $category = null) {
     $breadcrumbs->parent('Home');
-    if (! $category instanceof \App\Core\Models\Category) {
+    if (!$category instanceof \App\Core\Models\Category) {
         $breadcrumbs->push('Products', route('site::products::index'));
     } else {
         $breadcrumbs->push('Products', route('site::products::index'));

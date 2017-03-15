@@ -55,6 +55,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $reviews
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\AttributeGroupDescription[] $attributeGroupDescription
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereTitle($value)
@@ -91,12 +92,15 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product categorized($category = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMedia($tags, $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMediaMatchAll($tags = array())
+ *
  * @property float $tax
  * @property string $brand_name
  * @property-read string $display_name
@@ -113,6 +117,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\LikeCounter $likeCounter
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Like[] $likes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findBySKU($sku)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product mostViewed($limit)
@@ -136,6 +141,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
 
     /**
      * Custom field name to define the item's name.
+     *
      * @var string
      */
     protected $itemName = 'title';
@@ -264,6 +270,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
 
     /**
      * @param null $options
+     *
      * @return float
      */
     public function getBuyablePrice($options = null)
@@ -306,7 +313,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setStockStatusAttribute($stock_status)
     {
-        if (! $stock_status) {
+        if (!$stock_status) {
             $this->attributes['stock_status'] = 0;
         } else {
             $this->attributes['stock_status'] = $stock_status;
@@ -318,7 +325,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setLengthAttribute($length)
     {
-        if (! $length) {
+        if (!$length) {
             $this->attributes['length'] = 0.00000000;
         } else {
             $this->attributes['length'] = $length;
@@ -330,7 +337,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setWidthAttribute($width)
     {
-        if (! $width) {
+        if (!$width) {
             $this->attributes['width'] = 0.00000000;
         } else {
             $this->attributes['width'] = $width;
@@ -342,7 +349,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setHeightAttribute($height)
     {
-        if (! $height) {
+        if (!$height) {
             $this->attributes['height'] = 0.00000000;
         } else {
             $this->attributes['height'] = $height;
@@ -354,7 +361,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setWeightAttribute($weight)
     {
-        if (! $weight) {
+        if (!$weight) {
             $this->attributes['weight'] = 0.0000;
         } else {
             $this->attributes['weight'] = $weight;
@@ -366,7 +373,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function setDateAvailableAttribute($date)
     {
-        if (! $date) {
+        if (!$date) {
             $this->attributes['date_available'] = Carbon::now();
         } else {
             $this->attributes['date_available'] = $date;
@@ -415,6 +422,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeNewest($query)
@@ -424,6 +432,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeDrafted($query)
@@ -434,6 +443,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     /**
      * @param $query
      * @param $id
+     *
      * @return mixed
      */
     public function scopeBySlugOrId($query, $id)
@@ -447,6 +457,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      *
      * @param $query
      * @param Category|null $category
+     *
      * @return mixed
      */
     public function scopeCategorized($query, $category = null)

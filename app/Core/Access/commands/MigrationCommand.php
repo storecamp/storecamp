@@ -74,6 +74,7 @@ class MigrationCommand extends Command
      * @param $roleUserTable
      * @param $permissionsTable
      * @param $permissionRoleTable
+     *
      * @return bool
      */
     protected function createMigration($rolesTable, $roleUserTable, $permissionsTable, $permissionRoleTable)
@@ -88,7 +89,7 @@ class MigrationCommand extends Command
 
         $output = $this->laravel->view->make('access::generators.migration')->with($data)->render();
 
-        if (! file_exists($migrationFile) && $fs = fopen($migrationFile, 'x')) {
+        if (!file_exists($migrationFile) && $fs = fopen($migrationFile, 'x')) {
             fwrite($fs, $output);
             fclose($fs);
 

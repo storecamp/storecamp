@@ -16,6 +16,7 @@ interface ProductReviewRepository extends RepositoryInterface
 
     /**
      * get all Feedbacks.
+     *
      * @return mixed
      */
     public function getAll();
@@ -28,6 +29,7 @@ interface ProductReviewRepository extends RepositoryInterface
     /**
      * @param $id
      * @param $message
+     *
      * @return mixed
      */
     public function replyProductReview($id, $message);
@@ -39,7 +41,9 @@ interface ProductReviewRepository extends RepositoryInterface
 
     /**
      * get all feedbacks by user id.
+     *
      * @param $id
+     *
      * @return mixed
      */
     public function getAllUserById($id);

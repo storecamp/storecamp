@@ -10,11 +10,11 @@ class MenusDataTransformer extends TransformerAbstract
     public function transform(Menu $menu)
     {
         return [
-            'id' => $menu->id,
-            'name' => $menu->name,
+            'id'         => $menu->id,
+            'name'       => $menu->name,
             'created_at' => $menu->created_at,
             'updated_at' => $menu->updated_at,
-            'action' => $this->getActions($menu),
+            'action'     => $this->getActions($menu),
         ];
     }
 

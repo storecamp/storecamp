@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
         $settingSet = settingSet('name');
         $settingSet->fill([
             'value' => 'StoreCamp',
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 1,
         ])->save();
 
@@ -22,7 +22,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => 'Site Description',
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 2,
         ])->save();
 
@@ -30,7 +30,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => 'USD',
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 3,
         ])->save();
 
@@ -38,7 +38,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => '$',
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 4,
         ])->save();
 
@@ -46,7 +46,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => 21,
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 5,
         ])->save();
 
@@ -54,7 +54,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => ':symbol:price (:currency)',
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 6,
         ])->save();
 
@@ -62,7 +62,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => true,
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 7,
         ])->save();
 
@@ -70,7 +70,7 @@ class SettingSeeder extends Seeder
         $settingSet->fill([
             'value' => 'Google Analytics Client ID',
 
-            'type' => 'text',
+            'type'  => 'text',
             'order' => 8,
         ])->save();
     }

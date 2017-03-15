@@ -10,13 +10,13 @@ class AttributeGroupDescriptionDataTransformer extends TransformerAbstract
     public function transform(AttributeGroupDescription $attr)
     {
         return [
-            'id' => $attr->id,
-            'name' => $attr->name,
+            'id'              => $attr->id,
+            'name'            => $attr->name,
             'attributesGroup' => $attr->attributesGroup->name,
-            'sort_order' => $attr->sort_order,
-            'created_at' => $attr->created_at,
-            'updated_at' => $attr->updated_at,
-            'action' => $this->getActions($attr),
+            'sort_order'      => $attr->sort_order,
+            'created_at'      => $attr->created_at,
+            'updated_at'      => $attr->updated_at,
+            'action'          => $this->getActions($attr),
         ];
     }
 

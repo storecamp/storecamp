@@ -1,12 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
-use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
- * Class StoreCampTest
+ * Class StoreCampTest.
  */
 class StoreCampTest extends TestCase
 {
@@ -15,7 +13,7 @@ class StoreCampTest extends TestCase
     /**
      * StoreCampTest constructor.
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -25,7 +23,7 @@ class StoreCampTest extends TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__ . '/../bootstrap/app.php';
+        $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Http\Kernel::class);
 
@@ -62,7 +60,7 @@ class StoreCampTest extends TestCase
     public function testLogin()
     {
         $faker = Faker::create();
-        $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, "password" => "passw0RD"]);
+        $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, 'password' => 'passw0RD']);
         $this->artisan('db:seed');
         $this->visit('/login')
             ->type($user->email, 'email')
@@ -170,7 +168,7 @@ class StoreCampTest extends TestCase
             ->press('Register')
             ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
-                'name' => 'Sergi Tur Badenas',]);
+                'name'                        => 'Sergi Tur Badenas', ]);
     }
 
     /**

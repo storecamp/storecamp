@@ -30,7 +30,8 @@ class CampaignController extends BaseController
 
     /**
      * CampaignController constructor.
-     * @param MailRepository $mailRepository
+     *
+     * @param MailRepository     $mailRepository
      * @param CampaignRepository $campaignRepository
      */
     public function __construct(MailRepository $mailRepository, CampaignRepository $campaignRepository)
@@ -42,6 +43,7 @@ class CampaignController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -56,11 +58,12 @@ class CampaignController extends BaseController
     /**
      * @param Request $request
      * @param $uid
+     *
      * @return mixed
      */
     public function show(Request $request, $uid)
     {
-        if (! is_null($uid)) {
+        if (!is_null($uid)) {
             $lists = $this->mailRepository->getNewsList();
 
             $newslist = $this->mailRepository->findList($uid);
@@ -79,6 +82,7 @@ class CampaignController extends BaseController
      * @param Request $request
      * @param $type
      * @param $email
+     *
      * @return mixed
      */
     public function subscribers(Request $request, $type, $email)
@@ -99,11 +103,12 @@ class CampaignController extends BaseController
     /**
      * @param Request $request
      * @param $uid
+     *
      * @return mixed
      */
     public function create(Request $request, $uid)
     {
-        if (! is_null($uid)) {
+        if (!is_null($uid)) {
             $mails = $this->mailRepository->resolveTmpMails();
 
             $mailHistory = $this->mailRepository->resolveMailHistory($uid);
@@ -126,6 +131,7 @@ class CampaignController extends BaseController
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -138,6 +144,7 @@ class CampaignController extends BaseController
     /**
      * @param $folder
      * @param $filename
+     *
      * @return mixed
      */
     public function getHistoryTmpMail($folder, $filename)
@@ -161,6 +168,7 @@ class CampaignController extends BaseController
      * get groups name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getJson(Request $request)

@@ -48,10 +48,11 @@ class MediaSystem implements MediaSystemContract
 
     /**
      * MediaSystem constructor.
+     *
      * @param FolderRepository $folder
-     * @param MediaRepository $media
-     * @param Filesystem $filesystem
-     * @param MediaUploader $mediaUploader
+     * @param MediaRepository  $media
+     * @param Filesystem       $filesystem
+     * @param MediaUploader    $mediaUploader
      */
     public function __construct(FolderRepository $folder, MediaRepository $media, Filesystem $filesystem, MediaUploader $mediaUploader)
     {
@@ -82,11 +83,12 @@ class MediaSystem implements MediaSystemContract
 
     /**
      * @param string $name
+     *
      * @return $this
      */
     public function disk(string $name)
     {
-        if (! empty($name)) {
+        if (!empty($name)) {
             $this->folder->setDisk($name);
             $this->setDisk($name);
         } else {
@@ -99,11 +101,12 @@ class MediaSystem implements MediaSystemContract
 
     /**
      * @param $request
-     * @param null $folder
-     * @param null $tag
+     * @param null   $folder
+     * @param null   $tag
      * @param string $disk
-     * @param bool $getAll
-     * @param array $dataTypes
+     * @param bool   $getAll
+     * @param array  $dataTypes
+     *
      * @return array
      */
     public function present($request, $folder = null, $tag = null, $disk = '', bool $getAll = false, array $dataTypes = [])
@@ -116,7 +119,7 @@ class MediaSystem implements MediaSystemContract
         if ($getAll) {
             $this->media->setSkipPaginate(true);
         }
-        if (! empty($dataTypes)) {
+        if (!empty($dataTypes)) {
             $this->media->setDataTypes($dataTypes);
         }
         $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
@@ -125,15 +128,16 @@ class MediaSystem implements MediaSystemContract
 
         return [
             'directories' => $directories,
-            'media' => $media,
-            'count' => $count,
-            'path' => $folder->name,
+            'media'       => $media,
+            'count'       => $count,
+            'path'        => $folder->name,
         ];
     }
 
     /**
      * @param $request
      * @param string $disk
+     *
      * @return Folder
      */
     public function makeFolder($request, $disk = ''): Folder
@@ -147,13 +151,13 @@ class MediaSystem implements MediaSystemContract
         $parentPath = $parentFoldersPath ? $parentFoldersPath.'/'.$parentFolder->name : $parentFolder->name;
         $newFolder = $parentPath ? $folderDisk->getDiskRoot().'/'.$parentPath.'/'.$new_path : $folderDisk->getDiskRoot().'/'.$new_path;
         $newFolderPath = $parentPath ? $parentPath.'/'.$new_path : $new_path;
-        if (! $this->filesystem->isDirectory($newFolder)) {
+        if (!$this->filesystem->isDirectory($newFolder)) {
             $this->filesystem->makeDirectory($newFolder, 0775, true);
             $folder = $this->folder->getModel()->create([
-                'name' => $new_path,
+                'name'         => $new_path,
                 'path_on_disk' => $newFolderPath,
-                'parent_id' => $parentFolder->id,
-                'disk' => $disk,
+                'parent_id'    => $parentFolder->id,
+                'disk'         => $disk,
             ]);
 
             return $folder;
@@ -164,7 +168,8 @@ class MediaSystem implements MediaSystemContract
 
     /**
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Plank\Mediable\Media
      */
     public function makeFile($request, $disk = '')
@@ -190,7 +195,8 @@ class MediaSystem implements MediaSystemContract
 
     /**
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function renameFolder($request, $disk = '')
@@ -224,8 +230,10 @@ class MediaSystem implements MediaSystemContract
     /**
      * @param $request
      * @param string $disk
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function renameFile($request, $disk = '')
     {
@@ -240,7 +248,7 @@ class MediaSystem implements MediaSystemContract
         $renamedPath = $parentFoldersPath ? $parentFoldersPath.'/'.$folderFile->name : $folderFile->name;
         $selectedFolder = $folderDisk->getDiskRoot().'/'.$renamedPath;
         if ($this->filesystem->isDirectory($selectedFolder)) {
-            if (! $this->filesystem->exists($selectedFolder.$file->filename.'.'.$file->extension)) {
+            if (!$this->filesystem->exists($selectedFolder.$file->filename.'.'.$file->extension)) {
                 throw new \Exception('Sorry File not found', 404);
             }
             $this->filesystem->move($selectedFolder.$file->filename.'.'.$file->extension,
@@ -257,29 +265,33 @@ class MediaSystem implements MediaSystemContract
      * @param $request
      * @param $folder
      * @param $disk
-     * @return void
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     public function folderDelete($request, $folder, $disk): void
     {
         $this->setDisk($disk);
         $deleted = $this->folder->disk($disk)->delete($folder);
-        if (! $deleted) {
+        if (!$deleted) {
             throw new \Exception('Folder is not deleted', 500);
         }
     }
 
     /**
      * @param $id
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function fileDelete($id)
     {
         $media = $this->media->find($id);
         $mediaClone = $media;
         $deleted = $this->media->delete($id);
-        if (! $deleted) {
+        if (!$deleted) {
             throw new \Exception('Folder is not deleted', 500);
         }
 
@@ -295,6 +307,7 @@ class MediaSystem implements MediaSystemContract
      * @param $request
      * @param $folder
      * @param string $disk
+     *
      * @return array
      */
     private function filesPreRender($model, $path, $tag, $request, $folder, $disk = '')

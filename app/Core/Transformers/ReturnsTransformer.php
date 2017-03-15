@@ -12,6 +12,7 @@ class ReturnsTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Returns entity.
+     *
      * @param \Returns $model
      *
      * @return array

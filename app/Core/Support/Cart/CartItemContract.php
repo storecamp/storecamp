@@ -12,6 +12,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function price($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -22,6 +23,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function priceTax($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -33,6 +35,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -44,6 +47,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -54,6 +58,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -64,6 +69,7 @@ interface CartItemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function taxTotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
@@ -86,6 +92,7 @@ interface CartItemContract
      * Update the cart item from an array.
      *
      * @param array $attributes
+     *
      * @return void
      */
     public function updateFromArray(array $attributes);
@@ -94,6 +101,7 @@ interface CartItemContract
      * Associate the cart item with the given model.
      *
      * @param $model
+     *
      * @return CartItem
      */
     public function associate($model): CartItem;
@@ -102,6 +110,7 @@ interface CartItemContract
      * Set the tax rate.
      *
      * @param $taxRate
+     *
      * @return CartItem
      */
     public function setTaxRate($taxRate): CartItem;
@@ -110,7 +119,8 @@ interface CartItemContract
      * Create a new instance from a Buyable.
      *
      * @param Buyable $item
-     * @param array $options
+     * @param array   $options
+     *
      * @return CartItem
      */
     public static function fromBuyable($item, array $options = []): CartItem;
@@ -119,6 +129,7 @@ interface CartItemContract
      * Create a new instance from the given array.
      *
      * @param array $attributes
+     *
      * @return CartItem
      */
     public static function fromArray(array $attributes): CartItem;
@@ -128,6 +139,7 @@ interface CartItemContract
      *
      * @param $id
      * @param array $options
+     *
      * @return CartItem
      */
     public static function fromAttributes($id, array $options = []): CartItem;

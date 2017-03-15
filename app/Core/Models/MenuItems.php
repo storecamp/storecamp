@@ -38,12 +38,13 @@ class MenuItems extends Model implements Transformable
 
     /**
      * @param bool $absolute
+     *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
      */
     public function link($absolute = false)
     {
-        if (! is_null($this->route)) {
-            if (! \Route::has($this->route)) {
+        if (!is_null($this->route)) {
+            if (!\Route::has($this->route)) {
                 return '#';
             }
 

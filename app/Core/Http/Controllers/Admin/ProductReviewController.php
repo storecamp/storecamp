@@ -43,10 +43,11 @@ class ProductReviewController extends BaseController
 
     /**
      * ProductReviewController constructor.
+     *
      * @param ProductReviewSystemContract $productReviewSystem
-     * @param ProductsRepository $product
-     * @param UserRepository $user
-     * @param ProductReviewRepository $reviews
+     * @param ProductsRepository          $product
+     * @param UserRepository              $user
+     * @param ProductReviewRepository     $reviews
      */
     public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
                                 UserRepository $user, ProductReviewRepository $reviews)
@@ -60,6 +61,7 @@ class ProductReviewController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -73,6 +75,7 @@ class ProductReviewController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -87,6 +90,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -107,6 +111,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $productId
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request, $productId)
@@ -119,6 +124,7 @@ class ProductReviewController extends BaseController
     /**
      * @param ProductReviewFormRequest $request
      * @param $productId
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProductReviewFormRequest $request, $productId)
@@ -155,6 +161,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -177,6 +184,7 @@ class ProductReviewController extends BaseController
      *
      * @param ReplyProductReviewFormRequest $request
      * @param $messageId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function editMessage(ReplyProductReviewFormRequest $request, $messageId)
@@ -201,6 +209,7 @@ class ProductReviewController extends BaseController
      *
      * @param Request $request
      * @param $messageId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function deleteMessage(Request $request, $messageId)
@@ -223,6 +232,7 @@ class ProductReviewController extends BaseController
     /**
      * @param ReplyProductReviewFormRequest $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function replyFeedback(ReplyProductReviewFormRequest $request, $id)
@@ -248,6 +258,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function visibility(Request $request, $id)
@@ -267,6 +278,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return mixed
      */
     public function markAsRead(Request $request, $id)
@@ -291,6 +303,7 @@ class ProductReviewController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function delete(Request $request, $id)
@@ -298,7 +311,7 @@ class ProductReviewController extends BaseController
         try {
             $data = $request->all();
             $deleted = $this->productReviewSystem->delete($id, $data);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::error('Error appeared! Review not deleted!');
             }
 

@@ -51,6 +51,7 @@ class MakeViewCommand extends Command
     /**
      * @param $view
      * @param $for
+     *
      * @return string
      */
     private function makePath($view, $for)
@@ -61,7 +62,7 @@ class MakeViewCommand extends Command
         $count = count($paths);
         for ($i = 0; $i < $count; $i++) {
             $path .= $paths[$i].'/';
-            if (! is_dir($this->path.'/resources/views/'.$for.'/'.$path)) {
+            if (!is_dir($this->path.'/resources/views/'.$for.'/'.$path)) {
                 mkdir($this->path.'/resources/views/'.$for.'/'.$path);
             }
         }
@@ -72,6 +73,7 @@ class MakeViewCommand extends Command
     /**
      * @param $for
      * @param $view
+     *
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     private function getContent($for, $view)

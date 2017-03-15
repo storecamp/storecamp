@@ -10,12 +10,12 @@ class AttributeGroupsDataTransformer extends TransformerAbstract
     public function transform(AttributeGroup $attr)
     {
         return [
-            'id' => $attr->id,
-            'name' => $attr->name,
+            'id'         => $attr->id,
+            'name'       => $attr->name,
             'sort_order' => $attr->sort_order,
             'created_at' => $attr->created_at,
             'updated_at' => $attr->updated_at,
-            'action' => $this->getActions($attr),
+            'action'     => $this->getActions($attr),
         ];
     }
 

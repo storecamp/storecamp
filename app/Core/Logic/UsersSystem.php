@@ -25,7 +25,7 @@ class UsersSystem implements UsersSystemContract
     /**
      * UsersSystem constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepository  $userRepository
      * @param RolesRepository $rolesRepository
      */
     public function __construct(UserRepository $userRepository, RolesRepository $rolesRepository)
@@ -36,8 +36,9 @@ class UsersSystem implements UsersSystemContract
 
     /**
      * @param $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function present($data, $id = null, array $with = [])
@@ -45,7 +46,7 @@ class UsersSystem implements UsersSystemContract
         if ($id) {
             $users = $this->userRepository->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $users = $this->userRepository->with($with)->paginate();
             } else {
                 $users = $this->userRepository->paginate();
@@ -57,6 +58,7 @@ class UsersSystem implements UsersSystemContract
 
     /**
      * @param array $data
+     *
      * @return User
      */
     public function create(array $data) : User
@@ -71,6 +73,7 @@ class UsersSystem implements UsersSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return User
      */
     public function update(array $data, $id) : User
@@ -84,6 +87,7 @@ class UsersSystem implements UsersSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function delete($id, array $data = []) : int

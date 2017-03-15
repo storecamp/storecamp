@@ -53,7 +53,7 @@ class LogViewerController extends LogBaseController
     /**
      * List all logs.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
      */
@@ -70,7 +70,7 @@ class LogViewerController extends LogBaseController
     /**
      * Show the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Illuminate\View\View
      */
@@ -88,8 +88,8 @@ class LogViewerController extends LogBaseController
     /**
      * Filter the log entries by level.
      *
-     * @param  string  $date
-     * @param  string  $level
+     * @param string $date
+     * @param string $level
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
@@ -113,7 +113,7 @@ class LogViewerController extends LogBaseController
     /**
      * Download the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
@@ -127,13 +127,13 @@ class LogViewerController extends LogBaseController
     /**
      * Delete a log.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(Request $request)
     {
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(405, 'Method Not Allowed');
         }
 

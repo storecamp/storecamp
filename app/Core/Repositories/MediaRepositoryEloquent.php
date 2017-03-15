@@ -32,8 +32,9 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 
     /**
      * MediaRepositoryEloquent constructor.
-     * @param Application $app
-     * @param Dispatcher $dispatcher
+     *
+     * @param Application      $app
+     * @param Dispatcher       $dispatcher
      * @param FolderRepository $folder
      */
     public function __construct(Application $app, Dispatcher $dispatcher, FolderRepository $folder)
@@ -82,8 +83,8 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'filename' => 'like',
-        'extension' => 'like',
+        'filename'       => 'like',
+        'extension'      => 'like',
         'aggregate_type' => 'like',
     ];
 
@@ -104,7 +105,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     {
         $model = Media::class;
 
-        return new $model;
+        return new $model();
     }
 
     /**
@@ -123,6 +124,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param $directory
      * @param null $tag
      * @param bool $recursive
+     *
      * @return mixed
      */
     public function inDirectory($disk, $directory, $tag = null, $recursive = false)
@@ -140,7 +142,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         } else {
             $model = $model->where('directory', '=', $directory);
         }
-        if (! empty($dataTypes)) {
+        if (!empty($dataTypes)) {
             $model = $model->whereIn('aggregate_type', $dataTypes);
         }
         if ($this->isSkipPaginate()) {

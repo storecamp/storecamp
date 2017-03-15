@@ -12,6 +12,7 @@ class TransactionTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Transaction entity.
+     *
      * @param Transaction $model
      *
      * @return array

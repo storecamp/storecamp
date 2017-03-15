@@ -52,8 +52,9 @@ class MediaController extends BaseController
 
     /**
      * MediaController constructor.
+     *
      * @param MediaSystemContract $mediaSystem
-     * @param MediaSystemBuilder $mediaSystemBuilder
+     * @param MediaSystemBuilder  $mediaSystemBuilder
      */
     public function __construct(MediaSystemContract $mediaSystem, MediaSystemBuilder $mediaSystemBuilder)
     {
@@ -69,9 +70,10 @@ class MediaController extends BaseController
     /**
      * @param $request
      * @param string $disk
-     * @param null $folder
-     * @param bool $skipPaginate
-     * @param array $dataTypes
+     * @param null   $folder
+     * @param bool   $skipPaginate
+     * @param array  $dataTypes
+     *
      * @return array
      */
     private function preDefineIndexPart($request, $disk = '', $folder = null, $skipPaginate = false, array $dataTypes = [])
@@ -89,18 +91,19 @@ class MediaController extends BaseController
         $folderName = $folder->name ? $folder->name : '';
         $path = $path ? $path.'/'.$folderName : $folderName;
 
-        return ['media' => $media,
+        return ['media'   => $media,
             'directories' => $directories,
-            'path' => $path,
-            'folder' => $folder,
-            'count' => $count,
-            'disk' => $disk, ];
+            'path'        => $path,
+            'folder'      => $folder,
+            'count'       => $count,
+            'disk'        => $disk, ];
     }
 
     /**
      * @param Request $request
-     * @param null $folder
-     * @param string $disk
+     * @param null    $folder
+     * @param string  $disk
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request, $disk = '', $folder = null)
@@ -133,8 +136,9 @@ class MediaController extends BaseController
      * get folder structure and response for json requests.
      *
      * @param Request $request
-     * @param null $folder
-     * @param string $disk
+     * @param null    $folder
+     * @param string  $disk
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function getIndex(Request $request, $disk = '', $folder = null)
@@ -164,8 +168,9 @@ class MediaController extends BaseController
      * file linker functionality.
      *
      * @param Request $request
-     * @param null $folder
-     * @param string $disk
+     * @param null    $folder
+     * @param string  $disk
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function filesLinker(Request $request, $disk = '', $folder = null)
@@ -201,7 +206,8 @@ class MediaController extends BaseController
      * to reload.
      *
      * @param Request $request
-     * @param null $folder
+     * @param null    $folder
+     *
      * @return mixed
      */
     public function getIndexFolders(Request $request, $disk, $folder = null)
@@ -220,7 +226,8 @@ class MediaController extends BaseController
      * upload files.
      *
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function upload(Request $request, $disk = '')
@@ -241,7 +248,8 @@ class MediaController extends BaseController
      * folder in table.
      *
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function makeFolder(Request $request, $disk = '')
@@ -261,7 +269,8 @@ class MediaController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function renameFolder(Request $request, $disk = '')
@@ -281,7 +290,8 @@ class MediaController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function renameFile(Request $request, $disk = '')
@@ -305,6 +315,7 @@ class MediaController extends BaseController
      * @param $id
      * @param $folder
      * @param string $disk
+     *
      * @return Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function download($disk, $id, $folder)
@@ -332,6 +343,7 @@ class MediaController extends BaseController
      *
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, $id)
@@ -355,8 +367,9 @@ class MediaController extends BaseController
      * attached.
      *
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
      * @param $folder
+     *
      * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function folderDestroy(Request $request, $disk, $folder)

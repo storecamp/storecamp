@@ -35,7 +35,7 @@ class AttributeGroupRepositoryEloquent extends BaseRepository implements Attribu
     {
         $model = AttributeGroup::class;
 
-        return new $model;
+        return new $model();
     }
 
     /**

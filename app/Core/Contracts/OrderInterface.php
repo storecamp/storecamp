@@ -123,6 +123,7 @@ interface OrderInterface
      * Returns flag indicating if order is in the status specified.
      *
      * @param string $statusCode
+     *
      * @return bool
      */
     public function isStatus(string $statusCode): bool;
@@ -142,8 +143,8 @@ interface OrderInterface
      * Scopes class by item sku.
      * Optionally, scopes by status.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
-     * @param mixed                                 $sku    Item SKU.
+     * @param \Illuminate\Database\Eloquent\Builder $query Query.
+     * @param mixed                                 $sku   Item SKU.
      *
      * @return Builder
      */

@@ -12,6 +12,7 @@ class ParticipantTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Participant entity.
+     *
      * @param \Participant $model
      *
      * @return array

@@ -22,6 +22,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $likeable
  * @property-write mixed $value
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like whereCreatedAt($value)
@@ -85,7 +86,7 @@ class Like extends Model implements Transformable
     {
         $query = $likeable->likes();
 
-        if (! empty($to)) {
+        if (!empty($to)) {
             $range = [new Carbon($from), new Carbon($to)];
         } else {
             $range = [
@@ -134,7 +135,7 @@ class Like extends Model implements Transformable
      */
     protected function cast(Model $likeable, $value = 1)
     {
-        if (! $likeable->exists) {
+        if (!$likeable->exists) {
             return false;
         }
 

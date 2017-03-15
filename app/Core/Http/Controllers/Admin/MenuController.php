@@ -29,7 +29,8 @@ class MenuController extends BaseController
 
     /**
      * MenuController constructor.
-     * @param MenuRepository $menu
+     *
+     * @param MenuRepository      $menu
      * @param MenuItemsRepository $menuItems
      */
     public function __construct(MenuRepository $menu, MenuItemsRepository $menuItems)
@@ -40,6 +41,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -51,6 +53,7 @@ class MenuController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function data(Datatables $datatables)
@@ -64,6 +67,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
@@ -74,6 +78,7 @@ class MenuController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -86,6 +91,7 @@ class MenuController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function update(Request $request, $id)
@@ -98,6 +104,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -110,6 +117,7 @@ class MenuController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function builder($id)
@@ -122,6 +130,7 @@ class MenuController extends BaseController
     /**
      * @param $menu
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete_menu($menu, $id)
@@ -135,6 +144,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function add_item(Request $request)
@@ -147,7 +157,7 @@ class MenuController extends BaseController
             ->orderBy('order', 'DESC')
             ->first();
 
-        if (! is_null($highestOrderMenuItem)) {
+        if (!is_null($highestOrderMenuItem)) {
             $data['order'] = intval($highestOrderMenuItem->order) + 1;
         }
         $item = $this->menuItems->createOrFirst($data);
@@ -159,6 +169,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update_item(Request $request)
@@ -206,6 +217,7 @@ class MenuController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request, $id)

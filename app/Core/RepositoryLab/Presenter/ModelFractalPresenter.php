@@ -13,12 +13,13 @@ class ModelFractalPresenter extends FractalPresenter
     /**
      * Transformer.
      *
-     * @return ModelTransformer
      * @throws Exception
+     *
+     * @return ModelTransformer
      */
     public function getTransformer()
     {
-        if (! class_exists('League\Fractal\Manager')) {
+        if (!class_exists('League\Fractal\Manager')) {
             throw new Exception("Package required. Please install: 'composer require league/fractal' (0.12.*)");
         }
 

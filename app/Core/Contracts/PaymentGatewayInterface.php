@@ -14,6 +14,7 @@ interface PaymentGatewayInterface
 
     /**
      * @param Cart $cart
+     *
      * @return mixed
      */
     public function onCheckout($cart);
@@ -54,7 +55,7 @@ interface PaymentGatewayInterface
      * Success result.
      *
      * @param Orders $order Order.
-     * @param mixed $data  Request input from callback.
+     * @param mixed  $data  Request input from callback.
      */
     public function onCallbackSuccess($order, $data = null);
 
@@ -63,7 +64,7 @@ interface PaymentGatewayInterface
      * Failed result.
      *
      * @param Orders $order.
-     * @param mixed $data  Request input from callback.
+     * @param mixed  $data   Request input from callback.
      */
     public function onCallbackFail($order, $data = null);
 

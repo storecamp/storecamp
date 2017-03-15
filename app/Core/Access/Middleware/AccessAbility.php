@@ -31,15 +31,16 @@ class AccessAbility
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Closure $next
+     * @param Closure                  $next
      * @param $roles
      * @param $permissions
      * @param bool $validateAll
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $roles, $permissions, $validateAll = false)
     {
-        if ($this->auth->guest() || ! $request->user()->ability(explode('|', $roles), explode('|', $permissions), ['validate_all' => $validateAll])) {
+        if ($this->auth->guest() || !$request->user()->ability(explode('|', $roles), explode('|', $permissions), ['validate_all' => $validateAll])) {
             abort(403);
         }
 

@@ -20,7 +20,7 @@ return [
     ],
 
     'ses' => [
-        'key' => env('SES_KEY'),
+        'key'    => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
         'region' => 'us-east-1',
     ],
@@ -30,15 +30,15 @@ return [
     ],
 
     'stripe' => [
-        'model' => \App\Core\Models\User::class,
-        'key' => env('STRIPE_KEY'),
+        'model'  => \App\Core\Models\User::class,
+        'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
 
     'paypal' => [
         'client_id' => env('PAYPAL_CLIENT_ID', ''),
-        'secret' => env('PAYPAL_SECRET', ''),
-        'sandbox' => env('PAYPAL_SANDBOX', true),
+        'secret'    => env('PAYPAL_SECRET', ''),
+        'sandbox'   => env('PAYPAL_SANDBOX', true),
     ],
 
 ];

@@ -6,6 +6,7 @@ trait CalculationsTrait
 {
     /**
      * Property used to stored calculations.
+     *
      * @var array
      */
     private $salesCalculations = null;
@@ -153,7 +154,7 @@ trait CalculationsTrait
      */
     private function runCalculations()
     {
-        if (! empty($this->salesCalculations)) {
+        if (!empty($this->salesCalculations)) {
             return $this->salesCalculations;
         }
         $cacheKey = $this->calculationsCacheKey;
@@ -207,7 +208,7 @@ trait CalculationsTrait
     public function getAvgRatingCounter()
     {
         $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
-        if (! empty($reviews)) {
+        if (!empty($reviews)) {
             return round(array_sum($reviews) / (count($reviews)), 1);
         } else {
             return $reviews;
@@ -220,7 +221,7 @@ trait CalculationsTrait
     public function getRatingCounter()
     {
         $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
-        if (! empty($reviews)) {
+        if (!empty($reviews)) {
             return count($reviews);
         } else {
             return 0;

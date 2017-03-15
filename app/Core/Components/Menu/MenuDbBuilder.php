@@ -21,6 +21,7 @@ class MenuDbBuilder
 
     /**
      * MenuDbBuilder constructor.
+     *
      * @param $menu
      * @param $menuItems
      */
@@ -33,7 +34,8 @@ class MenuDbBuilder
     /**
      * @param string $menuName
      * @param string $type
-     * @param array $options
+     * @param array  $options
+     *
      * @return \Illuminate\Support\HtmlString
      */
     public function renderFromDb($menuName = 'string', $type = 'default', array $options = [])
@@ -45,7 +47,7 @@ class MenuDbBuilder
         // Convert options array into object
         $options = (object) $options;
         // Check for Menu Existence
-        if (! isset($menu)) {
+        if (!isset($menu)) {
             throw new \App\Core\Exceptions\MenuTypeNotFound('Menu not Found', 422);
         }
 

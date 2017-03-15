@@ -12,6 +12,7 @@ class LikeCounterTransformer extends TransformerAbstract
 {
     /**
      * Transform the \LikeCounter entity.
+     *
      * @param \LikeCounter $model
      *
      * @return array

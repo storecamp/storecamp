@@ -11,18 +11,18 @@ class ProductDataTransformer extends TransformerAbstract
     public function transform(Product $product)
     {
         return [
-            'id' => $product->id,
-            'model' => $product->model,
-            'title' => $product->title,
-            'category' => $product->categories->count() ? CategorySystem::getCategoryFullPath($product->categories->first()) : 'no category  provided',
-            'price' => $product->price,
-            'quantity' => $product->quantity,
+            'id'           => $product->id,
+            'model'        => $product->model,
+            'title'        => $product->title,
+            'category'     => $product->categories->count() ? CategorySystem::getCategoryFullPath($product->categories->first()) : 'no category  provided',
+            'price'        => $product->price,
+            'quantity'     => $product->quantity,
             'availability' => $product->getAvailability(),
             'stock_status' => $product->getStockStatus(),
-            'created_at' => $product->created_at,
-            'updated_at' => $product->updated_at,
-            'review' => $this->getReviewButton($product),
-            'action' => $this->getActions($product),
+            'created_at'   => $product->created_at,
+            'updated_at'   => $product->updated_at,
+            'review'       => $this->getReviewButton($product),
+            'action'       => $this->getActions($product),
         ];
     }
 

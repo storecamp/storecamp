@@ -141,7 +141,7 @@ class MigrationGenerator extends Generator
                 break;
         }
         $path = __DIR__;
-        if (! file_exists($path."/Stubs/migration/{$file}.stub")) {
+        if (!file_exists($path."/Stubs/migration/{$file}.stub")) {
             throw new FileNotFoundException($path."/Stubs/migration/{$file}.stub");
         }
 
@@ -150,14 +150,16 @@ class MigrationGenerator extends Generator
 
     /**
      * @param bool $backup
-     * @return string
+     *
      * @throws FileAlreadyExistsException
+     *
+     * @return string
      */
     protected function checkFileExists($backup = false)
     {
         $path = $this->getPath();
-        if ($this->checkMigrationExists() && ! $this->force) {
-            if (! $backup) {
+        if ($this->checkMigrationExists() && !$this->force) {
+            if (!$backup) {
                 throw new FileAlreadyExistsException($this->getMigrationName());
             }
         }

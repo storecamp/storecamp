@@ -55,6 +55,7 @@ trait Likeable
 
     /**
      * @param $user
+     *
      * @return bool
      */
     public function like($user): bool
@@ -94,7 +95,7 @@ trait Likeable
      */
     public function dislike($likedBy): bool
     {
-        if (! $like = $this->getLikedRecord($likedBy)) {
+        if (!$like = $this->getLikedRecord($likedBy)) {
             return false;
         }
         $like->delete();
@@ -163,6 +164,7 @@ trait Likeable
 
     /**
      * @param $user
+     *
      * @return bool
      */
     public function liked($user): bool
@@ -176,6 +178,7 @@ trait Likeable
 
     /**
      * @param Model $model
+     *
      * @return bool
      */
     public function isLiked($model): bool

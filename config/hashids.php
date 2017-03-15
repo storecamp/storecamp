@@ -38,14 +38,14 @@ return [
     'connections' => [
 
         'main' => [
-            'salt' => 'your-salt-string',
-            'length' => '12',
+            'salt'     => 'your-salt-string',
+            'length'   => '12',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
         ],
 
         'alternative' => [
-            'salt' => 'your-salt-string',
-            'length' => 'your-length-integer',
+            'salt'     => 'your-salt-string',
+            'length'   => 'your-length-integer',
             'alphabet' => 'your-alphabet-string',
         ],
 

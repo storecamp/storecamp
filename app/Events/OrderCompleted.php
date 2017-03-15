@@ -13,6 +13,7 @@ class OrderCompleted
 
     /**
      * Order ID.
+     *
      * @var int
      */
     public $id;

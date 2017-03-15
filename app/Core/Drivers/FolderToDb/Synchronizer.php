@@ -27,8 +27,9 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * Synchronizer constructor.
-     * @param MediaRepository $media
-     * @param FolderRepository $folder
+     *
+     * @param MediaRepository                   $media
+     * @param FolderRepository                  $folder
      * @param \Illuminate\Filesystem\Filesystem $file
      */
     public function __construct(MediaRepository $media, FolderRepository $folder, \Illuminate\Filesystem\Filesystem $file)
@@ -75,7 +76,8 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * @param string $root
-     * @param bool $withFolderName
+     * @param bool   $withFolderName
+     *
      * @return array
      */
     public function directoriesIterate(string $root, bool $withFolderName = false): array
@@ -102,7 +104,7 @@ class Synchronizer implements SynchronizerInterface
                 $folderName = explode('/', $folderPath);
                 $folderName = explode('/', $folderName[count($folderName) - 1]);
                 if ($key == 0) {
-                    if (! empty(implode('', explode($paths[0], $item)))) {
+                    if (!empty(implode('', explode($paths[0], $item)))) {
                         $items[$key]['folderPath'] = $folderPath;
                         $items[$key]['folderName'] = $folderName[0];
                     }
@@ -112,7 +114,7 @@ class Synchronizer implements SynchronizerInterface
                 }
             } else {
                 if ($key == 0) {
-                    if (! empty(implode('', explode($paths[0], $item)))) {
+                    if (!empty(implode('', explode($paths[0], $item)))) {
                         $items[] = $folderPath;
                     }
                 } else {
@@ -126,7 +128,8 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * @param null|string $folderPath
-     * @param string $disk
+     * @param string      $disk
+     *
      * @return Folder
      */
     public function findOrCreateByFolderPath(?string $folderPath, $disk = 'local'): Folder
@@ -148,11 +151,12 @@ class Synchronizer implements SynchronizerInterface
     /**
      * @param string $disk
      * @param string $root
+     *
      * @return Folder
      */
     private function resolveRootFolder($disk = 'local', $root = ''): Folder
     {
-        if (! empty($root) && ! $this->file->isDirectory($root)) {
+        if (!empty($root) && !$this->file->isDirectory($root)) {
             $this->file->makeDirectory($root);
         }
         $rootFolder = $this->folder->findWhere([
@@ -162,9 +166,9 @@ class Synchronizer implements SynchronizerInterface
         ]);
         if ($rootFolder->count() == 0) {
             return $rootFolder = $this->folder->create([
-                'name' => '',
+                'name'      => '',
                 'parent_id' => null,
-                'disk' => $disk,
+                'disk'      => $disk,
             ]);
         } else {
             return $rootFolder = $rootFolder->first();
@@ -273,7 +277,8 @@ class Synchronizer implements SynchronizerInterface
     /**
      * @param string $root
      * @param string $format
-     * @param bool $skipFormatEnding
+     * @param bool   $skipFormatEnding
+     *
      * @return array
      */
     public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array

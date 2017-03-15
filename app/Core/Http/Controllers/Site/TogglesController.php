@@ -17,6 +17,7 @@ class TogglesController extends BaseController
 
     /**
      * TogglesController constructor.
+     *
      * @param \Illuminate\Contracts\Auth\Factory $auth
      */
     public function __construct(\Illuminate\Contracts\Auth\Factory $auth)
@@ -30,6 +31,7 @@ class TogglesController extends BaseController
      * @param Request $request
      * @param $class_name
      * @param $object_id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function likeDis(Request $request, $class_name, $object_id)
@@ -78,6 +80,7 @@ class TogglesController extends BaseController
     /**
      * @param Request $request
      * @param $key
+     *
      * @return RedirectResponse
      */
     public function toggleLanguage(Request $request, $key)

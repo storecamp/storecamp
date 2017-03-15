@@ -12,6 +12,7 @@ class AttributeGroupTransformer extends TransformerAbstract
 {
     /**
      * Transform the \AttributeGroup entity.
+     *
      * @param \AttributeGroup $model
      *
      * @return array

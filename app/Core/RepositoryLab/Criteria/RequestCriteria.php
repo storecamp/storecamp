@@ -26,6 +26,7 @@ class RequestCriteria implements CriteriaInterface
      *
      * @param $model
      * @param RepositoryInterface $repository
+     *
      * @return mixed
      */
     public function apply($model, RepositoryInterface $repository)
@@ -38,7 +39,7 @@ class RequestCriteria implements CriteriaInterface
         $orderBy = $this->request->get(config('repository.criteria.params.orderBy', 'orderBy'), null);
         $sortedBy = $this->request->get(config('repository.criteria.params.sortedBy', 'sortedBy'), 'asc');
         $with = $this->request->get(config('repository.criteria.params.with', 'with'), null);
-        $sortedBy = ! empty($sortedBy) ? $sortedBy : 'asc';
+        $sortedBy = !empty($sortedBy) ? $sortedBy : 'asc';
 
         if ($search && is_array($fieldsSearchable) && count($fieldsSearchable)) {
             $searchFields = is_array($searchFields) || is_null($searchFields) ? $searchFields : explode(';', $searchFields);
@@ -48,7 +49,7 @@ class RequestCriteria implements CriteriaInterface
             $search = $this->parserSearchValue($search);
             $modelForceAndWhere = false;
             $model = $model->where(function ($query) use ($fields, $search, $searchData, $isFirstField, $modelForceAndWhere) {
-                foreach ($fields as $field=>$condition) {
+                foreach ($fields as $field=> $condition) {
                     if (is_numeric($field)) {
                         $field = $condition;
                         $condition = '=';
@@ -58,27 +59,27 @@ class RequestCriteria implements CriteriaInterface
                     if (isset($searchData[$field])) {
                         $value = $condition == 'like' ? "%{$searchData[$field]}%" : $searchData[$field];
                     } else {
-                        if (! is_null($search)) {
+                        if (!is_null($search)) {
                             $value = $condition == 'like' ? "%{$search}%" : $search;
                         }
                     }
                     if ($isFirstField || $modelForceAndWhere) {
-                        if (! is_null($value)) {
+                        if (!is_null($value)) {
                             $query->where($field, $condition, $value);
                             $isFirstField = false;
                         }
                     } else {
-                        if (! is_null($value)) {
+                        if (!is_null($value)) {
                             $query->orWhere($field, $condition, $value);
                         }
                     }
                 }
             });
         }
-        if (isset($orderBy) && ! empty($orderBy)) {
+        if (isset($orderBy) && !empty($orderBy)) {
             $model = $model->orderBy($orderBy, $sortedBy);
         }
-        if (isset($filter) && ! empty($filter)) {
+        if (isset($filter) && !empty($filter)) {
             if (is_string($filter)) {
                 $filter = explode(';', $filter);
             }
@@ -94,6 +95,7 @@ class RequestCriteria implements CriteriaInterface
 
     /**
      * @param $search
+     *
      * @return array
      */
     protected function parserSearchData($search)
@@ -116,6 +118,7 @@ class RequestCriteria implements CriteriaInterface
 
     /**
      * @param $search
+     *
      * @return null
      */
     protected function parserSearchValue($search)
@@ -137,7 +140,7 @@ class RequestCriteria implements CriteriaInterface
 
     protected function parserFieldsSearch(array $fields = [], array $searchFields = null)
     {
-        if (! is_null($searchFields) && count($searchFields)) {
+        if (!is_null($searchFields) && count($searchFields)) {
             $acceptedConditions = config('repository.criteria.acceptedConditions', ['=', 'like']);
             $originalFields = $fields;
             $fields = [];

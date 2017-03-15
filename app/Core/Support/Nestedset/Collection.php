@@ -25,7 +25,7 @@ class Collection extends BaseCollection
 
         /** @var NodeTrait|Model $node */
         foreach ($this->items as $node) {
-            if (! $node->getParentId()) {
+            if (!$node->getParentId()) {
                 $node->setRelation('parent', null);
             }
 
@@ -56,7 +56,7 @@ class Collection extends BaseCollection
     public function toTree($root = false)
     {
         if ($this->isEmpty()) {
-            return new static;
+            return new static();
         }
 
         $this->linkNodes();
@@ -115,7 +115,7 @@ class Collection extends BaseCollection
      */
     public function toFlatTree($root = false)
     {
-        $result = new static;
+        $result = new static();
 
         if ($this->isEmpty()) {
             return $result;
@@ -130,7 +130,7 @@ class Collection extends BaseCollection
      * Flatten a tree into a non recursive array.
      *
      * @param Collection $groupedNodes
-     * @param mixed $parentId
+     * @param mixed      $parentId
      *
      * @return $this
      */

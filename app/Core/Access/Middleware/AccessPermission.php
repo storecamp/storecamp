@@ -30,14 +30,15 @@ class AccessPermission
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Closure $next
+     * @param \Illuminate\Http\Request $request
+     * @param Closure                  $next
      * @param  $permissions
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $permissions)
     {
-        if ($this->auth->guest() || ! $request->user()->may(explode('|', $permissions))) {
+        if ($this->auth->guest() || !$request->user()->may(explode('|', $permissions))) {
             abort(403);
         }
 

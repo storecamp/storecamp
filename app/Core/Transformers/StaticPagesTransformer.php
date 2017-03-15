@@ -12,6 +12,7 @@ class StaticPagesTransformer extends TransformerAbstract
 {
     /**
      * Transform the \StaticPages entity.
+     *
      * @param Pages $model
      *
      * @return array

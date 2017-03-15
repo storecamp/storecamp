@@ -79,7 +79,7 @@ trait CustomAuditMessage
      */
     public function getCustomMessage($class)
     {
-        if (! isset($class::$auditCustomMessage)) {
+        if (!isset($class::$auditCustomMessage)) {
             return 'Not defined custom message!';
         }
 
@@ -93,7 +93,7 @@ trait CustomAuditMessage
      */
     public function getCustomFields($class)
     {
-        if (! isset($class::$auditCustomFields)) {
+        if (!isset($class::$auditCustomFields)) {
             return [];
         }
 
@@ -116,7 +116,7 @@ trait CustomAuditMessage
 
         // If no segments are found, we will
         // return the message immediately.
-        if (! count($segments)) {
+        if (!count($segments)) {
             return $message;
         }
 
@@ -127,7 +127,7 @@ trait CustomAuditMessage
                 explode('|', $pipe, 3), 3, null
             );
 
-            if (empty($defaultValue) && ! empty($method)) {
+            if (empty($defaultValue) && !empty($method)) {
                 $defaultValue = $this->resolveCallbackMethod($method);
             }
 
@@ -137,7 +137,7 @@ trait CustomAuditMessage
 
             // If any segmented value is found we will update the message
             // and remove it from the list of segments.
-            if (! empty($valueSegmented)) {
+            if (!empty($valueSegmented)) {
 
                 // Update message
                 $message = str_replace($segment, $valueSegmented, $message);
@@ -149,7 +149,7 @@ trait CustomAuditMessage
 
         // If all segments are found we return the updated message,
         // but any segment is not found return an empty value
-        return ! count($segments) ? $message : null;
+        return !count($segments) ? $message : null;
     }
 
     /**
@@ -194,7 +194,7 @@ trait CustomAuditMessage
         foreach (explode('.', $key) as $segment) {
             $object = is_array($object) ? (object) $object : $object;
 
-            if (! isset($object->{$segment})) {
+            if (!isset($object->{$segment})) {
                 return $default;
             }
 
@@ -213,7 +213,7 @@ trait CustomAuditMessage
     {
         $table = Config::get('auditing.table');
 
-        if (! empty($table)) {
+        if (!empty($table)) {
             return $table;
         }
 

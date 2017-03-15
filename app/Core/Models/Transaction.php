@@ -22,6 +22,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Core\Models\Orders $order
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Transaction idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Transaction uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Transaction whereCreatedAt($value)

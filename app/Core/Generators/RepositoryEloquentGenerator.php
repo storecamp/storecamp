@@ -64,9 +64,9 @@ class RepositoryEloquentGenerator extends Generator
     public function getReplacements()
     {
         return array_merge(parent::getReplacements(), [
-            'fillable' => $this->getFillable(),
+            'fillable'   => $this->getFillable(),
             'repository' => parent::getRootNamespace().parent::getConfigGeneratorClassPath('interfaces').'\\'.$this->getName().'Repository;',
-            'model'    => isset($this->options['model']) ? $this->options['model'] : '',
+            'model'      => isset($this->options['model']) ? $this->options['model'] : '',
         ]);
     }
 
@@ -87,7 +87,7 @@ class RepositoryEloquentGenerator extends Generator
      */
     public function getFillable()
     {
-        if (! $this->fillable) {
+        if (!$this->fillable) {
             return '[]';
         }
         $results = '['.PHP_EOL;

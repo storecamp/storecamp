@@ -44,30 +44,30 @@ return [
     'disks' => [
 
         'local' => [
-            'driver' => 'local',
-            'root' => public_path('uploads'),
+            'driver'          => 'local',
+            'root'            => public_path('uploads'),
             'rootFromProject' => 'public/uploads',
         ],
         'uploads' => [
-            'driver' => 'local',
-            'root' => public_path('uploads'),
-            'visibility' => 'uploads',
-            'prefix' => 'uploads',
+            'driver'          => 'local',
+            'root'            => public_path('uploads'),
+            'visibility'      => 'uploads',
+            'prefix'          => 'uploads',
             'rootFromProject' => 'public/uploads',
         ],
         'mails' => [
-            'driver' => 'local',
-            'root'   => public_path('mails'),
+            'driver'          => 'local',
+            'root'            => public_path('mails'),
             'rootFromProject' => 'public/mails',
         ],
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'driver'     => 'local',
+            'root'       => storage_path('app/public'),
             'visibility' => 'public',
         ],
         's3' => [
             'driver' => 's3',
-            'key' => 'your-key',
+            'key'    => 'your-key',
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
