@@ -3,8 +3,6 @@
 namespace App\Core\Http\Controllers\Site;
 
 use App\Core\Contracts\OrdersSystemContract;
-use App\Core\Logic\OrdersSystem;
-use App\Core\Models\Orders;
 use App\Core\Support\OrderSteps\OrderStepItem;
 use App\Core\Support\OrderSteps\OrderSteps;
 use Illuminate\Http\Request;
@@ -40,6 +38,7 @@ class OrdersController extends BaseController
      */
     public function __construct(OrdersSystemContract $ordersSystem)
     {
+        $this->middleware(['cartEmpty']);
         $this->ordersSystem = $ordersSystem;
         $this->statuses = ['showPersonal', 'showAddress', 'showShipping', 'showPayment'];
     }
@@ -65,11 +64,16 @@ class OrdersController extends BaseController
         return $this->view('index', compact('status', 'getAllPreviousValue'));
     }
 
-    public function makeStepPassed(Request $request, string $status)
+    /**
+     * @param Request $request
+     * @param string $step
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function makeStepPassed(Request $request, string $step)
     {
         try {
             $orderSteps = new OrderStepItem();
-            $statuses = $orderSteps->makeStepPassed($status);
+            $statuses = $orderSteps->makeStepPassed($step);
         } catch (\Throwable $e) {
             return $this->redirectError($e);
         }

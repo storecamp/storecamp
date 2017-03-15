@@ -3,7 +3,7 @@
     Add New Setting
 @endsection
 @section('contentheader_description')
-    @include('admin.partial._content-head_btns', [$routeName = "admin::settings::index", $createBtn = 'Back', $showFilters = false])
+    @include('admin.partial._content-head_btns', [$routeName = "admin::settings::default::index", $createBtn = 'Back', $showFilters = false])
 @endsection
 @section('main-content')
     <div class="panel" style="margin-top:10px;">
@@ -12,7 +12,7 @@
             <h3 class="panel-title"><i class="settings-plus"></i> New Setting</h3>
         </div>
         <div class="panel-body">
-            <form action="{{ route('admin::settings::store') }}" method="POST">
+            <form action="{{ route('admin::settings::default::store') }}" method="POST">
                 {{ csrf_field() }}
                 <div class="col-md-6">
                     <div class="form-group">

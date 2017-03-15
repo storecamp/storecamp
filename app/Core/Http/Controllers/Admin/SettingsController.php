@@ -13,7 +13,7 @@ class SettingsController extends BaseController
 {
     //TODO implement error handling
     public $viewPathBase = 'admin.settings.';
-    public $errorRedirectPath = 'admin::settings::index';
+    public $errorRedirectPath = 'admin::settings::default::index';
 
     /**
      * @var SettingsRepository
@@ -71,7 +71,7 @@ class SettingsController extends BaseController
         $this->settings->create($request->all());
         $this->flash('success', 'Successfully Created Settings');
 
-        return redirect()->to(route('admin::settings::index'));
+        return redirect()->to(route('admin::settings::default::index'));
     }
 
     /**
@@ -88,7 +88,7 @@ class SettingsController extends BaseController
         $setting->save();
         $this->flash('success', "Successfully Saved Setting - {$setting->key}");
 
-        return redirect()->to(route('admin::settings::index'));
+        return redirect()->to(route('admin::settings::default::index'));
     }
 
     /**
@@ -101,7 +101,7 @@ class SettingsController extends BaseController
         $this->settings->delete($id);
         $this->flash('success', 'Successfully Deleted Setting');
 
-        return redirect()->to(route('admin::settings::index'));
+        return redirect()->to(route('admin::settings::default::index'));
     }
 
     /**
@@ -128,7 +128,7 @@ class SettingsController extends BaseController
         }
         $this->flash($type, $message);
 
-        return redirect()->to(route('admin::settings::index'));
+        return redirect()->to(route('admin::settings::default::index'));
     }
 
     /**
@@ -178,6 +178,6 @@ class SettingsController extends BaseController
         }
         $this->flash($type, $message);
 
-        return redirect()->to(route('admin::settings::index'));
+        return redirect()->to(route('admin::settings::default::index'));
     }
 }

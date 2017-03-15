@@ -39,13 +39,6 @@
         @include('admin.fileLinker.fileLinkerModal', [$model = $category, $preferredTag, $btnMsg = 'attach image to category', $fileTypes = 'image', $multiple = false, $outputElementPath = "#general", $disk = "local"])
     </div>
     <div class="form-group">
-        {{ Form::label('top', 'Place to top navigation', ['class' => 'control-label']) }}
-        <label>
-            {{ Form::checkbox('top', null, null, ['class' => 'minimal']) }}
-            {!! $errors->first('top', '<div class="text-danger">:message</div>') !!}
-        </label>
-    </div>
-    <div class="form-group">
         {{ Form::label('sort_order', 'Sorting Order', ['class' => 'control-label']) }}
         {{ Form::input('number', 'sort_order', null, ['class' => 'form-control']) }}
         {!! $errors->first('sort_order', '<div class="text-danger">:message</div>') !!}

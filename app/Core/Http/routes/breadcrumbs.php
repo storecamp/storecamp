@@ -83,9 +83,10 @@ Breadcrumbs::register('products', function ($breadcrumbs) {
     $breadcrumbs->push('Products', route('admin::products::index'));
 });
 
-Breadcrumbs::register('settings', function ($breadcrumbs, $page) {
+Breadcrumbs::register('settings', function ($breadcrumbs) {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('settings', route('admin::settings::index'));
+    $breadcrumbs->push('Settings', route('admin::settings::default::index'));
+    $breadcrumbs->push('Currency', route('admin::settings::default::index'));
 });
 
 // / > [Category] > [Page]

@@ -4,7 +4,7 @@
 @endsection
 @include('admin.partial._contentheader_title', [$model = new \App\Core\Models\Settings(), $message = "All Settings Count"])
 @section('contentheader_description')
-    @include('admin.partial._content-head_btns', [$routeName = "admin::settings::create", $createBtn = 'Add New Setting'])
+    @include('admin.partial._content-head_btns', [$routeName = "admin::settings::default::create", $createBtn = 'Add New Setting'])
     <button class="btn pull-right" style="margin-bottom: 20px;" data-toggle="collapse" href="#info" aria-expanded="false"
             aria-controls="info">
         <span class="fa fa-info"></span>info
@@ -98,10 +98,10 @@
                     <b>{{ $setting->key }}</b> <code>setting('{{ $setting->key }}')</code>
                 </h3>
                 <div class="panel-actions pull-right">
-                    <a class="btn btn-xs btn-default" href="{{ route('admin::settings::move_up', $setting->id) }}">
+                    <a class="btn btn-xs btn-default" href="{{ route('admin::settings::default::move_up', $setting->id) }}">
                         <span class="fa fa-angle-up"></span>
                     </a>
-                    <a class="btn btn-xs btn-default" href="{{ route('admin::settings::move_down', $setting->id) }}">
+                    <a class="btn btn-xs btn-default" href="{{ route('admin::settings::default::move_down', $setting->id) }}">
                         <span class="fa fa-angle-down"></span>
                     </a>
                     <a class="btn btn-xs btn-default">
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <form action="{{ route('admin::settings::update', [$setting->unique_id]) }}" method="POST"
+                <form action="{{ route('admin::settings::default::update', [$setting->unique_id]) }}" method="POST"
                       enctype="multipart/form-data">
                     {{ method_field("PUT") }}
                     {{ csrf_field() }}
@@ -151,7 +151,7 @@
                     </h4>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('admin::settings::delete', ['id' => '__id']) }}" id="delete_form"
+                    <form action="{{ route('admin::settings::default::delete', ['id' => '__id']) }}" id="delete_form"
                           method="POST">
                         {{ method_field("DELETE") }}
                         {{ csrf_field() }}

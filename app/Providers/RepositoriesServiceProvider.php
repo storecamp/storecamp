@@ -56,6 +56,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Settings',
             'Menu',
             'MenuItems',
+            'Currency',
         ];
 
         foreach ($models as $repo) {

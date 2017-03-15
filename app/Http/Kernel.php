@@ -80,5 +80,6 @@ class Kernel extends HttpKernel
         'localize'              => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect'  => LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => LocaleSessionRedirect::class,
+        'cartEmpty' => \App\Http\Middleware\CartEmpty::class,
     ];
 }

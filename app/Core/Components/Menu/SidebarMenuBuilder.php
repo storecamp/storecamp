@@ -60,7 +60,8 @@ class SidebarMenuBuilder
 
         $settings = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-cogs"></i> Settings')
-            ->addLink('Settings', ['route' => 'admin::settings::index']);
+            ->addLink('Settings', ['route' => 'admin::settings::default::index'])
+            ->addLink('Currencies', ['route' => 'admin::settings::currency::index']);
 
         $mediaStorage = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-files-o"></i> MediaStorage')

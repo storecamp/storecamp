@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MailTemplatesToMediaSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(MenuItemsSeeder::class);
+        $this->call(CurrencySeed::class);
 
         \Illuminate\Database\Eloquent\Model::reguard();
     }

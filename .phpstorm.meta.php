@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-03-10.
+    * Generated on 2017-03-15.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -67,7 +67,6 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
             'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
-            'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
             'App\Core\Repositories\ReturnsRepository' instanceof \App\Core\Repositories\ReturnsRepositoryEloquent,
             'App\Core\Repositories\CartRepository' instanceof \App\Core\Repositories\CartRepositoryEloquent,
@@ -77,6 +76,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SettingsRepository' instanceof \App\Core\Repositories\SettingsRepositoryEloquent,
             'App\Core\Repositories\MenuRepository' instanceof \App\Core\Repositories\MenuRepositoryEloquent,
             'App\Core\Repositories\MenuItemsRepository' instanceof \App\Core\Repositories\MenuItemsRepositoryEloquent,
+            'App\Core\Repositories\CurrencyRepository' instanceof \App\Core\Repositories\CurrencyRepositoryEloquent,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
@@ -326,7 +326,6 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
             'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
-            'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
             'App\Core\Repositories\ReturnsRepository' instanceof \App\Core\Repositories\ReturnsRepositoryEloquent,
             'App\Core\Repositories\CartRepository' instanceof \App\Core\Repositories\CartRepositoryEloquent,
@@ -336,6 +335,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SettingsRepository' instanceof \App\Core\Repositories\SettingsRepositoryEloquent,
             'App\Core\Repositories\MenuRepository' instanceof \App\Core\Repositories\MenuRepositoryEloquent,
             'App\Core\Repositories\MenuItemsRepository' instanceof \App\Core\Repositories\MenuItemsRepositoryEloquent,
+            'App\Core\Repositories\CurrencyRepository' instanceof \App\Core\Repositories\CurrencyRepositoryEloquent,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
@@ -585,7 +585,6 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
             'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
-            'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
             'App\Core\Repositories\ReturnsRepository' instanceof \App\Core\Repositories\ReturnsRepositoryEloquent,
             'App\Core\Repositories\CartRepository' instanceof \App\Core\Repositories\CartRepositoryEloquent,
@@ -595,6 +594,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SettingsRepository' instanceof \App\Core\Repositories\SettingsRepositoryEloquent,
             'App\Core\Repositories\MenuRepository' instanceof \App\Core\Repositories\MenuRepositoryEloquent,
             'App\Core\Repositories\MenuItemsRepository' instanceof \App\Core\Repositories\MenuItemsRepositoryEloquent,
+            'App\Core\Repositories\CurrencyRepository' instanceof \App\Core\Repositories\CurrencyRepositoryEloquent,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
@@ -844,7 +844,6 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
             'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
-            'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
             'App\Core\Repositories\ReturnsRepository' instanceof \App\Core\Repositories\ReturnsRepositoryEloquent,
             'App\Core\Repositories\CartRepository' instanceof \App\Core\Repositories\CartRepositoryEloquent,
@@ -854,6 +853,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SettingsRepository' instanceof \App\Core\Repositories\SettingsRepositoryEloquent,
             'App\Core\Repositories\MenuRepository' instanceof \App\Core\Repositories\MenuRepositoryEloquent,
             'App\Core\Repositories\MenuItemsRepository' instanceof \App\Core\Repositories\MenuItemsRepositoryEloquent,
+            'App\Core\Repositories\CurrencyRepository' instanceof \App\Core\Repositories\CurrencyRepositoryEloquent,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
