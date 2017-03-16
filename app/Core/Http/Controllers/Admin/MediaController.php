@@ -6,12 +6,19 @@ use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
+use App\Core\Support\Media\MediaReceiver;
 use Arcanedev\LogViewer\Exceptions\FilesystemException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
+use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 /**
  * Class MediaController.
@@ -54,7 +61,7 @@ class MediaController extends BaseController
      * MediaController constructor.
      *
      * @param MediaSystemContract $mediaSystem
-     * @param MediaSystemBuilder  $mediaSystemBuilder
+     * @param MediaSystemBuilder $mediaSystemBuilder
      */
     public function __construct(MediaSystemContract $mediaSystem, MediaSystemBuilder $mediaSystemBuilder)
     {
@@ -70,9 +77,9 @@ class MediaController extends BaseController
     /**
      * @param $request
      * @param string $disk
-     * @param null   $folder
-     * @param bool   $skipPaginate
-     * @param array  $dataTypes
+     * @param null $folder
+     * @param bool $skipPaginate
+     * @param array $dataTypes
      *
      * @return array
      */
@@ -89,22 +96,22 @@ class MediaController extends BaseController
         $count = $files['count'];
         $path = $folderDisk->getParentFoldersPath($folder);
         $folderName = $folder->name ? $folder->name : '';
-        $path = $path ? $path.'/'.$folderName : $folderName;
+        $path = $path ? $path . '/' . $folderName : $folderName;
 
-        return ['media'   => $media,
+        return ['media' => $media,
             'directories' => $directories,
-            'path'        => $path,
-            'folder'      => $folder,
-            'count'       => $count,
-            'disk'        => $disk, ];
+            'path' => $path,
+            'folder' => $folder,
+            'count' => $count,
+            'disk' => $disk,];
     }
 
     /**
      * @param Request $request
-     * @param null    $folder
-     * @param string  $disk
+     * @param null $folder
+     * @param string $disk
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|RedirectResponse
      */
     public function index(Request $request, $disk = '', $folder = null)
     {
@@ -136,8 +143,8 @@ class MediaController extends BaseController
      * get folder structure and response for json requests.
      *
      * @param Request $request
-     * @param null    $folder
-     * @param string  $disk
+     * @param null $folder
+     * @param string $disk
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
@@ -168,8 +175,8 @@ class MediaController extends BaseController
      * file linker functionality.
      *
      * @param Request $request
-     * @param null    $folder
-     * @param string  $disk
+     * @param null $folder
+     * @param string $disk
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
@@ -206,7 +213,7 @@ class MediaController extends BaseController
      * to reload.
      *
      * @param Request $request
-     * @param null    $folder
+     * @param null $folder
      *
      * @return mixed
      */
@@ -216,24 +223,30 @@ class MediaController extends BaseController
         $folder = $folderDisk->find($request->folder);
         $path = $this->folder->getParentFoldersPath($folder);
         $folderName = $folder->name ? $folder->name : '';
-        $path = $path ? $path.'/'.$folderName : $folderName;
+        $path = $path ? $path . '/' . $folderName : $folderName;
         $directoryTransformed = $this->mediaSystemBuilder->presentFolders($request, $folder, $path);
 
         return $directoryTransformed;
     }
 
     /**
-     * upload files.
+     * File Upload Handler
      *
      * @param Request $request
-     * @param string  $disk
-     *
+     * @param string $disk
      * @return \Illuminate\Http\JsonResponse
      */
     public function upload(Request $request, $disk = '')
     {
         try {
-            $media = $this->mediaSystem->makeFile($request, $disk);
+
+            $mediaReceiver = new MediaReceiver($request);
+            $media = $mediaReceiver->receive('file', function ($file) use ($request, $disk) {
+                return $this->mediaSystem->makeChunkedFile($request, $file, $disk);
+            });
+            return response()->json([
+                'media' => json_encode($media)
+            ]);
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
         } catch (FilesystemException $exception) {
@@ -244,11 +257,37 @@ class MediaController extends BaseController
     }
 
     /**
+     * Saves the file
+     *
+     * @param UploadedFile $file
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function saveFile(UploadedFile $file)
+    {
+        $fileName = $this->createFilename($file);
+        // Group files by mime type
+        $mime = str_replace('/', '-', $file->getMimeType());
+        // Group files by the date (week
+        $dateFolder = date("Y-m-W");
+        // Build the file path
+        $filePath = "upload/{$mime}/{$dateFolder}/";
+        $finalPath = storage_path("app/" . $filePath);
+        // move the file name
+        $file->move($finalPath, $fileName);
+        return response()->json([
+            'path' => $filePath,
+            'name' => $fileName,
+            'mime_type' => $mime
+        ]);
+    }
+
+    /**
      * make folder && store the
      * folder in table.
      *
      * @param Request $request
-     * @param string  $disk
+     * @param string $disk
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -269,7 +308,7 @@ class MediaController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $disk
+     * @param string $disk
      *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
@@ -290,7 +329,7 @@ class MediaController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $disk
+     * @param string $disk
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -316,7 +355,7 @@ class MediaController extends BaseController
      * @param $folder
      * @param string $disk
      *
-     * @return Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|RedirectResponse
      */
     public function download($disk, $id, $folder)
     {
@@ -326,10 +365,10 @@ class MediaController extends BaseController
             $file = $this->repository->find($id);
             $folder = $folder ? $folderDisk->find($folder) : $this->defaultFolder;
             $parentFoldersPath = $folderDisk->getParentFoldersPath($folder);
-            $folderPath = $parentFoldersPath ? $parentFoldersPath.'/'.$folder->name : $folder->name;
-            $folderFullPath = $folderDisk->getDiskRoot().'/'.$folderPath;
+            $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
+            $folderFullPath = $folderDisk->getDiskRoot() . '/' . $folderPath;
 
-            return response()->download($folderFullPath.'/'.$file->filename.'.'.$file->extension);
+            return response()->download($folderFullPath . '/' . $file->filename . '.' . $file->extension);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         } catch (FileNotFoundException $e) {
@@ -353,7 +392,7 @@ class MediaController extends BaseController
             if ($request->ajax()) {
                 return response()->json(['message' => 'File deleted', 'title' => 'Success'], 200);
             }
-
+            $this->toastr('info', 'File Deleted', 'Success');
             return redirect()->route('admin::media::index', [$media->disk, $media->directory_id]);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -367,7 +406,7 @@ class MediaController extends BaseController
      * attached.
      *
      * @param Request $request
-     * @param string  $disk
+     * @param string $disk
      * @param $folder
      *
      * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse

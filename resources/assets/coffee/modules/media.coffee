@@ -5,6 +5,8 @@ $.StoreCamp.media =
     mediaItems: $('.media[data-status="playable"]')
     directoryItem: $(".directories .directory-item")
     fileItem: $(".media")
+    mediaInfoBtn: '.media .info-btn'
+    mediaDeleteBtn: '.media .delete-btn'
     infoData:
       itemUrl: 'data-href'
       itemType: 'data-file-type'
@@ -12,6 +14,7 @@ $.StoreCamp.media =
       itemModified: 'data-modified'
       itemName: 'data-filename'
       itemSize: 'data-size'
+      itemMime: 'data-mime'
       itemId: 'data-file-id'
 
     infoTemplate: (filename, type, modified, size) ->
@@ -35,14 +38,13 @@ $.StoreCamp.media =
                     </div>
                     <div class='clearfix'></div>
     """
-    videoTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+    videoTemplate: (mediaUrl, mediaId, filename, type, modified, size, mime) ->
       """<div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item" style="margin-bottom: 10px">
                     <span class="mailbox-attachment-icon has-img">
                         <video class='js-player' controls>
-                             <source src="#{mediaUrl}"
-                                       type="video/mp4">
-                              <source src="#{mediaUrl}"
-                                        type="video/webm">
+                             <source src="#{mediaUrl}" type="video/mp4">
+                              <source src="#{mediaUrl}" type="video/webm">
+                              <source src="#{mediaUrl}" type="#{mime}">
                          </video>
                     </span>
           #{this.infoTemplate(filename, type, modified, size)}
@@ -108,12 +110,12 @@ $.StoreCamp.media =
 
   fileSystemEvents: ->
     _this = this
-    $(".media .info-btn").on "click", (event) ->
+    $("#{_this.options.mediaInfoBtn}").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       _this.infoFile(btn)
       return
-    $(".media .delete-btn").on "click", (event) ->
+    $("#{_this.options.mediaDeleteBtn}").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
@@ -125,7 +127,9 @@ $.StoreCamp.media =
       btn = $(this)
       deleteUrl = btn.attr('href')
       fileItem = btn.closest('.directory-item')
-      _this.deleteFile(deleteUrl, fileItem)
+      withModal = btn.attr('data-with-modal')
+      if !withModal
+        _this.deleteFile(deleteUrl, fileItem)
       return
     return
   reindex: (mediaItems, players) ->
@@ -156,10 +160,11 @@ $.StoreCamp.media =
     itemModified = fileItem.attr("#{_this.options.infoData.itemModified}")
     itemName = fileItem.attr("#{_this.options.infoData.itemName}")
     itemSize = fileItem.attr("#{_this.options.infoData.itemSize}")
+    itemMime = fileItem.attr("#{_this.options.infoData.itemMime}")
     itemId = fileItem.attr("#{_this.options.infoData.itemId}")
     console.log(itemType)
     if(itemType == "video")
-      $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType,itemModified, itemSize), itemName)
+      $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType,itemModified, itemSize), itemName, itemMime)
     if(itemType == "audio")
       $.StoreCamp.templates.modal(itemId, _this.options.audioTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
     if(itemType == "document")

@@ -3,6 +3,8 @@
 namespace App\Core\Contracts;
 
 use App\Core\Models\Folder;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Interface MediaSystemContract.
@@ -41,6 +43,14 @@ interface MediaSystemContract
      * @param string $disk
      */
     public function makeFile($request, $disk = '');
+
+    /**
+     * @param Request $request
+     * @param $file
+     * @param string $disk
+     * @return mixed
+     */
+    public function makeChunkedFile(Request $request, UploadedFile $file, $disk = '');
 
     /**
      * @param $request
