@@ -12,7 +12,7 @@ class CurrencySeed extends Seeder
     public function run()
     {
         $items = [
-            
+
             ['name' => 'USD', 'code' => 'USD', 'main' => 1, 'sign'=> '$'],
             ['name' => 'EUR', 'code' => 'EUR', 'main' => 0, 'sign' => '&euro;'],
             ['name' => 'GBP', 'code' => 'GBP', 'main' => 0, 'sign' => '&pound;'],
@@ -20,7 +20,7 @@ class CurrencySeed extends Seeder
         ];
 
         foreach ($items as $item) {
-           \App\Core\Models\Currency::create($item);
+            \App\Core\Models\Currency::create($item);
         }
     }
 }

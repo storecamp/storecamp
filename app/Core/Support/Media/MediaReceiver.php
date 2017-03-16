@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Core\Support\Media;
 
 use Closure;
@@ -20,7 +19,7 @@ class MediaReceiver
     }
 
     /**
-     * Checks if the file was uploaded
+     * Checks if the file was uploaded.
      *
      * @return bool
      */
@@ -28,7 +27,6 @@ class MediaReceiver
     {
         return is_object($this->file);
     }
-
 
     public function getPath()
     {
@@ -83,7 +81,7 @@ class MediaReceiver
             $this->appendData($filePath, $file);
 
             if ($chunk == $chunks - 1) {
-                $file = new UploadedFile($filePath, $originalName, 'blob', sizeof($filePath), UPLOAD_ERR_OK, true);
+                $file = new UploadedFile($filePath, $originalName, 'blob', count($filePath), UPLOAD_ERR_OK, true);
 
                 $result = $handler($file);
                 event()->fire();
