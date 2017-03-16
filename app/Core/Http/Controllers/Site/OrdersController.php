@@ -66,7 +66,8 @@ class OrdersController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $step
+     * @param string  $step
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function makeStepPassed(Request $request, string $step)

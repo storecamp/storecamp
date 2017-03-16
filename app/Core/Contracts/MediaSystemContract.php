@@ -48,6 +48,7 @@ interface MediaSystemContract
      * @param Request $request
      * @param $file
      * @param string $disk
+     *
      * @return mixed
      */
     public function makeChunkedFile(Request $request, UploadedFile $file, $disk = '');
