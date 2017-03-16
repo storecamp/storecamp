@@ -229,7 +229,7 @@ return [
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class
+        Yajra\Datatables\DatatablesServiceProvider::class,
     ],
 
     /*
@@ -317,7 +317,7 @@ return [
         'Menu'                  => \storecamp\htmlelements\Facades\Menu::class,
         'Breadcrumbs'           => DaveJamesMiller\Breadcrumbs\Facade::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
-        'Plupload' => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
+        'Plupload'              => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
     ],
 
 ];

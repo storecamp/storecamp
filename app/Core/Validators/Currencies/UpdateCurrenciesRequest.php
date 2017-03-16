@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Core\Validators\Currencies;
-use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCurrenciesRequest extends FormRequest
 {
@@ -26,7 +26,7 @@ class UpdateCurrenciesRequest extends FormRequest
         return [
             'name' => 'required|string|min:2,max:255',
             'code' => 'required|string|min:2,max:10',
-            'sign' => 'string|min:1,max:255'
+            'sign' => 'string|min:1,max:255',
         ];
     }
 }

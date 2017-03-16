@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\CurrencyRepository;
 use App\Core\Models\Currency;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class CurrencyRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class CurrencyRepositoryEloquent.
  */
 class CurrencyRepositoryEloquent extends BaseRepository implements CurrencyRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class CurrencyRepositoryEloquent extends BaseRepository implements CurrencyRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

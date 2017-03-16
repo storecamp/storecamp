@@ -2,21 +2,20 @@
 
 namespace App\Core\Support\Media;
 
-use Plank\Mediable\Exceptions\MediaUpload\FileSizeException;
+use Illuminate\Filesystem\FilesystemManager;
+use Plank\Mediable\Exceptions\MediaUpload\ConfigurationException;
 use Plank\Mediable\Exceptions\MediaUpload\FileExistsException;
 use Plank\Mediable\Exceptions\MediaUpload\FileNotFoundException;
-use Plank\Mediable\Exceptions\MediaUpload\ForbiddenException;
 use Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException;
-use Plank\Mediable\Exceptions\MediaUpload\ConfigurationException;
+use Plank\Mediable\Exceptions\MediaUpload\FileSizeException;
+use Plank\Mediable\Exceptions\MediaUpload\ForbiddenException;
 use Plank\Mediable\Helpers\File;
 use Plank\Mediable\Media;
 use Plank\Mediable\SourceAdapters\RawContentAdapter;
 use Plank\Mediable\SourceAdapters\SourceAdapterFactory;
-use Illuminate\Filesystem\FilesystemManager;
 
 class MediaUploader
 {
-
     const ON_DUPLICATE_REPLACE = 'replace';
     const ON_DUPLICATE_INCREMENT = 'increment';
     const ON_DUPLICATE_ERROR = 'error';
@@ -33,45 +32,52 @@ class MediaUploader
 
     /**
      * Mediable configurations.
+     *
      * @var array
      */
     private $config;
 
     /**
      * Source adapter.
+     *
      * @var
      */
     private $source;
 
     /**
      * Name of the filesystem disk.
+     *
      * @var string
      */
     private $disk;
 
     /**
      * Path relative to the filesystem disk root.
+     *
      * @var string
      */
     private $directory = '';
 
     /**
      * Name of the new file.
+     *
      * @var string
      */
     private $filename = null;
 
     /**
      * If true the contents hash of the source will be used as the filename.
+     *
      * @var bool
      */
     private $hash_filename = false;
 
     /**
      * Constructor.
-     * @param \Illuminate\Filesystem\FilesystemManager $filesystem
+     *
+     * @param \Illuminate\Filesystem\FilesystemManager            $filesystem
      * @param \Plank\Mediable\SourceAdapters\SourceAdapterFactory $factory
-     * @param array|null $config
+     * @param array|null                                          $config
      */
     public function __construct(FileSystemManager $filesystem, SourceAdapterFactory $factory, $config = null)
     {
@@ -82,7 +88,9 @@ class MediaUploader
 
     /**
      * Set the source for the file.
-     * @param  mixed $source
+     *
+     * @param mixed $source
+     *
      * @return static
      */
     public function fromSource($source)
@@ -94,7 +102,9 @@ class MediaUploader
 
     /**
      * Set the source for the string data.
-     * @param  string $source
+     *
+     * @param string $source
+     *
      * @return static
      */
     public function fromString($source)
@@ -106,8 +116,10 @@ class MediaUploader
 
     /**
      * Set the filesystem disk and relative directory where the file will be saved.
-     * @param  string $disk
-     * @param  string $directory
+     *
+     * @param string $disk
+     * @param string $directory
+     *
      * @return static
      */
     public function toDestination($disk, $directory)
@@ -117,7 +129,9 @@ class MediaUploader
 
     /**
      * Set the filesystem disk on which the file will be saved.
+     *
      * @param string $disk
+     *
      * @return static
      */
     public function toDisk($disk)
@@ -129,7 +143,9 @@ class MediaUploader
 
     /**
      * Set the directory relative to the filesystem disk at which the file will be saved.
+     *
      * @param string $directory
+     *
      * @return static
      */
     public function toDirectory($directory)
@@ -141,7 +157,9 @@ class MediaUploader
 
     /**
      * Specify the filename to copy to the file to.
+     *
      * @param string $filename
+     *
      * @return static
      */
     public function useFilename($filename)
@@ -154,6 +172,7 @@ class MediaUploader
 
     /**
      * Indicates to the uploader to generate a filename using the file's MD5 hash.
+     *
      * @return static
      */
     public function useHashForFilename()
@@ -166,6 +185,7 @@ class MediaUploader
 
     /**
      * Restore the default behaviour of using the source file's filename.
+     *
      * @return static
      */
     public function useOriginalFilename()
@@ -178,9 +198,12 @@ class MediaUploader
 
     /**
      * Change the class to use for generated Media.
+     *
      * @param string $class
-     * @return static
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\ConfigurationException if $class does not extend Plank\Mediable\Media
+     *
+     * @return static
      */
     public function setModelClass($class)
     {
@@ -194,24 +217,28 @@ class MediaUploader
 
     /**
      * Change the maximum allowed filesize.
+     *
      * @param int $size
+     *
      * @return static
      */
     public function setMaximumSize($size)
     {
-        $this->config['max_size'] = (int)$size;
+        $this->config['max_size'] = (int) $size;
 
         return $this;
     }
 
     /**
      * Change the behaviour for when a file already exists at the destination.
+     *
      * @param string $behavior
+     *
      * @return static
      */
     public function setOnDuplicateBehavior($behavior)
     {
-        $this->config['on_duplicate'] = (string)$behavior;
+        $this->config['on_duplicate'] = (string) $behavior;
 
         return $this;
     }
@@ -258,40 +285,46 @@ class MediaUploader
 
     /**
      * Change whether both the MIME type and extensions must match the same aggregate type.
+     *
      * @param bool $strict
+     *
      * @return static
      */
     public function setStrictTypeChecking($strict)
     {
-        $this->config['strict_type_checking'] = (bool)$strict;
+        $this->config['strict_type_checking'] = (bool) $strict;
 
         return $this;
     }
 
     /**
      * Change whether files not matching any aggregate types are allowed.
+     *
      * @param bool $allow
+     *
      * @return static
      */
     public function setAllowUnrecognizedTypes($allow)
     {
-        $this->config['allow_unrecognized_types'] = (bool)$allow;
+        $this->config['allow_unrecognized_types'] = (bool) $allow;
 
         return $this;
     }
 
     /**
      * Add or update the definition of a aggregate type.
-     * @param string $type the name of the type
-     * @param array $mime_types list of MIME types recognized
-     * @param array $extensions list of file extensions recognized
+     *
+     * @param string $type       the name of the type
+     * @param array  $mime_types list of MIME types recognized
+     * @param array  $extensions list of file extensions recognized
+     *
      * @return static
      */
     public function setTypeDefinition($type, $mime_types, $extensions)
     {
         $this->config['aggregate_types'][$type] = [
-            'mime_types' => (array)$mime_types,
-            'extensions' => (array)$extensions,
+            'mime_types' => (array) $mime_types,
+            'extensions' => (array) $extensions,
         ];
 
         return $this;
@@ -299,7 +332,9 @@ class MediaUploader
 
     /**
      * Set a list of MIME types that the source file must be restricted to.
+     *
      * @param array $allowed_mimes
+     *
      * @return static
      */
     public function setAllowedMimeTypes($allowed_mimes)
@@ -311,7 +346,9 @@ class MediaUploader
 
     /**
      * Set a list of file extensions that the source file must be restricted to.
+     *
      * @param array $allowed_extensions
+     *
      * @return static
      */
     public function setAllowedExtensions($allowed_extensions)
@@ -323,7 +360,9 @@ class MediaUploader
 
     /**
      * Set a list of aggregate types that the source file must be restricted to.
+     *
      * @param array $allowed_types
+     *
      * @return static
      */
     public function setAllowedAggregateTypes($allowed_types)
@@ -335,12 +374,15 @@ class MediaUploader
 
     /**
      * Determine the aggregate type of the file based on the MIME type and the extension.
-     * @param  string $mime_type
-     * @param  string $extension
-     * @return string
+     *
+     * @param string $mime_type
+     * @param string $extension
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException If the file type is not recognized
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException If the file type is restricted
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException If the aggregate type is restricted
+     *
+     * @return string
      */
     public function inferAggregateType($mime_type, $extension)
     {
@@ -378,7 +420,9 @@ class MediaUploader
 
     /**
      * Determine the aggregate type of the file based on the MIME type.
-     * @param  string $mime
+     *
+     * @param string $mime
+     *
      * @return string
      */
     public function possibleAggregateTypesForMimeType($mime)
@@ -395,7 +439,9 @@ class MediaUploader
 
     /**
      * Determine the aggregate type of the file based on the extension.
-     * @param  string $extension
+     *
+     * @param string $extension
+     *
      * @return string|null
      */
     public function possibleAggregateTypesForExtension($extension)
@@ -414,6 +460,7 @@ class MediaUploader
      * Process the file upload.
      *
      * Validates the source, then stores the file onto the disk and creates and stores a new Media instance.
+     *
      * @return \Plank\Mediable\Media
      */
     public function upload()
@@ -431,7 +478,7 @@ class MediaUploader
         $model->directory = $this->directory;
         $model->filename = $this->generateFilename();
         $this->verifyDestination($model);
-        \Storage::disk($model->disk)->putFileAs($this->directory, $this->source, $model->filename . '.' .$model->extension);
+        \Storage::disk($model->disk)->putFileAs($this->directory, $this->source, $model->filename.'.'.$model->extension);
         $model->save();
 
         return $model;
@@ -439,8 +486,10 @@ class MediaUploader
 
     /**
      * Create a `Media` record for a file already on a disk.
-     * @param  string $disk
-     * @param  string $path Path to file, relative to disk root
+     *
+     * @param string $disk
+     * @param string $path Path to file, relative to disk root
+     *
      * @return \Plank\Mediable\Media
      */
     public function importPath($disk, $path)
@@ -454,12 +503,15 @@ class MediaUploader
 
     /**
      * Create a `Media` record for a file already on a disk.
-     * @param  string $disk
-     * @param  string $directory
-     * @param  string $filename
-     * @param  string $extension
-     * @return \Plank\Mediable\Media
+     *
+     * @param string $disk
+     * @param string $directory
+     * @param string $filename
+     * @param string $extension
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUploadFileNotFoundException If the file does not exist
+     *
+     * @return \Plank\Mediable\Media
      */
     public function import($disk, $directory, $filename, $extension)
     {
@@ -487,7 +539,9 @@ class MediaUploader
 
     /**
      * Reanalyze a media record's file and adjust the aggregate type and size, if necessary.
-     * @param  \Plank\Mediable\Media $media
+     *
+     * @param \Plank\Mediable\Media $media
+     *
      * @return bool Whether the model was modified
      */
     public function update(Media $media)
@@ -507,21 +561,25 @@ class MediaUploader
 
     /**
      * Generate an instance of the `Media` class.
+     *
      * @return \Plank\Mediable\Media
      */
     private function makeModel()
     {
         $class = $this->config['model'];
 
-        return new $class;
+        return new $class();
     }
 
     /**
      * Ensure that the provided filesystem disk name exists and is allowed.
-     * @param  string $disk
-     * @return string
+     *
+     * @param string $disk
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\ConfigurationException If the disk does not exist
-     * @throws \Plank\Mediable\Exceptions\MediaUpload\ForbiddenException If the disk is not included in the `allowed_disks` config.
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\ForbiddenException     If the disk is not included in the `allowed_disks` config.
+     *
+     * @return string
      */
     private function verifyDisk($disk)
     {
@@ -538,9 +596,11 @@ class MediaUploader
 
     /**
      * Ensure that a valid source has been provided.
-     * @return void
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\ConfigurationException If no source is provided
-     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotFoundException If the source is invalid
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotFoundException  If the source is invalid
+     *
+     * @return void
      */
     private function verifySource()
     {
@@ -554,9 +614,12 @@ class MediaUploader
 
     /**
      * Ensure that the file's mime type is allowed.
-     * @param  string $mime_type
-     * @return string
+     *
+     * @param string $mime_type
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException If the mime type is not allowed
+     *
+     * @return string
      */
     private function verifyMimeType($mime_type)
     {
@@ -570,9 +633,12 @@ class MediaUploader
 
     /**
      * Ensure that the file's extension is allowed.
-     * @param  string $extension
-     * @return string
+     *
+     * @param string $extension
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException If the file extension is not allowed
+     *
+     * @return string
      */
     private function verifyExtension($extension)
     {
@@ -586,9 +652,12 @@ class MediaUploader
 
     /**
      * Verify that the file being uploaded is not larger than the maximum.
-     * @param  int $size
-     * @return int
+     *
+     * @param int $size
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileSizeException If the file is too large
+     *
+     * @return int
      */
     private function verifyFileSize($size)
     {
@@ -602,7 +671,9 @@ class MediaUploader
 
     /**
      * Verify that the intended destination is available and handle any duplications.
-     * @param  \Plank\Mediable\Media $model
+     *
+     * @param \Plank\Mediable\Media $model
+     *
      * @return void
      */
     private function verifyDestination(Media $model)
@@ -616,9 +687,12 @@ class MediaUploader
 
     /**
      * Decide what to do about duplicated files.
-     * @param  \Plank\Mediable\Media $model
-     * @return void
+     *
+     * @param \Plank\Mediable\Media $model
+     *
      * @throws \Plank\Mediable\Exceptions\MediaUpload\FileExistsException If directory is not writable or file already exists at the destination and on_duplicate is set to 'error'
+     *
+     * @return void
      */
     private function handleDuplicate(Media $model)
     {
@@ -637,7 +711,9 @@ class MediaUploader
 
     /**
      * Delete the media that previously existed at a destination.
-     * @param  \Plank\Mediable\Media $model
+     *
+     * @param \Plank\Mediable\Media $model
+     *
      * @return void
      */
     private function deleteExistingMedia(Media $model)
@@ -653,7 +729,9 @@ class MediaUploader
 
     /**
      * Increment model's filename until one is found that doesn't already exist.
-     * @param  \Plank\Mediable\Media $model
+     *
+     * @param \Plank\Mediable\Media $model
+     *
      * @return void
      */
     private function generateUniqueFilename(Media $model)
@@ -671,6 +749,7 @@ class MediaUploader
 
     /**
      * Generate the model's filename.
+     *
      * @return string
      */
     private function generateFilename()
@@ -688,6 +767,7 @@ class MediaUploader
 
     /**
      * Calculate hash of source contents.
+     *
      * @return string
      */
     private function generateHash()
@@ -706,7 +786,9 @@ class MediaUploader
 
     /**
      * Remove any disallowed characters from a directory value.
-     * @param  string $path
+     *
+     * @param string $path
+     *
      * @return string
      */
     private function sanitizePath($path)
@@ -716,7 +798,9 @@ class MediaUploader
 
     /**
      * Remove any disallowed characters from a filename.
-     * @param  string $file
+     *
+     * @param string $file
+     *
      * @return string
      */
     private function sanitizeFileName($file)

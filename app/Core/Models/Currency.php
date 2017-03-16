@@ -29,6 +29,7 @@ class Currency extends Model implements Transformable
             $this->attributes['sign'] = '';
         }
     }
+
     public function setMainAttribute($value)
     {
         if (!empty($value)) {
@@ -37,5 +38,4 @@ class Currency extends Model implements Transformable
             $this->attributes['main'] = 0;
         }
     }
-
 }

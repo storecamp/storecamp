@@ -2,18 +2,17 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Currency;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class CurrencyTransformer
- * @package namespace App\Core\Transformers;
+ * Class CurrencyTransformer.
  */
 class CurrencyTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Currency entity
+     * Transform the \Currency entity.
+     *
      * @param \Currency $model
      *
      * @return array
@@ -26,7 +25,7 @@ class CurrencyTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }
