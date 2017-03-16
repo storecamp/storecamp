@@ -7,7 +7,7 @@
                 </button>
                 <h4 class="modal-title">
                     <i class="settings-trash"></i> Are you sure you want to delete the <span
-                            id="delete_setting_title"></span> Currency?
+                            id="delete_setting_title"></span> File?
                 </h4>
             </div>
             <div class="modal-footer">
@@ -26,13 +26,7 @@
 @push('scripts-add_on')
 <script>
     $('document').ready(function () {
-        $('.delete-file-btn').click(function (e) {
-            e.preventDefault();
-            var display = $(this).data('name');
-            $('#delete_filename').text(display);
-            $('#delete_file_form')[0].action = $('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
-            $('#delete_file_modal').modal('show');
-        });
+
     });
 </script>
 @endpush

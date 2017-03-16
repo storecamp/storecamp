@@ -7,6 +7,7 @@ $.StoreCamp.media =
     fileItem: $(".media")
     mediaInfoBtn: '.media .info-btn'
     mediaDeleteBtn: '.media .delete-btn'
+    deleteFileBtn: '.delete-file-btn'
     infoData:
       itemUrl: 'data-href'
       itemType: 'data-file-type'
@@ -122,6 +123,15 @@ $.StoreCamp.media =
       fileItem = btn.closest('.file-item')
       _this.deleteFile(deleteUrl, fileItem)
       return
+    deleteModal = $("#delete_file_modal")
+    if deleteModal.length > 0
+      $("#{_this.options.deleteFileBtn}").click (e) ->
+        e.preventDefault();
+        display = $(this).data('name');
+        $('#delete_filename').text(display);
+        $('#delete_file_form')[0].action = $('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
+        $('#delete_file_modal').modal('show');
+        return
     _this.options.directoryItem.find(".delete-file").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
