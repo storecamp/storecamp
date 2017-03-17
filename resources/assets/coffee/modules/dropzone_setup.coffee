@@ -45,7 +45,6 @@ $.StoreCamp.dropzone =
       formData.append("filesize", file.size)
       return
     @on 'error', (error, errorMessage, xhr) ->
-      console.log(error, xhr.responseText)
       toastr.error("File by name: "+error.name + " not loaded", "Error")
       return
     @on 'addedfile', (file) ->

@@ -235,7 +235,6 @@ class MediaController extends BaseController
      */
     public function upload(Request $request, $disk = '')
     {
-        throw new \Exception("File not uploaded", 500);
         try {
             $mediaReceiver = new MediaReceiver($request);
             $media = $mediaReceiver->receive('file', function ($file) use ($request, $disk) {
