@@ -15,18 +15,10 @@
                       method="POST">
                     {{ method_field("DELETE") }}
                     {{ csrf_field() }}
-                    <input type="submit" class="btn btn-danger pull-right delete-confirm"
-                           value="Yes, Delete This Setting">
+                    <button class="btn btn-danger pull-right delete-confirm">Yes, Delete <b>__name</b> File</button>
                 </form>
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
-@push('scripts-add_on')
-<script>
-    $('document').ready(function () {
-
-    });
-</script>
-@endpush

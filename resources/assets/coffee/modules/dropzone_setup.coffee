@@ -31,7 +31,6 @@ $.StoreCamp.dropzone =
         type: 'GET'
         success: (data) ->
           folderBody.html data
-          $.StoreCamp.media.activate()
           $.StoreCamp.media.fileSystemEvents()
           toastr.info('File uploaded by name: '+result.filename, 'Success')
           return

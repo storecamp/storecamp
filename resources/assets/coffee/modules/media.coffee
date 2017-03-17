@@ -5,6 +5,7 @@ $.StoreCamp.media =
     mediaItems: $('.media[data-status="playable"]')
     directoryItem: $(".directories .directory-item")
     fileItem: $(".media")
+    media: '.media'
     mediaInfoBtn: '.media .info-btn'
     mediaDeleteBtn: '.media .delete-btn'
     deleteFileBtn: '.delete-file-btn'
@@ -130,6 +131,7 @@ $.StoreCamp.media =
         display = $(this).data('name');
         $('#delete_filename').text(display);
         $('#delete_file_form')[0].action = $('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
+        $('.delete-confirm b').text($('.delete-confirm b').text().replace('__name', $(this).data('name')));
         $('#delete_file_modal').modal('show');
         return
     _this.options.directoryItem.find(".delete-file").on "click", (event) ->
@@ -163,7 +165,7 @@ $.StoreCamp.media =
       false
   infoFile: (btn) ->
     _this = this
-    fileItem = btn.closest('.media')
+    fileItem = btn.closest("#{_this.options.media}")
     itemUrl = fileItem.attr("#{_this.options.infoData.itemUrl}")
     itemType = fileItem.attr("#{_this.options.infoData.itemType}")
     itemDisk = fileItem.attr("#{_this.options.infoData.itemDisk}")
@@ -172,7 +174,8 @@ $.StoreCamp.media =
     itemSize = fileItem.attr("#{_this.options.infoData.itemSize}")
     itemMime = fileItem.attr("#{_this.options.infoData.itemMime}")
     itemId = fileItem.attr("#{_this.options.infoData.itemId}")
-    console.log(itemType)
+    if($("#{itemId}").length > 0)
+      $("#{itemId}").remove()
     if(itemType == "video")
       $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType,itemModified, itemSize), itemName, itemMime)
     if(itemType == "audio")

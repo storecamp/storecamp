@@ -122,6 +122,7 @@
     <link rel="stylesheet"
           href="{!! asset('custom_vendors/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css') !!}"
           type="text/css"/>
+    <script src="{{ asset('custom_vendors/media-js/jquery.media.js') }}"></script>
     <script type="text/javascript" src="{!! asset('custom_vendors/plupload/js/plupload.min.js') !!}"></script>
     <script type="text/javascript"
             src="{!! asset('custom_vendors/plupload/js/jquery.plupload.queue/jquery.plupload.queue.min.js') !!}"></script>
