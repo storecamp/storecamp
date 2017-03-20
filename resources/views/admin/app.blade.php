@@ -29,7 +29,7 @@ desired effect
 -->
 @yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
-<div class="wrapper">
+<div id="app" class="wrapper">
     @include('partials.mainheader')
     @include('partials.sidebar')
     <!-- Content Wrapper. Contains page content -->

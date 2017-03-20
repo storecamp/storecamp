@@ -1,4 +1,5 @@
 <!-- REQUIRED JS SCRIPTS -->
+<script src="https://unpkg.com/vue"></script>
 
 <!-- jQuery 2.1.4 -->
 <script src="{{ asset('custom_vendors/jQuery/jQuery-2.1.4.min.js') }}"></script>

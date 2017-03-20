@@ -254,33 +254,6 @@ class MediaController extends BaseController
     }
 
     /**
-     * Saves the file.
-     *
-     * @param UploadedFile $file
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function saveFile(UploadedFile $file)
-    {
-        $fileName = $this->createFilename($file);
-        // Group files by mime type
-        $mime = str_replace('/', '-', $file->getMimeType());
-        // Group files by the date (week
-        $dateFolder = date('Y-m-W');
-        // Build the file path
-        $filePath = "upload/{$mime}/{$dateFolder}/";
-        $finalPath = storage_path('app/'.$filePath);
-        // move the file name
-        $file->move($finalPath, $fileName);
-
-        return response()->json([
-            'path'      => $filePath,
-            'name'      => $fileName,
-            'mime_type' => $mime,
-        ]);
-    }
-
-    /**
      * make folder && store the
      * folder in table.
      *

@@ -84,6 +84,9 @@ class OrderStepItem implements Arrayable
     }
 
     /**
+     * get steps and check if user is logged in to remove
+     * first step show
+     *
      * @return Collection|null
      */
     public function getSteps(): ?Collection
@@ -113,11 +116,18 @@ class OrderStepItem implements Arrayable
 
             return $collection;
         } else {
-            return $steps['steps'];
+            if (\Auth::check()) {
+                $stepsCollection = $this->transformStepToPass(OrderSteps::STEPS[0], $steps)['steps'];
+            } else {
+                $stepsCollection = $steps['steps'];
+            }
+            return $stepsCollection;
         }
     }
 
     /**
+     * get step which is not activated
+     *
      * @return mixed
      */
     public function getWhereNotActive()
@@ -142,16 +152,7 @@ class OrderStepItem implements Arrayable
         }
         $steps = $this->getSteps();
         if (!empty($steps)) {
-            $items = $steps->transform(function ($item, $key) use ($name) {
-                if ($item['step'] == $name) {
-                    $item['status'] = true;
-
-                    return $item;
-                } else {
-                    return $item;
-                }
-            });
-            $orderItem = $this->update($this->rowId, $this->userId, $items);
+            $orderItem = $this->transformStepToPass($name, $steps);
 
             return $orderItem;
         } else {
@@ -159,6 +160,40 @@ class OrderStepItem implements Arrayable
         }
     }
 
+    /**
+     * transform step
+     * to be passed
+     *
+     * @param string $name
+     * @param $steps
+     * @return array
+     */
+    private function transformStepToPass(string $name, $steps): array
+    {
+        if(is_array($steps)) {
+            $steps = $steps['steps'];
+        }
+        $items = $steps->transform(function ($item, $key) use ($name) {
+            if ($item['step'] == $name) {
+                $item['status'] = true;
+
+                return $item;
+            } else {
+                return $item;
+            }
+        });
+        $orderItem = $this->update($this->rowId, $this->userId, $items);
+
+        return $orderItem;
+    }
+
+    /**
+     * create new steps
+     * session
+     *
+     * @param $steps
+     * @return array
+     */
     public function create($steps)
     {
         \Session::remove('steps');
@@ -174,6 +209,15 @@ class OrderStepItem implements Arrayable
         return $item;
     }
 
+
+    /**
+     * update steps session
+     *
+     * @param $rowId
+     * @param $userId
+     * @param $steps
+     * @return array
+     */
     public function update($rowId, $userId, $steps)
     {
         $item = [
@@ -188,6 +232,9 @@ class OrderStepItem implements Arrayable
     }
 
     /**
+     * generate a row id for
+     * steps session
+     *
      * @param $id
      *
      * @return string
