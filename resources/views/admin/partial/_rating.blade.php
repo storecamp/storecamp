@@ -16,21 +16,25 @@
     $(function() {
         var currentRating = $('#rating').data('current-rating');
         $(".current-rating .value").html("<span class='label label-default'>" + currentRating + "</span>");
-        $('#rating').barrating({
+        var bar = {
             theme: 'fontawesome-stars-o',
             showSelectedRating: true,
             initialRating: currentRating,
             readonly: {{ isset($readOnly) ? $readOnly : "false" }}
-        });
+        };
+        $('#rating').barrating(bar);
+        console.log(bar);
         // on star click
         $('.br-widget a').on('click', function(event, target) {
             // check the value of clicked star
             let $selected = $(this).data('rating-value');
 
-            // make sure we selected new start we clicked (or half star)
-            $('.rating').barrating('set', $selected);
-            $('.rating-input').attr('value', $selected);
-            $(".current-rating .value").html("<span class='label label-default'>" + $selected + "</span>");
+
+            if(!bar.readonly) {
+                $(".current-rating .value").html("<span class='label label-default'>" + $selected + "</span>");// make sure we selected new start we clicked (or half star)
+                $('.rating').barrating('set', $selected);
+                $('.rating-input').attr('value', $selected);
+            }
 
         });
     });
