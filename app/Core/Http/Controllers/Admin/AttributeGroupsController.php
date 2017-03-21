@@ -98,11 +98,14 @@ class AttributeGroupsController extends BaseController
     public function store(Request $request)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $group = $this->attributeGroupSystem->createGroup($data);
+            \DB::commit();
 
             return redirect('admin/attribute_groups');
         } catch (\Throwable $exception) {
+            \DB::rollBack();
             return $this->redirectNotFound($exception);
         }
     }
@@ -152,13 +155,17 @@ class AttributeGroupsController extends BaseController
     public function update(Request $request, $id)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->except('_method', '_token');
             $groupAttribute = $this->attributeGroupSystem->updateGroup($data, $id);
+            \DB::commit();
 
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
             return $this->redirectNotFound();
         } catch (\Throwable $exception) {
+            \DB::rollBack();
             return $this->redirectNotFound($exception);
         }
     }
@@ -171,13 +178,17 @@ class AttributeGroupsController extends BaseController
     public function destroy($id)
     {
         try {
+            \DB::beginTransaction();
             $deleted = $this->groupRepository->delete($id);
             if (!$deleted) {
                 $this->flash('warning', 'Item not deleted. Some error appeared!');
+                \DB::rollBack();
             }
+            \DB::commit();
 
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
             return $this->redirectNotFound($e);
         }
     }
