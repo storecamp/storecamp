@@ -9,6 +9,7 @@ use App\Core\Transformers\ProductDataTransformer;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -97,13 +98,16 @@ class ProductsController extends BaseController
     public function store(Create $request)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $product = $this->productSystem->create($data);
-
+            \DB::commit();
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
+            \DB::rollBack();
             return $this->redirectError($e);
         }
     }
@@ -163,13 +167,16 @@ class ProductsController extends BaseController
     public function update(Update $request, $id)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $this->productSystem->update($data, $id);
-
+            \Db::commit();
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \Db::rollBack();
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
+            \Db::rollBack();
             return $this->redirectError($e);
         }
     }
@@ -179,18 +186,21 @@ class ProductsController extends BaseController
      *
      * @param int $id
      *
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function destroy($id)
     {
         try {
+            \DB::beginTransaction();
             $deleted = $this->productSystem->delete($id);
             if (!$deleted) {
                 $this->flash('warning', 'Sorry product is not deleted');
+                \Db::rollBack();
             }
-
+            \Db::commit();
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \Db::rollBack();
             return $this->redirectNotFound($e);
         }
     }
