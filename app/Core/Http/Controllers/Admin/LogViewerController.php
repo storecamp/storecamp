@@ -3,7 +3,8 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\LogViewerSystemContract;
-use Arcanedev\LogViewer\Http\Controllers\Controller as LogBaseController;
+use Arcanedev\LogViewer\Contracts\LogViewer;
+use Arcanedev\LogViewer\Http\Controllers\LogViewerController as LogBaseController;
 use Illuminate\Http\Request;
 
 class LogViewerController extends LogBaseController
@@ -24,11 +25,16 @@ class LogViewerController extends LogBaseController
      */
     public function __construct(LogViewerSystemContract $viewerSystem)
     {
-        parent::__construct();
+        parent::__construct(app('Arcanedev\LogViewer\Contracts\LogViewer'));
         $this->viewerSystem = $viewerSystem;
         $this->perPage = config('log-viewer.per-page', $this->perPage);
         $this->middleware('role:Admin');
     }
+
+    /* ------------------------------------------------------------------------------------------------
+    |  Constructor
+    | ------------------------------------------------------------------------------------------------
+    */
 
     public function view($view, $data = [], $mergeData = [])
     {

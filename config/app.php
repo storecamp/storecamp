@@ -168,7 +168,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Laravel\Tinker\TinkerServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -317,7 +317,6 @@ return [
         'Menu'                  => \storecamp\htmlelements\Facades\Menu::class,
         'Breadcrumbs'           => DaveJamesMiller\Breadcrumbs\Facade::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
-        'Plupload'              => JildertMiedema\LaravelPlupload\Facades\Plupload::class,
     ],
 
 ];

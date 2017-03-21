@@ -92,7 +92,15 @@
         </div>
     </div>
     <div class="panel" id="settings" style="overflow: hidden">
-        @foreach($settings as $key => $setting)
+        @if(count($errors->all()))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                {!! $errors->first('key', '<p>:message</p>') !!}
+                {!! $errors->first('setting', '<p>:message</p>') !!}
+            </div>
+        @endif
+    @foreach($settings as $key => $setting)
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <b>{{ $setting->key }}</b> <code>setting('{{ $setting->key }}')</code>
@@ -117,9 +125,20 @@
                       enctype="multipart/form-data">
                     {{ method_field("PUT") }}
                     {{ csrf_field() }}
-                    <textarea type="text" class="form-control" name="setting"
-                              id="{{$setting->key . '-' . $key}}" rows="2"
-                              cols="60">{{trim($setting->value)}}</textarea>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input id="key" type="text" class="form-control" name="key" value="{{$setting->key}}">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" name="setting"
+                                      id="{{$setting->key . '-' . $key}}" rows="2"
+                                      cols="60">{{trim($setting->value)}}</textarea>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn pull-right">
                         update setting <b>{{ $setting->key }}</b>
                     </button>

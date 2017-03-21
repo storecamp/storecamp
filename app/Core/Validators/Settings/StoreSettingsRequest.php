@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Core\Validators\Role;
+namespace App\Core\Validators\Settings;
 
-use Illuminate\Foundation\Http\FormRequest as Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class RolesFormRequest extends Request
+class StoreSettingsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class RolesFormRequest extends Request
     public function rules()
     {
         return [
-            'name'         => 'required',
-            'permissions' => 'required',
-            'display_name' => 'unique:roles,display_name',
+            'key' => 'required|string|unique:settings,key|min:1,max:255',
+            'value' => 'string|min:1,max:1024',
         ];
     }
 }

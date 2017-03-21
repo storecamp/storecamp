@@ -4,6 +4,8 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Settings;
 use App\Core\Repositories\SettingsRepository;
+use App\Core\Validators\Settings\StoreSettingsRequest;
+use App\Core\Validators\Settings\UpdateSettingsRequest;
 use Illuminate\Http\Request;
 
 /**
@@ -52,11 +54,10 @@ class SettingsController extends BaseController
     }
 
     /**
-     * @param Request $request
-     *
+     * @param StoreSettingsRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreSettingsRequest $request)
     {
         $lastSetting = $this->settings->order('order', 'DESC')->first();
 
@@ -75,16 +76,17 @@ class SettingsController extends BaseController
     }
 
     /**
-     * @param Request $request
-     *
-     * @throws \Exception
-     *
+     * @param UpdateSettingsRequest $request
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSettingsRequest $request, $id)
     {
         $setting = $this->settings->find($id);
         $setting->value = $request->setting;
+        if ($request->key) {
+            $setting->key = $request->key;
+        }
         $setting->save();
         $this->flash('success', "Successfully Saved Setting - {$setting->key}");
 

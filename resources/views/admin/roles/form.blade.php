@@ -18,7 +18,7 @@
             <div class="form-group">
                 {{ Form::label('name', 'Name of role:') }}
                 {{ Form::text('name', null, ['class' => 'form-control']) }}
-                {{ $errors->first('name', '<div class="text-danger">:message</div>') }}
+                {!! $errors->first('name', '<div class="text-danger">:message</div>')  !!}
             </div>
 
             <div class="form-group">
@@ -36,7 +36,7 @@
             <div class="form-group">
                 {{ Form::label('permissions', 'Permissions:') }}
                 {!! buildSelect(route('admin::roles::permissions::json'), 'permissions[]', true, $permissions, $selectedPerms, "selector", "please choose your role") !!}
-                {!! $errors->first('permissions[]', '<div class="text-danger">:message</div>') !!}
+                {!! $errors->first('permissions', '<div class="text-danger">:message</div>') !!}
             </div>
 
             @if(isset($role))

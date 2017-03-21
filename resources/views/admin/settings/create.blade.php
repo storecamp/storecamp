@@ -18,12 +18,14 @@
                     <div class="form-group">
                         <label for="key">Key</label>
                         <input id="key" type="text" class="form-control" name="key">
+                        {!! $errors->first('key', '<div class="text-danger">:message</div>') !!}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="value">Value</label>
                         <input id="value" type="text" class="form-control" name="value">
+                        {!! $errors->first('value', '<div class="text-danger">:message</div>') !!}
                     </div>
                 </div>
                 <div style="clear:both"></div>

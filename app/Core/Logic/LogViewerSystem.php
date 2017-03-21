@@ -43,7 +43,7 @@ class LogViewerSystem implements LogViewerSystemContract
      */
     public function __construct(Arr $arr)
     {
-        $this->logViewer = app('arcanedev.log-viewer');
+        $this->logViewer = app('Arcanedev\LogViewer\Contracts\LogViewer');
         $this->arr = $arr;
     }
 
