@@ -8,4 +8,5 @@
     <strong class="text-muted"><i class="fa fa-paperclip"></i>
         {{ $file->filename }}
     </strong>
+    <i class='fa fa-remove btn btn-xs btn-default remove-selected text-danger btn-xs pull-right' onClick={$.StoreCamp.fileLinker.removeFile($(this).parent().attr('data-id'))}></i>
 </div>

@@ -215,11 +215,23 @@ $white: white;
       background: #f4f4f4;
     }
   }
+
 }
+
+.selected-block {
+  .selected-item {
+    padding-left: 0;
+    .remove-selected {
+      color: $danger-color;
+    }
+  }
+}
+
 %extend_media_2 {
   display: inline-block;
   position: relative;
 }
+
 .items-list {
   &:hover {
 
