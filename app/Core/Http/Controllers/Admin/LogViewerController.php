@@ -3,7 +3,6 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\LogViewerSystemContract;
-use Arcanedev\LogViewer\Contracts\LogViewer;
 use Arcanedev\LogViewer\Http\Controllers\LogViewerController as LogBaseController;
 use Illuminate\Http\Request;
 
