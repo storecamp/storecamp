@@ -103,6 +103,7 @@ class AttributesController extends BaseController
             return redirect('admin/attributes');
         } catch (\Throwable $exception) {
             \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -167,9 +168,11 @@ class AttributesController extends BaseController
             return redirect('admin/attributes');
         } catch (ModelNotFoundException $e) {
             \DB::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $exception) {
             \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -193,9 +196,11 @@ class AttributesController extends BaseController
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             \DB::rollBack();
+
             return $this->redirectNotFound();
         } catch (\Throwable $exception) {
             \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }

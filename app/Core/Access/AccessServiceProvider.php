@@ -34,7 +34,6 @@ class AccessServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/config.php' => config_path('access.php'),
         ]);
-
     }
 
     /**

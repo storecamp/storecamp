@@ -25,7 +25,7 @@ class RolesFormRequest extends Request
     {
         return [
             'name'         => 'required',
-            'permissions' => 'required',
+            'permissions'  => 'required',
             'display_name' => 'unique:roles,display_name',
         ];
     }

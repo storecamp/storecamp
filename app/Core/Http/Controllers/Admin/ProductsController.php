@@ -102,12 +102,15 @@ class ProductsController extends BaseController
             $data = $request->all();
             $product = $this->productSystem->create($data);
             \DB::commit();
+
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             \DB::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
             \DB::rollBack();
+
             return $this->redirectError($e);
         }
     }
@@ -171,12 +174,15 @@ class ProductsController extends BaseController
             $data = $request->all();
             $this->productSystem->update($data, $id);
             \Db::commit();
+
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             \Db::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
             \Db::rollBack();
+
             return $this->redirectError($e);
         }
     }
@@ -198,9 +204,11 @@ class ProductsController extends BaseController
                 \Db::rollBack();
             }
             \Db::commit();
+
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             \Db::rollBack();
+
             return $this->redirectNotFound($e);
         }
     }

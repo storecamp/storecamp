@@ -28,7 +28,7 @@ class UpdateSettingsRequest extends FormRequest
         $key = Settings::find($id)->key;
 
         return [
-            'key' => 'required|string|unique:settings,key,'.$key.'|min:1,max:255',
+            'key'     => 'required|string|unique:settings,key,'.$key.'|min:1,max:255',
             'setting' => 'required|string|min:1,max:1024',
         ];
     }

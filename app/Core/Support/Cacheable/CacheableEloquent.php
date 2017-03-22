@@ -58,6 +58,7 @@ trait CacheableEloquent
      * Register an updated model event with the dispatcher.
      *
      * @param $callback
+     *
      * @return mixed
      */
     abstract public static function updated($callback);
@@ -66,6 +67,7 @@ trait CacheableEloquent
      * Register a created model event with the dispatcher.
      *
      * @param $callback
+     *
      * @return mixed
      */
     abstract public static function created($callback);
@@ -74,6 +76,7 @@ trait CacheableEloquent
      * Register a deleted model event with the dispatcher.
      *
      * @param $callback
+     *
      * @return mixed
      */
     abstract public static function deleted($callback);
