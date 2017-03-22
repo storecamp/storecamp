@@ -58,7 +58,8 @@
                     <input type="file" name="attachment">
                 </div>
                 <div class="clearfix"></div>
-                <p class="help-block">Max. 32MB</p>
+                <p class="help-block" style="text-align: left; float: left;">Max. 32MB</p>
+                <div class="clearfix"></div>
             </div>
         </div>
         <!-- /.box-body -->
@@ -89,6 +90,11 @@
                 $('#message').code(null);
                 $('#message').summernote('code', null);
             }
+        });
+        emitter.on("file-removed", function (id) {
+            console.log("file removed " + id);
+            $('#message').code(null);
+            $('#message').summernote('code', null);
         });
     </script>
     @endpush
