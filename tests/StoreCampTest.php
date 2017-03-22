@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 /**
  * Class StoreCampTest.
  */
-class StoreCampTest extends TestCase
+class StoreCampTest extends \tests\BrowserKitTestCase
 {
     use DatabaseMigrations;
 

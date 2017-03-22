@@ -49,7 +49,8 @@
     "storecamp/htmlelements": "dev-laravel-5.4",
     "mcamara/laravel-localization": "^1.2",
     "artesaos/seotools": "^0.10.0",
-    "yajra/laravel-datatables-oracle": "^7.3"
+    "yajra/laravel-datatables-oracle": "^7.3",
+    "laravel/browser-kit-testing": "^1.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",
@@ -64,50 +65,12 @@
   },
   "autoload": {
     "classmap": [
-      "database",
-      "app/Core/Models",
-      "app/Core/Presenters",
-      "app/Core/Repositories",
-      "app/Core/Traits",
-      "app/Core/Observers",
-      "app/Core/Contracts",
-      "app/Core/Logic",
-      "app/Core/Support",
-      "app/Core/Generators",
-      "app/Core/Components",
-      "app/Core/Http/Composers",
-      "app/Core/MailComposers",
-      "app/Core/Components/EmailMarketer",
-      "app/Core/Drivers/FolderToDb"
+      "database"
     ],
     "psr-4": {
       "App\\": "app/",
-      "Core\\": "app/Core/",
-      "RepositoryLab\\Repository\\": "app/Core/RepositoryLab/",
-      "App\\Core\\Repositories\\": "app/Core/repositories/",
-      "App\\Core\\Models\\": "app/Core/Models/",
-      "App\\Core\\Presenters\\": "app/Core/Presenters/",
-      "App\\Core\\Transformers\\": "app/Core/Transformers/",
-      "App\\Core\\Observers\\": "app/Core/Observers/",
-      "App\\Core\\Access\\": "app/Core/Access/",
-      "App\\Core\\Access\\Commands\\": "app/Core/Access/commands/",
-      "App\\Core\\Components\\": "app/Core/Components/",
-      "App\\Core\\Base\\": "app/Core/Base/",
-      "App\\Core\\Logic\\": "app/Core/Logic/",
-      "App\\Core\\Drivers\\": "app/Core/Drivers/",
-      "App\\Core\\Contracts\\": "app/Core/Contracts/",
-      "App\\Core\\Policies\\": "app/Core/Policies/",
-      "App\\Core\\Traits\\": "app/Core/Traits/",
-      "App\\Core\\Http\\Composers\\": "App/Core/Http/Composers/",
-      "App\\Core\\Support\\": "app/Core/Support/",
-      "App\\Core\\Generators\\": "app/Core/Generators/",
-      "App\\Core\\APIs\\": "app/Core/APIs/",
-      "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
-      "App\\Core\\Drivers\\FolderToDb\\": "app/Core/Drivers/FolderToDb/",
-      "App\\Core\\Components\\Sidebar\\": "app/Core/Components/Sidebar/",
-      "App\\Core\\Components\\Timezone\\": "app/Core/Components/Timezone/",
-      "App\\Core\\Components\\Country\\": "app/Core/Components/Country/",
-      "App\\Core\\Components\\Select\\SelectBuilder\\": "app/Core/Components/Select/"
+      "App\\Core\\": "app/Core/",
+      "RepositoryLab\\Repository\\": "app/Core/RepositoryLab/"
     },
     "files": [
       "app/Helpers/helpers.php"
@@ -115,7 +78,8 @@
   },
   "autoload-dev": {
     "classmap": [
-      "tests/TestCase.php"
+      "tests/TestCase.php",
+      "tests/BrowserKitTestCase.php"
     ]
   },
   "extra": {

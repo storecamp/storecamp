@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-03-21.
+    * Generated on 2017-03-22.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -84,6 +84,7 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
             'App\Core\Contracts\UsersSystemContract' instanceof \App\Core\Logic\UsersSystem,
+            'App\Core\Contracts\LogViewerSystemContract' instanceof \App\Core\Logic\LogViewerSystem,
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
@@ -164,7 +165,6 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
-            'App\Drivers\FolderToDb\SynchronizerInterface' instanceof \App\Drivers\FolderToDb\Synchronizer,
             'Cviebrock\ImageValidator\ImageValidator' instanceof \Cviebrock\ImageValidator\ImageValidator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'cache' instanceof \Illuminate\Cache\CacheManager,
@@ -333,6 +333,7 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
             'App\Core\Contracts\UsersSystemContract' instanceof \App\Core\Logic\UsersSystem,
+            'App\Core\Contracts\LogViewerSystemContract' instanceof \App\Core\Logic\LogViewerSystem,
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
@@ -413,7 +414,6 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
-            'App\Drivers\FolderToDb\SynchronizerInterface' instanceof \App\Drivers\FolderToDb\Synchronizer,
             'Cviebrock\ImageValidator\ImageValidator' instanceof \Cviebrock\ImageValidator\ImageValidator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'cache' instanceof \Illuminate\Cache\CacheManager,
@@ -582,6 +582,7 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
             'App\Core\Contracts\UsersSystemContract' instanceof \App\Core\Logic\UsersSystem,
+            'App\Core\Contracts\LogViewerSystemContract' instanceof \App\Core\Logic\LogViewerSystem,
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
@@ -662,7 +663,6 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
-            'App\Drivers\FolderToDb\SynchronizerInterface' instanceof \App\Drivers\FolderToDb\Synchronizer,
             'Cviebrock\ImageValidator\ImageValidator' instanceof \Cviebrock\ImageValidator\ImageValidator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'cache' instanceof \Illuminate\Cache\CacheManager,
@@ -831,6 +831,7 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
             'App\Core\Contracts\UsersSystemContract' instanceof \App\Core\Logic\UsersSystem,
+            'App\Core\Contracts\LogViewerSystemContract' instanceof \App\Core\Logic\LogViewerSystem,
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
@@ -911,7 +912,6 @@ namespace PHPSTORM_META {
             'Tymon\JWTAuth\Validators\PayloadValidator' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
-            'App\Drivers\FolderToDb\SynchronizerInterface' instanceof \App\Drivers\FolderToDb\Synchronizer,
             'Cviebrock\ImageValidator\ImageValidator' instanceof \Cviebrock\ImageValidator\ImageValidator,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'cache' instanceof \Illuminate\Cache\CacheManager,
