@@ -1,0 +1,95 @@
+@extends('admin.mail.frame.layout')
+@section('main-content')
+    <style>
+        .selected-item {
+            padding-left: 0;
+            text-align: left;
+            font-size: 20px;
+        }
+
+        .files.selected-block div .item-icon {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: auto;
+            height: auto;
+            text-align: left;
+        }
+
+        .files.selected-block div {
+            text-align: left;
+        }
+
+        .fa-paperclip {
+            font-size: 8px;
+        }
+    </style>
+    <!-- /.col -->
+    <div style="width: 100%;    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;text-align: left">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">To(select campaign)</label>
+                {!! buildSelect(route('admin::campaign::get::json'), 'to', false, [], [], null, "select campaign listed clients") !!}
+            </div>
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">Subject</label>
+                <input class="form-control" placeholder="Subject:">
+            </div>
+            <span class="mail-output"></span>
+            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $outputElementPath = ".mail-output", $disk = "mails"])
+            <span class="files selected-block" style="
+    float: right;
+    clear: both;
+"></span>
+            <div class="form-group">
+                @include('admin.components.description-form', [$property_name='message'])
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group">
+                <div class="btn btn-default btn-file" style="float: left">
+                    <i class="fa fa-paperclip"></i> Attachment
+                    <input type="file" name="attachment">
+                </div>
+                <div class="clearfix"></div>
+                <p class="help-block">Max. 32MB</p>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+            </div>
+            <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
+        </div>
+        <!-- /.box-footer -->
+    </div>
+    <!-- /.row -->
+    @push('scripts-add_on')
+    <script>
+        emitter = $.StoreCamp.fileLinker.emitter;
+        emitter.on('selectedChanged', function () {
+            var items = $(".selected-item");
+            if (items.attr('data-href')) {
+                $.ajax({
+                    url: items.attr('data-href')
+                }).done(function (data) {
+                    $('#message').code(data);
+                    $('#message').summernote('code', data);
+                    $(this).addClass("done");
+                });
+            } else {
+                $('#message').code(null);
+                $('#message').summernote('code', null);
+            }
+        });
+    </script>
+    @endpush
+@endsection

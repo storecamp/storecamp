@@ -14,9 +14,8 @@ use RepositoryLab\Repository\Traits\CacheableRepository;
 /**
  * Class SubscribersRepositoryEloquent.
  */
-class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository, CacheableInterface
+class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository
 {
-    use CacheableRepository;
     /**
      * @var RolesRepository
      */

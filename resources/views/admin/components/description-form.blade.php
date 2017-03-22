@@ -1,5 +1,5 @@
 @if(isset($property_name))
-<div class="form-group">
+<div class="form-group" style="text-align: left">
     {{ Form::label($property_name, ucwords($property_name).':') }}
     {{ Form::textarea($property_name, old(ucwords($property_name)), ['class' => 'form-control description', "id" => $property_name]) }}
     {{ $errors->first($property_name, '<div class="text-danger">:message</div>') }}

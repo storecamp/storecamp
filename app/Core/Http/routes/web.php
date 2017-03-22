@@ -612,6 +612,11 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'create',
                 ]);
 
+            $this->get('/frame',
+                ['uses'  => 'Admin\MailController@showFrame',
+                    'as' => 'showFrame',
+                ]);
+
             $this->get('/templates',
                 ['uses'  => 'Admin\MailController@getTmpMails',
                     'as' => 'getTmpMails',

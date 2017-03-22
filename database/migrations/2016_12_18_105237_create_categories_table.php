@@ -24,7 +24,6 @@ class CreateCategoriesTable extends Migration
             $table->text('meta_tag_description')->nullable();
             $table->text('meta_tag_keywords')->nullable();
             $table->boolean('status')->default(true);
-            $table->boolean('top')->default(false);
             $table->tinyInteger('sort_order')->default(0);
             \App\Core\Support\Nestedset\NestedSet::columns($table);
             $table->timestamps();

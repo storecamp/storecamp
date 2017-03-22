@@ -129,7 +129,7 @@ class Orders extends Model implements Transformable, OrderInterface
      */
     public function transactions(): HasMany
     {
-        return $this->hasMany(config('sales.transaction'), 'order_id');
+        return $this->hasMany(Transaction::class, 'order_id');
     }
 
     /**

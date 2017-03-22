@@ -65,6 +65,13 @@ class MailController extends BaseController
         return view('show', compact('mail'));
     }
 
+    public function showFrame(Request $request)
+    {
+        $mail = new Mail();
+
+        return $this->view('frame', compact('mail'));
+    }
+
     /**
      * @param Request $request
      *
@@ -113,5 +120,15 @@ class MailController extends BaseController
         $mail = $this->repository->getHistoryTmpMail($folder, $filename);
 
         return $this->view('show-campaign-history', compact('mail'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $uid
+     * @param $type
+     */
+    public function generate(Request $request, $uid, $type)
+    {
+        $this->repository->generateCampaign($request, $uid, $type);
     }
 }
