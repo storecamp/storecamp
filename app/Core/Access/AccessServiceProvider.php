@@ -35,9 +35,6 @@ class AccessServiceProvider extends ServiceProvider
             __DIR__.'/config/config.php' => config_path('access.php'),
         ]);
 
-        // Register commands
-        $this->commands('command.access.migration');
-        $this->commands('command.access.classes');
     }
 
     /**
