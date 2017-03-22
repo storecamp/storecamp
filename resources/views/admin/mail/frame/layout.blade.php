@@ -64,6 +64,44 @@ desired effect
 -->
 @yield('styles-add')
 <body style="width: 100%">
+<style>
+    .selected-item {
+        text-align: left;
+        font-size: 20px;
+        background: whitesmoke;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        border: #ddd4b0 1px solid;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+    }
+
+    .files.selected-block div .item-icon {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        width: auto;
+        height: auto;
+        text-align: left;
+        padding-left: 5px;
+    }
+
+    .files.selected-block div {
+        text-align: left;
+    }
+
+    .fa-paperclip {
+        display: none;
+    }
+    .remove-selected {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+</style>
 @yield('main-content')
 @include('partials.scripts')
 @yield("scripts-add")

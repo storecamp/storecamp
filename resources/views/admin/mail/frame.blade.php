@@ -1,32 +1,5 @@
 @extends('admin.mail.frame.layout')
 @section('main-content')
-    <style>
-        .selected-item {
-            padding-left: 0;
-            text-align: left;
-            font-size: 20px;
-        }
-
-        .files.selected-block div .item-icon {
-            display: inline-block;
-            font: normal normal normal 14px/1 FontAwesome;
-            font-size: inherit;
-            text-rendering: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            width: auto;
-            height: auto;
-            text-align: left;
-        }
-
-        .files.selected-block div {
-            text-align: left;
-        }
-
-        .fa-paperclip {
-            font-size: 8px;
-        }
-    </style>
     <!-- /.col -->
     <div style="width: 100%;    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
@@ -44,10 +17,7 @@
             </div>
             <span class="mail-output"></span>
             @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $outputElementPath = ".mail-output", $disk = "mails"])
-            <span class="files selected-block" style="
-    float: right;
-    clear: both;
-"></span>
+            <span class="files selected-block" style="float: right;clear: both;"></span>
             <div class="form-group">
                 @include('admin.components.description-form', [$property_name='message'])
             </div>
