@@ -6,10 +6,8 @@ use App\Core\Models\Subscribers;
 use App\Core\Models\User;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Traits\CacheableRepository;
 
 /**
  * Class SubscribersRepositoryEloquent.

@@ -106,6 +106,7 @@ class AttributeGroupsController extends BaseController
             return redirect('admin/attribute_groups');
         } catch (\Throwable $exception) {
             \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -163,9 +164,11 @@ class AttributeGroupsController extends BaseController
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
             \DB::rollBack();
+
             return $this->redirectNotFound();
         } catch (\Throwable $exception) {
             \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -189,6 +192,7 @@ class AttributeGroupsController extends BaseController
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
             \DB::rollBack();
+
             return $this->redirectNotFound($e);
         }
     }

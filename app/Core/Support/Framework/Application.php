@@ -2,13 +2,13 @@
 
 namespace App\Core\Support\Framework;
 
-
 class Application extends \Illuminate\Foundation\Application
 {
     /**
      * Wrap a Closure such that it is shared.
      *
-     * @param  \Closure $closure
+     * @param \Closure $closure
+     *
      * @return \Closure
      */
     public function share(\Closure $closure)
@@ -21,6 +21,7 @@ class Application extends \Illuminate\Foundation\Application
             if (is_null($object)) {
                 $object = $closure($container);
             }
+
             return $object;
         };
     }

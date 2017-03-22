@@ -85,7 +85,7 @@ class OrderStepItem implements Arrayable
 
     /**
      * get steps and check if user is logged in to remove
-     * first step show
+     * first step show.
      *
      * @return Collection|null
      */
@@ -121,12 +121,13 @@ class OrderStepItem implements Arrayable
             } else {
                 $stepsCollection = $steps['steps'];
             }
+
             return $stepsCollection;
         }
     }
 
     /**
-     * get step which is not activated
+     * get step which is not activated.
      *
      * @return mixed
      */
@@ -162,15 +163,16 @@ class OrderStepItem implements Arrayable
 
     /**
      * transform step
-     * to be passed
+     * to be passed.
      *
      * @param string $name
      * @param $steps
+     *
      * @return array
      */
     private function transformStepToPass(string $name, $steps): array
     {
-        if(is_array($steps)) {
+        if (is_array($steps)) {
             $steps = $steps['steps'];
         }
         $items = $steps->transform(function ($item, $key) use ($name) {
@@ -189,9 +191,10 @@ class OrderStepItem implements Arrayable
 
     /**
      * create new steps
-     * session
+     * session.
      *
      * @param $steps
+     *
      * @return array
      */
     public function create($steps)
@@ -209,13 +212,13 @@ class OrderStepItem implements Arrayable
         return $item;
     }
 
-
     /**
-     * update steps session
+     * update steps session.
      *
      * @param $rowId
      * @param $userId
      * @param $steps
+     *
      * @return array
      */
     public function update($rowId, $userId, $steps)
@@ -233,7 +236,7 @@ class OrderStepItem implements Arrayable
 
     /**
      * generate a row id for
-     * steps session
+     * steps session.
      *
      * @param $id
      *

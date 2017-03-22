@@ -55,6 +55,7 @@ class SettingsController extends BaseController
 
     /**
      * @param StoreSettingsRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreSettingsRequest $request)
@@ -78,6 +79,7 @@ class SettingsController extends BaseController
     /**
      * @param UpdateSettingsRequest $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateSettingsRequest $request, $id)
