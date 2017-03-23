@@ -1,3 +1,5 @@
+<?php $prefix = isset($prefix) ? $prefix : null;
+?>
 <span class="linker-output" style="
     float: left;
     clear: both;

@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Contracts\MailCampaignSystemContract;
 use App\Core\Models\Folder;
 use App\Core\Models\Mail;
 use App\Core\Repositories\MailRepository;
@@ -28,12 +29,18 @@ class MailController extends BaseController
     private $repository;
 
     /**
-     * MailController constructor.
-     *
-     * @param MailRepository $repository
+     * @var MailCampaignSystemContract
      */
-    public function __construct(MailRepository $repository)
+    private $mailCampaign;
+
+    /**
+     * MailController constructor.
+     * @param MailRepository $repository
+     * @param MailCampaignSystemContract $mailCampaign
+     */
+    public function __construct(MailRepository $repository, MailCampaignSystemContract $mailCampaign)
     {
+        $this->mailCampaign = $mailCampaign;
         $this->repository = $repository;
         $this->middleware('role:Admin');
     }
@@ -65,6 +72,10 @@ class MailController extends BaseController
         return view('show', compact('mail'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showFrame(Request $request)
     {
         $mail = new Mail();
@@ -124,11 +135,10 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
-     * @param $uid
-     * @param $type
      */
-    public function generate(Request $request, $uid, $type)
+    public function makeCampaign(Request $request)
     {
-        $this->repository->generateCampaign($request, $uid, $type);
+        dd($request->all());
+        return $this->mailCampaign->generateCampaign($request);
     }
 }

@@ -139,11 +139,12 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * @param $request
-     * @param $uid
-     * @param $type
      */
-    public function generateCampaign($request, $uid, $type)
+    public function generateCampaign($request)
     {
+        $uid = $request->uid;
+        $type = $request->type;
+
         $pathArr = $this->putMail($request, $uid);
         $path = $pathArr['path'];
         $root = $pathArr['root'];

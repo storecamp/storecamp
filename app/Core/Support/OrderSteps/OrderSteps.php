@@ -17,7 +17,7 @@ class OrderSteps extends Collection
      *
      * @return mixed
      */
-    public function __get(string $key)
+    public function __get($key)
     {
         if (in_array($key, self::STEPS)) {
             $option = $this->get($key);

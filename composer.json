@@ -70,6 +70,7 @@
     "psr-4": {
       "App\\": "app/",
       "App\\Core\\": "app/Core/",
+      "App\\Components\\": "app/Core/Components",
       "RepositoryLab\\Repository\\": "app/Core/RepositoryLab/"
     },
     "files": [
