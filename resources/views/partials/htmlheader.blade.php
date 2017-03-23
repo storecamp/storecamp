@@ -51,9 +51,6 @@
     {{--<link href="{{ asset('/css/skins/skin-green.css') }}" rel="stylesheet" type="text/css" />--}}
     {{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
     <link rel="stylesheet" href="{{ asset('/css/admin_skins.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-fullcalendar.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/alt/AdminLTE-bootstrap-social.min.css') }}">
     <link rel="stylesheet" href="{{asset('/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/datatables.net-dt/css/jquery.dataTables.min.css')}}">
     <!-- iCheck -->

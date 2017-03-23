@@ -235,7 +235,7 @@
 
   (function($) {
     var items;
-    items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar')];
+    items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar'), $('.default-menu')];
     items.forEach(function(item, i, arr) {
       var makeAnchorActive, nav;
       nav = item;

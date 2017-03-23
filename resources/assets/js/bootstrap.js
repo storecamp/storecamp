@@ -1,4 +1,25 @@
 
+
+/**
+ * Vue is a modern JavaScript library for building interactive web interfaces
+ * using reactive data binding and reusable components. Vue's API is clean
+ * and simple, leaving you to focus on building your next great project.
+ */
+
+window.Vue = require('vue');
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = require('axios');
+
+window.axios.defaults.headers.common = {
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
+};
 window._ = require('lodash');
 
 /**
@@ -8,6 +29,7 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('../../../public/custom_vendors/jQuery/jQuery-2.1.4.min.js');
+require('../../../public/plugins/bootstrap/dist/js/bootstrap.min.js');
 require('imports?this=>window!../../../public/custom_vendors/site_sidebar/modernizr.js');
 require('../../../public/plugins/moment/min/moment.min.js');
 window.CodeMirror = require('codemirror');
@@ -37,6 +59,8 @@ require('../../../public/plugins/morris.js/morris.min.js');
 toastr = require('../../../public/plugins/toastr/toastr.js');
 require('../../../public/plugins/jquery-bar-rating/dist/jquery.barrating.min.js');
 $.magnificPopup = require('../../../public/plugins/magnific-popup/dist/jquery.magnific-popup.min.js');
+require('../../../public/plugins/datatables.net/js/jquery.dataTables.min.js');
+
 $.fn.extend({
     magnificPopup: function() {
         return $.magnificPopup;
@@ -54,34 +78,12 @@ $.fn.extend({
         return $.select2;
     }
 });
-require('../../../public/plugins/datatables.net/js/jquery.dataTables.min.js');
 require('../../../public/custom_vendors/site_sidebar/jquery.menu-aim.js');
 require('../../../public/js/admin.js');
 require('../../../public/js/main.js');
 require('../../../public/js/modules.js');
 require('../../../public/custom_vendors/site_sidebar/index.js');
 require('./plugins-default');
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
-window.Vue = require('vue');
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = require('axios');
-
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest'
-};
-
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

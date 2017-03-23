@@ -274,28 +274,62 @@
     paramName: 'file',
     maxFilesize: 1024,
     acceptedFiles: '.mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc,.aac,.ogg,.oga,.mp3,.wav, .zip',
+    addRemoveLinks: true,
+    removedfile: function(file) {
+      var _ref, response, result;
+      _ref = file.previewElement;
+      if (_ref !== null) {
+        _ref.parentNode.removeChild(file.previewElement);
+        toastr.info('File by name: ' + result.filename, 'Removed');
+      } else {
+        return;
+      }
+      response = JSON.parse(file.xhr.responseText);
+      result = JSON.parse(response.media).result;
+      return $.ajax({
+        type: 'GET',
+        url: APP_URL + "/admin/media/delete/" + result.id,
+        dataType: 'json'
+      });
+    },
     accept: function(file, done) {
       done();
     },
     init: function() {
+      var _this;
+      _this = this;
       this.on('success', function(file, messageOrDataFromServer, myEvent) {
-        var folderBody, folderBodyUrl;
+        var folderBody, folderBodyUrl, response, result;
         folderBody = $('#folder-body');
         folderBodyUrl = folderBody.data('folder-url');
-        return $.ajax({
+        response = JSON.parse(file.xhr.responseText);
+        result = JSON.parse(response.media).result;
+        $.ajax({
           url: folderBodyUrl,
           type: 'GET',
           success: function(data) {
-            var players;
             folderBody.html(data);
-            players = plyr.setup();
-            $.StoreCamp.media.reindex($('.media-plyr-item'), players);
+            $.StoreCamp.media.fileSystemEvents();
+            toastr.info('File uploaded by name: ' + result.filename, 'Success');
           },
           error: function(xhr, textStatus, errorThrown) {
-            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+            toastr.error('Sorry error appeared', 'Error updating file list');
             console.error(xhr);
           }
         }, false);
+      });
+      this.on('sending', function(file, xhr, formData) {
+        formData.append("filesize", file.size);
+      });
+      this.on('error', function(error, errorMessage, xhr) {
+        toastr.error("File by name: " + error.name + " not loaded", "Error");
+      });
+      return this.on('addedfile', function(file) {
+        file.previewElement.addEventListener("click", (function(_this) {
+          return function() {
+            return _this.removeFile(file);
+          };
+        })(this));
       });
     }
   };
@@ -407,7 +441,7 @@
       preferredTag: (ref5 = $('.file-linker').attr('data-preferred-tag')) != null ? ref5 : "thumbnail",
       inputTemplateClass: "selected-files_input",
       fileBlockTemplate: function(selectorId, content, fileName, href) {
-        return "<div data-id='" + selectorId + "' data-href='" + href + "' class='col-xs-4 col-md-3 col-lg-2 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+        return "<div data-id='" + selectorId + "'  data-href='" + href + "' class='col-xs-4 col-md-3 col-lg-2 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong><i class='fa fa-remove btn btn-xs btn-default remove-selected text-danger btn-xs pull-right' onClick={$.StoreCamp.fileLinker.removeFile($(this).parent().attr('data-id'))}></i></div>";
       },
       inputTemplate: function() {
         return "<input type=\"text\" name=\"selected_files\" class='hidden " + this.inputTemplateClass + "'/>";
@@ -416,7 +450,16 @@
     activate: function() {
       var _this;
       _this = this;
-      return _this.fileSystemEvents();
+      _this.fileSystemEvents();
+      return _this.emitter.on("file-removed", function(id) {
+        var fileItem, fileItemCheckBox;
+        console.log("file removed " + id);
+        fileItem = $("[data-file-id='" + id + "']");
+        fileItemCheckBox = fileItem.find('input:checkbox');
+        fileItem.removeClass('checked');
+        fileItemCheckBox.iCheck('uncheck');
+        return fileItemCheckBox.iCheck('disable');
+      });
     },
     fileSystemEvents: function() {
       var _this;
@@ -502,14 +545,14 @@
           fileItemCheckBox.iCheck('disable');
           $('.file-item').find('input:checkbox').iCheck('uncheck');
           $('.file-item').removeClass('checked');
-          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove');
+          _this.manageToFileBlock('remove', btn, selectFileName, selectId, selectUrl);
         } else {
           $('.file-item').find('input:checkbox').iCheck('uncheck');
           $('.file-item').removeClass('checked');
           btn.addClass('checked');
           fileItemCheckBox.iCheck('enable');
           fileItemCheckBox.iCheck('check');
-          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+          _this.manageToFileBlock('add', btn, selectFileName, selectId, selectUrl);
           fileItemCheckBox.iCheck('disable');
         }
       } else {
@@ -517,25 +560,26 @@
           btn.removeClass('checked');
           fileItemCheckBox.iCheck('uncheck');
           fileItemCheckBox.iCheck('disable');
-          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove');
+          _this.manageToFileBlock('remove', btn, selectFileName, selectId, selectUrl);
         } else {
           btn.addClass('checked');
           fileItemCheckBox.iCheck('enable');
           fileItemCheckBox.iCheck('check');
-          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+          _this.manageToFileBlock('add', btn, selectFileName, selectId, selectUrl);
           fileItemCheckBox.iCheck('disable');
         }
       }
       _this.emitter.emit("selectedChanged");
     },
-    manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
-      var _this;
+    manageToFileBlock: function(methodType, btn, selectFileName, selectId, selectUrl) {
+      var ID, _this;
       _this = this;
+      ID = btn.attr('data-file-id');
       switch (methodType) {
         case "add":
           return _this.fileBlockAddTemplate(btn);
         case "remove":
-          return _this.fileBlockRemoveTemplate(btn);
+          return _this.fileBlockRemoveTemplate(ID);
       }
     },
     fileBlockAddTemplate: function(btn) {
@@ -558,10 +602,16 @@
       selectedItems = $("" + this.options.selectedItemsClassPath);
       return this._setFileBlockSelectedState(selectedItems);
     },
-    fileBlockRemoveTemplate: function(btn) {
+    fileBlockRemoveTemplate: function(id) {
       var blockItem;
-      blockItem = $(".selected-block [data-id='" + (btn.attr('data-file-id')) + "']");
+      blockItem = $(".selected-block [data-id='" + id + "']");
       return blockItem.remove();
+    },
+    removeFile: function(id) {
+      var blockItem;
+      blockItem = $(".selected-block [data-id='" + id + "']");
+      blockItem.remove();
+      return this.emitter.emit("file-removed", id);
     },
     _setFileBlockSelectedState: function(btn) {
       return btn.each(function(index) {
@@ -875,14 +925,17 @@
               }
               if (data.type === 'liked') {
                 _this._liked(formLike, button, buttonI, data);
+                toastr.success('liked', data.message);
               }
               if (data.type === 'disliked') {
                 _this._disliked(formLike, button, buttonI, data);
+                toastr.success('disliked', data.message);
               }
             },
-            error: function(data) {
+            error: function(xhr, textStatus, errorThrown) {
               formLike.replaceWith(likeClone);
-              console.log('error' + '   ' + data);
+              console.log('error' + '   ' + xhr);
+              toastr.error(xhr.statusText, xhr.responseText);
             }
           }, 'html');
         });
@@ -929,6 +982,10 @@
       mediaItems: $('.media[data-status="playable"]'),
       directoryItem: $(".directories .directory-item"),
       fileItem: $(".media"),
+      media: '.media',
+      mediaInfoBtn: '.media .info-btn',
+      mediaDeleteBtn: '.media .delete-btn',
+      deleteFileBtn: '.delete-file-btn',
       infoData: {
         itemUrl: 'data-href',
         itemType: 'data-file-type',
@@ -936,13 +993,14 @@
         itemModified: 'data-modified',
         itemName: 'data-filename',
         itemSize: 'data-size',
+        itemMime: 'data-mime',
         itemId: 'data-file-id'
       },
       infoTemplate: function(filename, type, modified, size) {
         return "<div class='text-muted'>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">name: </small>\n  <p class='pull-right'>" + filename + "</p>\n </span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">type: </small>\n  <p class='pull-right'>" + type + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">modified: </small>\n  <p class='pull-right'>" + modified + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">size: </small>\n  <p class='pull-right'>" + size + "</p>\n</span>\n</div>\n<div class='clearfix'></div>";
       },
-      videoTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
-        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n          <span class=\"mailbox-attachment-icon has-img\">\n              <video class='js-player' controls>\n                   <source src=\"" + mediaUrl + "\"\n                             type=\"video/mp4\">\n                    <source src=\"" + mediaUrl + "\"\n                              type=\"video/webm\">\n               </video>\n          </span>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n</div>";
+      videoTemplate: function(mediaUrl, mediaId, filename, type, modified, size, mime) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n          <span class=\"mailbox-attachment-icon has-img\">\n              <video class='js-player' controls>\n                   <source src=\"" + mediaUrl + "\" type=\"video/mp4\">\n                    <source src=\"" + mediaUrl + "\" type=\"video/webm\">\n                    <source src=\"" + mediaUrl + "\" type=\"" + mime + "\">\n               </video>\n          </span>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n</div>";
       },
       audioTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
         return " <div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n           <audio class='js-player' controls title=\"" + mediaUrl + "\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/mp3\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/ogg\">\n            </audio>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
@@ -969,15 +1027,15 @@
       }
     },
     fileSystemEvents: function() {
-      var _this;
+      var _this, deleteModal;
       _this = this;
-      $(".media .info-btn").on("click", function(event) {
+      $("" + _this.options.mediaInfoBtn).on("click", function(event) {
         var btn;
         event.preventDefault();
         btn = $(this);
         _this.infoFile(btn);
       });
-      $(".media .delete-btn").on("click", function(event) {
+      $("" + _this.options.mediaDeleteBtn).on("click", function(event) {
         var btn, deleteUrl, fileItem;
         event.preventDefault();
         btn = $(this);
@@ -985,13 +1043,28 @@
         fileItem = btn.closest('.file-item');
         _this.deleteFile(deleteUrl, fileItem);
       });
+      deleteModal = $("#delete_file_modal");
+      if (deleteModal.length > 0) {
+        $("" + _this.options.deleteFileBtn).click(function(e) {
+          var display;
+          e.preventDefault();
+          display = $(this).data('name');
+          $('#delete_filename').text(display);
+          $('#delete_file_form')[0].action = $('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
+          $('.delete-confirm b').text($('.delete-confirm b').text().replace('__name', $(this).data('name')));
+          $('#delete_file_modal').modal('show');
+        });
+      }
       _this.options.directoryItem.find(".delete-file").on("click", function(event) {
-        var btn, deleteUrl, fileItem;
+        var btn, deleteUrl, fileItem, withModal;
         event.preventDefault();
         btn = $(this);
         deleteUrl = btn.attr('href');
         fileItem = btn.closest('.directory-item');
-        _this.deleteFile(deleteUrl, fileItem);
+        withModal = btn.attr('data-with-modal');
+        if (!withModal) {
+          _this.deleteFile(deleteUrl, fileItem);
+        }
       });
     },
     reindex: function(mediaItems, players) {
@@ -1018,19 +1091,22 @@
       }, false);
     },
     infoFile: function(btn) {
-      var _this, fileItem, item, itemDisk, itemId, itemModified, itemName, itemSize, itemType, itemUrl, players;
+      var _this, fileItem, item, itemDisk, itemId, itemMime, itemModified, itemName, itemSize, itemType, itemUrl, players;
       _this = this;
-      fileItem = btn.closest('.media');
+      fileItem = btn.closest("" + _this.options.media);
       itemUrl = fileItem.attr("" + _this.options.infoData.itemUrl);
       itemType = fileItem.attr("" + _this.options.infoData.itemType);
       itemDisk = fileItem.attr("" + _this.options.infoData.itemDisk);
       itemModified = fileItem.attr("" + _this.options.infoData.itemModified);
       itemName = fileItem.attr("" + _this.options.infoData.itemName);
       itemSize = fileItem.attr("" + _this.options.infoData.itemSize);
+      itemMime = fileItem.attr("" + _this.options.infoData.itemMime);
       itemId = fileItem.attr("" + _this.options.infoData.itemId);
-      console.log(itemType);
+      if ($("" + itemId).length > 0) {
+        $("" + itemId).remove();
+      }
       if (itemType === "video") {
-        $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+        $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName, itemMime);
       }
       if (itemType === "audio") {
         $.StoreCamp.templates.modal(itemId, _this.options.audioTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
@@ -1076,6 +1152,47 @@
   };
 
   $.StoreCamp.media.activate();
+
+}).call(this);
+
+(function() {
+  $.StoreCamp.product = {
+    activate: function() {
+      var _this;
+      _this = this;
+      return _this.categoryChooser();
+    },
+    categoryChooser: function() {
+      var _this, chooseOpener, chooserModal, chooserModalFooter, chosen, chosenField, removeChooser;
+      _this = this;
+      chosen = $('.choose-category');
+      chosenField = $('.chosen-category');
+      chooseOpener = $('.choose-opener');
+      chooserModal = $('#category-chooser-modal');
+      chooserModalFooter = chooserModal.find('.modal-footer');
+      chosen.on('click', function(event) {
+        var btn, chooseName, chosenId, chosenPath;
+        btn = $(event.target);
+        chosenId = btn.data('choose-id');
+        chosenPath = btn.data('choose-path');
+        chooseName = btn.data('choose-name');
+        chosenField.val(chosenId);
+        chooserModalFooter.find('.chosen-status').html(chosenPath + ' - <i class=\'fa fa-thumbs-o-up\'></i>');
+        chooseOpener.text(chosenPath);
+        chosen.closest('a').removeClass('active');
+        btn.closest('a').addClass('active');
+      });
+      removeChooser = $('.remove-chooser');
+      removeChooser.on('click', function(event) {
+        chosenField.val(null);
+        chooseOpener.text(null);
+        chosen.closest('a').removeClass('active');
+        chooserModalFooter.find('.chosen-status').html(null);
+      });
+    }
+  };
+
+  $.StoreCamp.product.activate();
 
 }).call(this);
 
@@ -1213,6 +1330,37 @@
 }).call(this);
 
 (function() {
+  $.StoreCamp.sidebar = {
+    o: {
+      sidebar: 'site_sidebar',
+      toggler: 'sidebar-nav-trigger'
+    },
+    activate: function() {
+      var _this;
+      _this = this;
+      return _this.toggleSidebar();
+    },
+    toggleSidebar: function() {
+      var _this;
+      _this = this;
+      return $("." + _this.o.toggler).click(function(e) {
+        var sidebar;
+        e.preventDefault();
+        sidebar = $("." + _this.o.sidebar);
+        if (sidebar.hasClass('active')) {
+          return sidebar.removeClass('active').addClass('hidden');
+        } else {
+          return sidebar.removeClass('hidden').addClass('active');
+        }
+      });
+    }
+  };
+
+  $.StoreCamp.sidebar.activate();
+
+}).call(this);
+
+(function() {
   $.StoreCamp.templates = {
     additionalModalButtonRenderState: "",
     options: {
@@ -1223,7 +1371,7 @@
         return "<button type=\"button\" data-dismiss=\"modal\" class=\"btn " + className + "\"  style='margin: auto 10px' id=\"" + id + "\">" + text + "</button>";
       },
       modalTemplate: function(modalId, Message, Header, AriaLabel, Ok, Cancel) {
-        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n" + $.StoreCamp.templates.additionalModalButtonRenderState + "\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
+        return "<div class=\"generic-modal modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n" + $.StoreCamp.templates.additionalModalButtonRenderState + "\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
       }
     },
     alert: function(type, title, message) {
@@ -1248,6 +1396,8 @@
       };
       if (modalId === '') {
         modalId = 'genericModal' + parseInt(Date.now());
+      } else {
+        $("" + modalId).remove();
       }
       html = _this.options.modalTemplate(modalId, message, title, AriaLabel, okText, cancelText);
       $('body').append(html);
@@ -1265,7 +1415,8 @@
       });
       $('button[data-dismiss="ok"]', genericModal).on('click', function() {
         genericModal.modal('hide');
-        defaultCallback(confirmLink);
+        defaultCallback($(this));
+        genericModal.remove();
       });
     },
     withAdditionalBtn: function(text, id, className) {
