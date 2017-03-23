@@ -16,36 +16,42 @@ class GatewayOmnipay extends PaymentGateway
 {
     /**
      * Omnipay object gateway.
+     *
      * @var object
      */
     protected $omnipay;
 
     /**
      * Omnipay credit card.
+     *
      * @var object
      */
     protected $creditCard;
 
     /**
      * Flag that indicates if a credit card should be used or not.
+     *
      * @var bool
      */
     public $isCreditCard = false;
 
     /**
      * Approval URL to redirect to.
+     *
      * @var string
      */
     protected $approvalUrl = '';
 
     /**
      * Additional options for authorize and purchase methods.
+     *
      * @var array
      */
     protected $options = [];
 
     /**
      * Returns paypal url for approval.
+     *
      * @since 1.0.0
      *
      * @return string
@@ -57,6 +63,7 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Generic getter.
+     *
      * @since 1.0.0
      *
      * @param string $property Property name.
@@ -72,6 +79,7 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Creates omnipay with a specific gateway.
+     *
      * @since 1.0.0
      *
      * @param string $gatewayName Gateway name to init omnipay.
@@ -83,6 +91,7 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Creates omnipay with a specific gateway.
+     *
      * @since 1.0.0
      *
      * @param string $gatewayName Gateway name to init omnipay.
@@ -95,10 +104,11 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Adds an extra option for authorization and purchase processes.
+     *
      * @since 1.0.0
      *
-     * @param string $key Option key.
-     * @param mixed $value Option value.
+     * @param string $key   Option key.
+     * @param mixed  $value Option value.
      */
     public function addOption($key, $value)
     {
@@ -107,27 +117,28 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Called on cart checkout.
+     *
      * @since 1.0.0
      *
      * @param Cart $cart Cart.
      */
     public function onCheckout($cart)
     {
-        if (! isset($this->omnipay)) {
+        if (!isset($this->omnipay)) {
             throw new ShopException('Omnipay gateway not set.', 0);
         }
-        if ($this->isCreditCard && ! isset($this->creditCard)) {
+        if ($this->isCreditCard && !isset($this->creditCard)) {
             throw new GatewayException('Credit Card not set.', 1);
         }
         try {
             $response = $this->omnipay->authorize(array_merge([
-                'amount' => $cart->total,
-                'currency' => config('sales.currency'),
-                'card' => $this->isCreditCard ? $this->creditCard : [],
+                'amount'    => $cart->total,
+                'currency'  => config('sales.currency'),
+                'card'      => $this->isCreditCard ? $this->creditCard : [],
                 'returnUrl' => $this->callbackSuccess,
             ], $this->options))->send();
 
-            if (! $response->isSuccessful()) {
+            if (!$response->isSuccessful()) {
                 throw new CheckoutException($response->getMessage(), 1);
             }
         } catch (Throwable $e) {
@@ -141,22 +152,25 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * Called by sales to charge order's amount.
+     *
      * @since 1.0.0
      *
      * @param \App\Core\Contracts\OrdersSystemContract $order
-     * @return bool
+     *
      * @throws ShopException
+     *
+     * @return bool
      */
     public function onCharge($order)
     {
-        if (! isset($this->omnipay)) {
+        if (!isset($this->omnipay)) {
             throw new ShopException('Omnipay gateway not set.', 0);
         }
         try {
             $response = $this->omnipay->purchase(array_merge([
-                'amount' => $order->total,
-                'currency' => config('sales.currency'),
-                'card' => $this->isCreditCard ? $this->creditCard : [],
+                'amount'    => $order->total,
+                'currency'  => config('sales.currency'),
+                'card'      => $this->isCreditCard ? $this->creditCard : [],
                 'returnUrl' => $this->callbackSuccess,
                 'cancelUrl' => $this->callbackFail,
             ], $this->options))->send();
@@ -189,7 +203,8 @@ class GatewayOmnipay extends PaymentGateway
 
     /**
      * @param Orders $order
-     * @param null $data
+     * @param null   $data
+     *
      * @throws GatewayException
      */
     public function onCallbackSuccess($order, $data = null)

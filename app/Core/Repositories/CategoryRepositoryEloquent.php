@@ -15,8 +15,8 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      * @var array
      */
     protected $fieldSearchable = [
-        'name' => 'like',
-        'slug' => 'like',
+        'name'       => 'like',
+        'slug'       => 'like',
         'created_at' => 'like',
     ];
 
@@ -45,7 +45,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     {
         $model = Category::class;
 
-        return new $model;
+        return new $model();
     }
 
     /**
@@ -62,6 +62,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     protected function selectChild($id)
@@ -75,6 +76,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
 
     /**
      * @param $categories
+     *
      * @return mixed
      */
     protected function addRelation($categories)

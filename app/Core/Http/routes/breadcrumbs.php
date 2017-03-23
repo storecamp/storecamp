@@ -83,10 +83,26 @@ Breadcrumbs::register('products', function ($breadcrumbs) {
     $breadcrumbs->push('Products', route('admin::products::index'));
 });
 
+Breadcrumbs::register('settings', function ($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Settings', route('admin::settings::default::index'));
+    $breadcrumbs->push('Currency', route('admin::settings::default::index'));
+});
+
 // / > [Category] > [Page]
 Breadcrumbs::register('page', function ($breadcrumbs, $page) {
     $breadcrumbs->parent('categories', $page->category);
     $breadcrumbs->push($page->title, route('page', $page->id));
+});
+
+Breadcrumbs::register('design', function ($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Design', route('admin::design::index'));
+});
+
+Breadcrumbs::register('menus', function ($breadcrumbs) {
+    $breadcrumbs->parent('design');
+    $breadcrumbs->push('Menus', route('admin::design::menus::index'));
 });
 
 // SITE Section
@@ -98,7 +114,7 @@ Breadcrumbs::register('Home', function ($breadcrumbs) {
 // / > Site
 Breadcrumbs::register('Products', function ($breadcrumbs, $category = null) {
     $breadcrumbs->parent('Home');
-    if (! $category instanceof \App\Core\Models\Category) {
+    if (!$category instanceof \App\Core\Models\Category) {
         $breadcrumbs->push('Products', route('site::products::index'));
     } else {
         $breadcrumbs->push('Products', route('site::products::index'));

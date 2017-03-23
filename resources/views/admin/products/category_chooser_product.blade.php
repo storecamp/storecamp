@@ -1,7 +1,6 @@
 <div class="category nav nav-pills nav-stacked">
     @foreach($categories as $category)
             @if(!$category->parent_id)
-
             <?php $children = $category->children; ?>
             <li class="treeview category-treeview">
             <a class="btn btn-app {{$chosenCategoryId ? $chosenCategoryId == $category->id ? "active": "" : ""}}"
@@ -13,6 +12,7 @@
                         {{$category->name}}
                     </span>
                 <b  data-choose-name="{{$category->name}}"
+                    data-choose-path="{!! getCategoryFullPath($category) !!}"
                     data-choose-id="{{$category->id}}" class="text-muted pull-right choose-category">choose category</b>
             </a>
             @if($children)
@@ -22,8 +22,12 @@
                             <a class="btn btn-app {{$chosenCategoryId == $child->id ? "active": ""}}">
                                 <i class="fa fa-link"></i>
                                 <span>{{$child->name}}</span>
-                                <b data-choose-name="{{$child->name}}" data-choose-id="{{$child->id}}" class="text-muted pull-right choose-category">choose category</b>
-
+                                <b data-choose-path="{!! getCategoryFullPath($child) !!}"
+                                   data-choose-name="{{$child->name}}"
+                                   data-choose-id="{{$child->id}}"
+                                   class="text-muted pull-right choose-category">
+                                    choose category
+                                </b>
                             </a>
                         </li>
                     @endforeach

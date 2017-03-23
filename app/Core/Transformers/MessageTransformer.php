@@ -12,6 +12,7 @@ class MessageTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Message entity.
+     *
      * @param \Message $model
      *
      * @return array

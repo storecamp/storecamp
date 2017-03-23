@@ -3,6 +3,7 @@
 if (!function_exists('resolveModelName')) {
     /**
      * @param $model
+     *
      * @return string
      */
     function resolveModelName($model): string
@@ -17,6 +18,7 @@ if (!function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
+     *
      * @return mixed
      */
     function determineActiveDBandResolveUp($migrationClass)
@@ -35,6 +37,7 @@ if (!function_exists('determineActiveDBandResolveDown')) {
 
     /**
      * @param $migrationClass
+     *
      * @return mixed
      */
     function determineActiveDBandResolveDown($migrationClass)
@@ -54,6 +57,7 @@ if (!function_exists('formatBytes')) {
     /**
      * @param $bytes
      * @param int $precision
+     *
      * @return string
      */
     function formatBytes($bytes, $precision = 2): string
@@ -68,7 +72,7 @@ if (!function_exists('formatBytes')) {
         $bytes /= pow(1024, $pow);
 //         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 }
 
@@ -80,8 +84,9 @@ if (!function_exists('buildSelect')) {
      * @param $multiple
      * @param array $data
      * @param array $selected
-     * @param null $class
-     * @param null $placeholder
+     * @param null  $class
+     * @param null  $placeholder
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     function buildSelect($actionUrl, $attrName, bool $multiple, $data = [], $selected = [], $class = null, $placeholder = null)
@@ -100,6 +105,7 @@ if (!function_exists('cartNumberFormat')) {
      * @param null $decimals
      * @param null $decimalPoint
      * @param null $thousandSeperator
+     *
      * @return string
      */
     function cartNumberFormat($value, $decimals = null, $decimalPoint = null, $thousandSeperator = null)
@@ -124,6 +130,7 @@ if (!function_exists('cartNumberFormat')) {
 if (!function_exists('shopFormat')) {
     /**
      * @param string $value
+     *
      * @return string
      */
     function shopFormat(string $value)
@@ -136,6 +143,7 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
     /**
      * @param $category
      * @param $breadcrumbs
+     *
      * @return mixed
      */
     function pushParentCategoryBreadcrumbs($category, $breadcrumbs)
@@ -149,7 +157,27 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
     }
 }
 
+if (!function_exists('getCategoryFullPath')) {
+    /**
+     * @param \App\Core\Models\Category $category
+     * @param string                    $type
+     *
+     * @return string
+     */
+    function getCategoryFullPath(\App\Core\Models\Category $category, string $type = 'string')
+    {
+        return \App\Core\Logic\CategorySystem::getCategoryFullPath($category, $type);
+    }
+}
+
 if (!function_exists('getFilesByFormat')) {
+    /**
+     * @param string $root
+     * @param string $format
+     * @param bool   $skipFormatEnding
+     *
+     * @return array
+     */
     function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
         $files = app('App\Drivers\FolderToDb\SynchronizerInterface')
@@ -160,6 +188,12 @@ if (!function_exists('getFilesByFormat')) {
 }
 
 if (!function_exists('getBaseClassName')) {
+    /**
+     * @param $class
+     * @param bool $snake
+     *
+     * @return mixed|string
+     */
     function getBaseClassName($class, $snake = true)
     {
         $path = explode('\\', get_class($class));
@@ -172,14 +206,150 @@ if (!function_exists('getBaseClassName')) {
 }
 
 if (!function_exists('getFileNames')) {
+    /**
+     * @param $root
+     *
+     * @return array
+     */
     function getFileNames($root)
     {
         $files = \File::allFiles($root);
         $filesArr = [];
         foreach ($files as $file) {
-            $fileName = explode('.php', $file->getBasename());
+            $extension = $file->getExtension();
+            $fileName = explode('.'.$extension, $file->getBasename());
             $filesArr[] = $fileName[0];
         }
+
         return $filesArr;
+    }
+}
+
+if (!function_exists('getPrevValue')) {
+    /**
+     * @param $key
+     * @param $array
+     *
+     * @return null
+     */
+    function getPrevValue($key, $array)
+    {
+        $key = array_search($key, $array);
+        if (!isset($array[$key])) {
+            return null;
+        }
+        $prevK = null;
+        foreach ($array as $k => $v) {
+            if ($k === $key) {
+                return $prevK;
+            }
+            $prevK = $array[$k];
+        }
+
+        return $prevK;
+    }
+}
+
+if (!function_exists('getNextValue')) {
+    /**
+     * @param $key
+     * @param $array
+     *
+     * @return null
+     */
+    function getNextValue($key, $array)
+    {
+        $key = array_search($key, $array);
+        if (!isset($array[$key])) {
+            return null;
+        }
+        $nextK = null;
+        foreach ($array as $k => $v) {
+            if ($k === $key) {
+                return $nextK;
+            }
+            if (!isset($array[$k + 2])) {
+                return null;
+            } else {
+                $nextK = $array[$k + 2];
+            }
+        }
+
+        return $nextK;
+    }
+}
+
+if (!function_exists('getAllPreviousValues')) {
+    /**
+     * @param $key
+     * @param $array
+     *
+     * @return array|int
+     */
+    function getAllPreviousValues($key, $array)
+    {
+        $key = array_search($key, $array);
+        if (!isset($array[$key])) {
+            return null;
+        }
+        $prevK = null;
+        foreach ($array as $k => $v) {
+            if ($k === $key) {
+                return $prevK;
+            }
+            $count = count($array);
+            for ($i = $key; $i < $count; $i++) {
+                unset($array[$i]);
+            }
+            $prevK = $array;
+        }
+
+        return $prevK;
+    }
+}
+
+if (!function_exists('setting')) {
+    /**
+     * @param $key
+     * @param null $default
+     *
+     * @return null
+     */
+    function setting($key, $default = null)
+    {
+        $setting = app('\App\Core\Models\Settings');
+
+        return $setting->get($key, $default);
+    }
+}
+
+if (!function_exists('settingSet')) {
+    /**
+     * @param $key
+     * @param null $value
+     *
+     * @return $this
+     */
+    function settingSet($key, $value = null)
+    {
+        $setting = app('\App\Core\Models\Settings');
+
+        return $setting->set($key, $value);
+    }
+}
+
+if (!function_exists('menu')) {
+    /**
+     * @param $key
+     * @param string $type
+     * @param array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    function menu($key, $type = 'default', array $options = [])
+    {
+        $menu = app('\App\Core\Components\Menu\MenuDbBuilder');
+
+        return $menu->renderFromDb($key, $type, $options);
     }
 }

@@ -35,9 +35,9 @@
     <link rel="stylesheet" href="{{asset('plugins/dropzone/dist/dropzone.css')}}">
     <link rel="stylesheet" href="{{asset('custom_vendors/jvectormap/jquery-jvectormap-1.2.2.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/summernote/dist/summernote.css')}}">
-    {{--<link rel="stylesheet" href="{{asset('plugins/magnific-popup/dist/magnific-popup.css')}}">--}}
+{{--<link rel="stylesheet" href="{{asset('plugins/magnific-popup/dist/magnific-popup.css')}}">--}}
 
-    <!-- Theme style -->
+<!-- Theme style -->
     <link href="{{ asset('/css/admin_lte.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter

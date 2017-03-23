@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\LikeCounter
+ * App\Core\Models\LikeCounter.
  *
  * @property int $id
  * @property int $likeable_id
@@ -19,6 +19,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $likeable
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\LikeCounter idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\LikeCounter uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\LikeCounter whereCount($value)

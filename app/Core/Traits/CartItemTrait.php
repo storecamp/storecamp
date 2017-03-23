@@ -15,7 +15,7 @@ trait CartItemTrait
      */
     public function getHasObjectAttribute()
     {
-        return array_key_exists('class', $this->attributes) && ! empty($this->attributes['class']);
+        return array_key_exists('class', $this->attributes) && !empty($this->attributes['class']);
     }
 
     /**
@@ -77,7 +77,7 @@ trait CartItemTrait
         if ($this->hasObject) {
             return $this->object->shopUrl;
         }
-        if (! property_exists($this, 'itemRouteName') && ! property_exists($this, 'itemRouteParams')) {
+        if (!property_exists($this, 'itemRouteName') && !property_exists($this, 'itemRouteParams')) {
             return '#';
         }
         $params = [];
@@ -103,8 +103,8 @@ trait CartItemTrait
     /**
      * Scope class by a given sku.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
-     * @param mixed                                 $sku    SKU.
+     * @param \Illuminate\Database\Eloquent\Builder $query Query.
+     * @param mixed                                 $sku   SKU.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -117,8 +117,8 @@ trait CartItemTrait
      * Scope class by a given sku.
      * Returns item found.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
-     * @param mixed                                 $sku    SKU.
+     * @param \Illuminate\Database\Eloquent\Builder $query Query.
+     * @param mixed                                 $sku   SKU.
      *
      * @return this
      */

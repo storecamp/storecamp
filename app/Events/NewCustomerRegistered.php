@@ -12,6 +12,7 @@ class NewCustomerRegistered extends Event
 
     /**
      * NewCustomerRegistered constructor.
+     *
      * @param \App\Core\Models\User $user
      */
     public function __construct(\App\Core\Models\User $user)

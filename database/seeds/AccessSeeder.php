@@ -13,21 +13,21 @@ class AccessSeeder extends Seeder
      */
     public function run()
     {
-        if (! Role::find(1)) {
+        if (!Role::find(1)) {
             Role::create([
-                'name' => 'Admin',
+                'name'         => 'Admin',
                 'display_name' => 'admin',
-                'description' => 'can manage admin panel, add, delete, update, manage licenses, manage products, manage users', // optional
+                'description'  => 'can manage admin panel, add, delete, update, manage licenses, manage products, manage users', // optional
             ]);
 
             Role::create([
-                'name' => 'Client',
+                'name'         => 'Client',
                 'display_name' => 'client',
-                'description' => 'can\'t be present in admin panel, can\'t delete users but can delete theirs info', // optional
+                'description'  => 'can\'t be present in admin panel, can\'t delete users but can delete theirs info', // optional
             ]);
         }
 
-        if (! Permission::find(1)) {
+        if (!Permission::find(1)) {
             $permissionsAdmin = [
                 'All of the above',
                 'Delete Users',
@@ -41,17 +41,17 @@ class AccessSeeder extends Seeder
                 'Can Update',
                 'Buy products',
                 'Manage own products',
-                'Write productReview',
+                'Write Rreviews',
             ];
             foreach ($permissionsAdmin as $permission) {
                 $perm = Permission::updateOrCreate([
-                    'name' => $permission,
+                    'name'         => $permission,
                     'display_name' => $permission,
-                    'description' => $permission,
+                    'description'  => $permission,
                 ]);
                 $roleSAdmin = Role::find(1);
 
-                $roleSAdmin->attachPermission($perm, new Role);
+                $roleSAdmin->attachPermission($perm, new Role());
             }
             $listIds = Permission::all()->pluck('id');
 

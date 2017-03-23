@@ -17,13 +17,21 @@ $.StoreCamp.fileLinker =
     preferredTag: $('.file-linker').attr('data-preferred-tag') ? "thumbnail"
     inputTemplateClass: "selected-files_input"
     fileBlockTemplate: (selectorId, content, fileName, href) ->
-      "<div data-id='#{selectorId}' data-href='#{href}' class='col-xs-4 col-md-3 col-lg-2 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
+      "<div data-id='#{selectorId}'  data-href='#{href}' class='col-xs-4 col-md-3 col-lg-2 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong><i class='fa fa-remove btn btn-xs btn-default remove-selected text-danger btn-xs pull-right' onClick={$.StoreCamp.fileLinker.removeFile($(this).parent().attr('data-id'))}></i></div>"
     inputTemplate: () ->
       """<input type="text" name="selected_files" class='hidden #{this.inputTemplateClass}'/>"""
   }
   activate: () ->
     _this = this
     _this.fileSystemEvents()
+    _this.emitter.on "file-removed", (id) ->
+      console.log("file removed " + id)
+      fileItem = $("[data-file-id='#{id}']");
+      fileItemCheckBox = fileItem.find('input:checkbox')
+      fileItem.removeClass 'checked'
+      fileItemCheckBox.iCheck('uncheck')
+      fileItemCheckBox.iCheck('disable')
+
   fileSystemEvents: ->
     _this = this
     _this.options.fileLinkerModal.on 'shown.bs.modal', (event) ->
@@ -95,34 +103,35 @@ $.StoreCamp.fileLinker =
         fileItemCheckBox.iCheck('disable')
         $('.file-item').find('input:checkbox').iCheck('uncheck')
         $('.file-item').removeClass 'checked'
-        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove')
+        _this.manageToFileBlock('remove', btn, selectFileName, selectId, selectUrl)
       else
         $('.file-item').find('input:checkbox').iCheck('uncheck')
         $('.file-item').removeClass 'checked'
         btn.addClass 'checked'
         fileItemCheckBox.iCheck('enable')
         fileItemCheckBox.iCheck('check')
-        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
+        _this.manageToFileBlock('add', btn, selectFileName, selectId, selectUrl)
         fileItemCheckBox.iCheck('disable')
     else
       if btn.hasClass 'checked'
         btn.removeClass 'checked'
         fileItemCheckBox.iCheck('uncheck')
         fileItemCheckBox.iCheck('disable')
-        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove')
+        _this.manageToFileBlock('remove', btn, selectFileName, selectId, selectUrl)
       else
         btn.addClass 'checked'
         fileItemCheckBox.iCheck('enable')
         fileItemCheckBox.iCheck('check')
-        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
+        _this.manageToFileBlock('add', btn, selectFileName, selectId, selectUrl)
         fileItemCheckBox.iCheck('disable')
     _this.emitter.emit "selectedChanged"
     return
-  manageToFileBlock: (btn, selectFileName, selectId, selectUrl, methodType) ->
+  manageToFileBlock: (methodType, btn, selectFileName, selectId, selectUrl) ->
     _this = this
+    ID = btn.attr('data-file-id')
     switch methodType
       when "add" then _this.fileBlockAddTemplate(btn)
-      when "remove" then _this.fileBlockRemoveTemplate(btn)
+      when "remove" then _this.fileBlockRemoveTemplate(ID)
       else return
   fileBlockAddTemplate: (btn) ->
     _this = this
@@ -140,9 +149,13 @@ $.StoreCamp.fileLinker =
   reindexSelectedFiles: () ->
     selectedItems = $("#{@.options.selectedItemsClassPath}")
     @_setFileBlockSelectedState selectedItems
-  fileBlockRemoveTemplate: (btn) ->
-    blockItem = $(".selected-block [data-id='#{btn.attr('data-file-id')}']");
+  fileBlockRemoveTemplate: (id) ->
+    blockItem = $(".selected-block [data-id='#{id}']");
     blockItem.remove()
+  removeFile: (id) ->
+    blockItem = $(".selected-block [data-id='#{id}']");
+    blockItem.remove()
+    this.emitter.emit "file-removed", id
   _setFileBlockSelectedState: (btn) ->
     btn.each (index) ->
       blockItem = $(".file-item[data-file-id='#{$(this).attr('data-id')}']")

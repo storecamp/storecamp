@@ -10,7 +10,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Cart
+ * App\Core\Models\Cart.
  *
  * @property int $id
  * @property string $unique_id
@@ -20,6 +20,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property array $content
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Cart idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Cart uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Cart whereContent($value)
@@ -46,6 +47,7 @@ class Cart extends Model implements Transformable, CartInterface
 
     /**
      * Cart constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])

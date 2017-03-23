@@ -18,8 +18,9 @@ class AdminsShouldLeft
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -32,7 +33,7 @@ class AdminsShouldLeft
             }
             $userId = $request->id;
             $user = $this->userRepository->find($userId);
-            if (! $user->hasRole('Admin')) {
+            if (!$user->hasRole('Admin')) {
                 return $next($request);
             }
             if ($user->getUsersByRole('Admin')->count() <= 1) {

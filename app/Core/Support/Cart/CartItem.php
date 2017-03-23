@@ -61,6 +61,7 @@ class CartItem implements Arrayable, CartItemContract
 
     /**
      * CartItem constructor.
+     *
      * @param $id
      * @param array $options
      */
@@ -92,6 +93,7 @@ class CartItem implements Arrayable, CartItemContract
      * Get an attribute from the cart item or get the associated model.
      *
      * @param string $attribute
+     *
      * @return mixed
      */
     public function __get($attribute)
@@ -131,16 +133,17 @@ class CartItem implements Arrayable, CartItemContract
         }
 
         if ($attribute === 'model') {
-            return with(new $this->associatedModel)->find($this->id);
+            return with(new $this->associatedModel())->find($this->id);
         }
     }
 
     /**
      * Returns the formatted price without TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function price($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -151,9 +154,10 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted price with TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function priceTax($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -165,9 +169,10 @@ class CartItem implements Arrayable, CartItemContract
      * Returns the formatted subtotal.
      * Subtotal is price for whole CartItem without TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -179,9 +184,10 @@ class CartItem implements Arrayable, CartItemContract
      * Returns the formatted total.
      * Total is price for whole CartItem with TAX.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -192,9 +198,10 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -205,9 +212,10 @@ class CartItem implements Arrayable, CartItemContract
     /**
      * Returns the formatted tax.
      *
-     * @param int $decimals
+     * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function taxTotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -222,7 +230,7 @@ class CartItem implements Arrayable, CartItemContract
      */
     public function setQuantity($qty)
     {
-        if (empty($qty) || ! is_numeric($qty)) {
+        if (empty($qty) || !is_numeric($qty)) {
             throw new \InvalidArgumentException('Please supply a valid quantity.');
         }
         $this->qty = $qty;
@@ -250,6 +258,7 @@ class CartItem implements Arrayable, CartItemContract
      * Update the cart item from an array.
      *
      * @param array $attributes
+     *
      * @return void
      */
     public function updateFromArray(array $attributes)
@@ -268,6 +277,7 @@ class CartItem implements Arrayable, CartItemContract
      * Associate the cart item with the given model.
      *
      * @param $model
+     *
      * @return CartItem
      */
     public function associate($model): CartItem
@@ -281,6 +291,7 @@ class CartItem implements Arrayable, CartItemContract
      * Set the tax rate.
      *
      * @param $taxRate
+     *
      * @return CartItem
      */
     public function setTaxRate($taxRate): CartItem
@@ -294,7 +305,8 @@ class CartItem implements Arrayable, CartItemContract
      * Create a new instance from a Buyable.
      *
      * @param Buyable $item
-     * @param array $options
+     * @param array   $options
+     *
      * @return CartItem
      */
     public static function fromBuyable($item, array $options = []): CartItem
@@ -307,6 +319,7 @@ class CartItem implements Arrayable, CartItemContract
      * Create a new instance from the given array.
      *
      * @param array $attributes
+     *
      * @return CartItem
      */
     public static function fromArray(array $attributes): CartItem
@@ -321,6 +334,7 @@ class CartItem implements Arrayable, CartItemContract
      *
      * @param $id
      * @param array $options
+     *
      * @return CartItem
      */
     public static function fromAttributes($id, array $options = []): CartItem
@@ -332,7 +346,8 @@ class CartItem implements Arrayable, CartItemContract
      * Generate a unique id for the cart item.
      *
      * @param string $id
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     protected function generateRowId($id, array $options): string
@@ -350,14 +365,14 @@ class CartItem implements Arrayable, CartItemContract
     public function toArray(): array
     {
         return [
-            'rowId' => $this->rowId,
-            'id' => $this->id,
-            'userId' => \Auth::check() ? \Auth::user()->id : null,
-            'name' => $this->name,
-            'qty' => $this->qty,
-            'price' => $this->price,
-            'options' => $this->options,
-            'tax' => $this->tax,
+            'rowId'    => $this->rowId,
+            'id'       => $this->id,
+            'userId'   => \Auth::check() ? \Auth::user()->id : null,
+            'name'     => $this->name,
+            'qty'      => $this->qty,
+            'price'    => $this->price,
+            'options'  => $this->options,
+            'tax'      => $this->tax,
             'subtotal' => $this->subtotal,
         ];
     }

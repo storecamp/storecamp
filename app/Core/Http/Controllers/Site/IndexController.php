@@ -14,6 +14,7 @@ class IndexController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function home(Request $request)

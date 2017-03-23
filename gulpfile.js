@@ -21,15 +21,6 @@ let assetsPath = 'resources/assets/';
 let modulesPrefix = assetsPath + '/coffee/modules/';
 
 
-// elixir.extend('test', function() {
-//     return gulp.task('tester', function() {
-//         elixir((mix) => {
-//             mix.phpUnit();
-//             mix.phpSpec();
-//         });
-//     });
-// });
-
 elixir((mix) => {
     Elixir.webpack.mergeConfig({
         module: {}
@@ -45,7 +36,7 @@ elixir((mix) => {
     mix.webpack(assetsPath + '/js/app.js', 'public/js');
 
     mix.browserSync({
-        proxy: 'storecamp.app'
+        proxy: 'storecamp.dev'
     });
 });
 

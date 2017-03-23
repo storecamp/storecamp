@@ -62,6 +62,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Set Id.
      *
      * @param $id
+     *
      * @return $this
      */
     public function setId($id)
@@ -75,6 +76,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Set data to validate.
      *
      * @param array $data
+     *
      * @return $this
      */
     public function with(array $data)
@@ -108,6 +110,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Pass the data and the rules to the validator.
      *
      * @param string $action
+     *
      * @return bool
      */
     abstract public function passes($action = null);
@@ -115,13 +118,15 @@ abstract class AbstractValidator implements ValidatorInterface
     /**
      * Pass the data and the rules to the validator or throws ValidatorException.
      *
-     * @throws ValidatorException
      * @param string $action
+     *
+     * @throws ValidatorException
+     *
      * @return bool
      */
     public function passesOrFail($action = null)
     {
-        if (! $this->passes($action)) {
+        if (!$this->passes($action)) {
             throw new ValidatorException($this->errorsBag());
         }
 
@@ -134,6 +139,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Default rule: ValidatorInterface::RULE_CREATE
      *
      * @param null $action
+     *
      * @return array
      */
     public function getRules($action = null)
@@ -151,6 +157,7 @@ abstract class AbstractValidator implements ValidatorInterface
      * Set Rules for Validation.
      *
      * @param array $rules
+     *
      * @return $this
      */
     public function setRules(array $rules)
@@ -209,6 +216,7 @@ abstract class AbstractValidator implements ValidatorInterface
      *
      * @param $rules
      * @param null $id
+     *
      * @return array
      */
     protected function parserValidationRules($rules, $id = null)
@@ -218,7 +226,7 @@ abstract class AbstractValidator implements ValidatorInterface
         }
 
         array_walk($rules, function (&$rules, $field) use ($id) {
-            if (! is_array($rules)) {
+            if (!is_array($rules)) {
                 $rules = explode('|', $rules);
             }
 
@@ -234,7 +242,7 @@ abstract class AbstractValidator implements ValidatorInterface
                 $p = array_map('trim', explode(',', $params));
 
                 // set field name to rules key ($field) (laravel convention)
-                if (! isset($p[1])) {
+                if (!isset($p[1])) {
                     $p[1] = $field;
                 }
 

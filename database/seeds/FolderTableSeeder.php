@@ -14,6 +14,7 @@ class FolderTableSeeder extends Seeder
 
     /**
      * FolderTableSeeder constructor.
+     *
      * @param \App\Drivers\FolderToDb\Synchronizer $synchronizer
      */
     public function __construct(\App\Drivers\FolderToDb\Synchronizer $synchronizer)
@@ -29,16 +30,16 @@ class FolderTableSeeder extends Seeder
     public function run()
     {
         \App\Core\Models\Folder::create([
-            'name' => '',
+            'name'      => '',
             'parent_id' => null,
-            'locked' => true,
+            'locked'    => true,
         ]);
 
         \App\Core\Models\Folder::create([
-            'name' => '',
+            'name'      => '',
             'parent_id' => null,
-            'disk' => 'mails',
-            'locked' => true,
+            'disk'      => 'mails',
+            'locked'    => true,
         ]);
 
         $uploadsPath = public_path('uploads');

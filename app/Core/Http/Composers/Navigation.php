@@ -18,6 +18,7 @@ class Navigation
 
     /**
      * Navigation constructor.
+     *
      * @param CartSystemContract $cartSystem
      */
     public function __construct(CartSystemContract $cartSystem)

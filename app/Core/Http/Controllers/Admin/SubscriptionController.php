@@ -24,11 +24,13 @@ class SubscriptionController extends BaseController
 
     /**
      * SubscriptionController constructor.
+     *
      * @param SubscribersRepository $repository
      */
     public function __construct(SubscribersRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     public function index(Request $request)
@@ -43,11 +45,12 @@ class SubscriptionController extends BaseController
     /**
      * @param Request $request
      * @param $uid
+     *
      * @return mixed
      */
     public function show(Request $request, $uid)
     {
-        if (! is_null($uid)) {
+        if (!is_null($uid)) {
             $lists = $this->repository->getNewsList();
 
             $newslist = $this->repository->findList($uid);
@@ -66,6 +69,7 @@ class SubscriptionController extends BaseController
      * @param Request $request
      * @param $type
      * @param $email
+     *
      * @return mixed
      */
     public function showUser(Request $request, $type, $email)
@@ -90,11 +94,12 @@ class SubscriptionController extends BaseController
     /**
      * @param Request $request
      * @param $uid
+     *
      * @return mixed
      */
     public function showGenerate(Request $request, $uid)
     {
-        if (! is_null($uid)) {
+        if (!is_null($uid)) {
             $mails = $this->repository->resolveTmpMails();
 
             $mailHistory = $this->repository->resolveMailHistory($uid);
@@ -117,6 +122,7 @@ class SubscriptionController extends BaseController
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -129,6 +135,7 @@ class SubscriptionController extends BaseController
     /**
      * @param $folder
      * @param $filename
+     *
      * @return mixed
      */
     public function getHistoryTmpMail($folder, $filename)

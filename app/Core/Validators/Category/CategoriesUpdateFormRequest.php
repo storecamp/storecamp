@@ -24,7 +24,7 @@ class CategoriesUpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name'      => 'required',
             'parent_id' => 'integer',
         ];
     }

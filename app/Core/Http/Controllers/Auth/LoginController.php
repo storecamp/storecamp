@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'admin';
+    protected $redirectTo = 'home';
 
     /**
      * LoginController constructor.
@@ -40,6 +40,7 @@ class LoginController extends Controller
     /**
      * @param $redirector
      * @param $user
+     *
      * @return mixed
      */
     private function redirectTo(Redirector $redirector, $user)
@@ -55,6 +56,7 @@ class LoginController extends Controller
      * Send the response after the user was authenticated.
      *
      * @param Request $request
+     *
      * @return mixed
      */
     protected function sendLoginResponse(Request $request)

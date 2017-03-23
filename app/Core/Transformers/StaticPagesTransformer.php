@@ -2,7 +2,7 @@
 
 namespace App\Core\Transformers;
 
-use App\Core\Models\StaticPages;
+use App\Core\Models\Pages;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -12,11 +12,12 @@ class StaticPagesTransformer extends TransformerAbstract
 {
     /**
      * Transform the \StaticPages entity.
-     * @param \StaticPages $model
+     *
+     * @param Pages $model
      *
      * @return array
      */
-    public function transform(StaticPages $model)
+    public function transform(Pages $model)
     {
         return [
             'id'         => (int) $model->id,

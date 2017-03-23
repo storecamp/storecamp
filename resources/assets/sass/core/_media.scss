@@ -5,7 +5,7 @@ $white: white;
 //@extend-elements
 //original selectors
 //.delete-file, .rename-file, .download-file, .tag-file
-%extend_1 {
+%extend_media_1 {
   position: absolute;
   top: auto;
   right: 0;
@@ -14,11 +14,11 @@ $white: white;
 }
 
 .delete-file {
-  @extend %extend_1;
+  @extend %extend_media_1;
 }
 
 .rename-file {
-  @extend %extend_1;
+  @extend %extend_media_1;
   display: none;
   top: 30px;
   z-index: 9999;
@@ -31,14 +31,14 @@ $white: white;
 }
 
 .download-file {
-  @extend %extend_1;
+  @extend %extend_media_1;
   display: none;
   top: 30px;
   z-index: 9999;
 }
 
 .tag-file {
-  @extend %extend_1;
+  @extend %extend_media_1;
 }
 
 .file-item {
@@ -215,28 +215,40 @@ $white: white;
       background: #f4f4f4;
     }
   }
+
 }
-%extend_2 {
+
+.selected-block {
+  .selected-item {
+    padding-left: 0;
+    .remove-selected {
+      color: $danger-color;
+    }
+  }
+}
+
+%extend_media_2 {
   display: inline-block;
   position: relative;
 }
+
 .items-list {
   &:hover {
 
   }
   .delete-btn {
-    @extend %extend_2
+    @extend %extend_media_2
   }
 
   .rename-btn {
-    @extend %extend_2
+    @extend %extend_media_2
 
   }
   .download-btn {
-    @extend %extend_2
+    @extend %extend_media_2
 
   }
   .info-btn {
-    @extend %extend_2
+    @extend %extend_media_2
   }
 }

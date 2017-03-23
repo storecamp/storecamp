@@ -24,8 +24,8 @@ class PermissionsUpdateFormRequest extends Request
     public function rules()
     {
         return [
-           'name' => 'required',
-            'slug' => 'required',
+           'name'         => 'required',
+            'slug'        => 'required',
             'description' => 'required',
         ];
     }

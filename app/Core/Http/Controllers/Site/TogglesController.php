@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Core\Http\Controllers\Site;
-
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
 /**
  * Class TogglesController.
  */
@@ -14,22 +11,22 @@ class TogglesController extends BaseController
      * @var \Illuminate\Contracts\Auth\Factory
      */
     protected $auth;
-
     /**
      * TogglesController constructor.
+     *
      * @param \Illuminate\Contracts\Auth\Factory $auth
      */
     public function __construct(\Illuminate\Contracts\Auth\Factory $auth)
     {
         $this->auth = $auth;
     }
-
     /**
      * like-Action to call with class_name and object_id.
      *
      * @param Request $request
      * @param $class_name
      * @param $object_id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function likeDis(Request $request, $class_name, $object_id)
@@ -47,7 +44,6 @@ class TogglesController extends BaseController
                     return response()->json(['type' => $type, 'counter' => $object->getLikeCount(), 'message' => 'dislike']);
                 } else {
                     $this->flash('info', $type.'! '.$class_name.' DisLiked.');
-
                     return redirect()->back();
                 }
             } else {
@@ -57,10 +53,9 @@ class TogglesController extends BaseController
                     $type = 'error';
                 }
                 if ($request->ajax()) {
-                    return response()->json(['type' => $type,'counter' => $object->getLikeCount(), 'message' => 'like']);
+                    return response()->json(['type' => $type, 'counter' => $object->getLikeCount(), 'message' => 'like']);
                 } else {
                     $this->flash('info', $type.'! '.$class_name.' Liked.');
-
                     return redirect()->back();
                 }
             }
@@ -69,15 +64,14 @@ class TogglesController extends BaseController
                 return response()->json(['message' => 'user not authorized'], 401);
             } else {
                 \Toastr::warning('Please login or register to LIKE or DISLIKE!', $title = 'login required', $options = []);
-
                 return redirect()->to(route('login'));
             }
         }
     }
-
     /**
      * @param Request $request
      * @param $key
+     *
      * @return RedirectResponse
      */
     public function toggleLanguage(Request $request, $key)
@@ -85,7 +79,6 @@ class TogglesController extends BaseController
         $previous = \URL::previous();
         $localization = app('Mcamara\LaravelLocalization\LaravelLocalization');
         $url = $localization->getLocalizedURL($key, $previous);
-
         return redirect()->to($url)->withCookie(cookie('locale', $key, 525600));
     }
 }

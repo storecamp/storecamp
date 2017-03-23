@@ -43,9 +43,10 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * ProductReviewRepositoryEloquent constructor.
-     * @param Application $app
-     * @param Dispatcher $dispatcher
-     * @param RolesRepository $roleRepository
+     *
+     * @param Application        $app
+     * @param Dispatcher         $dispatcher
+     * @param RolesRepository    $roleRepository
      * @param ProductsRepository $product
      */
     public function __construct(Application $app,
@@ -101,6 +102,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * return the number of user's products.
+     *
      * @return mixed
      */
     public function countUserProductReviews()
@@ -110,6 +112,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * get all Products.
+     *
      * @return mixed
      */
     public function getAll()
@@ -119,6 +122,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * get all current logged in user Reviews.
+     *
      * @return mixed
      */
     public function getAllUsers()
@@ -128,7 +132,9 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * get the specific to user id feedbacks.
+     *
      * @param $id
+     *
      * @return mixed
      */
     public function getAllUserById($id)
@@ -139,6 +145,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     /**
      * @param $id
      * @param $message
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|mixed
      */
     public function replyProductReview($id, $message)
@@ -151,8 +158,8 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $this->message->create(
             [
                 'thread_id' => $thread->id,
-                'user_id' => $user_id,
-                'body' => $message,
+                'user_id'   => $user_id,
+                'body'      => $message,
             ]
         );
 
@@ -160,7 +167,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $participant = $this->participant->firstOrCreate(
             [
                 'thread_id' => $thread->id,
-                'user_id' => $user_id,
+                'user_id'   => $user_id,
             ]
         );
         $participant->last_read = new Carbon();

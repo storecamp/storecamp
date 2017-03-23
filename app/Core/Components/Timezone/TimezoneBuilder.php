@@ -13,6 +13,7 @@ class TimezoneBuilder extends Timezone
 
     /**
      * TimezoneBuilder constructor.
+     *
      * @param $selected
      * @param $placeholder
      * @param $formAttributes
@@ -28,22 +29,22 @@ class TimezoneBuilder extends Timezone
 
     public function buildSelect($selected = null, $placeholder = null, array $formAttributes = [], array $optionAttributes = [])
     {
-        if (! is_null($selected)) {
+        if (!is_null($selected)) {
             $this->selected = $selected;
         } else {
             $this->selected = config('timezone.selected');
         }
-        if (! is_null($placeholder)) {
+        if (!is_null($placeholder)) {
             $this->placeholder = $placeholder;
         } else {
             $this->placeholder = config('timezone.placeholder');
         }
-        if (! isset($formAttributes)) {
+        if (!isset($formAttributes)) {
             $this->formAttributes = $formAttributes;
         } else {
             $this->formAttributes = config('timezone.formAttributes');
         }
-        if (! isset($optionAttributes)) {
+        if (!isset($optionAttributes)) {
             $this->optionAttributes = $optionAttributes;
         } else {
             $this->optionAttributes = config('timezone.optionAttributes');

@@ -22,6 +22,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * AttributeGroupSystem constructor.
+     *
      * @param $group
      * @param $description
      */
@@ -33,8 +34,9 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentGroup(array $data, $id = null, array $with = [])
@@ -42,7 +44,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
         if ($id) {
             $attributes = $this->group->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $attributes = $this->group->with($with)->paginate();
             } else {
                 $attributes = $this->group->paginate();
@@ -54,8 +56,9 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function presentDescription(array $data, $id = null, array $with = [])
@@ -63,7 +66,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
         if ($id) {
             $attributes = $this->description->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $attributes = $this->description->with($with)->paginate();
             } else {
                 $attributes = $this->description->paginate();
@@ -75,6 +78,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * @param array $data
+     *
      * @return bool|mixed
      */
     public function createGroup(array $data)
@@ -91,6 +95,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createDescription(array $data)
@@ -108,6 +113,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updateGroup(array $data, $id)
@@ -127,6 +133,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function updateDescription(array $data, $id)
@@ -146,6 +153,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deleteGroup($id, array $data = []): int
@@ -158,6 +166,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function deleteDescription($id, array $data = []): int

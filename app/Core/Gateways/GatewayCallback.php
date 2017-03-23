@@ -30,7 +30,7 @@ class GatewayCallback extends GatewayPass
      * Called on callback.
      *
      * @param Orders $order Orders.
-     * @param mixed $data  Request input from callback.
+     * @param mixed  $data  Request input from callback.
      *
      * @return bool
      */
@@ -45,7 +45,7 @@ class GatewayCallback extends GatewayPass
      * Called on callback.
      *
      * @param Orders $order Orders.
-     * @param mixed $data  Request input from callback.
+     * @param mixed  $data  Request input from callback.
      *
      * @return bool
      */
@@ -58,6 +58,7 @@ class GatewayCallback extends GatewayPass
 
     /**
      * Returns successful callback URL.
+     *
      * @return false
      */
     public function getCallbackSuccess()
@@ -67,6 +68,7 @@ class GatewayCallback extends GatewayPass
 
     /**
      * Returns fail callback URL.
+     *
      * @return false
      */
     public function getCallbackFail()
@@ -76,6 +78,7 @@ class GatewayCallback extends GatewayPass
 
     /**
      * Returns successful callback URL.
+     *
      * @return false
      */
     public function getDidCallback()

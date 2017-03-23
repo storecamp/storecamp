@@ -6,17 +6,14 @@ use App\Core\Models\Subscribers;
 use App\Core\Models\User;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
-use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Traits\CacheableRepository;
 
 /**
  * Class SubscribersRepositoryEloquent.
  */
-class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository, CacheableInterface
+class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository
 {
-    use CacheableRepository;
     /**
      * @var RolesRepository
      */
@@ -36,9 +33,10 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
 
     /**
      * SubscribersRepositoryEloquent constructor.
-     * @param Application $app
-     * @param Dispatcher $dispatcher
-     * @param RolesRepository $roleRepository
+     *
+     * @param Application        $app
+     * @param Dispatcher         $dispatcher
+     * @param RolesRepository    $roleRepository
      * @param CampaignRepository $campaignRepository
      */
     public function __construct(Application $app, Dispatcher $dispatcher,
@@ -85,6 +83,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
 
     /**
      * @param $email
+     *
      * @return mixed
      */
     public function findSubscriber($email)
@@ -97,6 +96,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     /**
      * @param $data
      * @param $list
+     *
      * @return bool
      */
     private function createSubscriber($data, $list)
@@ -106,7 +106,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
             $subscriber->{$key} = $value;
         }
         $subscriber->save();
-        if (! is_null($list)) {
+        if (!is_null($list)) {
             $list->subscribers()->attach($subscriber);
             $list->save();
         }
@@ -117,6 +117,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     /**
      * @param $request
      * @param $campaignId
+     *
      * @return bool
      */
     public function createSubscription($request, $campaignId)
@@ -128,7 +129,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         ];
 
         if (is_null($subscriber = $this->getModel()->where('email', $mail)->first())) {
-            if (! is_null($list)) {
+            if (!is_null($list)) {
                 $list->subscribers()->attach($subscriber);
                 $list->save();
                 $this->createSubscriber($info, $list);
@@ -155,6 +156,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
      * @param $request
      * @param $type
      * @param $subscription_id
+     *
      * @return bool|\Illuminate\Http\RedirectResponse
      */
     public function deleteSubscription($request, $type, $subscription_id)
@@ -182,6 +184,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
 
     /**
      * @param null $type
+     *
      * @return mixed
      */
     public function getNewsList($type = null)

@@ -3,11 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\Product;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Transformers\ProductDataTransformer;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class ProductsController.
@@ -38,27 +42,40 @@ class ProductsController extends BaseController
 
     /**
      * ProductsController constructor.
+     *
      * @param ProductSystemContract $productSystem
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryRepository    $categoryRepository
      */
     public function __construct(ProductSystemContract $productSystem, CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
         $this->productSystem = $productSystem;
         $this->productRepository = $this->productSystem->productRepository;
+        $this->middleware('role:Admin');
     }
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $products = $this->productSystem->present($data, null, $with = ['categories', 'media']);
-        $no = $products->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('products', 'no'));
+    /**
+     * @param Datatables $datatables
+     *
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Product::with('categories')->select('products.*');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new ProductDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -75,18 +92,25 @@ class ProductsController extends BaseController
 
     /**
      * @param Create $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Create $request)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $product = $this->productSystem->create($data);
+            \DB::commit();
 
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
+            \DB::rollBack();
+
             return $this->redirectError($e);
         }
     }
@@ -94,6 +118,7 @@ class ProductsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -111,6 +136,7 @@ class ProductsController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -138,18 +164,25 @@ class ProductsController extends BaseController
      *
      * @param Update $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Update $request, $id)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $this->productSystem->update($data, $id);
+            \Db::commit();
 
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \Db::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
+            \Db::rollBack();
+
             return $this->redirectError($e);
         }
     }
@@ -157,23 +190,34 @@ class ProductsController extends BaseController
     /**
      * Remove the specified article from storage.
      *
-     * @param  int $id
-     * @return Response
+     * @param int $id
+     *
+     * @return Response|RedirectResponse
      */
     public function destroy($id)
     {
         try {
+            \DB::beginTransaction();
             $deleted = $this->productSystem->delete($id);
-            if (! $deleted) {
-                \Flash::warning('Sorry product is not deleted');
+            if (!$deleted) {
+                $this->flash('warning', 'Sorry product is not deleted');
+                \Db::rollBack();
             }
+            \Db::commit();
 
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
+            \Db::rollBack();
+
             return $this->redirectNotFound($e);
         }
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getSelect(Request $request)
     {
         if (strlen(trim($request->get('search'))) > 0) {

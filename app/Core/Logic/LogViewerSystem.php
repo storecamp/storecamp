@@ -38,11 +38,12 @@ class LogViewerSystem implements LogViewerSystemContract
 
     /**
      * LogViewerSystem constructor.
+     *
      * @param Arr $arr
      */
     public function __construct(Arr $arr)
     {
-        $this->logViewer = app('arcanedev.log-viewer');
+        $this->logViewer = app('Arcanedev\LogViewer\Contracts\LogViewer');
         $this->arr = $arr;
     }
 
@@ -63,7 +64,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * List all logs.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
      */
@@ -79,7 +80,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Show the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Illuminate\View\View
      */
@@ -96,8 +97,8 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Filter the log entries by level.
      *
-     * @param  string  $date
-     * @param  string  $level
+     * @param string $date
+     * @param string $level
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
@@ -118,7 +119,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Download the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
@@ -130,7 +131,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Delete a log.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -150,8 +151,8 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Paginate logs.
      *
-     * @param  array                     $data
-     * @param  \Illuminate\Http\Request  $request
+     * @param array                    $data
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
@@ -170,7 +171,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Get a log or fail.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Arcanedev\LogViewer\Entities\Log|null
      */
@@ -190,7 +191,7 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Prepare chart data.
      *
-     * @param  \Arcanedev\LogViewer\Tables\StatsTable  $stats
+     * @param \Arcanedev\LogViewer\Tables\StatsTable $stats
      *
      * @return string
      */
@@ -213,8 +214,8 @@ class LogViewerSystem implements LogViewerSystemContract
     /**
      * Calculate the percentage.
      *
-     * @param  array  $total
-     * @param  array  $names
+     * @param array $total
+     * @param array $names
      *
      * @return array
      */

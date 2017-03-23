@@ -11,6 +11,7 @@ class FolderLocked
 
     /**
      * FolderLocked constructor.
+     *
      * @param FolderRepository $folder
      */
     public function __construct(FolderRepository $folder)
@@ -21,8 +22,9 @@ class FolderLocked
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

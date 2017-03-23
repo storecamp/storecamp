@@ -19,7 +19,8 @@ class ClearSessionListener
     /**
      * Handle the event.
      *
-     * @param  ClearSession  $event
+     * @param ClearSession $event
+     *
      * @return void
      */
     public function handle(ClearSession $event)

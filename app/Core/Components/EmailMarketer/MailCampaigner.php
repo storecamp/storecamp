@@ -30,8 +30,9 @@ class MailCampaigner extends Command
 
     /**
      * MailCampaigner constructor.
-     * @param Filesystem $file
-     * @param Mailer $mailer
+     *
+     * @param Filesystem   $file
+     * @param Mailer       $mailer
      * @param UrlGenerator $urlhelper
      */
     public function __construct(Filesystem $file, Mailer $mailer, UrlGenerator $urlhelper)
@@ -126,6 +127,7 @@ class MailCampaigner extends Command
 
     /**
      * @param $file
+     *
      * @return array
      */
     private function mailFromFile($file)

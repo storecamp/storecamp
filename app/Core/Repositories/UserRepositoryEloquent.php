@@ -15,7 +15,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'name' => 'like',
+        'name'  => 'like',
         'email' => 'like',
     ];
 
@@ -44,11 +44,12 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $model = User::class;
 
-        return new $model;
+        return new $model();
     }
 
     /**
      * @param $user
+     *
      * @return mixed
      */
     public function getRole($user)

@@ -2,12 +2,14 @@
 
 namespace App\Core\Components\Menu;
 
+use App\Core\Models\Menu;
+
 class SidebarMenuBuilder
 {
     /**
      * create sidebar menu structure.
      */
-    public function createStructure()
+    public function createStatic()
     {
         $productsMenu = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-cube"></i>Manage Products')
@@ -46,15 +48,20 @@ class SidebarMenuBuilder
             ->addLink('Mail', ['route' => ['admin::mail::index']]);
 
         $design = app('elements.menu.manager')
-            ->createMenu('<i class="fa  fa-paint-brush"></i> Design')
-            ->addLink('Layouts', ['route' => 'admin::design::layouts::index'])
+            ->createMenu('<i class="fa fa-paint-brush"></i> Design')
+            ->addLink('Static Pages', ['route' => 'admin::design::pages::index'])
             ->addLink('Banners', ['route' => 'admin::design::banners::index'])
-            ->addLink('Static Pages', ['route' => ['admin::design::staticPages::index']]);
+            ->addLink('Menus', ['route' => 'admin::design::menus::index']);
 
         $users = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-users"></i> Users')
             ->addLink('All Users', ['route' => 'admin::users::index'])
             ->addLink('Create User', ['route' => ['admin::users::create']]);
+
+        $settings = app('elements.menu.manager')
+            ->createMenu('<i class="fa fa-cogs"></i> Settings')
+            ->addLink('Settings', ['route' => 'admin::settings::default::index'])
+            ->addLink('Currencies', ['route' => 'admin::settings::currency::index']);
 
         $mediaStorage = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-files-o"></i> MediaStorage')
@@ -79,6 +86,7 @@ class SidebarMenuBuilder
             )
             ->menu('administration')
             ->setLabel('Administration')
+            ->addSubMenu($settings, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::settings::*']])
             ->addSubMenu($mediaStorage, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::media::*']])
             ->addSubMenu($access, ['id' => 'link-access', 'url_def' => ['route_pattern' => 'admin::roles::*']])
             ->addSubMenu($logsViewer, ['id' => 'link-logs', 'url_def' => ['route_pattern' => 'log-viewer::*']]);

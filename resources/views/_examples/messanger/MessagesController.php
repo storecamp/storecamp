@@ -49,6 +49,7 @@ class MessagesController extends Controller
      * Shows a message thread.
      *
      * @param $id
+     *
      * @return mixed
      */
     public function show($id)
@@ -114,7 +115,7 @@ class MessagesController extends Controller
             [
                 'thread_id' => $thread->id,
                 'user_id'   => Auth::user()->id,
-                'last_read' => new Carbon,
+                'last_read' => new Carbon(),
             ]
         );
 
@@ -130,6 +131,7 @@ class MessagesController extends Controller
      * Adds a new message to a current thread.
      *
      * @param $id
+     *
      * @return mixed
      */
     public function update($id)
@@ -160,7 +162,7 @@ class MessagesController extends Controller
                 'user_id'   => Auth::user()->id,
             ]
         );
-        $participant->last_read = new Carbon;
+        $participant->last_read = new Carbon();
         $participant->save();
 
         // Recipients

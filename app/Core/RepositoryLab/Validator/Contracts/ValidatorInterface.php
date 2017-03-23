@@ -17,6 +17,7 @@ interface ValidatorInterface
      * Set Id.
      *
      * @param $id
+     *
      * @return $this
      */
     public function setId($id);
@@ -25,6 +26,7 @@ interface ValidatorInterface
      * With.
      *
      * @param array
+     *
      * @return $this
      */
     public function with(array $input);
@@ -33,6 +35,7 @@ interface ValidatorInterface
      * Pass the data and the rules to the validator.
      *
      * @param string $action
+     *
      * @return bool
      */
     public function passes($action = null);
@@ -40,8 +43,10 @@ interface ValidatorInterface
     /**
      * Pass the data and the rules to the validator or throws ValidatorException.
      *
-     * @throws ValidatorException
      * @param string $action
+     *
+     * @throws ValidatorException
+     *
      * @return bool
      */
     public function passesOrFail($action = null);
@@ -64,6 +69,7 @@ interface ValidatorInterface
      * Set Rules for Validation.
      *
      * @param array $rules
+     *
      * @return $this
      */
     public function setRules(array $rules);
@@ -74,6 +80,7 @@ interface ValidatorInterface
      * Default rule: ValidatorInterface::RULE_CREATE
      *
      * @param $action
+     *
      * @return array
      */
     public function getRules($action = null);

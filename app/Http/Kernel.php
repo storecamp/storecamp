@@ -5,10 +5,11 @@ namespace App\Http;
 use App\Core\Access\Middleware\AccessPermission;
 use App\Core\Access\Middleware\AccessRole;
 use App\Http\Middleware\BelongsToUserOrAdmin;
-use App\Http\Middleware\CheckIfUserBanned;
 use App\Http\Middleware\checkLocale;
 use App\Http\Middleware\DetectBrowserLanguage;
 use App\Http\Middleware\FolderLocked;
+use App\Http\Middleware\LaravelLocalizationRedirectFilter;
+use App\Http\Middleware\LocaleSessionRedirect;
 use App\Http\Middleware\UserAdditionalInfo;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -38,7 +39,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            CheckIfUserBanned::class,
+            \App\Http\Middleware\CheckIfUserBanned::class,
         ],
 
         'api' => [
@@ -55,29 +56,30 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
-        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
-        'isAdmin' => \App\Http\Middleware\IsAdmin::class,
-        'role' => AccessRole::class,
-        'permission' => AccessPermission::class,
-        'user.additional' => UserAdditionalInfo::class,
-        'shouldBeUnique' => \App\Http\Middleware\ElementShouldBeUnique::class,
-        'notDefaultRole' => \App\Http\Middleware\ShouldNotBeDefaultRole::class,
-        'notAdmin' => \App\Http\Middleware\ShouldNotBeAdmin::class,
-        'shouldLeftAdmin' => \App\Http\Middleware\AdminsShouldLeft::class,
-        'folderLocked' => FolderLocked::class,
-        'belongsToUserOrAdmin' => BelongsToUserOrAdmin::class,
+        'auth'                  => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic'            => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'              => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'                   => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'                 => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'              => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'jwt.auth'              => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+        'jwt.refresh'           => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+        'isAdmin'               => \App\Http\Middleware\IsAdmin::class,
+        'role'                  => AccessRole::class,
+        'permission'            => AccessPermission::class,
+        'user.additional'       => UserAdditionalInfo::class,
+        'shouldBeUnique'        => \App\Http\Middleware\ElementShouldBeUnique::class,
+        'notDefaultRole'        => \App\Http\Middleware\ShouldNotBeDefaultRole::class,
+        'notAdmin'              => \App\Http\Middleware\ShouldNotBeAdmin::class,
+        'shouldLeftAdmin'       => \App\Http\Middleware\AdminsShouldLeft::class,
+        'folderLocked'          => FolderLocked::class,
+        'belongsToUserOrAdmin'  => BelongsToUserOrAdmin::class,
         'DetectBrowserLanguage' => DetectBrowserLanguage::class,
-        'locale' => checkLocale::class,
-        'checkBannedUser' => CheckIfUserBanned::class,
-        'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-        'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-        'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+        'locale'                => checkLocale::class,
+        'checkBannedUser'       => \App\Http\Middleware\CheckIfUserBanned::class,
+        'localize'              => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect'  => LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect' => LocaleSessionRedirect::class,
+        'cartEmpty'             => \App\Http\Middleware\CartEmpty::class,
     ];
 }

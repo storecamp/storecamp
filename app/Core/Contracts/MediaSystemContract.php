@@ -3,6 +3,8 @@
 namespace App\Core\Contracts;
 
 use App\Core\Models\Folder;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Interface MediaSystemContract.
@@ -11,17 +13,19 @@ interface MediaSystemContract
 {
     /**
      * @param string $name
+     *
      * @return mixed
      */
     public function disk(string $name);
 
     /**
      * @param $request
-     * @param null $folder
-     * @param null $tag
+     * @param null   $folder
+     * @param null   $tag
      * @param string $disk
-     * @param bool $getAll
-     * @param array $dataTypes
+     * @param bool   $getAll
+     * @param array  $dataTypes
+     *
      * @return mixed
      */
     public function present($request, $folder = null, $tag = null, $disk = '', bool $getAll = false, array $dataTypes = []);
@@ -29,6 +33,7 @@ interface MediaSystemContract
     /**
      * @param $request
      * @param string $disk
+     *
      * @return mixed
      */
     public function makeFolder($request, $disk = '') : Folder;
@@ -40,8 +45,18 @@ interface MediaSystemContract
     public function makeFile($request, $disk = '');
 
     /**
+     * @param Request $request
+     * @param $file
+     * @param string $disk
+     *
+     * @return mixed
+     */
+    public function makeChunkedFile(Request $request, UploadedFile $file, $disk = '');
+
+    /**
      * @param $request
      * @param string $disk
+     *
      * @return mixed
      */
     public function renameFolder($request, $disk = '');
@@ -49,6 +64,7 @@ interface MediaSystemContract
     /**
      * @param $request
      * @param string $disk
+     *
      * @return mixed
      */
     public function renameFile($request, $disk = '');
@@ -57,12 +73,14 @@ interface MediaSystemContract
      * @param $request
      * @param $folder
      * @param $disk
+     *
      * @return int
      */
     public function folderDelete($request, $folder, $disk);
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function fileDelete($id);

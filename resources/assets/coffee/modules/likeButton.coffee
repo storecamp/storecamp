@@ -23,7 +23,7 @@ $.StoreCamp.likeBTN =
           data = {
             type: 'disliked'
             counter: counter
-            }
+          }
           actionPerformed = true
           _this._disliked(formLike, button, buttonI, data)
         if(formLike.hasClass('disliked') && !actionPerformed)
@@ -43,39 +43,42 @@ $.StoreCamp.likeBTN =
               window.location.href = _this.o.redirectIfLogin
             if data.type == 'liked'
               _this._liked(formLike, button, buttonI, data)
+              toastr.success('liked' , data.message)
             if data.type == 'disliked'
               _this._disliked(formLike, button, buttonI, data)
+              toastr.success('disliked' , data.message)
             return
-          error: (data) ->
+          error: (xhr, textStatus, errorThrown) ->
             formLike.replaceWith(likeClone)
-            console.log 'error' + '   ' + data
+            console.log 'error' + '   ' + xhr
+            toastr.error(xhr.statusText, xhr.responseText)
             return
         }, 'html'
         return
     return
 
   _liked: (formLike, button, buttonI, message) ->
-      _this = this
-      console.log(message)
-      buttonI.addClass 'text-danger'
-      buttonI.removeClass 'fa-heart-o'
-      buttonI.addClass 'fa-heart'
-      button.html(buttonI)
-      formLike.removeClass('disliked')
-      formLike.addClass('liked')
-      _this.o.label.html message.counter++
-      return
+    _this = this
+    console.log(message)
+    buttonI.addClass 'text-danger'
+    buttonI.removeClass 'fa-heart-o'
+    buttonI.addClass 'fa-heart'
+    button.html(buttonI)
+    formLike.removeClass('disliked')
+    formLike.addClass('liked')
+    _this.o.label.html message.counter++
+    return
   _disliked: (formLike, button, buttonI, message) ->
-      _this = this
-      console.log(message)
-      if (message.type != "liked")
-        buttonI.removeClass 'text-danger'
-        buttonI.addClass 'fa-heart-o'
-        buttonI.removeClass 'fa-heart'
-        button.html(buttonI)
-        formLike.removeClass('liked')
-        formLike.addClass('disliked')
-        _this.o.label.html message.counter--
-        formLike.find('.like-message').remove()
-      return
+    _this = this
+    console.log(message)
+    if (message.type != "liked")
+      buttonI.removeClass 'text-danger'
+      buttonI.addClass 'fa-heart-o'
+      buttonI.removeClass 'fa-heart'
+      button.html(buttonI)
+      formLike.removeClass('liked')
+      formLike.addClass('disliked')
+      _this.o.label.html message.counter--
+      formLike.find('.like-message').remove()
+    return
 $.StoreCamp.likeBTN.activate()

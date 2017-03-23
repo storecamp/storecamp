@@ -8,6 +8,7 @@ class SelectBuilder
 
     /**
      * TagsBuilder constructor.
+     *
      * @param $instance
      */
     public function __construct($instance = null)
@@ -21,8 +22,9 @@ class SelectBuilder
      * @param $multiple
      * @param array $data
      * @param array $selected
-     * @param null $class
-     * @param null $placeholder
+     * @param null  $class
+     * @param null  $placeholder
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render(string $actionUrl, string $attrName, bool $multiple, $data = [], $selected = [], $class = null, $placeholder = null)
@@ -32,15 +34,15 @@ class SelectBuilder
         $attrName = $attrName ? $attrName : ($multiple ? 'select[]' : 'select');
         $className = $class;
         $class = 'form-control '.($class ? $class : ' select_builder_select ').($multiple ? ' multiple ' : '');
-        if (! empty($selected)) {
-            if (! is_array($selected)) {
+        if (!empty($selected)) {
+            if (!is_array($selected)) {
                 $selected = $selected->toArray();
             }
         } else {
             $selected = [];
         }
-        if (! empty($data)) {
-            if (! is_array($data)) {
+        if (!empty($data)) {
+            if (!is_array($data)) {
                 $result = $data->toArray();
             }
         }

@@ -2,7 +2,13 @@
 
 Auth::routes();
 
-$this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
+if (env('APP_ENV') !== 'testing') {
+    $prefix = \LaravelLocalization::setLocale();
+} else {
+    $prefix = '/';
+}
+
+$this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
     /*
      * Client Site routes
      */
@@ -59,28 +65,28 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
         });
 
         $router->group(['prefix' => 'order', 'as' => 'order::'], function (\Illuminate\Routing\Router $router) {
-            $router->get('index', [
+            $router->get('index/{status?}', [
                 'uses' => 'Site\OrdersController@index',
                 'as' => 'index',
             ]);
 
-            $router->get('personal', [
-                'uses' => 'Site\OrdersController@personal',
+            $router->post('personal', [
+                'uses' => 'Site\OrdersController@createPersonal',
                 'as' => 'personal',
             ]);
 
-            $router->get('address', [
-                'uses' => 'Site\OrdersController@address',
+            $router->post('address', [
+                'uses' => 'Site\OrdersController@createAddress',
                 'as' => 'address',
             ]);
 
-            $router->get('shipment', [
-                'uses' => 'Site\OrdersController@shipment',
+            $router->post('shipment', [
+                'uses' => 'Site\OrdersController@createShipping',
                 'as' => 'shipment',
             ]);
 
-            $router->get('payment', [
-                'uses' => 'Site\OrdersController@payment',
+            $router->post('payment', [
+                'uses' => 'Site\OrdersController@createPayment',
                 'as' => 'payment',
             ]);
         });
@@ -101,7 +107,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
 
         $this->get('/language/{key}', [
             'as' => 'toggleLanguage',
-            'uses' => 'Site\TogglesController@toggleLanguage', ]);
+            'uses' => 'Site\TogglesController@toggleLanguage',]);
     });
 
     $this->get('/htmlElements', [
@@ -112,18 +118,22 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
     $this->group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
         $this->get('dashboard', [
             'uses' => 'Admin\AdminController@show',
-            'as' => 'dashboard', ]);
+            'as' => 'dashboard',]);
         $this->get('/', [
             'uses' => 'Admin\AdminController@show',
             'as' => 'dashboard',
         ]);
 
+        // users
         $this->group(['prefix' => 'users', 'as' => 'users::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\UsersController@index',
                 'as' => 'index',
             ]);
-
+            $this->get('data', [
+                'uses' => 'Admin\UsersController@data',
+                'as' => 'data',
+            ]);
             $this->get('/show/{id}', [
                 'uses' => 'Admin\UsersController@show',
                 'as' => 'show',
@@ -157,6 +167,8 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'get::delete',
             ])->middleware('notAdmin');
         });
+
+        // media
         $this->group(['prefix' => 'media', 'as' => 'media::'], function () {
             $this->get('/index', [
                 'uses' => 'Admin\MediaController@index',
@@ -223,24 +235,25 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ])->middleware('folderLocked');
         });
 
+        // roles
         $this->group(['prefix' => 'roles', 'as' => 'roles::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\RolesController@index',
                 'as' => 'index',
-
             ]);
-
+            $this->get('data', [
+                'uses' => 'Admin\RolesController@data',
+                'as' => 'data',
+            ]);
             $this->get('create', [
                 'uses' => 'Admin\RolesController@create',
                 'as' => 'create',
 
             ]);
-
             $this->get('edit/{id}', [
                 'uses' => 'Admin\RolesController@edit',
                 'as' => 'edit',
             ]);
-
             $this->put('update/{id}', [
                 'uses' => 'Admin\RolesController@update',
                 'as' => 'update',
@@ -266,11 +279,17 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'get::delete',
             ])->middleware('notDefaultRole');
         });
+
+        // products
         $this->group(['prefix' => 'products', 'as' => 'products::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\ProductsController@index',
                 'as' => 'index',
 
+            ]);
+            $this->get('data', [
+                'uses' => 'Admin\ProductsController@data',
+                'as' => 'data',
             ]);
 
             $this->get('show/{id}', [
@@ -313,12 +332,19 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'get::select',
             ]);
         });
+
+        // reviews
         $this->group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
             $this->get('index',
                 [
                     'uses' => 'Admin\ProductReviewController@index',
                     'as' => 'index',
                 ]);
+
+            $this->get('data', [
+                'uses' => 'Admin\ProductReviewController@data',
+                'as' => 'data',
+            ]);
 
             $this->get('show/{id}',
                 [
@@ -366,7 +392,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 'as' => 'visibility',
             ]);
 
-            $this->get('markasread/productReview/{feed}', [
+            $this->get('markasread/reviews/{feed}', [
                 'uses' => 'Admin\ProductReviewController@markAsRead',
                 'as' => 'markasread',
             ]);
@@ -382,11 +408,17 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ])->middleware('belongsToUserOrAdmin');
         });
 
+        // categories
         $this->group(['prefix' => 'categories', 'as' => 'categories::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\CategoriesController@index',
                 'as' => 'index',
 
+            ]);
+
+            $this->get('data', [
+                'uses' => 'Admin\CategoriesController@data',
+                'as' => 'data',
             ]);
 
             $this->get('create', [
@@ -425,11 +457,16 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ]);
         });
 
+        // attribute groups
         $this->group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\AttributeGroupsController@index',
                 'as' => 'index',
 
+            ]);
+            $this->get('data', [
+                'uses' => 'Admin\AttributeGroupsController@data',
+                'as' => 'data',
             ]);
 
             $this->get('create', [
@@ -470,6 +507,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ]);
         });
 
+        // attributes
         $this->group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
             $this->get('/', [
                 'uses' => 'Admin\AttributesController@index',
@@ -477,10 +515,14 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
 
             ]);
 
+            $this->get('data', [
+                'uses' => 'Admin\AttributesController@data',
+                'as' => 'data',
+            ]);
+
             $this->get('create', [
                 'uses' => 'Admin\AttributesController@create',
                 'as' => 'create',
-
             ]);
 
             $this->get('edit/{id}', [
@@ -515,6 +557,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ]);
         });
 
+        // subscribers
         $this->group(['prefix' => 'subscribers', 'as' => 'subscribers::'], function () {
             $this->get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'index']);
 
@@ -552,6 +595,8 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                     'as' => 'generate',
                 ]);
         });
+
+        // mail
         $this->group(['prefix' => 'mail', 'as' => 'mail::'], function () {
             $this->get('/',
                 ['uses' => 'Admin\MailController@index', 'as' => 'index',
@@ -567,11 +612,24 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                     'as' => 'create',
                 ]);
 
+            $this->get('/frame',
+                ['uses' => 'Admin\MailController@showFrame',
+                    'as' => 'showFrame',
+                ]);
+
             $this->get('/templates',
                 ['uses' => 'Admin\MailController@getTmpMails',
                     'as' => 'getTmpMails',
                 ]);
+
+            $this->post('/makeCampaign',
+                [
+                    'uses' => 'Admin\MailController@makeCampaign',
+                    'as' => 'makeCampaign',
+                ]);
         });
+
+        //campaign
         $this->group(['prefix' => 'campaign', 'as' => 'campaign::'], function () {
             $this->get('/', ['uses' => 'Admin\CampaignController@index', 'as' => 'index']);
 
@@ -615,48 +673,50 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             ]);
         });
 
+        // design
         $this->group(['prefix' => 'design', 'as' => 'design::'], function () {
-            $this->group(['prefix' => 'layouts', 'as' => 'layouts::'], function () {
+            $this->get('/index', ['uses' => 'Admin\DesignController@index', 'as' => 'index']);
+            $this->group(['prefix' => 'pages', 'as' => 'pages::'], function () {
                 $this->get('/', [
-                    'uses' => 'Admin\LayoutController@index',
+                    'uses' => 'Admin\PagesController@index',
                     'as' => 'index',
 
                 ]);
 
                 $this->get('create', [
-                    'uses' => 'Admin\LayoutController@create',
+                    'uses' => 'Admin\PagesController@create',
                     'as' => 'create',
 
                 ]);
 
                 $this->get('edit/{id}', [
-                    'uses' => 'Admin\LayoutController@edit',
+                    'uses' => 'Admin\PagesController@edit',
                     'as' => 'edit',
                 ]);
 
                 $this->put('update/{id}', [
-                    'uses' => 'Admin\LayoutController@update',
+                    'uses' => 'Admin\PagesController@update',
                     'as' => 'update',
                 ]);
 
                 $this->delete('{id}', [
-                    'uses' => 'Admin\LayoutController@destroy',
+                    'uses' => 'Admin\PagesController@destroy',
                     'as' => 'delete',
                 ]);
 
                 $this->post('store', [
-                    'uses' => 'Admin\LayoutController@store',
+                    'uses' => 'Admin\PagesController@store',
                     'as' => 'store',
                 ]);
 
                 $this->get('/delete/{id}', [
-                    'uses' => 'Admin\LayoutController@destroy',
+                    'uses' => 'Admin\PagesController@destroy',
                     'as' => 'get::delete',
                 ]);
 
-                $this->get('/layouts/json', [
+                $this->get('/pages/json', [
 
-                    'uses' => 'Admin\LayoutController@getJson',
+                    'uses' => 'Admin\PagesController@getJson',
                     'as' => 'get::json',
                 ]);
             });
@@ -664,92 +724,87 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                 $this->get('/', [
                     'uses' => 'Admin\BannerController@index',
                     'as' => 'index',
-
                 ]);
-
                 $this->get('create', [
                     'uses' => 'Admin\BannerController@create',
                     'as' => 'create',
-
                 ]);
-
                 $this->get('edit/{id}', [
                     'uses' => 'Admin\BannerController@edit',
                     'as' => 'edit',
                 ]);
-
                 $this->put('update/{id}', [
                     'uses' => 'Admin\BannerController@update',
                     'as' => 'update',
                 ]);
-
                 $this->delete('{id}', [
                     'uses' => 'Admin\BannerController@destroy',
                     'as' => 'delete',
                 ]);
-
                 $this->post('store', [
                     'uses' => 'Admin\BannerController@store',
                     'as' => 'store',
                 ]);
-
                 $this->get('/delete/{id}', [
                     'uses' => 'Admin\BannerController@destroy',
                     'as' => 'get::delete',
                 ]);
-
-                $this->get('/layouts/json', [
-
+                $this->get('/banners/json', [
                     'uses' => 'Admin\BannerController@getJson',
                     'as' => 'get::json',
                 ]);
             });
-            $this->group(['prefix' => 'staticPages', 'as' => 'staticPages::'], function () {
+            // Menu
+            $this->group(['as' => 'menus::', 'prefix' => 'menus'], function () {
                 $this->get('/', [
-                    'uses' => 'Admin\StaticController@index',
-                    'as' => 'index',
-
+                    'uses' => 'Admin\MenuController@index', 'as' => 'index',
                 ]);
-
-                $this->get('create', [
-                    'uses' => 'Admin\StaticController@create',
+                $this->get('data', [
+                    'uses' => 'Admin\MenuController@data',
+                    'as' => 'data',
+                ]);
+                $this->get('/create', [
+                    'uses' => 'Admin\MenuController@create',
                     'as' => 'create',
-
                 ]);
-
-                $this->get('edit/{id}', [
-                    'uses' => 'Admin\StaticController@edit',
-                    'as' => 'edit',
-                ]);
-
-                $this->put('update/{id}', [
-                    'uses' => 'Admin\StaticController@update',
-                    'as' => 'update',
-                ]);
-
-                $this->delete('{id}', [
-                    'uses' => 'Admin\StaticController@destroy',
-                    'as' => 'delete',
-                ]);
-
-                $this->post('store', [
-                    'uses' => 'Admin\StaticController@store',
+                $this->post('/store', [
+                    'uses' => 'Admin\MenuController@store',
                     'as' => 'store',
                 ]);
-
-                $this->get('/delete/{id}', [
-                    'uses' => 'Admin\StaticController@destroy',
-                    'as' => 'get::delete',
+                $this->get('/edit/{id}', [
+                    'uses' => 'Admin\MenuController@edit',
+                    'as' => 'edit',
                 ]);
-
-                $this->get('/layouts/json', [
-
-                    'uses' => 'Admin\StaticController@getJson',
-                    'as' => 'get::json',
+                $this->put('/update/{id}', [
+                    'uses' => 'Admin\MenuController@update',
+                    'as' => 'update',
                 ]);
+                $this->delete('/{id}', [
+                    'uses' => 'Admin\MenuController@delete', 'as' => 'delete',
+                ]);
+                $this->group(['prefix' => '{menu}'], function () {
+                    $this->get('builder', [
+                        'uses' => 'Admin\MenuController@builder', 'as' => 'builder',
+                    ]);
+                    $this->post('order', [
+                        'uses' => 'Admin\MenuController@order_item', 'as' => 'order',
+                    ]);
+                    $this->group(['as' => 'item::', 'prefix' => 'item'], function () {
+                        $this->delete('{id}', [
+                            'uses' => 'Admin\MenuController@delete_menu', 'as' => 'destroy',
+                        ]);
+                        $this->post('/', [
+                            'uses' => 'Admin\MenuController@add_item', 'as' => 'add',
+                        ]);
+                        $this->put('/', [
+                            'uses' => 'Admin\MenuController@update_item', 'as' => 'update',
+                        ]);
+                    });
+                });
             });
         });
 
+        // audits
         $this->group(['prefix' => 'audits', 'as' => 'audits::'], function () {
             $this->get('show/{model}/{id}',
                 [
@@ -757,7 +812,7 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
                     'as' => 'show',
                 ]);
         });
-
+        // Sales
         $this->group(['prefix' => 'sales', 'as' => 'sales::'], function () {
             $this->group(['prefix' => 'orders', 'as' => 'orders::'], function () {
                 $this->get('/', [
@@ -767,6 +822,68 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
             });
         });
 
+        // Settings
+        $this->group(['as' => 'settings::', 'prefix' => 'settings'], function (\Illuminate\Routing\Router $router) {
+            $router->group(['as' => 'default::', 'prefix' => 'default'], function (\Illuminate\Routing\Router $router) {
+                $router->get('/', [
+                    'uses' => 'Admin\SettingsController@index', 'as' => 'index',
+                ]);
+                $this->get('data', [
+                    'uses' => 'Admin\SettingsController@data',
+                    'as' => 'data',
+                ]);
+                $router->get('/create', [
+                    'uses' => 'Admin\SettingsController@create',
+                    'as' => 'create',
+                ]);
+                $router->post('/', [
+                    'uses' => 'Admin\SettingsController@store', 'as' => 'store',
+                ]);
+                $router->put('/{id}', [
+                    'uses' => 'Admin\SettingsController@update', 'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'Admin\SettingsController@delete', 'as' => 'delete',
+                ]);
+                $router->get('{id}/move_up', [
+                    'uses' => 'Admin\SettingsController@move_up', 'as' => 'move_up',
+                ]);
+                $router->get('{id}/move_down', [
+                    'uses' => 'Admin\SettingsController@move_down', 'as' => 'move_down',
+                ]);
+                $router->get('{id}/delete_value', [
+                    'uses' => 'Admin\SettingsController@delete_value', 'as' => 'delete_value',
+                ]);
+            });
+            $this->group(['as' => 'currency::', 'prefix' => 'currency'], function (\Illuminate\Routing\Router $router) {
+                $router->get('/', [
+                    'uses' => 'Admin\CurrenciesController@index', 'as' => 'index',
+                ]);
+                $this->get('data', [
+                    'uses' => 'Admin\CurrenciesController@data',
+                    'as' => 'data',
+                ]);
+                $router->get('/create', [
+                    'uses' => 'Admin\CurrenciesController@create',
+                    'as' => 'create',
+                ]);
+                $router->get('/edit/{id}', [
+                    'uses' => 'Admin\CurrenciesController@edit',
+                    'as' => 'edit',
+                ]);
+                $router->post('/', [
+                    'uses' => 'Admin\CurrenciesController@store', 'as' => 'store',
+                ]);
+                $router->put('/{id}', [
+                    'uses' => 'Admin\CurrenciesController@update', 'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'Admin\CurrenciesController@destroy', 'as' => 'delete',
+                ]);
+            });
+        });
+
+        // toggles
         $this->get('toggleBan/{class_name}/{object_id}',
             ['uses' => 'Admin\TogglesController@toggleBan', 'as' => 'toggleBan'])
             ->where('object_id', '[0-9]+');
@@ -774,35 +891,35 @@ $this->group(['prefix' => \LaravelLocalization::setLocale(),  'middleware' => ['
 
     $this->group(
         ['prefix' => '/admin/log-viewer'], function () {
-            $this->get('/', [
+        $this->get('/', [
             'as' => 'log-viewer::dashboard',
             'uses' => 'Admin\LogViewerController@index',
         ]);
-            $this->group(['prefix' => '/logs'], function () {
-                $this->get('/', [
+        $this->group(['prefix' => '/logs'], function () {
+            $this->get('/', [
                 'as' => 'log-viewer::logs.list',
                 'uses' => 'Admin\LogViewerController@listLogs',
             ]);
-                $this->delete('delete', [
+            $this->delete('delete', [
                 'as' => 'log-viewer::logs.delete',
                 'uses' => 'Admin\LogViewerController@delete',
             ]);
-            });
+        });
 
-            $this->group(['prefix' => '/{date}'], function () {
-                $this->get('/', [
+        $this->group(['prefix' => '/{date}'], function () {
+            $this->get('/', [
                 'as' => 'log-viewer::logs.show',
                 'uses' => 'Admin\LogViewerController@show',
             ]);
 
-                $this->get('download', [
+            $this->get('download', [
                 'as' => 'log-viewer::logs.download',
                 'uses' => 'Admin\LogViewerController@download',
             ]);
-                $this->get('{level}', [
+            $this->get('{level}', [
                 'as' => 'log-viewer::logs.filter',
                 'uses' => 'Admin\LogViewerController@showByLevel',
             ]);
-            });
         });
+    });
 });

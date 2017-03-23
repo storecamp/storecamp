@@ -27,6 +27,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
 
     /**
      * SendCampaignEmails constructor.
+     *
      * @param $view
      * @param $subject
      * @param $receiverEmail
@@ -48,7 +49,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
 
     /**
      * @param UrlGenerator $urlhelper
-     * @param Mailer $mailer
+     * @param Mailer       $mailer
      */
     public function handle(UrlGenerator $urlhelper, Mailer $mailer)
     {
@@ -59,7 +60,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
         $filepath = $this->filepath;
         $urlhelper->forceRootUrl(config('app.url'));
         $mailer->queue($this->view,
-            ['name' => $this->name, 'receiverEmail' => $receiverEmail, 'subject' => $subject,
+            ['name'          => $this->name, 'receiverEmail' => $receiverEmail, 'subject' => $subject,
                 'senderName' => $senderName, ],
             function ($m) use ($receiverEmail, $subject, $senderEmail, $senderName, $filepath) {
                 $m->to($receiverEmail)->subject($subject);

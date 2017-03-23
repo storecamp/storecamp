@@ -14,6 +14,7 @@ class MailTemplatesToMediaSeeder extends Seeder
 
     /**
      * MailTemplatesToMediaSeeder constructor.
+     *
      * @param \App\Drivers\FolderToDb\Synchronizer $synchronizer
      */
     public function __construct(\App\Drivers\FolderToDb\Synchronizer $synchronizer)

@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\LogViewerSystemContract;
-use Arcanedev\LogViewer\Http\Controllers\Controller as LogBaseController;
+use Arcanedev\LogViewer\Http\Controllers\LogViewerController as LogBaseController;
 use Illuminate\Http\Request;
 
 class LogViewerController extends LogBaseController
@@ -24,10 +24,16 @@ class LogViewerController extends LogBaseController
      */
     public function __construct(LogViewerSystemContract $viewerSystem)
     {
-        parent::__construct();
+        parent::__construct(app('Arcanedev\LogViewer\Contracts\LogViewer'));
         $this->viewerSystem = $viewerSystem;
         $this->perPage = config('log-viewer.per-page', $this->perPage);
+        $this->middleware('role:Admin');
     }
+
+    /* ------------------------------------------------------------------------------------------------
+    |  Constructor
+    | ------------------------------------------------------------------------------------------------
+    */
 
     public function view($view, $data = [], $mergeData = [])
     {
@@ -52,7 +58,7 @@ class LogViewerController extends LogBaseController
     /**
      * List all logs.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\View\View
      */
@@ -69,7 +75,7 @@ class LogViewerController extends LogBaseController
     /**
      * Show the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Illuminate\View\View
      */
@@ -87,8 +93,8 @@ class LogViewerController extends LogBaseController
     /**
      * Filter the log entries by level.
      *
-     * @param  string  $date
-     * @param  string  $level
+     * @param string $date
+     * @param string $level
      *
      * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
@@ -112,7 +118,7 @@ class LogViewerController extends LogBaseController
     /**
      * Download the log.
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
@@ -126,13 +132,13 @@ class LogViewerController extends LogBaseController
     /**
      * Delete a log.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(Request $request)
     {
-        if (! $request->ajax()) {
+        if (!$request->ajax()) {
             abort(405, 'Method Not Allowed');
         }
 

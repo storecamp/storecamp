@@ -1,4 +1,9 @@
-<div class="linker-output">
+<?php $prefix = isset($prefix) ? $prefix : null;
+?>
+<span class="linker-output" style="
+    float: left;
+    clear: both;
+">
     <?php isset($preferredTag) ? $preferredTag : 'thumbnail' ?>
     <a data-toggle="modal" href="#fileLinker-modal"
        class="btn btn-md btn-info file-linker"
@@ -8,17 +13,21 @@
        data-attach-output-path="{{ $outputElementPath }}"
        data-preferred-tag="{{ $preferredTag }}"
        data-requestUrl="{{ route('admin::media::file_linker', [$disk]) }}"
-    >
+       style="text-align: left;float:left; clear: both; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;">
         {{ $btnMsg ? $btnMsg : "attach file" }}
     </a>
-</div>
+    <div class="clearfix"></div>
+</span>
+<div class="clearfix"></div>
 <div class="modal tallModal modal-wide" id="fileLinker-modal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Please Select Files To Attach</h4>
+                <h4 class="modal-title" style="text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;">Please Select Files To Attach</h4>
             </div>
             <div class="modal-body" style="word-wrap: break-word;"></div>
             <div class="modal-footer">

@@ -129,7 +129,7 @@
     }
   }
   //Sidebar Menu. First level links
-  .sidebar-menu > li {
+  .sidebar-menu > li, .default-menu > li {
     //Section Headning
     &.header {
       color: lighten(@sidebar-dark-bg, 20%);
@@ -220,7 +220,7 @@
     }
   }
   //Sidebar Menu. First level links
-  .sidebar-menu > li {
+  .sidebar-menu > li, .default-menu > li {
     .transition(border-left-color .3s ease);
     //border-left: 3px solid transparent;
     //Section Headning
@@ -254,7 +254,7 @@
     }
   }
   //All links within the sidebar menu
-  .sidebar a {
+  .sidebar a, .menu a {
     color: @sidebar-light-color;
     &:hover {
       text-decoration: none;

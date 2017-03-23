@@ -41,6 +41,7 @@ trait CacheableRepository
      * Set Cache Repository.
      *
      * @param CacheRepository $repository
+     *
      * @return $this
      */
     public function setCacheRepository(CacheRepository $repository)
@@ -68,6 +69,7 @@ trait CacheableRepository
      * Skip Cache.
      *
      * @param bool $status
+     *
      * @return $this
      */
     public function skipCache($status = true)
@@ -95,13 +97,14 @@ trait CacheableRepository
 
     /**
      * @param $method
+     *
      * @return bool
      */
     protected function allowedCache($method)
     {
         $cacheEnabled = config('repository.cache.enabled', true);
 
-        if (! $cacheEnabled) {
+        if (!$cacheEnabled) {
             return false;
         }
 
@@ -113,7 +116,7 @@ trait CacheableRepository
         }
 
         if (is_array($cacheExcept)) {
-            return ! in_array($method, $cacheExcept);
+            return !in_array($method, $cacheExcept);
         }
 
         if (is_null($cacheOnly) && is_null($cacheExcept)) {
@@ -128,6 +131,7 @@ trait CacheableRepository
      *
      * @param $method
      * @param $args
+     *
      * @return string
      */
     public function getCacheKey($method, $args = null)
@@ -161,11 +165,12 @@ trait CacheableRepository
      * Retrieve all data of repository.
      *
      * @param array $columns
+     *
      * @return mixed
      */
     public function all($columns = ['*'])
     {
-        if (! $this->allowedCache('all') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('all') || $this->isSkippedCache()) {
             return parent::all($columns);
         }
 
@@ -180,13 +185,15 @@ trait CacheableRepository
 
     /**
      * Retrieve all data of repository, paginated.
-     * @param null $limit
+     *
+     * @param null  $limit
      * @param array $columns
+     *
      * @return mixed
      */
     public function paginate($limit = null, $columns = ['*'])
     {
-        if (! $this->allowedCache('paginate') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('paginate') || $this->isSkippedCache()) {
             return parent::paginate($limit, $columns);
         }
 
@@ -205,11 +212,12 @@ trait CacheableRepository
      *
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
     public function find($id, $columns = ['*'])
     {
-        if (! $this->allowedCache('find') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('find') || $this->isSkippedCache()) {
             return parent::find($id, $columns);
         }
 
@@ -228,11 +236,12 @@ trait CacheableRepository
      * @param $field
      * @param $value
      * @param array $columns
+     *
      * @return mixed
      */
     public function findByField($field, $value = null, $columns = ['*'])
     {
-        if (! $this->allowedCache('findByField') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('findByField') || $this->isSkippedCache()) {
             return parent::findByField($field, $value, $columns);
         }
 
@@ -250,11 +259,12 @@ trait CacheableRepository
      *
      * @param array $where
      * @param array $columns
+     *
      * @return mixed
      */
     public function findWhere(array $where, $columns = ['*'])
     {
-        if (! $this->allowedCache('findWhere') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('findWhere') || $this->isSkippedCache()) {
             return parent::findWhere($where, $columns);
         }
 
@@ -271,11 +281,12 @@ trait CacheableRepository
      * Find data by Criteria.
      *
      * @param CriteriaInterface $criteria
+     *
      * @return mixed
      */
     public function getByCriteria(CriteriaInterface $criteria)
     {
-        if (! $this->allowedCache('getByCriteria') || $this->isSkippedCache()) {
+        if (!$this->allowedCache('getByCriteria') || $this->isSkippedCache()) {
             return parent::getByCriteria($criteria);
         }
 

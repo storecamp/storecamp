@@ -14,7 +14,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Thread
+ * App\Core\Models\Thread.
  *
  * @property int $id
  * @property string $unique_id
@@ -30,7 +30,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Message[] $messages
  * @property-read \App\Core\Models\Message $parentMessage
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
- * @property-read \App\Core\Models\ProductReview $productReview
+ * @property-read \App\Core\Models\ProductReview $reviews
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread between($participants)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUser($userId)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUserWithNewMessages($userId)
@@ -170,6 +171,7 @@ class Thread extends Model implements Transformable
      * Returns an array of user ids that are associated with the thread.
      *
      * @param null $userId
+     *
      * @return array
      */
     public function participantsUserIds($userId = null)
@@ -188,6 +190,7 @@ class Thread extends Model implements Transformable
      *
      * @param $query
      * @param $userId
+     *
      * @return mixed
      */
     public function scopeForUser($query, $userId)
@@ -203,6 +206,7 @@ class Thread extends Model implements Transformable
      *
      * @param $query
      * @param $userId
+     *
      * @return mixed
      */
     public function scopeForUserWithNewMessages($query, $userId)
@@ -223,6 +227,7 @@ class Thread extends Model implements Transformable
      *
      * @param $query
      * @param $participants
+     *
      * @return mixed
      */
     public function scopeBetween($query, array $participants)
@@ -238,6 +243,7 @@ class Thread extends Model implements Transformable
      * Adds users to this thread.
      *
      * @param array|Collection $participants list of all participants
+     *
      * @return void
      */
     public function addParticipants($participants)
@@ -246,12 +252,12 @@ class Thread extends Model implements Transformable
             foreach ($participants as $user) {
                 if ($user instanceof User) {
                     Participant::firstOrCreate([
-                        'user_id' => $user->id,
+                        'user_id'   => $user->id,
                         'thread_id' => $this->id,
                     ]);
                 } else {
                     Participant::firstOrCreate([
-                        'user_id' => $user,
+                        'user_id'   => $user,
                         'thread_id' => $this->id,
                     ]);
                 }
@@ -263,6 +269,7 @@ class Thread extends Model implements Transformable
      * Adds users to this thread.
      *
      * @param array $participants list of all participants
+     *
      * @return void
      */
     public function addParticipantsObjects(array $participants)
@@ -270,7 +277,7 @@ class Thread extends Model implements Transformable
         if (count($participants)) {
             foreach ($participants as $user) {
                 Participant::firstOrCreate([
-                    'user_id' => $user->id,
+                    'user_id'   => $user->id,
                     'thread_id' => $this->id,
                 ]);
             }
@@ -286,7 +293,7 @@ class Thread extends Model implements Transformable
     {
         try {
             $participant = $this->getParticipantFromUser($userId);
-            $participant->last_read = new Carbon;
+            $participant->last_read = new Carbon();
             $participant->save();
         } catch (ModelNotFoundException $e) {
             // do nothing
@@ -297,6 +304,7 @@ class Thread extends Model implements Transformable
      * See if the current thread is unread by the user.
      *
      * @param int $userId
+     *
      * @return bool
      */
     public function isUnread($userId)
@@ -317,8 +325,10 @@ class Thread extends Model implements Transformable
      * Finds the participant record from a user id.
      *
      * @param $userId
-     * @return mixed
+     *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     *
+     * @return mixed
      */
     public function getParticipantFromUser($userId)
     {
@@ -339,8 +349,9 @@ class Thread extends Model implements Transformable
     /**
      * Generates a string of participant information.
      *
-     * @param null $userId
+     * @param null  $userId
      * @param array $columns
+     *
      * @return string
      */
     public function participantsString($userId = null, $columns = ['name'])
@@ -365,6 +376,7 @@ class Thread extends Model implements Transformable
      * Checks to see if a user is a current participant of the thread.
      *
      * @param $userId
+     *
      * @return bool
      */
     public function hasParticipant($userId)
@@ -381,6 +393,7 @@ class Thread extends Model implements Transformable
      * Generates a select string used in participantsString().
      *
      * @param $columns
+     *
      * @return string
      */
     protected function createSelectString($columns)
@@ -428,6 +441,6 @@ class Thread extends Model implements Transformable
 
         $userModel = Config::get('messenger.user_model');
 
-        return $this->usersTable = (new $userModel)->getTable();
+        return $this->usersTable = (new $userModel())->getTable();
     }
 }

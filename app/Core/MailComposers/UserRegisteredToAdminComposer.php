@@ -8,6 +8,7 @@ class UserRegisteredToAdminComposer extends MailComposer
 {
     /**
      * @param $user
+     *
      * @return \CodeZero\Mailer\Mail
      */
     public function compose($user)

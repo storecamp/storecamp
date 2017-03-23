@@ -1,5 +1,5 @@
 <div class="media file-item" data-file-id="{{ $file->id }}"
-     data-filename="{{ $file->filename }}"
+     data-filename="{{ $file->filename .'.'.$file->extension}}"
      data-disk="{{ $file->disk }}"
      data-file-type="{{ $file->aggregate_type }}"
      data-modified="{{ $file->updated_at }}"
@@ -21,7 +21,9 @@
         <div>
             <div class="pull-right inline items-list">
                 <a class="btn info-btn btn-default btn-xs" data-name="{{ $file->filename }}"
-                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal" type="rename"
+                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal"
+                   data-mime="{{ $file->mime_type }}"
+                   type="info"
                    role="button"
                    href="#info-modal">
                     <i class="fa fa-play" aria-hidden="true"></i>
@@ -37,13 +39,16 @@
                     <i class="fa fa-edit" aria-hidden="true"></i>
                     edit
                 </a>
-                <a class="delete-btn text-danger btn btn-default btn-xs" type="delete" role="button"
-                   href="{{route("admin::media::get.delete", [$file->id])}}">
+                <a class="delete-file-btn text-danger btn btn-default btn-xs" type="delete" role="button"
+                   href="{{route("admin::media::get.delete", [$file->id])}}"
+                   data-id="{{$file->id}}"
+                   data-with-modal="true"
+                   data-name="{{$file->filename}}">
                     <i class="fa fa-times" aria-hidden="true"></i>
                     delete
                 </a>
             </div>
-            <strong>{{ $file->filename }}</strong>
+            <strong>{{ $file->filename  .'.'.$file->extension}}</strong>
         </div>
         <div class="text-muted">
             <small>size: {{ formatBytes($file->size)}}</small>

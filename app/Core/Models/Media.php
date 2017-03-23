@@ -23,6 +23,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Core\Models\Folder $folder
  * @property-read string $basename
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Media whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Media whereDisk($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Media whereDirectory($value)
@@ -40,6 +41,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Plank\Mediable\Media forPathOnDisk($disk, $path)
  * @method static \Illuminate\Database\Query\Builder|\Plank\Mediable\Media unordered()
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  */
 class Media extends \Plank\Mediable\Media implements Transformable

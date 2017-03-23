@@ -1,21 +1,19 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
-use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
- * Class StoreCampTest
+ * Class StoreCampTest.
  */
-class StoreCampTest extends TestCase
+class StoreCampTest extends \tests\BrowserKitTestCase
 {
     use DatabaseMigrations;
 
     /**
      * StoreCampTest constructor.
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -25,7 +23,7 @@ class StoreCampTest extends TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__ . '/../bootstrap/app.php';
+        $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Http\Kernel::class);
 
@@ -62,13 +60,13 @@ class StoreCampTest extends TestCase
     public function testLogin()
     {
         $faker = Faker::create();
-        $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, "password" => "passw0RD"]);
+        $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, 'password' => 'passw0RD']);
         $this->artisan('db:seed');
         $this->visit('/login')
             ->type($user->email, 'email')
             ->type('passw0RD', 'password')
             ->press('Sign In')
-            ->seePageIs('/en/home')
+            ->seePageIs('/home')
             ->see($user->name);
     }
 
@@ -119,8 +117,8 @@ class StoreCampTest extends TestCase
         $user = factory(\App\Core\Models\User::class)->create();
         $this->artisan('db:seed');
         $this->actingAs($user)
-            ->visit('/')
-            ->see($user->name);
+            ->visit('/home')
+            ->see(str_limit($user->name, 20));
     }
 
     /**
@@ -135,9 +133,9 @@ class StoreCampTest extends TestCase
         $form = $this->actingAs($user)->visit('/')->getForm('logout');
 
         $this->actingAs($user)
-            ->visit('/en')
+            ->visit('/home')
             ->makeRequestUsingForm($form)
-            ->seePageIs('/en');
+            ->seePageIs('/');
     }
 
     /**
@@ -168,9 +166,9 @@ class StoreCampTest extends TestCase
             ->type('passw0RD', 'password')
             ->type('passw0RD', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/en')
+            ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
-                'name' => 'Sergi Tur Badenas',]);
+                'name'                        => 'Sergi Tur Badenas', ]);
     }
 
     /**

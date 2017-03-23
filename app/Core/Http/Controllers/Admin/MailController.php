@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Contracts\MailCampaignSystemContract;
 use App\Core\Models\Folder;
 use App\Core\Models\Mail;
 use App\Core\Repositories\MailRepository;
@@ -28,16 +29,25 @@ class MailController extends BaseController
     private $repository;
 
     /**
+     * @var MailCampaignSystemContract
+     */
+    private $mailCampaign;
+
+    /**
      * MailController constructor.
      * @param MailRepository $repository
+     * @param MailCampaignSystemContract $mailCampaign
      */
-    public function __construct(MailRepository $repository)
+    public function __construct(MailRepository $repository, MailCampaignSystemContract $mailCampaign)
     {
+        $this->mailCampaign = $mailCampaign;
         $this->repository = $repository;
+        $this->middleware('role:Admin');
     }
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
@@ -52,6 +62,7 @@ class MailController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -65,6 +76,18 @@ class MailController extends BaseController
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function showFrame(Request $request)
+    {
+        $mail = new Mail();
+
+        return $this->view('frame', compact('mail'));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Request $request)
     {
         $mail = new Mail();
@@ -74,6 +97,7 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function getTmpMails(Request $request)
@@ -86,6 +110,7 @@ class MailController extends BaseController
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -98,6 +123,7 @@ class MailController extends BaseController
     /**
      * @param $folder
      * @param $filename
+     *
      * @return mixed
      */
     public function getHistoryTmpMail($folder, $filename)
@@ -105,5 +131,14 @@ class MailController extends BaseController
         $mail = $this->repository->getHistoryTmpMail($folder, $filename);
 
         return $this->view('show-campaign-history', compact('mail'));
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function makeCampaign(Request $request)
+    {
+        dd($request->all());
+        return $this->mailCampaign->generateCampaign($request);
     }
 }

@@ -35,6 +35,7 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request)
@@ -53,6 +54,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $rowId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $rowId)
@@ -62,7 +64,7 @@ class CartController extends BaseController
             if ($request->ajax()) {
                 return response()->json(['message' => 'cart item updated']);
             } else {
-                $this->flash('success','cart item updated');
+                $this->flash('success', 'cart item updated');
 
                 return redirect()->route('site::cart::show');
             }
@@ -74,6 +76,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $productId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function add(Request $request, $productId)
@@ -82,7 +85,7 @@ class CartController extends BaseController
             $data = $request->all();
             $cart = $this->cartSystem->addItem($data, $productId);
             if ($request->ajax()) {
-                $this->flash('success','item added to cart');
+                $this->flash('success', 'item added to cart');
 
                 return response()->json(['cart' => json_encode($cart)]);
             } else {
@@ -96,6 +99,7 @@ class CartController extends BaseController
     /**
      * @param Request $request
      * @param $itemId
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function remove(Request $request, $itemId)
@@ -104,7 +108,7 @@ class CartController extends BaseController
         if ($request->ajax()) {
             return response()->json(['message' => 'cart item deleted'], 200);
         } else {
-            $this->flash('warning','item deleted from cart');
+            $this->flash('warning', 'item deleted from cart');
 
             return redirect()->back();
         }
@@ -112,6 +116,7 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function delete(Request $request)
@@ -120,7 +125,7 @@ class CartController extends BaseController
         if ($request->ajax()) {
             return response()->json(['message' => 'cart deleted'], 200);
         } else {
-            $this->flash('warning','cart cleared completely');
+            $this->flash('warning', 'cart cleared completely');
 
             return redirect()->back();
         }

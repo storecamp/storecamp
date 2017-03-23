@@ -11,7 +11,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Coupon
+ * App\Core\Models\Coupon.
  *
  * @property int $id
  * @property string $unique_id
@@ -25,6 +25,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property string $expires_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon findByCode($code)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon uuid($unique_id, $first = true)

@@ -3,8 +3,11 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AttributeGroupSystemContract;
+use App\Core\Models\AttributeGroupDescription;
+use App\Core\Transformers\AttributeGroupDescriptionDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class AttributesController.
@@ -35,6 +38,7 @@ class AttributesController extends BaseController
 
     /**
      * AttributesController constructor.
+     *
      * @param AttributeGroupSystemContract $attributeGroupSystem
      */
     public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
@@ -42,19 +46,31 @@ class AttributesController extends BaseController
         $this->attributeGroupSystem = $attributeGroupSystem;
         $this->groupRepository = $attributeGroupSystem->group;
         $this->groupDescriptionRepository = $attributeGroupSystem->description;
+        $this->middleware('role:Admin');
     }
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $groupDescriptions = $this->attributeGroupSystem->presentDescription($data, null, ['attributesGroup']);
-        $no = $groupDescriptions->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('groupDescriptions', 'no'));
+    /**
+     * @param Datatables $datatables
+     *
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = AttributeGroupDescription::with('attributesGroup');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new AttributeGroupDescriptionDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -73,16 +89,21 @@ class AttributesController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $groupDescription = $this->attributeGroupSystem->createDescription($data);
+            \DB::commit();
 
             return redirect('admin/attributes');
         } catch (\Throwable $exception) {
+            \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -90,6 +111,7 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -107,6 +129,7 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -131,38 +154,53 @@ class AttributesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
         try {
+            \DB::beginTransaction();
             $data = $request->all();
             $groupdescription = $this->attributeGroupSystem->updateDescription($data, $id);
+            \DB::commit();
 
             return redirect('admin/attributes');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
+
             return $this->redirectNotFound($e);
         } catch (\Throwable $exception) {
+            \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
 
     /**
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         try {
+            \DB::beginTransaction();
             $deleted = $this->attributeGroupSystem->deleteDescription($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Item not deleted. Some error appeared!');
+                \DB::rollBack();
             }
+            \DB::commit();
 
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
+            \DB::rollBack();
+
             return $this->redirectNotFound();
         } catch (\Throwable $exception) {
+            \DB::rollBack();
+
             return $this->redirectNotFound($exception);
         }
     }
@@ -171,6 +209,7 @@ class AttributesController extends BaseController
      * get groups name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getJson(Request $request)

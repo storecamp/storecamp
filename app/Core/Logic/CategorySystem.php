@@ -3,6 +3,7 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
 use App\Core\Traits\MediableCore;
 
@@ -19,6 +20,7 @@ class CategorySystem implements CategorySystemContract
 
     /**
      * CategorySystem constructor.
+     *
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(CategoryRepository $categoryRepository)
@@ -28,8 +30,9 @@ class CategorySystem implements CategorySystemContract
 
     /**
      * @param array $data
-     * @param null $id
+     * @param null  $id
      * @param array $with
+     *
      * @return mixed
      */
     public function present(array $data, $id = null, array $with = [])
@@ -37,7 +40,7 @@ class CategorySystem implements CategorySystemContract
         if ($id) {
             $categories = $this->categoryRepository->with($with)->find($id);
         } else {
-            if (! empty($with)) {
+            if (!empty($with)) {
                 $categories = $this->categoryRepository->with($with)->order('parent_id', 'ASC')->paginate();
             } else {
                 $categories = $this->categoryRepository->order('parent_id', 'ASC')->paginate();
@@ -49,6 +52,7 @@ class CategorySystem implements CategorySystemContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data)
@@ -66,6 +70,7 @@ class CategorySystem implements CategorySystemContract
     /**
      * @param array $data
      * @param $id
+     *
      * @return mixed
      */
     public function update(array $data, $id)
@@ -84,6 +89,7 @@ class CategorySystem implements CategorySystemContract
     /**
      * @param $id
      * @param array $data
+     *
      * @return int
      */
     public function delete($id, array $data = []) : int
@@ -91,5 +97,29 @@ class CategorySystem implements CategorySystemContract
         $deleted = $this->categoryRepository->delete($id);
 
         return $deleted;
+    }
+
+    // SYSTEM HELPERS SECTION
+
+    /**
+     * string $type = "string" | "array".
+     *
+     * @param Category $category
+     * @param string   $type
+     *
+     * @return string
+     */
+    public static function getCategoryFullPath(Category $category, string $type = 'string')
+    {
+        $parents = [];
+        foreach ($category->ancestors()->get() as $parent) {
+            $parents[] = $parent->name;
+        }
+        array_push($parents, $category->name);
+        if ($type == 'string') {
+            $parents = implode('/', $parents);
+        }
+
+        return $parents;
     }
 }

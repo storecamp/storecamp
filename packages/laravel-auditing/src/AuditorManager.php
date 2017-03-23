@@ -51,7 +51,7 @@ class AuditorManager extends Manager implements Dispatcher
             $auditable = clone $auditable;
 
             // Review audit
-            if (! $this->auditReview($auditable, $auditor)) {
+            if (!$this->auditReview($auditable, $auditor)) {
                 continue;
             }
 

@@ -12,6 +12,7 @@ class GatewayFail extends PaymentGateway
      * Called on cart checkout.
      *
      * @param \App\Core\Models\Cart $cart
+     *
      * @throws CheckoutException
      */
     public function onCheckout($cart)
@@ -23,8 +24,10 @@ class GatewayFail extends PaymentGateway
      * Called by shop to charge order's amount.
      *
      * @param \App\Core\Contracts\OrdersContract $order
-     * @return bool
+     *
      * @throws GatewayException
+     *
+     * @return bool
      */
     public function onCharge($order): bool
     {

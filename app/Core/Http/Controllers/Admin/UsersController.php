@@ -3,12 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\UsersSystemContract;
+use App\Core\Models\User;
 use App\Core\Repositories\RolesRepository;
 use App\Core\Repositories\UserRepository;
+use App\Core\Transformers\UsersDataTransformer;
 use App\Core\Validators\User\UsersFormRequest;
 use App\Core\Validators\User\UsersUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class UsersController.
@@ -40,6 +43,7 @@ class UsersController extends BaseController
 
     /**
      * UsersController constructor.
+     *
      * @param UsersSystemContract $usersSystem
      */
     public function __construct(UsersSystemContract $usersSystem)
@@ -52,15 +56,26 @@ class UsersController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $users = $this->usersSystem->present($data);
-        $no = $users->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('users', 'no'));
+    /**
+     * @param Datatables $datatables
+     *
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = User::with('roles')->select('users.*');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new UsersDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -75,6 +90,7 @@ class UsersController extends BaseController
 
     /**
      * @param UsersFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(UsersFormRequest $request)
@@ -94,6 +110,7 @@ class UsersController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -112,6 +129,7 @@ class UsersController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -133,12 +151,13 @@ class UsersController extends BaseController
     /**
      * @param UsersUpdateFormRequest $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(UsersUpdateFormRequest $request, $id)
     {
         try {
-            $data = ! $request->has('password') ? $request->except('password') : $request->all();
+            $data = !$request->has('password') ? $request->except('password') : $request->all();
             $user = $this->usersSystem->update($data, $id);
 
             return redirect('admin/users');
@@ -153,13 +172,14 @@ class UsersController extends BaseController
 
     /**
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->usersSystem->delete($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Sorry user is not deleted');
             }
 

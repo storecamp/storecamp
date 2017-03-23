@@ -3,12 +3,17 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Transformers\CategoriesDataTransformer;
 use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class CategoriesController.
@@ -36,6 +41,7 @@ class CategoriesController extends BaseController
 
     /**
      * CategoriesController constructor.
+     *
      * @param CategorySystemContract $categorySystem
      */
     public function __construct(CategorySystemContract $categorySystem)
@@ -50,21 +56,33 @@ class CategoriesController extends BaseController
      * Display a listing of categories.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $categories = $this->categorySystem->present($data, null, ['parent', 'children', 'media']);
-        $no = $categories->firstItem();
-
         return $this->view('index', compact('categories', 'no'));
+    }
+
+    /**
+     * @param Datatables $datatables
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Category::with(['media']);
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new CategoriesDataTransformer())
+            ->make(true);
     }
 
     /**
      * Show the form for creating a new category.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(Request $request)
@@ -78,6 +96,7 @@ class CategoriesController extends BaseController
 
     /**
      * @param CategoriesFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|Redirect
      */
     public function store(CategoriesFormRequest $request)
@@ -85,18 +104,19 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->create($data);
-
-            return redirect('admin/categories');
         } catch (\Throwable $exception) {
             return $this->redirectError($exception);
         }
+
+        return redirect('admin/categories');
     }
 
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
-     * @return Response|Redirect
+     * @return RedirectResponse|Response
      */
     public function show(Request $request, $id)
     {
@@ -104,16 +124,18 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->present($data, $id, ['media']);
             $categories = $this->repository->all();
-
-            return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return $this->view('show', compact('category', 'categories'));
     }
 
     /**
      * get category description for json.
+     *
      * @param $id
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getDescription($id)
@@ -121,16 +143,17 @@ class CategoriesController extends BaseController
         try {
             $category = $this->repository->find($id);
             $description = $category->description;
-
-            return response()->json($description);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
+
+        return response()->json($description);
     }
 
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -141,47 +164,49 @@ class CategoriesController extends BaseController
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
             $preferredTag = 'thumbnail';
-
-            return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
     }
 
     /**
      * @param CategoriesUpdateFormRequest $request
      * @param $id
-     * @return Response|Redirect
+     *
+     * @return RedirectResponse|Response
      */
     public function update(CategoriesUpdateFormRequest $request, $id)
     {
         try {
             $data = $request->all();
             $category = $this->categorySystem->update($data, $id);
-
-            return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return redirect('admin/categories');
     }
 
     /**
      * Remove the specified category from storage.
      *
      * @param $id
-     * @return Response|Redirect
+     *
+     * @return RedirectResponse|Redirect
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->categorySystem->delete($id);
-            if (! $deleted) {
-                \Flash::warning('Sorry category is not deleted');
+            if (!$deleted) {
+                $this->flash('warning', 'Sorry category is not deleted');
             }
-
-            return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
+
+        return redirect('admin/categories');
     }
 }

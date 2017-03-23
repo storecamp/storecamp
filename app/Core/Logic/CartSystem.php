@@ -68,11 +68,12 @@ class CartSystem implements CartSystemContract
 
     /**
      * CartSystem constructor.
-     * @param SessionManager $session
-     * @param Dispatcher $events
-     * @param CartRepository $cartRepository
+     *
+     * @param SessionManager     $session
+     * @param Dispatcher         $events
+     * @param CartRepository     $cartRepository
      * @param ProductsRepository $productsRepository
-     * @param AuthManager $auth
+     * @param AuthManager        $auth
      */
     public function __construct(SessionManager $session, Dispatcher $events,
                                 CartRepository $cartRepository, ProductsRepository $productsRepository,
@@ -89,7 +90,8 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param array $data
-     * @param bool $withAggregations
+     * @param bool  $withAggregations
+     *
      * @return Collection
      */
     public function show(array $data, bool $withAggregations = true)
@@ -106,6 +108,7 @@ class CartSystem implements CartSystemContract
     /**
      * @param array $data
      * @param $productId
+     *
      * @return array|mixed
      */
     public function addItem(array $data, $productId)
@@ -122,6 +125,7 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param string $currency
+     *
      * @return CartSystem
      */
     public function setCurrency(string $currency): CartSystem
@@ -141,6 +145,7 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param string $currency
+     *
      * @return CartSystem
      */
     public function withCurrency(string $currency = null): CartSystem
@@ -155,6 +160,7 @@ class CartSystem implements CartSystemContract
      * Set the current cart instance.
      *
      * @param null $instance
+     *
      * @return $this
      */
     public function instance($instance = null)
@@ -179,8 +185,9 @@ class CartSystem implements CartSystemContract
      * Add an item to the cart.
      *
      * @param $id
-     * @param null $qty
+     * @param null  $qty
      * @param array $options
+     *
      * @return CartItem|array
      */
     public function add($id, $qty = null, array $options = [])
@@ -208,6 +215,7 @@ class CartSystem implements CartSystemContract
      *
      * @param $rowId
      * @param $qty
+     *
      * @return CartItem|void
      */
     public function update($rowId, $qty)
@@ -245,6 +253,7 @@ class CartSystem implements CartSystemContract
      * Remove the cart item with the given rowId from the cart.
      *
      * @param string $rowId
+     *
      * @return void
      */
     public function remove($rowId)
@@ -260,12 +269,13 @@ class CartSystem implements CartSystemContract
      * Get a cart item from the cart by its rowId.
      *
      * @param string $rowId
+     *
      * @return CartItem
      */
     public function find($rowId)
     {
         $content = $this->getContent();
-        if (! $content->has($rowId)) {
+        if (!$content->has($rowId)) {
             throw new InvalidRowIDException("The cart does not contain rowId {$rowId}.");
         }
 
@@ -302,20 +312,21 @@ class CartSystem implements CartSystemContract
      * with products table.
      *
      * @param $content
+     *
      * @return mixed
      */
     private function checkItems($content)
     {
         foreach ($content as $item) {
             $cartProduct = $item->getProduct();
-            if (! $cartProduct) {
+            if (!$cartProduct) {
                 $content->pull($item->rowId);
                 $this->events->fire('cart.removed', $item);
                 $this->session->put($this->instance, $content);
             }
         }
         $content = $this->session->get($this->instance);
-        if (! $content) {
+        if (!$content) {
             return new Collection();
         }
 
@@ -340,6 +351,7 @@ class CartSystem implements CartSystemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return string
      */
     public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -359,6 +371,7 @@ class CartSystem implements CartSystemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return float
      */
     public function tax($decimals = null, $decimalPoint = null, $thousandSeperator = null)
@@ -378,6 +391,7 @@ class CartSystem implements CartSystemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
+     *
      * @return float|string
      */
     public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
@@ -399,6 +413,7 @@ class CartSystem implements CartSystemContract
      * Search the cart content for a cart item matching the given search closure.
      *
      * @param \Closure $search
+     *
      * @return Collection
      */
     public function search(\Closure $search): Collection
@@ -413,11 +428,12 @@ class CartSystem implements CartSystemContract
      *
      * @param string $rowId
      * @param mixed  $model
+     *
      * @return void
      */
     public function associate($rowId, $model)
     {
-        if (is_string($model) && ! class_exists($model)) {
+        if (is_string($model) && !class_exists($model)) {
             throw new UnknownModelException("The supplied model {$model} does not exist.");
         }
         $cartItem = $this->find($rowId);
@@ -432,6 +448,7 @@ class CartSystem implements CartSystemContract
      *
      * @param string    $rowId
      * @param int|float $taxRate
+     *
      * @return void
      */
     public function setTax($rowId, $taxRate)
@@ -450,8 +467,10 @@ class CartSystem implements CartSystemContract
      * Returns created order.
      *
      * @param null $statusCode
-     * @return mixed
+     *
      * @throws UserNotLoggedInException
+     *
+     * @return mixed
      */
     public function placeOrder($statusCode = null)
     {
@@ -475,8 +494,10 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param mixed $identifier
-     * @return mixed
+     *
      * @throws UserNotLoggedInException
+     *
+     * @return mixed
      */
     public function store($identifier)
     {
@@ -491,9 +512,9 @@ class CartSystem implements CartSystemContract
 
         $cart = $this->cartRepository->create([
             'unique_id' => $identifier,
-            'user_id' => $this->auth->user()->id,
-            'instance' => $this->currentInstance(),
-            'content' => json_encode($content),
+            'user_id'   => $this->auth->user()->id,
+            'instance'  => $this->currentInstance(),
+            'content'   => json_encode($content),
         ]);
         $this->events->fire('cart.stored');
 
@@ -504,11 +525,12 @@ class CartSystem implements CartSystemContract
      * Restore the cart with the given identifier.
      *
      * @param mixed $identifier
+     *
      * @return void
      */
     public function restore($identifier)
     {
-        if (! $this->storedCartWithIdentifierExists($identifier)) {
+        if (!$this->storedCartWithIdentifierExists($identifier)) {
             return;
         }
         $stored = $this->cartRepository
@@ -530,6 +552,7 @@ class CartSystem implements CartSystemContract
      * Magic method to make accessing the total, tax and subtotal properties possible.
      *
      * @param string $attribute
+     *
      * @return float|null
      */
     public function __get($attribute)
@@ -566,6 +589,7 @@ class CartSystem implements CartSystemContract
      * @param $id
      * @param $qty
      * @param array $options
+     *
      * @return CartItem
      */
     private function createCartItem($id, $qty, array $options)
@@ -592,11 +616,12 @@ class CartSystem implements CartSystemContract
      * Check if the item is a multidimensional array or an array of Buyables.
      *
      * @param mixed $item
+     *
      * @return bool
      */
     private function isMulti($item): bool
     {
-        if (! is_array($item)) {
+        if (!is_array($item)) {
             return false;
         }
 
@@ -605,6 +630,7 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param $identifier
+     *
      * @return bool
      */
     private function storedCartWithIdentifierExists($identifier): bool

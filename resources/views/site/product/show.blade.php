@@ -57,7 +57,7 @@
                         <?php $ratingCounter = $product->getRatingCounter() ?>
                         @if(!empty($ratingCounter))
                             <span class="text-muted pull-left"><b>Product review point</b></span>
-                            @include('admin.partial._rating', [$selected = $product->getRatingCounter(), $readOnly = true])
+                            @include('admin.partial._rating', [$selected = $product->getAvgRating(), $readOnly = true])
                             <span class="review-no">{{$product->getRatingCounter()}} reviews</span>
                         @else
                             <div type="text" class="product-quantity">
@@ -116,7 +116,7 @@
                         <div class="tab-pane" id="reviews">
                             <div class="product-reviews">
                                 @foreach($product->productReview as $review)
-                                    @include('site.partials.reviews.message', ['productReview' => $review])
+                                    @include('site.partials.reviews.message', ['reviews' => $review])
                                 @endforeach
                             </div>
                         </div>

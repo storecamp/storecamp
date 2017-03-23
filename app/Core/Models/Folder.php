@@ -26,6 +26,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\Folder $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Folder[] $children
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $files
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereParentId($value)
@@ -38,8 +39,10 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property bool $locked
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereLocked($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder uuid($unique_id, $first = true)

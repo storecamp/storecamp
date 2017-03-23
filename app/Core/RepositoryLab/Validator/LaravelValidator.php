@@ -30,6 +30,7 @@ class LaravelValidator extends AbstractValidator
      * Pass the data and the rules to the validator.
      *
      * @param string $action
+     *
      * @return bool
      */
     public function passes($action = null)

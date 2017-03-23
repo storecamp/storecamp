@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
- * App\Core\Models\Message
+ * App\Core\Models\Message.
  *
  * @property int $id
  * @property string $unique_id
@@ -24,6 +24,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
  * @property-read \App\Core\Models\Thread $thread
  * @property-read \App\Core\Models\User $user
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Message whereBody($value)

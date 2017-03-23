@@ -12,6 +12,7 @@ class MailSentTOReceiver extends Event
 
     /**
      * MailSentTOReceiver constructor.
+     *
      * @param $data
      */
     public function __construct($data)

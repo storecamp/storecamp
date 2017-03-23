@@ -1,5 +1,20 @@
 <?php $chosenCategoryId = $chosenCategory ? $chosenCategory->id : null; ?>
-
+<style>
+    .category .btn.active {
+        border: 2px dashed #3c8dbc;
+    }
+    .category .btn.active .choose-category {
+        background: lightgrey;
+        color: #3c8dbc;
+    }
+    .choose-category {
+        background: #3c8dbc;
+        color: whitesmoke;
+        padding: 2px;
+        border: 1px solid black;
+        border-radius: 2px;
+    }
+</style>
 <div class="form-group">
     {{ Form::label('category_id', 'Products Category', ['class' => 'control-label']) }}
     <a data-toggle="modal" href="#category-chooser-modal"
@@ -9,7 +24,6 @@
     <div class="clearfix"></div>
     {{ Form::input('text','category_id', $chosenCategoryId, ['class' => 'chosen-category hidden']) }}
 </div>
-
 <div class="modal" id="category-chooser-modal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -37,48 +51,3 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-@push('scripts-add_on')
-<script>
-    $(function () {
-        var chosen = $('.choose-category'),
-            chosenField = $(".chosen-category"),
-            chooseOpener = $(".choose-opener"),
-            chooserModal = $("#category-chooser-modal"),
-            chooserModalFooter = chooserModal.find('.modal-footer');
-
-        chosen.on("click", function(event) {
-            var btn = $(event.target),
-                chosenId = btn.data('choose-id'),
-                chooseName = btn.data('choose-name');
-            chosenField.val(chosenId);
-            chooserModalFooter.find(".chosen-status").html(chooseName+ " - <i class='fa fa-thumbs-o-up'></i>");
-            chooseOpener.text(chooseName);
-            chosen.closest('a').removeClass('active');
-            btn.closest('a').addClass('active');
-        });
-        var removeChooser = $(".remove-chooser");
-        removeChooser.on("click", function(event) {
-            chosenField.val(null);
-            chooseOpener.text(null);
-            chosen.closest('a').removeClass('active');
-            chooserModalFooter.find(".chosen-status").html(null);
-        });
-    });
-</script>
-<style>
-    .category .btn.active {
-        border: 2px dashed #3c8dbc;
-    }
-    .category .btn.active .choose-category {
-        background: lightgrey;
-        color: #3c8dbc;
-    }
-    .choose-category {
-        background: #3c8dbc;
-        color: whitesmoke;
-        padding: 2px;
-        border: 1px solid black;
-        border-radius: 2px;
-    }
-</style>
-@endpush

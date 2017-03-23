@@ -12,6 +12,7 @@ class BannerTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Banner entity.
+     *
      * @param \Banner $model
      *
      * @return array

@@ -40,8 +40,8 @@ return [
     */
 
     'models' => [
-        'role' => Bican\Roles\Models\Role::class,
-        'permission' => Bican\Roles\Models\Permission::class,
+        'role'       => \App\Core\Models\Role::class,
+        'permission' => \App\Core\Models\Permission::class,
     ],
 
     /*
@@ -60,8 +60,8 @@ return [
         'enabled' => false,
 
         'options' => [
-            'is' => true,
-            'can' => true,
+            'is'      => true,
+            'can'     => true,
             'allowed' => true,
         ],
 

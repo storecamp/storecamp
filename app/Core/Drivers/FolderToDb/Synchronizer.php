@@ -27,8 +27,9 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * Synchronizer constructor.
-     * @param MediaRepository $media
-     * @param FolderRepository $folder
+     *
+     * @param MediaRepository                   $media
+     * @param FolderRepository                  $folder
      * @param \Illuminate\Filesystem\Filesystem $file
      */
     public function __construct(MediaRepository $media, FolderRepository $folder, \Illuminate\Filesystem\Filesystem $file)
@@ -36,24 +37,6 @@ class Synchronizer implements SynchronizerInterface
         $this->folder = $folder;
         $this->media = $media;
         $this->file = $file;
-    }
-
-    /**
-     * @param string $folderPath
-     * @param string $disk
-     * @return Folder
-     */
-    public function findOrCreateByFolderPath(string $folderPath, $disk = 'local'): Folder
-    {
-        $folder = $this->folder->disk($disk)->where('path_on_disk', $folderPath)->where('disk', $disk);
-        if ($folder->count() > 0) {
-            return $folder->first();
-        } else {
-            $folderName = explode('/', $folderPath);
-            $folderName = $folderName[count($folderName) - 1];
-
-            return $this->folder->create(['name' => $folderName, 'path_on_disk' => $folderPath, 'disk' => $disk]);
-        }
     }
 
     /**
@@ -92,6 +75,107 @@ class Synchronizer implements SynchronizerInterface
     }
 
     /**
+     * @param string $root
+     * @param bool   $withFolderName
+     *
+     * @return array
+     */
+    public function directoriesIterate(string $root, bool $withFolderName = false): array
+    {
+        $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS;
+        $iter = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($root, $flags),
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+        );
+        $paths = [$root];
+        foreach ($iter as $path => $dir) {
+            if ($dir->isDir()) {
+                $paths[] = $path;
+            }
+        }
+        $items = [];
+        foreach ($paths as $key => $item) {
+            $folderPath = explode('/', implode('', explode($paths[0], $item)));
+            unset($folderPath[0]);
+            $folderPath = implode('/', $folderPath);
+
+            if ($withFolderName) {
+                $folderName = explode('/', $folderPath);
+                $folderName = explode('/', $folderName[count($folderName) - 1]);
+                if ($key == 0) {
+                    if (!empty(implode('', explode($paths[0], $item)))) {
+                        $items[$key]['folderPath'] = $folderPath;
+                        $items[$key]['folderName'] = $folderName[0];
+                    }
+                } else {
+                    $items[$key]['folderPath'] = $folderPath;
+                    $items[$key]['folderName'] = $folderName[0];
+                }
+            } else {
+                if ($key == 0) {
+                    if (!empty(implode('', explode($paths[0], $item)))) {
+                        $items[] = $folderPath;
+                    }
+                } else {
+                    $items[] = $folderPath;
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param null|string $folderPath
+     * @param string      $disk
+     *
+     * @return Folder
+     */
+    public function findOrCreateByFolderPath(?string $folderPath, $disk = 'local'): Folder
+    {
+        if (empty($folderPath)) {
+            $folderPath = null;
+        }
+        $folder = $this->folder->disk($disk)->where('path_on_disk', $folderPath)->where('disk', $disk);
+        if ($folder->count() > 0) {
+            return $folder->first();
+        } else {
+            $folderName = explode('/', $folderPath);
+            $folderName = $folderName[count($folderName) - 1];
+
+            return $this->folder->create(['name' => $folderName, 'path_on_disk' => $folderPath, 'disk' => $disk]);
+        }
+    }
+
+    /**
+     * @param string $disk
+     * @param string $root
+     *
+     * @return Folder
+     */
+    private function resolveRootFolder($disk = 'local', $root = ''): Folder
+    {
+        if (!empty($root) && !$this->file->isDirectory($root)) {
+            $this->file->makeDirectory($root);
+        }
+        $rootFolder = $this->folder->findWhere([
+            ['disk', '=', $disk],
+            ['name', '=', ''],
+            ['path_on_disk', '=', null],
+        ]);
+        if ($rootFolder->count() == 0) {
+            return $rootFolder = $this->folder->create([
+                'name'      => '',
+                'parent_id' => null,
+                'disk'      => $disk,
+            ]);
+        } else {
+            return $rootFolder = $rootFolder->first();
+        }
+    }
+
+    /**
      * synchronize folders  with.
      *
      * folder structure
@@ -119,18 +203,21 @@ class Synchronizer implements SynchronizerInterface
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk) as $file) {
+                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk : $newFolder->path_on_disk;
+                foreach ($this->file->files($filePath) as $file) {
                     $iter++;
                     $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
+                    $newFolderPath = $newFolder->path_on_disk ?? null;
                     $mediaFile = $this->media->findWhere([
-                        ['directory', '=', $newFolder->path_on_disk],
+                        ['directory', '=', $newFolderPath],
                         ['filename', '=', implode('', $fileNameClean)],
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $media = \MediaUploader::importPath($disk, $newFolder->path_on_disk.'/'.$fileName);
+                        $newFolderPath = $newFolder->path_on_disk ? $newFolder->path_on_disk.'/'.$fileName : $fileName;
+                        $media = \MediaUploader::importPath($disk, $newFolderPath);
                         $media->directory_id = $newFolder->id;
                         $media->save();
                     }
@@ -140,17 +227,20 @@ class Synchronizer implements SynchronizerInterface
                 $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
                 $folderParentInstance->parent_id = $rootFolder->id;
                 $folderParentInstance->save();
-                foreach ($this->file->files($this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk) as $file) {
+                $manageFilesPath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk : $folderParentInstance->path_on_disk;
+                foreach ($this->file->files($manageFilesPath) as $file) {
                     $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
                     array_pop($fileNameClean);
+                    $folderParentInstancePath = $folderParentInstance->path_on_disk ?? null;
                     $mediaFile = $this->media->findWhere([
-                        ['directory', '=', $folderParentInstance->path_on_disk],
+                        ['directory', '=', $folderParentInstancePath],
                         ['filename', '=', $fileNameClean],
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $media = \MediaUploader::importPath($disk, $folderParentInstance->path_on_disk.'/'.$fileName);
+                        $manageRootPath = $folderParentInstancePath ? $folderParentInstancePath.'/'.$fileName : $fileName;
+                        $media = \MediaUploader::importPath($disk, $manageRootPath);
                         $media->directory_id = $folderParentInstance->id;
                         $media->save();
                     }
@@ -158,81 +248,6 @@ class Synchronizer implements SynchronizerInterface
             }
         }
         $this->rootFolderFilesSearch($path, $disk);
-    }
-
-    /**
-     * @param string $root
-     * @param bool $withFolderName
-     * @return array
-     */
-    public function directoriesIterate(string $root, bool $withFolderName = false): array
-    {
-        $iter = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::SELF_FIRST,
-            \RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
-        );
-        $paths = [$root];
-        foreach ($iter as $path => $dir) {
-            if ($dir->isDir()) {
-                $paths[] = $path;
-            }
-        }
-        $items = [];
-        foreach ($paths as $key => $item) {
-            $folderPath = explode('/', implode('', explode($paths[0], $item)));
-            unset($folderPath[0]);
-            $folderPath = implode('/', $folderPath);
-
-            if ($withFolderName) {
-                $folderName = explode('/', $folderPath);
-                $folderName = explode('/', $folderName[count($folderName) - 1]);
-                if ($key == 0) {
-                    if (! empty(implode('', explode($paths[0], $item)))) {
-                        $items[$key]['folderPath'] = $folderPath;
-                        $items[$key]['folderName'] = $folderName[0];
-                    }
-                } else {
-                    $items[$key]['folderPath'] = $folderPath;
-                    $items[$key]['folderName'] = $folderName[0];
-                }
-            } else {
-                if ($key == 0) {
-                    if (! empty(implode('', explode($paths[0], $item)))) {
-                        $items[] = $folderPath;
-                    }
-                } else {
-                    $items[] = $folderPath;
-                }
-            }
-        }
-
-        return $items;
-    }
-
-    /**
-     * @param string $root
-     * @param string $format
-     * @param bool $skipFormatEnding
-     * @return array
-     */
-    public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
-    {
-        $Directory = new \RecursiveDirectoryIterator($root);
-        $Iterator = new \RecursiveIteratorIterator($Directory,
-            \RecursiveIteratorIterator::SELF_FIRST,
-            \RecursiveIteratorIterator::CATCH_GET_CHILD);
-        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
-        $files = [];
-        foreach ($Regex as $file) {
-            if ($skipFormatEnding) {
-                $files[] = explode('.'.$format, basename($file[0]))[0];
-            } else {
-                $files[] = basename($file[0]);
-            }
-        }
-
-        return $files;
     }
 
     /**
@@ -251,7 +266,8 @@ class Synchronizer implements SynchronizerInterface
                 ['filename', '=', implode('', $fileNameClean)],
                 ['disk', '=', $disk], ]);
             if ($mediaFile->count() == 0) {
-                $media = \MediaUploader::importPath($disk, $rootFolder->path_on_disk.'/'.$fileName);
+                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk.'/'.$fileName : $fileName;
+                $media = \MediaUploader::importPath($disk, $manageRootPath);
                 $media->directory_id = $rootFolder->id;
                 $media->save();
             }
@@ -259,28 +275,29 @@ class Synchronizer implements SynchronizerInterface
     }
 
     /**
-     * @param string $disk
      * @param string $root
-     * @return Folder
+     * @param string $format
+     * @param bool   $skipFormatEnding
+     *
+     * @return array
      */
-    private function resolveRootFolder($disk = 'local', $root = ''): Folder
+    public function getFilesByFormat(string $root, string $format, bool $skipFormatEnding = false): array
     {
-        if (! empty($root) && ! $this->file->isDirectory($root)) {
-            $this->file->makeDirectory($root);
+        $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS;
+        $Directory = new \RecursiveDirectoryIterator($root, $flags);
+        $Iterator = new \RecursiveIteratorIterator($Directory,
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD);
+        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
+        $files = [];
+        foreach ($Regex as $file) {
+            if ($skipFormatEnding) {
+                $files[] = explode('.'.$format, basename($file[0]))[0];
+            } else {
+                $files[] = basename($file[0]);
+            }
         }
-        $rootFolder = $this->folder->findWhere([
-            ['disk', '=', $disk],
-            ['name', '=', ''],
-            ['path_on_disk', '=', null],
-        ]);
-        if ($rootFolder->count() == 0) {
-            return $rootFolder =    $this->folder->create([
-                'name' => '',
-                'parent_id' => null,
-                'disk' => $disk,
-            ]);
-        } else {
-            return $rootFolder = $rootFolder->first();
-        }
+
+        return $files;
     }
 }

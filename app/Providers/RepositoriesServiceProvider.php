@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
  */
 class RepositoriesServiceProvider extends ServiceProvider
 {
+    protected $defer = false;
+
     /**
      * Bootstrap the application services.
      *
@@ -51,6 +53,10 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Thread',
             'Message',
             'Participant',
+            'Settings',
+            'Menu',
+            'MenuItems',
+            'Currency',
         ];
 
         foreach ($models as $repo) {

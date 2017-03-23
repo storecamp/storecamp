@@ -15,24 +15,28 @@ class ShopSystem implements ShopSystemContract
 {
     /**
      * Forces quantity to reset when adding items to cart.
+     *
      * @var bool
      */
     const QUANTITY_RESET = true;
 
     /**
      * Gateway in use.
+     *
      * @var string
      */
     protected static $gatewayKey = null;
 
     /**
      * Gateway instance.
+     *
      * @var object
      */
     protected static $gateway = null;
 
     /**
      * Gatway in use.
+     *
      * @var string
      */
     protected static $exception = null;
@@ -55,6 +59,7 @@ class ShopSystem implements ShopSystemContract
      * Create a new confide instance.
      *
      * ShopSystem constructor.
+     *
      * @param $app
      */
     public function __construct($app)
@@ -80,7 +85,7 @@ class ShopSystem implements ShopSystemContract
      */
     public static function setGateway($gatewayKey)
     {
-        if (! array_key_exists($gatewayKey, config('sales.gateways'))) {
+        if (!array_key_exists($gatewayKey, config('sales.gateways'))) {
             throw new ShopException('Invalid gateway.');
         }
         static::$gatewayKey = $gatewayKey;
@@ -311,6 +316,7 @@ class ShopSystem implements ShopSystemContract
 
     /**
      * Retunes gateway object.
+     *
      * @return object
      */
     protected static function instanceGateway()
@@ -325,13 +331,15 @@ class ShopSystem implements ShopSystemContract
 
     /**
      * Check on order status differences and fires event.
-     * @param object $order Order.
+     *
+     * @param object $order          Order.
      * @param string $prevStatusCode Previous status code.
+     *
      * @return void
      */
     protected static function checkStatusChange($order, $prevStatusCode)
     {
-        if (! empty($prevStatusCode) && $order->statusCode != $prevStatusCode) {
+        if (!empty($prevStatusCode) && $order->statusCode != $prevStatusCode) {
             \event(new OrderStatusChanged($order->id, $order->statusCode, $prevStatusCode));
         }
     }

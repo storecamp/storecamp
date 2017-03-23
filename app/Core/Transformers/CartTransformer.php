@@ -12,6 +12,7 @@ class CartTransformer extends TransformerAbstract
 {
     /**
      * Transform the \Cart entity.
+     *
      * @param \Cart $model
      *
      * @return array

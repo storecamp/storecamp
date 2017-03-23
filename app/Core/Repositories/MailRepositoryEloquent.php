@@ -74,6 +74,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
 
     /**
      * @param $uid
+     *
      * @return array
      */
     public function resolveMailHistory($uid)
@@ -95,6 +96,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function getTmpMail($file)
@@ -114,6 +116,7 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     /**
      * @param $folder
      * @param $filename
+     *
      * @return $this|null|string
      */
     public function getHistoryTmpMail($folder, $filename)
@@ -136,12 +139,13 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
     /**
      * @param $request
      * @param $uid
+     *
      * @return array
      */
     private function putMail($request, $uid)
     {
         $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
-        if (! \File::exists($root)) {
+        if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $randomStr = str_random(5);
@@ -155,11 +159,12 @@ class MailRepositoryEloquent extends BaseRepository implements MailRepository
 
     /**
      * @param $root
+     *
      * @return string
      */
     private function putCSV($root)
     {
-        if (! \File::exists($root)) {
+        if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
 

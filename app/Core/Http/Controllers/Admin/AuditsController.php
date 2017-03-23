@@ -33,6 +33,7 @@ class AuditsController extends BaseController
 
     public function show(Request $request, $model, $id)
     {
+        $this->middleware('role:Admin');
         switch ($model) {
             case 'product':
                 if (Product::isAuditEnabled()) {

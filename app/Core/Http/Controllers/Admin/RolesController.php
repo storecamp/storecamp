@@ -3,12 +3,15 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AccessSystemContract;
+use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
+use App\Core\Transformers\RolesDataTransformer;
 use App\Core\Validators\Role\RolesFormRequest;
 use App\Core\Validators\Role\RolesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class RolesController.
@@ -38,6 +41,7 @@ class RolesController extends BaseController
 
     /**
      * RolesController constructor.
+     *
      * @param AccessSystemContract $accessSystem
      */
     public function __construct(AccessSystemContract $accessSystem)
@@ -45,20 +49,31 @@ class RolesController extends BaseController
         $this->accessSystem = $accessSystem;
         $this->rolesRepository = $accessSystem->rolesRepository;
         $this->permissionRepository = $accessSystem->permissionRepository;
-        $this->middleware('isAdmin');
+        $this->middleware('role:Admin');
     }
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-        $roles = $this->accessSystem->presentRoles($data, null, ['perms']);
-        $no = $roles->firstItem();
+        return $this->view('index');
+    }
 
-        return $this->view('index', compact('roles', 'no'));
+    /**
+     * @param Datatables $datatables
+     *
+     * @return mixed
+     */
+    public function data(Datatables $datatables)
+    {
+        $query = Role::with('perms');
+
+        return $datatables->eloquent($query)
+            ->setTransformer(new RolesDataTransformer())
+            ->make(true);
     }
 
     /**
@@ -74,6 +89,7 @@ class RolesController extends BaseController
 
     /**
      * @param RolesFormRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(RolesFormRequest $request)
@@ -88,6 +104,7 @@ class RolesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -101,6 +118,7 @@ class RolesController extends BaseController
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
@@ -120,6 +138,7 @@ class RolesController extends BaseController
     /**
      * @param RolesUpdateFormRequest $request
      * @param $id
+     *
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(RolesUpdateFormRequest $request, $id)
@@ -138,6 +157,7 @@ class RolesController extends BaseController
      * get permissions name in json format.
      *
      * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getPermsJson(Request $request)
@@ -155,13 +175,14 @@ class RolesController extends BaseController
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         try {
             $deleted = $this->accessSystem->deleteRole($id);
-            if (! $deleted) {
+            if (!$deleted) {
                 \Flash::warning('Sorry role is not deleted');
             }
 

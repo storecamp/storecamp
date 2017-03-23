@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Base\UserAuth as Authenticatable;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
@@ -12,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use App\Core\Base\UserAuth as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -34,12 +34,13 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $notify
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $reviews
  * @property-write mixed $date
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Role[] $roles
  * @property-read Message[] $messages
  * @property-read Thread[] $threads
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereName($value)
@@ -59,18 +60,22 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User users()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMedia($tags, $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMediaMatchAll($tags = array())
+ *
  * @property string $locale
  * @property bool $banned
  * @property-read \App\Core\Models\Cart $cart
  * @property-read int $shop_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Orders[] $orders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereBanned($value)
@@ -212,6 +217,24 @@ class User extends Authenticatable implements
     /**
      * @param string $value
      */
+    public function setIsAdminAttribute($value)
+    {
+        $this->is_admin = $this->hasRole('role:Admin');
+    }
+
+    /**
+     * @param $value
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute($value)
+    {
+        return $this->hasRole('role:Admin');
+    }
+
+    /**
+     * @param string $value
+     */
     public function setRememberToken($value)
     {
         $this->remember_token = $value;
@@ -235,6 +258,7 @@ class User extends Authenticatable implements
 
     /**
      * check if the given customer is admin.
+     *
      * @return bool
      */
     public function isAdmin()
@@ -244,7 +268,9 @@ class User extends Authenticatable implements
 
     /**
      * CHECK if the customer is the owner of the instance.
+     *
      * @param $instance
+     *
      * @return bool
      */
     public function isOwner($instance)
@@ -275,6 +301,7 @@ class User extends Authenticatable implements
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeAllExcept($query)
@@ -294,6 +321,7 @@ class User extends Authenticatable implements
      * find user by slug.
      *
      * @param $slug
+     *
      * @return mixed
      */
     public static function findBySlug($slug)

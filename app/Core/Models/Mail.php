@@ -21,6 +21,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property string $message
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereUserId($value)
@@ -31,7 +32,9 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail whereUpdatedAt($value)
  * @mixin \Eloquent
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Mail uuid($unique_id, $first = true)
  */

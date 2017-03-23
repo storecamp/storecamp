@@ -4,7 +4,6 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = null, $message = "All HtmlElements"])
     @section('contentheader_description')
-        {{--@include('admin.partial._content-head_btns', [$routeName = "admin::categories::create", $createBtn = 'Add New Category'])--}}
     @endsection
 @section('main-content')
     <div class="row">
@@ -17,7 +16,7 @@
     Forms::help('Here is a help text')
 )!!}
             <h3>Menu</h3>
-            {{--{!! app('elements.menu.manager')->menu('sidebar') !!}--}}
+            {!! app('elements.menu.manager')->menu('sidebar') !!}
             {{--{!! app('elements.menu.manager')->menu('administration') !!}--}}
             <h3>Carousel</h3>
             <div class="row">

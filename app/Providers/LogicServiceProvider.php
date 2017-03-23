@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Core\Logic\MediaSystem;
 use Illuminate\Support\ServiceProvider;
 
 class LogicServiceProvider extends ServiceProvider
@@ -36,6 +35,7 @@ class LogicServiceProvider extends ServiceProvider
             'OrdersSystem',
             'CartSystem',
             'ShopSystem',
+            'MailCampaignSystem'
         ];
 
         foreach ($models as $repo) {

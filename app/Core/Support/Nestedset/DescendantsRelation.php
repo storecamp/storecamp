@@ -26,11 +26,11 @@ class DescendantsRelation extends Relation
      * DescendantsRelation constructor.
      *
      * @param QueryBuilder $builder
-     * @param Model $model
+     * @param Model        $model
      */
     public function __construct(QueryBuilder $builder, Model $model)
     {
-        if (! NestedSet::isNode($model)) {
+        if (!NestedSet::isNode($model)) {
             throw new InvalidArgumentException('Model must be node.');
         }
 
@@ -40,7 +40,7 @@ class DescendantsRelation extends Relation
     /**
      * @param EloquentBuilder $query
      * @param EloquentBuilder $parent
-     * @param array $columns
+     * @param array           $columns
      *
      * @return mixed
      */
@@ -80,7 +80,7 @@ class DescendantsRelation extends Relation
      */
     public function addConstraints()
     {
-        if (! static::$constraints) {
+        if (!static::$constraints) {
             return;
         }
 
@@ -90,7 +90,7 @@ class DescendantsRelation extends Relation
     /**
      * Set the constraints for an eager load of the relation.
      *
-     * @param  array $models
+     * @param array $models
      *
      * @return void
      */
@@ -110,8 +110,8 @@ class DescendantsRelation extends Relation
     /**
      * Initialize the relation on a set of models.
      *
-     * @param  array $models
-     * @param  string $relation
+     * @param array  $models
+     * @param string $relation
      *
      * @return array
      */
@@ -123,9 +123,9 @@ class DescendantsRelation extends Relation
     /**
      * Match the eagerly loaded results to their parents.
      *
-     * @param  array $models
-     * @param  EloquentCollection $results
-     * @param  string $relation
+     * @param array              $models
+     * @param EloquentCollection $results
+     * @param string             $relation
      *
      * @return array
      */
@@ -151,7 +151,7 @@ class DescendantsRelation extends Relation
     }
 
     /**
-     * @param Model $model
+     * @param Model              $model
      * @param EloquentCollection $results
      *
      * @return Collection

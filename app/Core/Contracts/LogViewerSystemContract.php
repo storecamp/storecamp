@@ -22,12 +22,14 @@ interface LogViewerSystemContract
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function showLogs(Request $request);
 
     /**
      * @param $date
+     *
      * @return mixed
      */
     public function show($date);
@@ -35,18 +37,21 @@ interface LogViewerSystemContract
     /**
      * @param $date
      * @param $level
+     *
      * @return mixed
      */
     public function showByLevel($date, $level);
 
     /**
      * @param $date
+     *
      * @return mixed
      */
     public function download($date);
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function delete(Request $request);

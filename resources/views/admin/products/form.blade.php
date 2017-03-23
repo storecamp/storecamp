@@ -85,7 +85,7 @@
                     <tr>
                         <td colspan="2"></td>
                         <td class="text-left">
-                            <a role="button" onclick="addAttribute();" data-toggle="tooltip" title=""
+                            <a role="button" onclick="addAttribute();" data-toggle="tooltip" title="Add Attribute"
                                class="btn btn-primary" data-original-title="Add Attribute"><i
                                         class="fa fa-plus-circle"></i></a>
                         </td>
@@ -109,8 +109,10 @@
 
             </div>
             <div class="form-group">
-                <label class="control-label" for="input-upc"><span data-toggle="tooltip" title=""
-                                                                   data-original-title="Universal Product Code">UPC</span></label>
+                <label class="control-label" for="input-upc">
+                    <span data-toggle="tooltip" title=""
+                          data-original-title="Universal Product Code">UPC</span>
+                </label>
                 {{ Form::text('upc', old('upc'), ["id" => "input-upc", "placeholder" => "UPC", "class" => "form-control"]) }}
                 {!! $errors->first('upc', '<div class="text-danger">:message</div>') !!}
 

@@ -12,7 +12,7 @@ $.StoreCamp.templates =
     <button type="button" data-dismiss="modal" class="btn #{className}"  style='margin: auto 10px' id="#{id}">#{text}</button>
       """
     modalTemplate: (modalId, Message, Header, AriaLabel, Ok, Cancel) ->
-        """<div class="modal fade" id="#{modalId}" tabindex="-1" role="dialog" aria-labelledby="#{AriaLabel}" aria-hidden="true">
+        """<div class="generic-modal modal fade" id="#{modalId}" tabindex="-1" role="dialog" aria-labelledby="#{AriaLabel}" aria-hidden="true">
         <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>#{Header}</h3></div>
@@ -42,6 +42,8 @@ $.StoreCamp.templates =
     # generate a modal id unless one is specified
     if modalId == ''
       modalId = 'genericModal' + parseInt(Date.now() )
+    else
+      $("#{modalId}").remove()
     # set-up the html for the modal
     html = _this.options.modalTemplate(modalId, message, title, AriaLabel, okText, cancelText)
     $('body').append html
@@ -58,7 +60,8 @@ $.StoreCamp.templates =
       return
     $('button[data-dismiss="ok"]', genericModal).on 'click', ->
       genericModal.modal 'hide'
-      defaultCallback confirmLink
+      defaultCallback $(this)
+      genericModal.remove()
       return
     return
   withAdditionalBtn: (text, id, className) ->

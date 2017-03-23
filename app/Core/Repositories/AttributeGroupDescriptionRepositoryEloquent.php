@@ -35,7 +35,7 @@ class AttributeGroupDescriptionRepositoryEloquent extends BaseRepository impleme
     {
         $model = AttributeGroupDescription::class;
 
-        return new $model;
+        return new $model();
     }
 
     /**

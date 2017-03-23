@@ -17,7 +17,8 @@ class MailSentTOReceiverListener
     /**
      * Handle the event.
      *
-     * @param  MailSentTOReceiver  $event
+     * @param MailSentTOReceiver $event
+     *
      * @return void
      */
     public function handle(MailSentTOReceiver $event)
