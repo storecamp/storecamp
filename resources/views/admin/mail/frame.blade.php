@@ -24,19 +24,21 @@
             </div>
             <div class="clearfix"></div>
             {{--<div class="form-group">--}}
-                {{--@include('admin.fileLinker.fileLinkerModal', [$btnMsg='attach file', $preferredTag = "gallery", $prefix="attachment", $fileTypes = 'document, image, video, pdf, archive, audio', $multiple = false, $outputElementPath = ".attach-output", $disk = "local"])--}}
-                {{--<div class="attach-output"></div>--}}
+            {{--@include('admin.fileLinker.fileLinkerModal', [$btnMsg='attach file', $preferredTag = "gallery", $prefix="attachment", $fileTypes = 'document, image, video, pdf, archive, audio', $multiple = false, $outputElementPath = ".attach-output", $disk = "local"])--}}
+            {{--<div class="attach-output"></div>--}}
             {{--</div>--}}
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
             <div class="pull-right">
                 <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
-                <button type="submit" onclick="save(event)" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Start Campaign</button>
+                <button type="submit" onclick="save(event)" class="btn btn-primary"><i class="fa fa-envelope-o"></i>
+                    Start Campaign
+                </button>
             </div>
             <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
         </div>
-        {!! Form::close() !!}
+    {!! Form::close() !!}
         <!-- /.box-footer -->
     </div>
     <!-- /.row -->

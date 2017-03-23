@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Core\Logic\MediaSystem;
 use Illuminate\Support\ServiceProvider;
 
 class LogicServiceProvider extends ServiceProvider

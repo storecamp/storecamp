@@ -183,6 +183,43 @@ class MailCampaignSystem implements MailCampaignSystemContract
     }
 
     /**
+     * @param $request
+     * @param $uid
+     *
+     * @return array
+     */
+    private function putMail($request, $uid)
+    {
+        $root = base_path('resources/views/storage/tmp_mails') . '/' . $uid . '/';
+        if (!\File::exists($root)) {
+            \File::makeDirectory($root, 0775, true, true);
+        }
+        $randomStr = str_random(5);
+        $filename = $randomStr . '.blade.php';
+        $path = $root . $filename;
+        $viewFolder = 'storage/tmp_mails' . '/' . $uid . '/' . $randomStr;
+        \File::put($path, $request->mail);
+
+        return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
+    }
+
+    /**
+     * @param $root
+     *
+     * @return string
+     */
+    private function putCSV($root)
+    {
+        if (!\File::exists($root)) {
+            \File::makeDirectory($root, 0775, true, true);
+        }
+        $path = $root . str_random(5) . '.csv';
+        \File::put($path, null);
+
+        return $path;
+    }
+
+    /**
      * @param $type
      * @param $sender_email
      * @param $sender_name
@@ -216,43 +253,6 @@ class MailCampaignSystem implements MailCampaignSystemContract
             echo "\n\n Email sent to - ".$receiverMail.'<br>';
         }
         echo "\n <h3 class='text-info'>All done</h3>";
-    }
-
-    /**
-     * @param $request
-     * @param $uid
-     *
-     * @return array
-     */
-    private function putMail($request, $uid)
-    {
-        $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
-        if (!\File::exists($root)) {
-            \File::makeDirectory($root, 0775, true, true);
-        }
-        $randomStr = str_random(5);
-        $filename = $randomStr.'.blade.php';
-        $path = $root.$filename;
-        $viewFolder = 'storage/tmp_mails'.'/'.$uid.'/'.$randomStr;
-        \File::put($path, $request->mail);
-
-        return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
-    }
-
-    /**
-     * @param $root
-     *
-     * @return string
-     */
-    private function putCSV($root)
-    {
-        if (!\File::exists($root)) {
-            \File::makeDirectory($root, 0775, true, true);
-        }
-        $path = $root.str_random(5).'.csv';
-        \File::put($path, null);
-
-        return $path;
     }
 
     /**
