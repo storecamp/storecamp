@@ -12,15 +12,18 @@
         @endif
     </span>
     <div class="mailbox-attachment-info">
-        <span class="mailbox-attachment-name"><i
+        <span class="mailbox-attachment-name" style="text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;"><i
                     class="fa fa-paperclip"></i>
             {{$file->filename}}
         </span>
-        <span class="mailbox-attachment-size">
+        <span class="mailbox-attachment-size" style="text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;">
                                 {{ formatBytes($file->size)}}
                             </span>
         <div class="form-group">
-            <strong class="text-info">{{ $file->aggregate_type }}</strong>
+            <strong class="text-info" style="color: #3c8dbc!important;text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;">{{ $file->aggregate_type }}</strong>
             <label for="{{ $file->id }}" class="pull-right">
                 {{ Form::checkbox('selectedFile[]', null, null, ['class' => 'minimal pull-right selectedFile', 'id' => $file->id]) }}
             </label>

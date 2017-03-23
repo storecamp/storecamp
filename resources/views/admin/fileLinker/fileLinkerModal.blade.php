@@ -26,7 +26,8 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" style="text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                <h4 class="modal-title" style="font-size: 18px;     margin: 0;
+    line-height: 1.42857143; text-align: left; clear: both; float:left; font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;">Please Select Files To Attach</h4>
             </div>
             <div class="modal-body" style="word-wrap: break-word;"></div>
