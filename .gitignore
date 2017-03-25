@@ -52,3 +52,18 @@ _ide_helper.php
 /public/css/admin_lte.css.map
 /public/css/app_less.css.map
 /public/css/admin_storecamp.css.map
+/public/hot
+npm-debug.log
+
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+storage/*.key
+.env.*.php
+.env.php
+
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+!/app/Http/Controllers/

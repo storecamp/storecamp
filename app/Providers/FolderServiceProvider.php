@@ -15,8 +15,8 @@ class FolderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(
-            'App\\Drivers\\FolderToDb\\SynchronizerInterface',
-            'App\\Drivers\\FolderToDb\\Synchronizer');
+            'App\\Core\\Drivers\\FolderToDb\\SynchronizerInterface',
+            'App\\Core\\Drivers\\FolderToDb\\Synchronizer');
 
         Folder::created(function ($folder) {
             //setDiskAttribute fix
