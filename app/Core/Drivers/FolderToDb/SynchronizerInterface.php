@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Drivers\FolderToDb;
+namespace App\Core\Drivers\FolderToDb;
 
 use App\Core\Models\Folder;
 

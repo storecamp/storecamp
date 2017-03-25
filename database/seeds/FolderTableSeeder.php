@@ -8,16 +8,16 @@ use Illuminate\Database\Seeder;
 class FolderTableSeeder extends Seeder
 {
     /**
-     * @var \App\Drivers\FolderToDb\Synchronizer
+     * @var \App\Core\Drivers\FolderToDb\Synchronizer
      */
     protected $synchronizer;
 
     /**
      * FolderTableSeeder constructor.
      *
-     * @param \App\Drivers\FolderToDb\Synchronizer $synchronizer
+     * @param \App\Core\Drivers\FolderToDb\Synchronizer $synchronizer
      */
-    public function __construct(\App\Drivers\FolderToDb\Synchronizer $synchronizer)
+    public function __construct(\App\Core\Drivers\FolderToDb\Synchronizer $synchronizer)
     {
         $this->synchronizer = $synchronizer;
     }
