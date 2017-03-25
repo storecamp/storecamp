@@ -35,7 +35,8 @@ class MailController extends BaseController
 
     /**
      * MailController constructor.
-     * @param MailRepository $repository
+     *
+     * @param MailRepository             $repository
      * @param MailCampaignSystemContract $mailCampaign
      */
     public function __construct(MailRepository $repository, MailCampaignSystemContract $mailCampaign)
@@ -74,6 +75,7 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showFrame(Request $request)
@@ -139,6 +141,7 @@ class MailController extends BaseController
     public function makeCampaign(Request $request)
     {
         dd($request->all());
+
         return $this->mailCampaign->generateCampaign($request);
     }
 }

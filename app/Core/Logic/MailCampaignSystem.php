@@ -190,14 +190,14 @@ class MailCampaignSystem implements MailCampaignSystemContract
      */
     private function putMail($request, $uid)
     {
-        $root = base_path('resources/views/storage/tmp_mails') . '/' . $uid . '/';
+        $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
         if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $randomStr = str_random(5);
-        $filename = $randomStr . '.blade.php';
-        $path = $root . $filename;
-        $viewFolder = 'storage/tmp_mails' . '/' . $uid . '/' . $randomStr;
+        $filename = $randomStr.'.blade.php';
+        $path = $root.$filename;
+        $viewFolder = 'storage/tmp_mails'.'/'.$uid.'/'.$randomStr;
         \File::put($path, $request->mail);
 
         return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
@@ -213,7 +213,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
         if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
-        $path = $root . str_random(5) . '.csv';
+        $path = $root.str_random(5).'.csv';
         \File::put($path, null);
 
         return $path;
