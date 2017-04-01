@@ -230,6 +230,8 @@ return [
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        Spatie\CookieConsent\CookieConsentServiceProvider::class,
     ],
 
     /*

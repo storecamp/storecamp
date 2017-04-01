@@ -76,7 +76,8 @@
                 <div class="col-md-6">
                     <div class="product-sku">{{ $product->sku }}</div>
                 </div>
-                <button class="btn btn-default product-add-to-cart"><em class="fa fa-cart-plus"></em> Add to cart</button>
+                <button class="btn btn-default product-add-to-cart"><em class="fa fa-cart-plus"></em> Add to cart
+                </button>
                 {!! Form::close() !!}
                 <hr>
                 <div class="col-md-12">
@@ -85,22 +86,16 @@
                     <button class="btn btn-default product-add-to-compare">Add to Compare</button>
                 </div>
                 <div class="col-md-12">
-                <div class="product-social-sharing">
-                    <ul class="product-social-list">
-                        <li>
-                            <span>Share</span>
-                        </li>
-                        <li>
-                            <a class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li>
-                            <a class="btn btn-social-icon btn-vk"><i class="fa fa-vk"></i></a>
-                        </li>
-                        <li>
-                            <a class="btn btn-social-icon btn-google"><i class="fa fa-google-plus"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                    <div class="product-social-sharing">
+                        <?php $mainImage = $product->getMedia('gallery')->first(); ?>
+                        <?php $mainImage = $mainImage ? $mainImage->getUrl() : asset("/img/Image-not-found.gif"); ?>
+                        @include('site.partials.social.share', [
+                           'url' => request()->fullUrl(),
+                           'description' => $product->body,
+                           'name' => $product->title,
+                           'image' => $mainImage
+                        ])
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12">

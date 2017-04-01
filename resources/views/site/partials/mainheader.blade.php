@@ -133,3 +133,4 @@ $user = $auth->user() ? $auth->user() : null; ?>
         <!-- /.container-fluid -->
     </nav>
 </header>
+@include('cookieConsent::index')
