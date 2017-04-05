@@ -7,7 +7,6 @@ use App\Core\Repositories\CurrencyRepository;
 use App\Core\Transformers\CurrenciesDataTransformer;
 use App\Core\Validators\Currencies\StoreCurrenciesRequest;
 use App\Core\Validators\Currencies\UpdateCurrenciesRequest;
-use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 /**
