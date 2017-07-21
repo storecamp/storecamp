@@ -44,8 +44,6 @@
     "graham-campbell/manager": "^2.4",
     "laracasts/flash": "^2.0",
     "symfony/event-dispatcher": "^2.8",
-    "omnipay/common": "^2.5",
-    "omnipay/omnipay": "dev-master",
     "storecamp/htmlelements": "dev-laravel-5.4",
     "mcamara/laravel-localization": "^1.2",
     "artesaos/seotools": "^0.10.0",
