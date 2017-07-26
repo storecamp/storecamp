@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 /**
- * Class MediaReceiver
- * @package App\Core\Support\Media
+ * Class MediaReceiver.
  */
 class MediaReceiver
 {
