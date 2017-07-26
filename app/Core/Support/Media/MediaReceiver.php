@@ -5,8 +5,11 @@ namespace App\Core\Support\Media;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use JildertMiedema\LaravelPlupload\PluploadException;
 
+/**
+ * Class MediaReceiver
+ * @package App\Core\Support\Media
+ */
 class MediaReceiver
 {
     private $maxFileAge = 600; //600 secondes
@@ -51,11 +54,11 @@ class MediaReceiver
     private function appendData($filePathPartial, UploadedFile $file)
     {
         if (!$out = @fopen($filePathPartial, 'ab')) {
-            throw new PluploadException('Failed to open output stream.', 102);
+            throw new \Exception('Failed to open output stream.', 102);
         }
 
         if (!$in = @fopen($file->getPathname(), 'rb')) {
-            throw new PluploadException('Failed to open input stream', 101);
+            throw new \Exception('Failed to open input stream', 101);
         }
         while ($buff = fread($in, 4096)) {
             fwrite($out, $buff);
