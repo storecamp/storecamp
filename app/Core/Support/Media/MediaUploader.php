@@ -87,6 +87,27 @@ class MediaUploader
     }
 
     /**
+     * @param $url
+     * @return mixed
+     * @throws \Exception
+     */
+    public function addMediaFromUrl($url)
+    {
+        if (!$stream = @fopen($url, 'r')) {
+            throw new \Exception('Url Cannot be opened!');
+        }
+
+        $tmpFile = tempnam(sys_get_temp_dir(), 'tmp-media-library');
+        file_put_contents($tmpFile, $stream);
+
+        $filename = basename(parse_url($url, PHP_URL_PATH));
+
+        $this->source = $tmpFile;
+        return $this->upload();
+    }
+
+
+    /**
      * Set the source for the file.
      *
      * @param mixed $source

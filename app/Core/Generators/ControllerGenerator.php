@@ -3,6 +3,7 @@
 namespace App\Core\Generators;
 
 use App\Core\Generators\Migrations\SchemaParser;
+use Illuminate\Support\Str;
 
 /**
  * Class ModelGenerator.
@@ -53,7 +54,9 @@ class ControllerGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath().'/'.parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.$this->getFor().'/'.$this->getName().str_studly($this->getPathConfigNode()).'.php';
+        return $this->getBasePath().'/'.
+            parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.
+            $this->getFor().'/'.$this->getName() . Str::studly($this->getPathConfigNode()).'.php';
     }
 
     /**

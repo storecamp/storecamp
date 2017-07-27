@@ -2,14 +2,14 @@
 
 namespace App\Core\Generators;
 
-use Illuminate\Console\AppNamespaceDetectorTrait;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\Input;
 
 abstract class Generator
 {
-    use AppNamespaceDetectorTrait;
+    use DetectsApplicationNamespace;
 
     /**
      * The filesystem instance.
