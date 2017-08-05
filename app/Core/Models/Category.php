@@ -238,6 +238,28 @@ class Category extends Model implements Transformable
     }
 
     /**
+     * @param null $category
+     * @param array $categories
+     * @return Collection
+     */
+    public function descedants($category = null, $categories = array())
+    {
+        if(is_null($category)) {
+           $category = $this;
+        }
+        if(count($category->children)) {
+            foreach ($category->children as $child) {
+                array_push($categories, $child);
+                if($child->children->count()) {
+                    return $this->descedants($child, $categories);
+                }
+            }
+        }
+
+       return new Collection($categories);
+    }
+
+    /**
      * @param $query
      *
      * @return mixed

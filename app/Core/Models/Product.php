@@ -467,7 +467,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         }
         $categoryInstance = app(CategoryRepository::class);
         $category = $categoryInstance->findOrFail($category);
-        $categoryIds = $category->children()->pluck('id')->toArray();
+        $categoryIds = $category->descedants()->pluck('id')->toArray();
         array_unshift($categoryIds, $category->id);
 
         return $query->with('categories')

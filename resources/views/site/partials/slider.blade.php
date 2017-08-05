@@ -43,11 +43,13 @@
 <script>
     var owl = $('.owl-carousel');
     owl.owlCarousel({
-        items: 4,
+        items: {!! $countViewed > 4 ? 4 : $countViewed !!},
         loop: true,
+        autoWidth: true,
         margin: 10,
         autoplay: true,
         autoplayTimeout: 3000,
+        height: 200,
         autoplayHoverPause: true
     });
     $('.play').on('click', function () {
