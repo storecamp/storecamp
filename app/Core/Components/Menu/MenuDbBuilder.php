@@ -34,9 +34,11 @@ class MenuDbBuilder
     /**
      * @param string $menuName
      * @param string $type
-     * @param array $options
-     * @return \Illuminate\Support\HtmlString
+     * @param array  $options
+     *
      * @throws \App\Core\Exceptions\MenuTypeNotFound
+     *
+     * @return \Illuminate\Support\HtmlString
      */
     public function renderFromDb($menuName = 'string', $type = 'default', array $options = [])
     {

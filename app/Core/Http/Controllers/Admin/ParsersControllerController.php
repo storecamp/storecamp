@@ -3,15 +3,14 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Parsers\Rozetka\Rozetka;
-use Illuminate\Http\Request;
 use App\Core\Repositories\ParserRepository;
+use Illuminate\Http\Request;
 
 /**
- * Class ParsersControllersController
- * @package App\Http\Controllers
+ * Class ParsersControllersController.
  */
-class ParsersControllerController extends BaseController {
-
+class ParsersControllerController extends BaseController
+{
     /**
      * @var string
      */
@@ -26,8 +25,10 @@ class ParsersControllerController extends BaseController {
      * @var ParserRepository
      */
     private $repository;
+
     /**
      * ParsersControllerController constructor.
+     *
      * @param ParserRepository $repository
      */
     public function __construct(ParserRepository $repository)
@@ -44,17 +45,20 @@ class ParsersControllerController extends BaseController {
     public function index(Request $request)
     {
         $data = $this->repository->all();
+
         return $this->view('index', compact('data'));
     }
 
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Request $request, $id)
     {
         $data = $this->repository->findOrFail($id);
+
         return $this->view('show', compact('data'));
     }
 
@@ -70,11 +74,13 @@ class ParsersControllerController extends BaseController {
         $pagelimit = $request->get('pagelimit');
         $newsearch = new Rozetka($model, $pagelimit ? $pagelimit : 1);
         $result = $newsearch->parse($keyword);
-        if($result) {
-            $this->toastr('success', 'Data stored in a file in parsers folder with name: ' ."<b>".$result.'.csv'."</b>");
+        if ($result) {
+            $this->toastr('success', 'Data stored in a file in parsers folder with name: '.'<b>'.$result.'.csv'.'</b>');
+
             return redirect()->back();
         } else {
             $this->toastr('error', 'Error appeared!');
+
             return redirect()->back();
         }
     }
@@ -102,7 +108,8 @@ class ParsersControllerController extends BaseController {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit(Request $request, $id)
@@ -113,7 +120,8 @@ class ParsersControllerController extends BaseController {
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function update(Request $request, $id)
@@ -124,7 +132,8 @@ class ParsersControllerController extends BaseController {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy(Request $request, $id)

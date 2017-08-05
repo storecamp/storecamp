@@ -209,20 +209,21 @@ class Category extends Model implements Transformable
         return $this->belongsTo('App\Core\Models\Category', 'parent_id');
     }
 
-
     /**
      * @param array $parents
-     * @param null $parent
+     * @param null  $parent
+     *
      * @return array|int
      */
-    public function parents($parents = array(), $parent = null)
+    public function parents($parents = [], $parent = null)
     {
-        if(!$parent) {
+        if (!$parent) {
             $parent = $this;
         }
 
         while ($parent->parent_id != null) {
             array_push($parents, $parent->parent);
+
             return $this->parents($parents, $parent->parent);
         }
 
@@ -238,25 +239,26 @@ class Category extends Model implements Transformable
     }
 
     /**
-     * @param null $category
+     * @param null  $category
      * @param array $categories
+     *
      * @return Collection
      */
-    public function descedants($category = null, $categories = array())
+    public function descedants($category = null, $categories = [])
     {
-        if(is_null($category)) {
-           $category = $this;
+        if (is_null($category)) {
+            $category = $this;
         }
-        if(count($category->children)) {
+        if (count($category->children)) {
             foreach ($category->children as $child) {
                 array_push($categories, $child);
-                if($child->children->count()) {
+                if ($child->children->count()) {
                     return $this->descedants($child, $categories);
                 }
             }
         }
 
-       return new Collection($categories);
+        return new Collection($categories);
     }
 
     /**
