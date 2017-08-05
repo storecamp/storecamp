@@ -112,7 +112,7 @@ class CategorySystem implements CategorySystemContract
     public static function getCategoryFullPath(Category $category, string $type = 'string')
     {
         $parents = [];
-        foreach ($category->ancestors()->get() as $parent) {
+        foreach ($category->parents() as $parent) {
             $parents[] = $parent->name;
         }
         array_push($parents, $category->name);

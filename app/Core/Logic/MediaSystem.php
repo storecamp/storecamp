@@ -155,7 +155,7 @@ class MediaSystem implements MediaSystemContract
         $newFolderPath = $parentPath ? $parentPath.'/'.$new_path : $new_path;
         if (!$this->filesystem->isDirectory($newFolder)) {
             $this->filesystem->makeDirectory($newFolder, 0775, true);
-            $folder = $this->folder->getModel()->create([
+            $folder = $this->folder->getModel()->firstOrCreate([
                 'name'         => $new_path,
                 'path_on_disk' => $newFolderPath,
                 'parent_id'    => $parentFolder->id,
@@ -164,8 +164,17 @@ class MediaSystem implements MediaSystemContract
 
             return $folder;
         } else {
-            return $this->folder->getDefaultFolder($disk);
+            $folder = $this->folder->getModel()->firstOrCreate([
+                'name'         => $new_path,
+                'path_on_disk' => $newFolderPath,
+                'parent_id'    => $parentFolder->id,
+                'disk'         => $disk,
+            ]);
+
+            return $folder;
         }
+
+        return $this->folder->getDefaultFolder($disk);
     }
 
     /**

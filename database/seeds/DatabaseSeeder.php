@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingSeeder::class);
         $this->call(MenuItemsSeeder::class);
         $this->call(CurrencySeed::class);
+        $this->call(ParsersSeeder::class);
+        $this->call(ProductsParserSeeder::class);
 
         \Illuminate\Database\Eloquent\Model::reguard();
     }

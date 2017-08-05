@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Core\Models\Parser;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -57,6 +58,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Menu',
             'MenuItems',
             'Currency',
+            'Parser'
         ];
 
         foreach ($models as $repo) {

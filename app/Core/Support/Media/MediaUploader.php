@@ -525,14 +525,12 @@ class MediaUploader
     /**
      * Create a `Media` record for a file already on a disk.
      *
-     * @param string $disk
-     * @param string $directory
-     * @param string $filename
-     * @param string $extension
-     *
-     * @throws \Plank\Mediable\Exceptions\MediaUploadFileNotFoundException If the file does not exist
-     *
-     * @return \Plank\Mediable\Media
+     * @param $disk
+     * @param $directory
+     * @param $filename
+     * @param $extension
+     * @return \Illuminate\Database\Eloquent\Model|Media
+     * @throws FileNotFoundException
      */
     public function import($disk, $directory, $filename, $extension)
     {
@@ -553,7 +551,12 @@ class MediaUploader
         $model->aggregate_type = $this->inferAggregateType($model->mime_type, $model->extension);
         $model->size = $this->verifyFileSize($storage->size($model->getDiskPath()));
 
-        $model->save();
+        $modelBuilder = \App\Core\Models\Media::where('disk',$model->disk)->where('directory', $model->directory)->where('filename', $model->filename);
+        if($modelBuilder->count()) {
+            $model = $modelBuilder->first();
+        } else {
+            $model->save();
+        }
 
         return $model;
     }

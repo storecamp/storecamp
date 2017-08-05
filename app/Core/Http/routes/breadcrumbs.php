@@ -78,9 +78,15 @@ Breadcrumbs::register('users', function ($breadcrumbs) {
     $breadcrumbs->parent('admin');
     $breadcrumbs->push('Users', route('admin::users::index'));
 });
+//products
 Breadcrumbs::register('products', function ($breadcrumbs) {
     $breadcrumbs->parent('admin');
     $breadcrumbs->push('Products', route('admin::products::index'));
+});
+//parsers
+Breadcrumbs::register('parsers', function ($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Parsers', route('admin::parsers::index'));
 });
 
 Breadcrumbs::register('settings', function ($breadcrumbs) {

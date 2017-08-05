@@ -33,7 +33,7 @@
     "that0n3guy/transliteration": "^2.0",
     "barryvdh/laravel-debugbar": "^2.3",
     "nilsenj/toastr-laravel": "dev-1.0-stable",
-    "league/csv": "8.0",
+    "league/csv": "^8.2",
     "laravel/socialite": "^3.0",
     "laravel/tinker": "^1.0",
     "wikimedia/composer-merge-plugin": "^1.4",
@@ -50,7 +50,8 @@
     "yajra/laravel-datatables-oracle": "^7.3",
     "laravel/browser-kit-testing": "^1.0",
     "spatie/laravel-backup": "^3.0.0",
-    "spatie/laravel-cookie-consent": "^1.8"
+    "spatie/laravel-cookie-consent": "^1.8",
+    "masterminds/html5": "^2.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",

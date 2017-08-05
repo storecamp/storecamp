@@ -22,6 +22,7 @@ trait CacheableEloquent
      */
     protected $cacheClearOn = [
         'create',
+        'save',
         'update',
         'delete',
     ];

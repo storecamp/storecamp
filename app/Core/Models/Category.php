@@ -6,7 +6,7 @@ use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
-use App\Core\Traits\Nestedset\NodeTrait;
+use Arcanedev\Support\Collection;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -78,14 +78,13 @@ class Category extends Model implements Transformable
     use SluggableScopeHelpers;
     use Auditable;
     use Mediable;
-    use NodeTrait, CacheableEloquent {
-        NodeTrait::newEloquentBuilder as node_newEloquentBuilder;
+    use CacheableEloquent {
         CacheableEloquent::newEloquentBuilder as cache_newEloquentBuilder;
     }
 
     public function newEloquentBuilder($query)
     {
-        return $this->node_newEloquentBuilder($query);
+        return $this->cache_newEloquentBuilder($query);
     }
 
     /**
@@ -208,6 +207,26 @@ class Category extends Model implements Transformable
     public function parent()
     {
         return $this->belongsTo('App\Core\Models\Category', 'parent_id');
+    }
+
+
+    /**
+     * @param array $parents
+     * @param null $parent
+     * @return array|int
+     */
+    public function parents($parents = array(), $parent = null)
+    {
+        if(!$parent) {
+            $parent = $this;
+        }
+
+        while ($parent->parent_id != null) {
+            array_push($parents, $parent->parent);
+            return $this->parents($parents, $parent->parent);
+        }
+
+        return $parents;
     }
 
     /**

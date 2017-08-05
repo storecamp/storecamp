@@ -15,7 +15,7 @@ trait SidebarTrait
      */
     public function __construct($instance)
     {
-        $this->instace = $instance;
+        $this->instance = $instance;
     }
 
     /**

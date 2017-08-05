@@ -275,6 +275,30 @@ class Synchronizer implements SynchronizerInterface
     }
 
     /**
+     * @param $folder
+     * @param $disk
+     */
+    public function byFolderFilesSync($folder, $disk)
+    {
+        $rootFolder = $this->resolveRootFolder($disk);
+        foreach ($this->file->files($folder) as $file) {
+            $fileName = $this->file->basename($file);
+            $fileNameClean = explode('.', $fileName);
+            array_pop($fileNameClean);
+            $mediaFile = $this->media->findWhere([
+                ['directory', '=', ''],
+                ['filename', '=', implode('', $fileNameClean)],
+                ['disk', '=', $disk], ]);
+            if ($mediaFile->count() == 0) {
+                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk.'/'.$fileName : $fileName;
+                $media = \MediaUploader::importPath($disk, $manageRootPath);
+                $media->directory_id = $rootFolder->id;
+                $media->save();
+            }
+        }
+    }
+
+    /**
      * @param string $root
      * @param string $format
      * @param bool   $skipFormatEnding

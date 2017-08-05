@@ -333,6 +333,22 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
+        //parsers
+        $this->group(['prefix' => 'parsers', 'as' => 'parsers::'], function (\Illuminate\Routing\Router $router) {
+            $router->get('index', [
+                'uses' => 'Admin\ParsersControllerController@index',
+                'as'   => 'index',
+            ]);
+            $router->get('show/{id}', [
+                'uses' => 'Admin\ParsersControllerController@show',
+                'as'   => 'show',
+            ]);
+            $router->put('parse/{id}', [
+                'uses' => 'Admin\ParsersControllerController@parse',
+                'as'   => 'parse',
+            ]);
+        });
+
         // reviews
         $this->group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
             $this->get('index',

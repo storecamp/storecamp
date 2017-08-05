@@ -54,7 +54,7 @@ class Folder extends Model implements Transformable
     use SluggableScopeHelpers;
     use GeneratesUnique;
     use Auditable;
-    use CacheableEloquent;
+//    use CacheableEloquent;
 
     protected $with = ['files'];
     /**

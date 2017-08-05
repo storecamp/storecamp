@@ -2,8 +2,6 @@
 
 namespace App\Core\Components\Menu;
 
-use App\Core\Models\Menu;
-
 class SidebarMenuBuilder
 {
     /**
@@ -86,6 +84,7 @@ class SidebarMenuBuilder
             )
             ->menu('administration')
             ->setLabel('Administration')
+            ->addLink('<i class="fa fa-suitcase"></i> Parsers', ['route' => 'admin::parsers::index'])
             ->addSubMenu($settings, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::settings::*']])
             ->addSubMenu($mediaStorage, ['id' => 'link-media', 'url_def' => ['route_pattern' => 'admin::media::*']])
             ->addSubMenu($access, ['id' => 'link-access', 'url_def' => ['route_pattern' => 'admin::roles::*']])
@@ -104,7 +103,7 @@ class SidebarMenuBuilder
             ->addSubMenu($design, ['id' => 'link-design', 'url_def' => ['route_pattern' => 'admin::design::*']])
             ->addSubMenu($marketing, ['id' => 'link-marketing', 'url_def' => ['route_pattern' => 'admin::marketing::*']])
             ->addSubMenu($sales, ['id' => 'link-sales', 'url_def' => ['route_pattern' => 'admin::sales::*']])
-//            ->addSubMenu($attributes, ['id' => 'link-attributes', 'url_def' => ['route_pattern' => 'admin::attributes::*']])
+            //            ->addSubMenu($attributes, ['id' => 'link-attributes', 'url_def' => ['route_pattern' => 'admin::attributes::*']])
 //            ->addSubMenu($categories, ['id' => 'link-categories', 'url_def' => ['route_pattern' => 'admin::categories::*']])
 //            ->addSubMenu($productReviews, ['id' => 'link-reviews', 'url_def' => ['route_pattern' => 'admin::reviews::*']])
             ->addSubMenu($productsMenu, ['id' => 'link-products', 'url_def' => ['route_pattern' => 'admin::products::*']]);
