@@ -56,7 +56,7 @@ class ControllerGenerator extends Generator
     {
         return $this->getBasePath().'/'.
             parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true).'/'.
-            $this->getFor().'/'.$this->getName() . Str::studly($this->getPathConfigNode()).'.php';
+            $this->getFor().'/'.$this->getName().Str::studly($this->getPathConfigNode()).'.php';
     }
 
     /**

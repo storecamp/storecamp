@@ -12,12 +12,11 @@ class Parser extends Model implements Transformable
     use TransformableTrait;
     use GeneratesUnique;
 
-    protected $table = "parsers";
+    protected $table = 'parsers';
     protected $fillable = ['name', 'url', 'search_query', 'image'];
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
-
 }

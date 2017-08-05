@@ -88,8 +88,10 @@ class MediaUploader
 
     /**
      * @param $url
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function addMediaFromUrl($url)
     {
@@ -103,9 +105,9 @@ class MediaUploader
         $filename = basename(parse_url($url, PHP_URL_PATH));
 
         $this->source = $tmpFile;
+
         return $this->upload();
     }
-
 
     /**
      * Set the source for the file.
@@ -529,8 +531,10 @@ class MediaUploader
      * @param $directory
      * @param $filename
      * @param $extension
-     * @return \Illuminate\Database\Eloquent\Model|Media
+     *
      * @throws FileNotFoundException
+     *
+     * @return \Illuminate\Database\Eloquent\Model|Media
      */
     public function import($disk, $directory, $filename, $extension)
     {
@@ -551,8 +555,8 @@ class MediaUploader
         $model->aggregate_type = $this->inferAggregateType($model->mime_type, $model->extension);
         $model->size = $this->verifyFileSize($storage->size($model->getDiskPath()));
 
-        $modelBuilder = \App\Core\Models\Media::where('disk',$model->disk)->where('directory', $model->directory)->where('filename', $model->filename);
-        if($modelBuilder->count()) {
+        $modelBuilder = \App\Core\Models\Media::where('disk', $model->disk)->where('directory', $model->directory)->where('filename', $model->filename);
+        if ($modelBuilder->count()) {
             $model = $modelBuilder->first();
         } else {
             $model->save();

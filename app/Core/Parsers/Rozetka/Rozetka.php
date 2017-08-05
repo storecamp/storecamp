@@ -10,17 +10,17 @@ use League\Csv\Writer;
 use Masterminds\HTML5;
 
 /**
- * Parser for rozetka.com.ua
+ * Parser for rozetka.com.ua.
  *
  * Class Rozetka
  */
 class Rozetka
 {
     /**
-     * @var $pagesLimit is limit of pages for parsing.
+     * @var is         limit of pages for parsing.
      * @var $searchURL is url to parse.
-     * @var $request to create an object of class Request.
-     * @var $model to create an object of class Model.
+     * @var $request   to create an object of class Request.
+     * @var $model     to create an object of class Model.
      */
     public $pagesLimit;
     private $searchURL;
@@ -31,14 +31,15 @@ class Rozetka
 
     /**
      * Rozetka constructor.
+     *
      * @param $model
-     * @param int $pagesLimit
+     * @param int  $pagesLimit
      * @param null $url
      */
     public function __construct($model, $pagesLimit = 20, $url = null)
     {
         $this->pagesLimit = $pagesLimit;
-        $this->searchURL = $url ? $url : $model->url . $model->search_url;
+        $this->searchURL = $url ? $url : $model->url.$model->search_url;
         $this->model = $model;
         $this->client = new Client([
             // Base URI is used with relative requests
@@ -51,13 +52,14 @@ class Rozetka
     /**
      * @param $keyword
      * @param \Closure|null $handler
+     *
      * @return mixed
      */
     public function parse($keyword, \Closure $handler = null)
     {
         $this->searchURL .= 'search/?text={text}&p={page}';
-        $URL = str_replace("{text}", urlencode($keyword), $this->searchURL);
-        $resultItems = array();
+        $URL = str_replace('{text}', urlencode($keyword), $this->searchURL);
+        $resultItems = [];
         $pageNum = 0;
         $this->request = new Request();
         while ($pageNum < $this->pagesLimit) {
@@ -73,18 +75,20 @@ class Rozetka
                     break;
                 }
                 if ($this->request->lastErrorCode) {
-                    echo 'ERROR CODE: ' . $this->request->lastErrorCode;
+                    echo 'ERROR CODE: '.$this->request->lastErrorCode;
+
                     return;
                 }
                 if ($this->request->lastHTTPCode != 200) {
-                    echo 'HTTP CODE: ' . $this->request->lastHTTPCode;
+                    echo 'HTTP CODE: '.$this->request->lastHTTPCode;
+
                     return;
                 }
             }
             $items = $this->parse_items_list($htmlpage);
 
             if (is_array($items)) {
-                echo 'Parsed ' . count($items) . ' items from page ' . $pageNum . "\n";
+                echo 'Parsed '.count($items).' items from page '.$pageNum."\n";
                 /**
                  * Save everything in a single array.
                  */
@@ -107,10 +111,10 @@ class Rozetka
         $obj->new_path = 'parsers';
         $obj->folder = Folder::where('name', '')->where('disk', 'local')->first()->unique_id;
         $folder = $mediaSystem->makeFolder($obj, 'local');
-        $filename =  '\\' . date('Y-m-d') . '-' . '-rozetka.csv';
-        $filePath =  public_path('uploads/parsers') . $filename;
+        $filename = '\\'.date('Y-m-d').'-'.'-rozetka.csv';
+        $filePath = public_path('uploads/parsers').$filename;
 
-        if(!\File::exists($filePath)) {
+        if (!\File::exists($filePath)) {
             $writer = Writer::createFromPath($filePath, 'w+');
             //we insert the CSV header
             $writer->insertOne(['name', 'detail', 'link', 'image', 'price_uah', 'price_usd']);
@@ -131,31 +135,33 @@ class Rozetka
 
 //        $file = \Storage::disk('local')->url($filePath);
 
-        $media = app(MediaUploader::class)->importPath('local', 'parsers/' . $filename);
+        $media = app(MediaUploader::class)->importPath('local', 'parsers/'.$filename);
         $media->directory_id = $folder->id;
         $media->save();
 
-        if($handler) {
+        if ($handler) {
             $handler($resultItems);
         }
 
-        return !empty($media->filename) ? $media->filename : "";
+        return !empty($media->filename) ? $media->filename : '';
     }
 
     /**
-     * Converts an array into a single CSV line
+     * Converts an array into a single CSV line.
      *
      * @param array $array .
+     *
      * @return string $csv_string.
      */
-    function array_to_csv($array)
+    public function array_to_csv($array)
     {
-        $csv_arr = array();
+        $csv_arr = [];
         foreach ($array as $value) {
-            $csv_arr[] = '"' . preg_replace('/"/', '""', $value) . '"';
+            $csv_arr[] = '"'.preg_replace('/"/', '""', $value).'"';
         }
         $csv_string = implode(',', $csv_arr);
         $csv_string .= "\r\n";
+
         return $csv_string;
     }
 
@@ -163,43 +169,44 @@ class Rozetka
      * Using regular expressions to find and analyze needed fields.
      *
      * @param string $html Variable containing html code of current search results page.
+     *
      * @return array $onPageItems is array of items per page.
      */
     protected function parse_items_list($html)
     {
-        echo "html dom: " . "\n";
-        $onPageItems = array();
-        $currentItem = array();
+        echo 'html dom: '."\n";
+        $onPageItems = [];
+        $currentItem = [];
 
         // Parse the document. $dom is a DOMDocument.
         $html5 = new HTML5();
         $dom = $html5->loadHTML($html);
         $finder = new \DOMXPath($dom);
-        $classname = "g-i-tile-i-box";
+        $classname = 'g-i-tile-i-box';
         $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         for ($i = $nodes->length - 1; $i > -1; $i--) {
             $nodeValue = $nodes->item($i);
-            $titleClass = "g-i-tile-i-title";
+            $titleClass = 'g-i-tile-i-title';
             $titleBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $titleClass ')]");
             $currentItem['name'] = $titleBlock->item($i)->nodeValue;
-            $detailClass = "g-i-tile-short-detail";
-            $detailBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $detailClass ')]");;
+            $detailClass = 'g-i-tile-short-detail';
+            $detailBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $detailClass ')]");
             $currentItem['detail'] = $detailBlock->item($i)->getElementsByTagName('li')->item(0)->nodeValue;
 
-            $linkClass = "g-i-tile-i-image";
-            $linkBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $linkClass ')]");;
+            $linkClass = 'g-i-tile-i-image';
+            $linkBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $linkClass ')]");
             $currentItem['link'] = $linkBlock->item($i)->getElementsByTagName('a')->item(0)->getAttributeNode('href')->nodeValue;
 
-            $linkClass = "g-i-tile-i-image";
+            $linkClass = 'g-i-tile-i-image';
             $linkBlock = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $linkClass ')]");
             $currentItem['image'] = $linkBlock->item($i)->getElementsByTagName('img')->item(0)->getAttributeNode('src')->nodeValue;
 
-            $scriptClass = "inline";
+            $scriptClass = 'inline';
             $scriptBlock = $nodeValue->getElementsByTagName('script')->item(0)->nodeValue;
 
             preg_match('#var pricerawjson = (.*?);\s*$#m', $scriptBlock, $matches);
 
-            if(empty($matches[1])) {
+            if (empty($matches[1])) {
                 $currentItem['price_uah'] = 0;
                 $currentItem['price_usd'] = 0;
             } else {
@@ -216,5 +223,3 @@ class Rozetka
         return $onPageItems;
     }
 }
-
-?>
