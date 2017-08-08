@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\ParserRepository;
 use App\Core\Models\Parser;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class ParserRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class ParserRepositoryEloquent.
  */
 class ParserRepositoryEloquent extends BaseRepository implements ParserRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class ParserRepositoryEloquent extends BaseRepository implements ParserRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

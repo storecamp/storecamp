@@ -2,18 +2,17 @@
 
 namespace App\Core\Parsers\Rozetka;
 
-
 use GuzzleHttp\Client;
 
 /**
- * Class Request
+ * Class Request.
  */
 class Request
 {
     /**
-     * @var $lastHTTPCode contains CURLINFO_HTTP_CODE.
-     * @var $lastErrorCode contains curl ErrorCode.
-     * @var $$handler is request header for curl.
+     * @var contains        CURLINFO_HTTP_CODE.
+     * @var $lastErrorCode  contains curl ErrorCode.
+     * @var $$handler       is request header for curl.
      * @var $userAgentsFile is file for CURLOPT_USERAGENT.
      */
     public $lastHTTPCode = null;
@@ -31,18 +30,17 @@ class Request
     private $userAgentsFile = 'ua.txt';
 
     /**
-     *
      * @param string $url
+     *
      * @return string $response
      */
     public function make_request($url)
     {
         $client = new Client();
         $response = $client->request('GET', $url, [
-                'headers' =>
-                    [
-                        'User-Agent' => $this->_create_agents()
-                    ]
+                'headers' => [
+                        'User-Agent' => $this->_create_agents(),
+                    ],
             ]
         );
         $body = $response->getBody();
@@ -55,8 +53,8 @@ class Request
      */
     private function _create_agents()
     {
-        $ch = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36";
-        /**
+        $ch = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 Safari/537.36';
+        /*
          * Get and set identifiable user agent from file.
          */
         if (isset($this->userAgentsFile) &&
@@ -64,11 +62,10 @@ class Request
             $userAgents = file($this->userAgentsFile);
             shuffle($userAgents);
             $uagent = $userAgents[array_rand($userAgents)];
+
             return trim($uagent);
         }
 
         return $ch;
     }
 }
-
-?>

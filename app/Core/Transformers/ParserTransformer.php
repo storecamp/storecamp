@@ -2,18 +2,17 @@
 
 namespace App\Core\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Core\Models\Parser;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class ParserTransformer
- * @package namespace App\Core\Transformers;
+ * Class ParserTransformer.
  */
 class ParserTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Parser entity
+     * Transform the \Parser entity.
+     *
      * @param \Parser $model
      *
      * @return array
@@ -26,7 +25,7 @@ class ParserTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

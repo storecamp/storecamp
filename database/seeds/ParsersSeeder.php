@@ -11,15 +11,14 @@ class ParsersSeeder extends Seeder
      */
     public function run()
     {
-        if(env('WITH_ROZETKA')) {
-
+        if (env('WITH_ROZETKA')) {
             \App\Core\Base\Model::unguard();
 
             $parser = \App\Core\Models\Parser::create([
-                'name' => 'Rozetka',
-                'url' => 'http://rozetka.com.ua/',
-                'image' => 'img/parsers/rozetka.png',
-                'search_query' => "search/?text={text}&p={page}"
+                'name'         => 'Rozetka',
+                'url'          => 'http://rozetka.com.ua/',
+                'image'        => 'img/parsers/rozetka.png',
+                'search_query' => 'search/?text={text}&p={page}',
             ]);
         }
     }

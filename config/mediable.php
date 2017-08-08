@@ -154,7 +154,7 @@ return [
                 'application/msword',
                 'application/application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'text/html',
-                'text/x-comma-separated-values'
+                'text/x-comma-separated-values',
             ],
             'extensions' => [
                 'doc',
@@ -164,7 +164,7 @@ return [
                 'xml',
                 'json',
                 'html',
-                'csv'
+                'csv',
             ],
         ],
         Plank\Mediable\Media::TYPE_SPREADSHEET => [
