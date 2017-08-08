@@ -60,19 +60,26 @@
     height: auto;
   }
   > .info {
-    padding: 5px 5px 5px 15px;
-    line-height: 1;
-    position: absolute;
-    left: 55px;
+   display: inline-block;
+    width: 100%;
     > p {
       font-weight: 600;
-      margin-bottom: 9px;
+      //margin-bottom: 9px;
+      display: inline-block;
+      width: 75%;
+      overflow: hidden;
+      padding-right: 3px;
     }
     > a {
       text-decoration: none;
       padding-right: 5px;
       margin-top: 3px;
       font-size: 11px;
+      display: inline;
+      float: right;
+      clear: both;
+      width: 25%;
+      overflow: hidden;
       > .fa,
       > .ion,
       > .glyphicon {
@@ -98,7 +105,7 @@
       > .fa,
       > .glyphicon,
       > .ion {
-        width: 20px;
+        width: 35px;
       }
     }
     .label,

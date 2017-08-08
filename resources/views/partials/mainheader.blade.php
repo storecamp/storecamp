@@ -37,10 +37,10 @@ $user = $auth->user() ? $auth->user() : null; ?>
                             <ul class="menu">
                                 <li><!-- start message -->
                                     <a href="#">
-                                        <div class="pull-left">
-                                            <!-- User Image -->
-                                            <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-                                        </div>
+                                        {{--<div class="pull-left">--}}
+                                            {{--<!-- User Image -->--}}
+                                            {{--<img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>--}}
+                                        {{--</div>--}}
                                         <!-- Message title and timestamp -->
                                         <h4>
                                             Support Team
@@ -120,9 +120,9 @@ $user = $auth->user() ? $auth->user() : null; ?>
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                        {{--<img src="/img/user2-160x160.jpg" class="user-image" alt="User Image"/>--}}
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">@if($user){{ $user->name }}@else Not available right now @endif</span>
+                        <span class="hidden-xs">@if($user) <b> {{ $user->name }} </b> @else Not available right now @endif</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
