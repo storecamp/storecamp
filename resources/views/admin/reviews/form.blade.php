@@ -1,5 +1,5 @@
 <div class="tab-pane active" id="general">
-@if(isset($review))
+@if(!empty($review))
     {{ Form::model($review, ['route' => ['admin::reviews::update',
     $review->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
 @else
@@ -35,8 +35,7 @@
     </div>
     <h3 class="text-muted"><b>Product review point</b></h3>
     <div class="col-md-6">
-        @include('admin.partial._rating', [$selected = old('rating') ?
-        old('rating') : isset($review) ? $review->rating : null])
+        @include('admin.partial._rating', [$selected = old('rating') ? old('rating') : (!empty($review) ? $review->rating : null)])
         {!! $errors->first('rating', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group text-right">
