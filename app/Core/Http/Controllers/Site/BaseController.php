@@ -27,7 +27,7 @@ abstract class BaseController extends Controller
      * @param null|string $title
      * @param array       $options
      */
-    public function toastr(string $type, $message, ?string $title = null, $options = [])
+    public function toastr(string $type, $message, $title = null, $options = [])
     {
         $toastr = app('\nilsenj\Toastr\Toastr');
         $toastr->add($type, $message, $title, $options);
@@ -71,7 +71,8 @@ abstract class BaseController extends Controller
     {
         if (isset($e)) {
             if (request()->ajax()) {
-                return response()->json('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode(), $e->getCode());
+                return response()->json('Error appeared! Server message is - '.
+                    $e->getMessage().' and code is - '.$e->getCode(), $e->getCode());
             }
             \Flash::error('Error appeared! Server message is - '.$e->getMessage().' and code is - '.$e->getCode());
 

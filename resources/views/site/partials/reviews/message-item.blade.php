@@ -10,8 +10,11 @@
                              <a href="{{ route("admin::users::show", $message->user->id) }}">
                             {{$message->user->name}}
                              </a>
-                        <a style="margin: auto 10px;" data-href="{{route('admin::reviews::deleteMessage', [$message->id])}}" data-message-block="{{$message->id}}" class="btn btn-danger btn-xs deleteMessage pull-right">Delete</a>
-                        <a style="margin: auto 10px;" data-href="{{route('admin::reviews::editMessage', [$message->id])}}" data-message-block="{{$message->id}}" class="btn btn-link btn-xs editMessage pull-right">Edit</a>
+                        <a style="margin: auto 10px;" data-href="{{route('admin::reviews::deleteMessage',
+                        [$message->id])}}" data-message-block="{{$message->id}}"
+                           class="btn btn-danger btn-xs deleteMessage pull-right">Delete</a>
+                        <a style="margin: auto 10px;" data-href="{{route('admin::reviews::editMessage', [$message->id])}}"
+                           data-message-block="{{$message->id}}" class="btn btn-link btn-xs editMessage pull-right">Edit</a>
                         <span class="text-muted pull-right">Posted {{ $message->created_at->diffForHumans() }}</span>
                       </span>
         <hr>
