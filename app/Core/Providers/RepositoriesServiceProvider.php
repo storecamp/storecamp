@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Core\Providers;
 
 use App\Core\Models\Parser;
 use Illuminate\Support\ServiceProvider;

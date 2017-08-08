@@ -81,7 +81,8 @@
                 {!! Form::close() !!}
                 <hr>
                 <div class="col-md-12">
-                    @include("site.partials.like-btn", [$model = $product, $route = route('site::like_dis', array('class_name' => getBaseClassName($product, false), 'object_id' => $product->id))])
+                    @include("site.partials.like-btn", [$model = $product, $route = route('site::like_dis',
+                    array('class_name' => getBaseClassName($product, false), 'object_id' => $product->id))])
                     <button class="btn btn-default product-add-to-wishList">Add to Wish List</button>
                     <button class="btn btn-default product-add-to-compare">Add to Compare</button>
                 </div>

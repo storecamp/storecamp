@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Core\Providers;
 
-use App\Core\Components\Menu\SidebarMenuBuilder;
 use Illuminate\Support\ServiceProvider;
 
-class MenuBuilderProvider extends ServiceProvider
+class MailServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,7 +13,7 @@ class MenuBuilderProvider extends ServiceProvider
      */
     public function boot()
     {
-        (new SidebarMenuBuilder())->createStatic();
+        //
     }
 
     /**
@@ -24,6 +23,7 @@ class MenuBuilderProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        \Event::listen('Illuminate\Mail\Events\MessageSending', function ($message) {
+        });
     }
 }

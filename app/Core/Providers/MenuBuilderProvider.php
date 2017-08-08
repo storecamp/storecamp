@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Providers;
+namespace App\Core\Providers;
 
+use App\Core\Components\Menu\SidebarMenuBuilder;
 use Illuminate\Support\ServiceProvider;
 
-class SupportProvider extends ServiceProvider
+class MenuBuilderProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -13,7 +14,11 @@ class SupportProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        (new SidebarMenuBuilder())->createStatic();
+    }
+
+    public function getItems() {
+        $this->boot();
     }
 
     /**
@@ -23,9 +28,6 @@ class SupportProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'App\\Core\\Support\\Cart\\CartItemContract',
-            'App\\Core\\Support\\Cart\\CartItem'
-        );
+        //
     }
 }

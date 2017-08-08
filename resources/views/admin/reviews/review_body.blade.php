@@ -7,8 +7,8 @@
                  data-feed-status="{{$review->comments->first()->isUnread($currentUserId) ? "false" : "true"}}">
                 @include('admin.reviews.review-message')
             </div><!-- /.panel.review-list-item -->
-    @endforeach
-    <!-- /.review-paper-body -->
+        @endforeach
+        <!-- /.review-paper-body -->
         <!-- /.review-paper -->
     </div>
     <!-- /.review-wrapper -->

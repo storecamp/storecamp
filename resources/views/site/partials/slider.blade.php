@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="owl-carousel owl-theme">
+            <div class="owl-carousel owl-theme" style="display: none">
                 <?php $countViewed = count($mostViewed); ?>
                 @forelse($mostViewed as $product)
                     <div class="">
@@ -41,15 +41,17 @@
 <link rel="stylesheet" href="{{asset('plugins/owl.carousel/dist/assets/owl.carousel.min.css')}}"/>
 <script src="{{asset('plugins/owl.carousel/dist/owl.carousel.min.js')}}"></script>
 <script>
+    $(document).ready(function() {
+        $(".owl-carousel").show();
+    });
     var owl = $('.owl-carousel');
     owl.owlCarousel({
         items: {!! $countViewed > 4 ? 4 : $countViewed !!},
         loop: true,
-        autoWidth: true,
+        autoWidth: false,
         margin: 10,
         autoplay: true,
         autoplayTimeout: 3000,
-        height: 200,
         autoplayHoverPause: true
     });
     $('.play').on('click', function () {

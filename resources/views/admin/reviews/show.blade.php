@@ -33,8 +33,8 @@
 //                            'object_id': _this.o.object_id
 //                        },
                         success: function (data) {
-                            if (data['error']) {
-
+                            if (data['error'])
+                            {
                                 console.log(data);
                             }
                             console.log(data);

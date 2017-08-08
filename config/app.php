@@ -172,39 +172,24 @@ return [
         /*
          * Package Service Providers...
          */
-
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-
         //Instances Providers
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
         \RepositoryLab\Repository\RepositoryServiceProvider::class,
-        App\Providers\RepositoriesServiceProvider::class,
         \Robbo\Presenter\PresenterServiceProvider::class,
-        \App\Providers\LogicServiceProvider::class,
-        \App\Providers\SupportProvider::class,
-        \App\Providers\ViewComposerServiceProvider::class,
-
-        \App\Providers\FolderServiceProvider::class,
-        \App\Providers\CustomValidatorServiceProvider::class,
-        \App\Providers\GeneratorsServiceProvider::class,
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
         \App\Core\Components\Auditing\AuditingServiceProvider::class,
-        \App\Providers\MailServiceProvider::class,
-        \App\Providers\MenuBuilderProvider::class,
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,
         //End of API service providers
-
         //Vendor Providers
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,

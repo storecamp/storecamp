@@ -2,10 +2,38 @@
 
 namespace App\Providers;
 
+use App\Core\Providers\CustomValidatorServiceProvider;
+use App\Core\Providers\FolderServiceProvider;
+use App\Core\Providers\GeneratorsServiceProvider;
+use App\Core\Providers\LogicServiceProvider;
+use App\Core\Providers\MailServiceProvider;
+use App\Core\Providers\MenuBuilderProvider;
+use App\Core\Providers\RepositoriesServiceProvider;
+use App\Core\Providers\SupportProvider;
+use App\Core\Providers\ViewComposerServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array
+     */
+    protected $storecampProviders = [
+        CustomValidatorServiceProvider::class,
+        FolderServiceProvider::class,
+        GeneratorsServiceProvider::class,
+        LogicServiceProvider::class,
+        MailServiceProvider::class,
+        MenuBuilderProvider::class,
+        RepositoriesServiceProvider::class,
+        SupportProvider::class,
+        ViewComposerServiceProvider::class
+    ];
+
     /**
      * Bootstrap any application services.
      *
@@ -14,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Illuminate\Pagination\LengthAwarePaginator::defaultView('partials.paginator');
+        foreach ($this->storecampProviders as $provider) {
+            $this->app->register($provider);
+        }
     }
 
     /**
@@ -23,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         if ($this->app->environment() == 'local') {
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }

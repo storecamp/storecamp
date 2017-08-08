@@ -130,7 +130,9 @@ $user = $auth->user() ? $auth->user() : null; ?>
                             <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
                             <p>
                                 @if($user){{ $user->name }}@else Not available right now @endif
-                                <small>Member since Nov. 2012</small>
+                                <small>Member since
+                                    @if($user){{ $user->created_at->diffForHumans() }} @endif
+                                </small>
                             </p>
                         </li>
                         <!-- Menu Body -->

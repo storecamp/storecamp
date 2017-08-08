@@ -55,6 +55,14 @@ $user = $auth->user() ? $auth->user() : null; ?>
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    @if(!empty($user) && $user->hasRole('Admin'))
+                    <li class="nav-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="{!! route('admin::dashboard') !!}" class="" data-toggle="">
+                            <i class="fa fa-user-plus"></i> Admin Page
+                        </a>
+                    </li>
+                    @endif
                     <!-- Messages: style can be found in dropdown.less-->
                     <!-- Notifications Menu -->
                     <li class="dropdown notifications-menu">

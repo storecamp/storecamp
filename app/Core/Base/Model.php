@@ -104,7 +104,7 @@ abstract class Model extends Eloquent
      *
      * @return \Illuminate\Database\Eloquent\Collection|Eloquent|null|static
      */
-    public function finder($id, $columns = ['*'])
+    private function finder($id, $columns = ['*'])
     {
         $newQuery = $this->newQuery();
         if (is_array($id)) {

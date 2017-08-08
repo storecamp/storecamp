@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class MailServiceProvider extends ServiceProvider
+class SupportProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -23,7 +23,9 @@ class MailServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \Event::listen('Illuminate\Mail\Events\MessageSending', function ($message) {
-        });
+        $this->app->bind(
+            'App\\Core\\Support\\Cart\\CartItemContract',
+            'App\\Core\\Support\\Cart\\CartItem'
+        );
     }
 }
