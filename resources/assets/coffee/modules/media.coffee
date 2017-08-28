@@ -82,7 +82,8 @@ $.StoreCamp.media =
              </div>"""
     pdfTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
-           <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+           <div id='#{mediaId}' data-id='#{mediaId}' 
+           class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
             <div class="text-center">
               <i class="item-icon fa fa-file-pdf-o fa-2x"></i>
            </div>
@@ -96,7 +97,8 @@ $.StoreCamp.media =
 
     archiveTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
-           <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+           <div id='#{mediaId}' data-id='#{mediaId}' 
+           class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
             <div class="text-center">
               <i class="item-icon fa fa-archive fa-2x"></i>
            </div>
@@ -130,7 +132,8 @@ $.StoreCamp.media =
         e.preventDefault();
         display = $(this).data('name');
         $('#delete_filename').text(display);
-        $('#delete_file_form')[0].action = $('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
+        $('#delete_file_form')[0].action = 
+$('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
         $('.delete-confirm b').text($('.delete-confirm b').text().replace('__name', $(this).data('name')));
         $('#delete_file_modal').modal('show');
         return
