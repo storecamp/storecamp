@@ -51,7 +51,8 @@
     "laravel/browser-kit-testing": "^1.0",
     "spatie/laravel-backup": "^3.0.0",
     "spatie/laravel-cookie-consent": "^1.8",
-    "masterminds/html5": "^2.2"
+    "masterminds/html5": "^2.2",
+    "squizlabs/php_codesniffer": "*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",
@@ -61,7 +62,6 @@
     "symfony/dom-crawler": "3.1.*",
     "laracasts/generators": "dev-master",
     "doctrine/dbal": "^2.6@dev",
-    "squizlabs/php_codesniffer": "^2.8",
     "laravel/homestead": "^4.0"
   },
   "autoload": {
