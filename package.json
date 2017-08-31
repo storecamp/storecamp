@@ -18,6 +18,8 @@
     "laravel-elixir-vue-2": "^0.2.0",
     "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.16.2",
+    "node-gyp": "^3.6.2",
+    "node-sass": "^4.5.3",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.2",
     "vue-style-loader": "^1.0.0"
