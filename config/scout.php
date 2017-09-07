@@ -55,7 +55,7 @@ return [
     */
 
     'chunk' => [
-        'searchable' => 500,
+        'searchable'   => 500,
         'unsearchable' => 500,
     ],
 
@@ -71,25 +71,25 @@ return [
     */
 
     'algolia' => [
-        'id' => env('ALGOLIA_APP_ID', ''),
+        'id'     => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 
     'elasticsearch' => [
-        'index' => env('ELASTICSEARCH_INDEX', 'laravel'),
+        'index'  => env('ELASTICSEARCH_INDEX', 'laravel'),
         'config' => [
             'hosts' => [
                 env('ELASTICSEARCH_HOST', 'localhost'),
-            ]
+            ],
         ],
     ],
     'mysql' => [
-        'mode' => 'NATURAL_LANGUAGE',
-        'model_directories' => [app_path('Core/Models')],
-        'min_search_length' => 0,
-        'min_fulltext_search_length' => 4,
+        'mode'                         => 'NATURAL_LANGUAGE',
+        'model_directories'            => [app_path('Core/Models')],
+        'min_search_length'            => 0,
+        'min_fulltext_search_length'   => 4,
         'min_fulltext_search_fallback' => 'LIKE',
-        'query_expansion' => false
-    ]
+        'query_expansion'              => false,
+    ],
 
 ];
