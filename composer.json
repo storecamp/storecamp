@@ -55,7 +55,8 @@
     "squizlabs/php_codesniffer": "*",
     "laravel/scout": "^3.0",
     "tamayo/laravel-scout-elastic": "^3.0",
-    "elasticsearch/elasticsearch": "^5.3"
+    "elasticsearch/elasticsearch": "^5.3",
+    "yab/laravel-scout-mysql-driver": "^2.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",

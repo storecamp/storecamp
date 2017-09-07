@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'elasticsearch'),
+    'driver' => env('SCOUT_DRIVER', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,5 +83,13 @@ return [
             ]
         ],
     ],
+    'mysql' => [
+        'mode' => 'NATURAL_LANGUAGE',
+        'model_directories' => [app_path('Core/Models')],
+        'min_search_length' => 0,
+        'min_fulltext_search_length' => 4,
+        'min_fulltext_search_fallback' => 'LIKE',
+        'query_expansion' => false
+    ]
 
 ];

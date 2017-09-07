@@ -20,7 +20,8 @@ class SearchController extends BaseController
             $data = $searchBuilder->get();
         }
         $data->map(function($item) {
-            $item['search'] = '<a href="'.route('site::products::show', [$item->unique_id]).'">'.$item->title.'</a>';
+            $item['url'] = route('site::products::show', [$item->unique_id]);
+            $item['name'] = $item->title;
         });
 
         return response()->json($data);

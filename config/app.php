@@ -219,6 +219,7 @@ return [
         Spatie\CookieConsent\CookieConsentServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+        \Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
     ],
 
     /*

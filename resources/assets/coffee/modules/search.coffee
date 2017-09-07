@@ -1,59 +1,31 @@
-timer = undefined
 $.StoreCamp.search =
-  selectors: $.StoreCamp.options.search
+  selectors: $.StoreCamp.options.search,
+  searchData: new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('search'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: APP_URL + '/searchQuery?search=%QUERY',
+      wildcard: '%QUERY'
+    }
+  })
   activate: ->
-    _this = this
-    searchBTN = @selectors.searchBTN
-    searchResult = @selectors.searchResult
-    searchBTN.click (e) ->
-      e.preventDefault()
-      _this.search()
-      return
-    $('a.search-button').on 'click', (event) ->
-      event.preventDefault()
-      $('#search input[type="search"]').focus()
-      $('#search').addClass('active')
-      $('body').css 'overflow': 'hidden'
-      return
-    $('#search, #search button.close').on 'click keyup', (event) ->
-      if event.target == this or event.target.className == 'close' or event.target.className == 'icon-close' or event.keyCode == 27
-        $(this).removeClass 'active'
-        searchResult.html ''
-        $('#search .search-input').val('')
-        $('body').css 'overflow': 'auto'
-        _this.stopSearch()
-      return
-    #Do not include! This prevents the form from submitting for DEMO purposes only!
-    $('#search form').submit (event) ->
-      event.preventDefault()
-      false
-    $('#search > form > input[type="search"]').keyup (e) ->
-      if (e.keyCode == 13 and $('#search .search-input').val().length > 0) or $('#search .search-input').val().length > 0
-        _this.search()
-      else
-        _this.stopSearch()
-      return
+    that = this
+    $('#search-type .search-input').typeahead({
+        highlight: true
+      },
+      {
+        name: 'search',
+        source: that.searchData,
+        display: 'name',
+        templates: {
+          suggestion: (data) ->
+            return '<li class="search-item"><a class="clearfix" href="' + data.url + '">' + data.name + '</a>' + data.body.substr(0, 120) + '...</li>';
+            empty: [
+              '<h3 class="empty-search text-center text-warning">',
+              'Unable to find any Product that match the current query',
+              '</h3>'].join('\n');
+        }
+      }
+    );
     return
-  search: ->
-    _this = this
-    searchResult = @selectors.searchResult
-    timer = setTimeout((->
-      $.ajax
-        url: APP_URL+'/searchQuery?search=' + $('[name="search"]').val()
-        method: 'get'
-        success: (markup) ->
-          searchResult.html markup
-          return
-        error: (err) ->
-          searchResult.html '<h3 class="text-danger"> try once more... </h3>'
-          console.log err.type
-          _this.stopSearch()
-          return
-      return
-    ), 500)
-    return
-  stopSearch: ->
-    clearTimeout timer
-    return
-
 do $.StoreCamp.search.activate

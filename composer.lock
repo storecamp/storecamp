@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a863639ad767f8744b1513d55f5e6ff",
+    "content-hash": "a3b33ea563c8788246fd7c45f43dbf2e",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -6116,6 +6116,51 @@
                 "windwalker"
             ],
             "time": "2017-06-09T18:19:49+00:00"
+        },
+        {
+            "name": "yab/laravel-scout-mysql-driver",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/YABhq/laravel-scout-mysql-driver.git",
+                "reference": "1c082f400528aba400b1592272f7b67a823ecabb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/YABhq/laravel-scout-mysql-driver/zipball/1c082f400528aba400b1592272f7b67a823ecabb",
+                "reference": "1c082f400528aba400b1592272f7b67a823ecabb",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.3.*|5.4.*",
+                "laravel/scout": "^2.0|^3.0",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yab\\MySQLScout\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Lantz",
+                    "email": "matt@yabhq.com"
+                },
+                {
+                    "name": "Damian Crisafulli",
+                    "email": "damian.crisafulli@troyweb.com"
+                }
+            ],
+            "description": "MySQL driver for Laravel Scout.",
+            "time": "2017-07-30T19:05:01+00:00"
         },
         {
             "name": "yajra/laravel-datatables-oracle",
