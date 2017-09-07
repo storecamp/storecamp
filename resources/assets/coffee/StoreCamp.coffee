@@ -364,6 +364,9 @@ $.StoreCamp.options =
   directChat:
     enable: true
     contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+  search:
+    searchBTN : $('#search button')
+    searchResult : $('.search-result #search-result-body')
   colors:
     lightBlue: '#3c8dbc'
     red: '#f56954'

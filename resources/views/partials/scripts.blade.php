@@ -50,6 +50,7 @@
 <script src="{{asset('plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
 <script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/typeahead.js/dist/typeahead.bundle.min.js')}}"></script>
 <!-- Page script -->
 <script>
     APP_URL = {!! json_encode(url('/')) !!};
@@ -150,6 +151,32 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
+    var searchData = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('search'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: APP_URL+'/searchQuery?search=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+    $('#search-type .search-input').typeahead({
+            highlight: true
+        },
+        {
+            name: 'search',
+            source: searchData,
+            templates: {
+                suggestion: function(data) {
+                    return '<li class="search-item"><strong>' + data.search + '</strong></li>';
+                },
+                empty: [
+                    '<h3 class="empty-search text-center text-warning">',
+                    'unable to find any Product that match the current query',
+                    '</h3>'
+                ].join('\n'),
+            }
+        }
+    );
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the

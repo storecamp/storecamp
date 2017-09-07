@@ -50,6 +50,7 @@
     "components-font-awesome": "^4.7.0",
     "JSONarea": "jpdevries/JSONarea",
     "bootstrap-toggle": "^2.2.2",
-    "Nestable": "dbushell/Nestable"
+    "Nestable": "dbushell/Nestable",
+    "typeahead.js": "^0.11.1"
   }
 }

@@ -1,0 +1,21 @@
+.search-item, .empty-search {
+  list-style-type: none;
+  border-bottom: 1px solid darkgrey;
+  width: inherit;
+  padding: 10px;
+  background: rgb(229, 229, 229);
+  &:hover {
+    background: #dddddd;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.empty-search {
+  border-bottom: none;
+  padding: 0;
+  margin-top: 0;
+}
+.twitter-typeahead, .tt-menu{
+  width: inherit;
+}

@@ -16,6 +16,7 @@ use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -138,7 +139,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use ViewCounterTrait;
     use Likeable;
     use ProductCalculations;
-
+    use Searchable;
     /**
      * Custom field name to define the item's name.
      *

@@ -52,7 +52,10 @@
     "spatie/laravel-backup": "^3.0.0",
     "spatie/laravel-cookie-consent": "^1.8",
     "masterminds/html5": "^2.2",
-    "squizlabs/php_codesniffer": "*"
+    "squizlabs/php_codesniffer": "*",
+    "laravel/scout": "^3.0",
+    "tamayo/laravel-scout-elastic": "^3.0",
+    "elasticsearch/elasticsearch": "^5.3"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",
