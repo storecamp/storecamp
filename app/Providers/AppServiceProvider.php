@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Illuminate\Pagination\LengthAwarePaginator::defaultView('partials.paginator');
+        \Illuminate\Pagination\LengthAwarePaginator::defaultView('site.partials.paginator');
         foreach ($this->storecampProviders as $provider) {
             $this->app->register($provider);
         }

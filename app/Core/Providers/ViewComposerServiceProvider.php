@@ -16,7 +16,7 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('*', 'App\Core\Http\Composers\Auth');
         view()->composer('site.*', 'App\Core\Http\Composers\Site');
         view()->composer('site.partials.sidebar', 'App\Core\Http\Composers\Sidebar');
-        view()->composer('partials.mainheader', 'App\Core\Http\Composers\AdminNavigation');
+        view()->composer('admin.partials.mainheader', 'App\Core\Http\Composers\AdminNavigation');
         view()->composer('site.partials.mainheader', 'App\Core\Http\Composers\Navigation');
     }
 

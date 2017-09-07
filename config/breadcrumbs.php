@@ -2,6 +2,6 @@
 
 return [
 
-    'view' => 'partials.breadcrumbs',
+    'view' => 'site.partials.breadcrumbs',
 
 ];

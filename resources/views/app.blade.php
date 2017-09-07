@@ -50,7 +50,7 @@ desired effect
         </section><!-- /.content -->
     </div>
 </div>
-@include('partials.scripts')
+@include('site.partials.scripts')
 @yield("scripts-add")
 @stack('scripts-add_on')
 {!! Toastr::render() !!}
