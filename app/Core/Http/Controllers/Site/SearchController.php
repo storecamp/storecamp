@@ -2,13 +2,12 @@
 
 namespace App\Core\Http\Controllers\Site;
 
-
 use App\Core\Models\Product;
 use Illuminate\Http\Request;
 
 class SearchController extends BaseController
 {
-    public $viewPathBase = "site.partials.search.";
+    public $viewPathBase = 'site.partials.search.';
 
     public function search(Request $request)
     {
@@ -19,7 +18,7 @@ class SearchController extends BaseController
             $count = count($searchBuilder);
             $data = $searchBuilder->get();
         }
-        $data->map(function($item) {
+        $data->map(function ($item) {
             $item['url'] = route('site::products::show', [$item->unique_id]);
             $item['name'] = $item->title;
         });

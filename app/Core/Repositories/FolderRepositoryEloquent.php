@@ -257,6 +257,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
             return $this->parserResult($model);
         }
+
         throw (new ModelNotFoundException())->setModel(get_class($this->model), $id);
     }
 

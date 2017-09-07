@@ -143,7 +143,7 @@ trait CustomAuditMessage
                 $message = str_replace($segment, $valueSegmented, $message);
 
                 // Remove segment from list
-                 unset($segments[$order]);
+                unset($segments[$order]);
             }
         }
 

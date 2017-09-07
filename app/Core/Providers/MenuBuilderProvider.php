@@ -17,7 +17,8 @@ class MenuBuilderProvider extends ServiceProvider
         (new SidebarMenuBuilder())->createStatic();
     }
 
-    public function getItems() {
+    public function getItems()
+    {
         $this->boot();
     }
 
