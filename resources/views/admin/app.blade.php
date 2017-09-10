@@ -30,12 +30,12 @@ desired effect
 @yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
 <div id="app" class="wrapper">
-    @include('admin.partials.mainheader')
-    @include('admin.partials.sidebar')
-    <!-- Content Wrapper. Contains page content -->
+@include('admin.partials.mainheader')
+@include('admin.partials.sidebar')
+<!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('admin.partials.contentheader')
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
         <!-- Main content -->
         <section class="content">
             <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
