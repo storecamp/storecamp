@@ -191,7 +191,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      * @var array
      */
     protected $searchable = [
-        /**
+        /*
          * Columns and their priority in search results.
          * Columns with higher values are more important.
          * Columns with equal values have equal importance.
@@ -199,11 +199,11 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
          * @var array
          */
         'columns' => [
-            'products.title' => 10,
-            'products.model' => 10,
-            'products.body' => 7,
-            'products.brand_name' => 7
-        ]
+            'products.title'      => 10,
+            'products.model'      => 10,
+            'products.body'       => 7,
+            'products.brand_name' => 7,
+        ],
     ];
 
     /**
@@ -309,7 +309,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function getStockStatus(): string
     {
-        return config('constants.stock-statuses.' . $this->stock_status);
+        return config('constants.stock-statuses.'.$this->stock_status);
     }
 
     /**

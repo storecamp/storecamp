@@ -115,7 +115,7 @@ class Category extends Model implements Transformable
      * @var array
      */
     protected $searchable = [
-        /**
+        /*
          * Columns and their priority in search results.
          * Columns with higher values are more important.
          * Columns with equal values have equal importance.
@@ -123,9 +123,9 @@ class Category extends Model implements Transformable
          * @var array
          */
         'columns' => [
-            'categories.name' => 10,
-            'categories.description' => 1
-        ]
+            'categories.name'        => 10,
+            'categories.description' => 1,
+        ],
     ];
 
     /**
@@ -230,7 +230,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param array $parents
-     * @param null $parent
+     * @param null  $parent
      *
      * @return array|int
      */
@@ -258,7 +258,7 @@ class Category extends Model implements Transformable
     }
 
     /**
-     * @param null $category
+     * @param null  $category
      * @param array $categories
      *
      * @return Collection
