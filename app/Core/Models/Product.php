@@ -139,7 +139,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use ViewCounterTrait;
     use Likeable;
     use ProductCalculations;
-    use Searchable;
+    use \App\Core\Traits\Searchable;
     /**
      * Custom field name to define the item's name.
      *
@@ -162,7 +162,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'price',
         'availability',
         'date_available',
-        'model',
         'quantity',
         'viewed',
         'sku',
@@ -187,11 +186,25 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'brand_name',
     ];
     /**
-     * The database table used by the model.
+     * Searchable rules.
      *
-     * @var string
+     * @var array
      */
-    protected $table;
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'products.title' => 10,
+            'products.model' => 10,
+            'products.body' => 7,
+            'products.brand_name' => 7
+        ]
+    ];
 
     /**
      * Creates a new instance of the model.
@@ -296,7 +309,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function getStockStatus(): string
     {
-        return config('constants.stock-statuses.'.$this->stock_status);
+        return config('constants.stock-statuses.' . $this->stock_status);
     }
 
     /**

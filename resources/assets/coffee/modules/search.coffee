@@ -19,10 +19,11 @@ $.StoreCamp.search =
         display: 'name',
         templates: {
           suggestion: (data) ->
-            return '<li class="search-item"><a class="clearfix" href="' + data.url + '">' + data.name + '</a>' + data.body.substr(0, 120) + '...</li>';
+            return '<li class="search-item">
+<a class="clearfix" href="' + data.url + '">' + data.name + ' <span class="text-bold text-info"> ' + data.searchType + ' </span></a>' + data.description.substr(0, 120) + '...</li>';
             empty: [
               '<h3 class="empty-search text-center text-warning">',
-              'Unable to find any Product that match the current query',
+              'Unable to find any Product or Category that match the current query',
               '</h3>'].join('\n');
         }
       }

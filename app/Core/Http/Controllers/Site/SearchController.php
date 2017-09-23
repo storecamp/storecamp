@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Site;
 
+use App\Core\Models\Category;
 use App\Core\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,17 +13,27 @@ class SearchController extends BaseController
     public function search(Request $request)
     {
         $data = null;
-        $count = 0;
         if ($request->has('search')) {
             $searchBuilder = Product::search($request->input('search'));
-            $count = count($searchBuilder);
-            $data = $searchBuilder->get();
+            $data['products'] = $searchBuilder->take(5)->get();
+
+            $searchCatBuilder = Category::search($request->input('search'));
+            $data['categories'] = $searchCatBuilder->take(5)->get();
         }
-        $data->map(function ($item) {
+        $data['products']->map(function ($item) {
             $item['url'] = route('site::products::show', [$item->unique_id]);
             $item['name'] = $item->title;
+            $item['description'] = $item->body;
+            $item['searchType'] = 'product';
         });
 
-        return response()->json($data);
+        $data['categories']->map(function ($item) {
+            $item['url'] = route('site::products::index', [$item->unique_id]);
+            $item['searchType'] = 'category';
+        });
+
+        $newDataArr = array_merge_recursive($data['products']->toArray(), $data['categories']->toArray());
+
+        return response()->json($newDataArr);
     }
 }
