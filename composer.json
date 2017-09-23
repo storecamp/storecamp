@@ -50,7 +50,6 @@
     "mcamara/laravel-localization": "^1.2",
     "artesaos/seotools": "^0.10.0",
     "yajra/laravel-datatables-oracle": "^7.7",
-    "laravel/browser-kit-testing": "^1.0",
     "spatie/laravel-backup": "^3.0.0",
     "spatie/laravel-cookie-consent": "^1.8",
     "masterminds/html5": "^2.2",
@@ -67,7 +66,8 @@
     "symfony/dom-crawler": "3.1.*",
     "laracasts/generators": "dev-master",
     "doctrine/dbal": "^2.6@dev",
-    "laravel/homestead": "^4.0"
+    "laravel/homestead": "^4.0",
+    "laravel/browser-kit-testing": "^2.0"
   },
   "autoload": {
     "classmap": [

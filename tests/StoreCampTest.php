@@ -23,7 +23,7 @@ class StoreCampTest extends \tests\BrowserKitTestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Http\Kernel::class);
 
@@ -67,7 +67,7 @@ class StoreCampTest extends \tests\BrowserKitTestCase
             ->type('passw0RD', 'password')
             ->press('Sign In')
             ->seePageIs('/home')
-            ->see($user->name);
+            ->see(str_limit($user->name, 20));
     }
 
     /**
@@ -168,7 +168,7 @@ class StoreCampTest extends \tests\BrowserKitTestCase
             ->press('Register')
             ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
-                'name'                        => 'Sergi Tur Badenas', ]);
+                'name' => 'Sergi Tur Badenas',]);
     }
 
     /**

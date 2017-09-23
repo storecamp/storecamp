@@ -16,8 +16,7 @@ return [
    |
    */
 
-    'driver' => env('APP_ENV') == 'local' ? env('MAIL_DRIVER_LOCAL', 'mail') : env('MAIL_DRIVER', 'sendmail'),
-
+    'driver' => (env('APP_ENV') == 'local' || env('APP_ENV') == 'testing') ? env('MAIL_DRIVER_LOCAL', 'mail') : env('MAIL_DRIVER', 'sendmail'),
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address
