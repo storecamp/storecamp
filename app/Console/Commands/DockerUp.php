@@ -37,6 +37,6 @@ class DockerUp extends Command
      */
     public function handle()
     {
-        exec("cd laradock && docker-compose up -d nginx redis elasticsearch mariadb phpmyadmin  && cd ../");
+        exec("cd laradock && chcp 850 >> nul && docker-compose up -d nginx mysql php-fpm elasticsearch redis memcached  && cd ../");
     }
 }

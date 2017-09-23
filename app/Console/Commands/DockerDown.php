@@ -37,6 +37,6 @@ class DockerDown extends Command
      */
     public function handle()
     {
-        shell_exec('cd laradock && docker-compose down && cd ../');
+        shell_exec('cd laradock && chcp 850 >> nul && docker-compose down && cd ../');
     }
 }
