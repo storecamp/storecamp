@@ -5,7 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 
-@include('partials.htmlheader')
+@include('site.partials.htmlheader')
 
 <!--
 BODY TAG OPTIONS:
@@ -55,7 +55,7 @@ desired effect
 {{--@include('partials.controlsidebar')--}}
 
 
-@include('partials.scripts')
+@include('site.partials.scripts')
 @yield("scripts-add")
 {!! Toastr::render() !!}
 </body>
