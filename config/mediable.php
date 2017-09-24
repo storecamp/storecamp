@@ -25,7 +25,7 @@ return [
     /*
      * The maximum file size in bytes for a single uploaded file
      */
-    'max_size' => 1024 * 1024 * 1024,
+    'max_size' => 1024 * 1024 * 1024 * 2,
 
     /*
      * What to do if a duplicate file is uploaded.
@@ -129,8 +129,7 @@ return [
                 'm4v',
                 'mov',
                 'ogv',
-                'webm',
-                'avi',
+                'webm'
             ],
         ],
         Plank\Mediable\Media::TYPE_ARCHIVE => [

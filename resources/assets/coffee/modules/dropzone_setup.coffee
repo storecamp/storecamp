@@ -1,7 +1,7 @@
 $.StoreCamp.dropzone =
   paramName: 'file'
-  maxFilesize: 1024
-  acceptedFiles: '.mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc,.aac,.ogg,.oga,.mp3,.wav, .zip'
+  maxFilesize: 2048
+  acceptedFiles: '.mp4, .webm. image/*,application/pdf,.psd,.docx,.doc,.aac,.ogg,.oga,.mp3,.wav, .zip'
   addRemoveLinks: true
   removedfile: (file) ->
     _ref = file.previewElement
