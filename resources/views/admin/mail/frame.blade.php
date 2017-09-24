@@ -17,7 +17,7 @@
                 <input class="form-control" name="subject" id="subject" placeholder="Subject:">
             </div>
             <span class="mail-output"></span>
-            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $prefix="mail", $outputElementPath = ".mail-output", $disk = "mails"])
+            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $prefix="mail", $outputElementPath = ".mail-output", $disk = "local"])
             <span class="files selected-block" style="float: right;clear: both;"></span>
             <div class="form-group">
                 @include('admin.components.description-form', [$property_name='message'])

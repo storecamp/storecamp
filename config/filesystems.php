@@ -42,7 +42,6 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver'          => 'local',
             'root'            => public_path('uploads'),
@@ -55,16 +54,7 @@ return [
             'prefix'          => 'uploads',
             'rootFromProject' => 'public/uploads',
         ],
-        'mails' => [
-            'driver'          => 'local',
-            'root'            => public_path('mails'),
-            'rootFromProject' => 'public/mails',
-        ],
-        'public' => [
-            'driver'     => 'local',
-            'root'       => storage_path('app/public'),
-            'visibility' => 'public',
-        ],
+
         's3' => [
             'driver' => 's3',
             'key'    => 'your-key',

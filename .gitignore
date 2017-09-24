@@ -11,6 +11,8 @@ Homestead.yaml
 .env
 /public/uploads/**/*.mp4
 /public/uploads/**/*.jpg
+/public/uploads/**/*.mkv
+/public/uploads/**/*.png
 /public/uploads/**/*.gif
 /public/uploads/**/*.avi
 /public/uploads/**/*.mp3
@@ -68,3 +70,4 @@ storage/*.key
 /storage/framework/views/*
 !/app/Http/Controllers/
 /public/uploads/Logo.png
+!/public/uploads/mails/

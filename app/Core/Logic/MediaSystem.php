@@ -229,7 +229,6 @@ class MediaSystem implements MediaSystemContract
         $filename = implode('.', $filenameArr);
         $media = $this->mediaUploader->fromSource($file)
             ->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
-
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();

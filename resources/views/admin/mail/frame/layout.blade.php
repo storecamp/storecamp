@@ -103,7 +103,7 @@ desired effect
     }
 </style>
 @yield('main-content')
-@include('partials.scripts')
+@include('admin.partials.scripts')
 @yield("scripts-add")
 @stack('scripts-add_on')
 {!! Toastr::render() !!}
