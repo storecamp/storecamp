@@ -29,6 +29,7 @@ class SearchController extends BaseController
 
         $data['categories']->map(function ($item) {
             $item['url'] = route('site::products::index', [$item->unique_id]);
+            $item['name'] = getCategoryFullPath($item);
             $item['searchType'] = 'category';
         });
 
