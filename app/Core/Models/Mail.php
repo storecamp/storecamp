@@ -46,7 +46,7 @@ class Mail extends Model implements Transformable
     use CacheableEloquent;
 
     protected $table = 'mails';
-    protected $fillable = ['from', 'to', 'subject', 'message', 'user_id'];
+    protected $fillable = ['from', 'to', 'subject', 'status', 'message', 'user_id'];
 
     /**
      * bootable methods fix.

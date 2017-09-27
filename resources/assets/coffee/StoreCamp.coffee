@@ -336,6 +336,11 @@ $.StoreCamp = {}
 ###
 
 $.StoreCamp.options =
+  baseDateFormat: 'YYYY-MM-DD'
+  baseDateTimeFormat: 'YYYY-MM-DD HH:mm:ss'
+  appDateFormat: 'M/D/YYYY'
+  appDateTimeFormat: 'M/D/YYYY h:mma'
+  appTimeCalendarFormat: 'h:mma'
   navbarMenuSlimscroll: true
   navbarMenuSlimscrollWidth: '3px'
   navbarMenuHeight: '200px'

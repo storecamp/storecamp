@@ -10,7 +10,7 @@
         <div class="box-body no-padding">
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
-                <li><a href="{{ route("admin::mail::getTmpMails") }}"><i class="fa fa-file-text-o"></i> Templates</a></li>
+                <li><a href="#"><i class="fa fa-file-text-o"></i> Templates</a></li>
             </ul>
         </div>
         <!-- /.box-body -->

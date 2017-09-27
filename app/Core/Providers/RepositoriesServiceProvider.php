@@ -59,6 +59,8 @@ class RepositoriesServiceProvider extends ServiceProvider
             'MenuItems',
             'Currency',
             'Parser',
+            'EmailLog',
+            'EmailLogRecipients'
         ];
 
         foreach ($models as $repo) {

@@ -513,6 +513,15 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        $model = $this->model->count();
+        return $model;
+    }
+
+    /**
      * Find data by multiple fields.
      *
      * @param array $where

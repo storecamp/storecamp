@@ -20,6 +20,7 @@ class CreateMailsTable extends Migration
 
             $table->string('from');
             $table->string('to');
+            $table->string('status')->default('draft');
             $table->string('subject');
             $table->text('message');
             $table->timestamps();

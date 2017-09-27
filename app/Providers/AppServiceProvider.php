@@ -44,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->storecampProviders as $provider) {
             $this->app->register($provider);
         }
+
+        ini_set('curl.cainfo', asset('cacert.pem'));
     }
 
     /**

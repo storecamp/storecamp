@@ -8,6 +8,7 @@ use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use App\Core\Traits\Messagable;
+use App\Core\Traits\Searchable;
 use App\Core\Traits\ViewCounterTrait;
 use Carbon\Carbon;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -97,6 +98,7 @@ class User extends Authenticatable implements
     use Mediable;
     use CacheableEloquent;
     use ViewCounterTrait;
+    use Searchable;
 
     /**
      * @var string
@@ -144,6 +146,24 @@ class User extends Authenticatable implements
         ];
     }
 
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /*
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'users.name'      => 10,
+            'users.email'      => 10
+        ],
+    ];
     /**
      * bootable methods fix.
      */

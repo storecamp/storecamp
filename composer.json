@@ -26,7 +26,7 @@
     "predis/predis": "^1.1",
     "robclancy/presenter": "^1.3",
     "webpatser/laravel-countries": "^1.5",
-    "guzzlehttp/guzzle": "^6.2",
+    "guzzlehttp/guzzle": "^6.3",
     "camroncade/timezone": "^0.1.0",
     "a6digital/laravel-default-profile-image": "^1.0",
     "arcanedev/log-viewer": "^4.3",
@@ -56,7 +56,8 @@
     "squizlabs/php_codesniffer": "*",
     "tamayo/laravel-scout-elastic": "^3.0",
     "elasticsearch/elasticsearch": "^5.3",
-    "yab/laravel-scout-mysql-driver": "^2.0"
+    "yab/laravel-scout-mysql-driver": "^2.0",
+    "clarification/sendgrid-laravel-driver": "^1.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.6",

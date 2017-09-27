@@ -2,11 +2,15 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
-use App\Core\Contracts\MailCampaignSystemContract;
-use App\Core\Models\Folder;
-use App\Core\Models\Mail;
+use App\Core\Models\EmailLog;
+use App\Core\Models\EmailLogRecipient;
+use App\Core\Repositories\EmailLogRepository;
+use App\Core\Repositories\EmailLogRepositoryEloquent;
 use App\Core\Repositories\MailRepository;
+use App\Core\Repositories\MailRepositoryEloquent;
 use Illuminate\Http\Request;
+use App\Core\Transformers\MailHistoryTransformer;
+use Yajra\Datatables\Datatables;
 
 /**
  * Class MailController.
@@ -24,26 +28,31 @@ class MailController extends BaseController
     public $errorRedirectPath = 'admin/mail';
 
     /**
+     * @var EmailLogRepository
+     */
+    private $emailLogRepository;
+    /**
+     * @var EmailLogRecipient
+     */
+    private $emailLogRecipient;
+    /**
      * @var MailRepository
      */
-    private $repository;
+    private $mailRepository;
 
     /**
-     * @var MailCampaignSystemContract
+     * AdminEmailsController constructor.
+     * @param EmailLogRepository $emailLogRepository
+     * @param EmailLogRecipient $emailLogRecipient
+     * @param MailRepository $mailRepository
      */
-    private $mailCampaign;
-
-    /**
-     * MailController constructor.
-     *
-     * @param MailRepository             $repository
-     * @param MailCampaignSystemContract $mailCampaign
-     */
-    public function __construct(MailRepository $repository, MailCampaignSystemContract $mailCampaign)
+    public function __construct(EmailLogRepository $emailLogRepository,
+                                EmailLogRecipient $emailLogRecipient,
+                                MailRepository $mailRepository)
     {
-        $this->mailCampaign = $mailCampaign;
-        $this->repository = $repository;
-        $this->middleware('role:Admin');
+        $this->emailLogRepository = $emailLogRepository;
+        $this->emailLogRecipient = $emailLogRecipient;
+        $this->mailRepository = $mailRepository;
     }
 
     /**
@@ -53,11 +62,23 @@ class MailController extends BaseController
      */
     public function index(Request $request)
     {
-        $mails = $this->repository->paginate();
-
+        $mails = $this->emailLogRepository->simplePaginate();
+        $total = $this->emailLogRepository->count();
         $no = $mails->firstItem();
 
-        return $this->view('index', compact('mails', 'no'));
+        return $this->view('index', compact('mails', 'no', 'total'));
+    }
+
+    /**
+     * @param Datatables $datatables
+     * @return mixed
+     */
+    public function history(Datatables $datatables)
+    {
+        $query = EmailLog::select('*');
+        return $datatables->eloquent($query)
+            ->setTransformer(new MailHistoryTransformer())
+            ->make(true);
     }
 
     /**
@@ -68,7 +89,7 @@ class MailController extends BaseController
      */
     public function show(Request $request, $id)
     {
-        $mail = $this->repository->find($id);
+        $mail = $this->emailLogRepository->find($id);
 
         return view('show', compact('mail'));
     }
@@ -80,7 +101,7 @@ class MailController extends BaseController
      */
     public function showFrame(Request $request)
     {
-        $mail = new Mail();
+        $mail = new EmailLog();
 
         return $this->view('frame', compact('mail'));
     }
@@ -92,56 +113,202 @@ class MailController extends BaseController
      */
     public function create(Request $request)
     {
-        $mail = new Mail();
+        $mail = new EmailLog();
 
         return $this->view('create', compact('mail'));
     }
 
     /**
      * @param Request $request
-     *
-     * @return mixed
+     * @return array
+     * @throws \Exception
      */
-    public function getTmpMails(Request $request)
+    public function save(Request $request)
     {
-        $folder = Folder::find(4);
-        $mail = $this->repository->getTmpMail($file = null);
 
-        return $mail;
+        $map = [
+            'subject' => $request->get('subject'),
+            'to' => $request->get('to'),
+            'body' => $request->get('body'),
+            'bcc' => $request->get('bcc'),
+            'cc' => $request->get('cc'),
+            'from' => $request->get('from'),
+            'reply_to' => $request->get('reply_to'),
+            'delay_time' => $request->get('delay_time'),
+            'id' => $request->get('id')
+        ];
+        if ($map['delay_time']) {
+            $validationArr = [
+                'subject' => 'required',
+                'body' => 'required',
+            ];
+            if (!empty($map['cc'])) {
+                $validationArr['cc'] = 'array';
+            }
+            if (!empty($map['bcc'])) {
+                $validationArr['bcc'] = 'array';
+            }
+            if (!empty($map['from'])) {
+                $validationArr['from'] = 'email';
+            }
+            try {
+                \DB::beginTransaction();
+                $validator = \Validator::make($map, $validationArr);
+                if ($validator->fails()) {
+                    throw new \Exception(join(' ', $validator->errors()->all()));
+                }
+                $failures = \Mail::failures();
+                if ($failures) {
+                    return response()->json(['error' => $failures], 500);
+                }
+                $this->sendMail($map);
+                \DB::commit();
+                return response()->json(['ok']);
+            } catch (\Exception $exception) {
+                \DB::rollBack();
+                return response()->json(['error' => 'Mail Not sent! Server msg: ' . $exception->getMessage()],
+                    $exception->getCode());
+            } catch (\Throwable $exception) {
+                \DB::rollBack();
+                return response()->json(['error' => 'Mail Not sent. Code - ' . $exception->getCode()],
+                    $exception->getCode());
+            }
+        } else {
+            return response()->json(['error' => 'Mail Not sent'], 500);
+        }
     }
 
     /**
-     * @param $file
-     *
-     * @return mixed
+     * @param Request $request
+     * @return array
+     * @throws \Exception
      */
-    public function getTmpMail($file)
+    public function saveAsNew(Request $request)
     {
-        $mail = $this->repository->getTmpMail($file);
+        $map = [
+            'subject' => $request->get('subject'),
+            'to' => $request->get('to'),
+            'body' => $request->get('body'),
+            'bcc' => $request->get('bcc'),
+            'cc' => $request->get('cc'),
+            'from' => $request->get('from'),
+            'reply_to' => $request->get('reply_to'),
+            'delay_time' => $request->get('delay_time')
+        ];
 
-        return $mail;
+        $map['drafted'] = true;
+        $validationArr = [
+            'subject' => 'required',
+            'body' => 'required',
+        ];
+        if (!empty($map['cc'])) {
+            $validationArr['cc'] = 'array';
+        }
+        if (!empty($map['bcc'])) {
+            $validationArr['bcc'] = 'array';
+        }
+        if (!empty($map['from'])) {
+            $validationArr['from'] = 'email';
+        }
+
+        $validator = \Validator::make($map, $validationArr);
+        if ($validator->fails()) {
+            throw new \Exception(join(' ', $validator->errors()->all()));
+        }
+        try {
+            \DB::beginTransaction();
+            $this->sendMail($map);
+            \DB::commit();
+            return response()->json(['ok']);
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            return ['error', ['Mail Not sent']];
+        } catch (\Throwable $exception) {
+            \DB::rollBack();
+            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
+        }
     }
 
     /**
-     * @param $folder
-     * @param $filename
-     *
-     * @return mixed
+     * @param Request $request
+     * @return array
+     * @throws \Exception
      */
-    public function getHistoryTmpMail($folder, $filename)
+    public function saveAsNewAndResend(Request $request)
     {
-        $mail = $this->repository->getHistoryTmpMail($folder, $filename);
+        $map = [
+            'subject' => $request->get('subject'),
+            'to' => $request->get('to'),
+            'body' => $request->get('body'),
+            'bcc' => $request->get('bcc'),
+            'cc' => $request->get('cc'),
+            'from' => $request->get('from'),
+            'reply_to' => $request->get('reply_to'),
+            'delay_time' => $request->get('delay_time')
+        ];
 
-        return $this->view('show-campaign-history', compact('mail'));
+        $validationArr = [
+            'subject' => 'required',
+            'body' => 'required',
+        ];
+        if (!empty($map['cc'])) {
+            $validationArr['cc'] = 'array';
+        }
+        if (!empty($map['bcc'])) {
+            $validationArr['bcc'] = 'array';
+        }
+        if (!empty($map['from'])) {
+            $validationArr['from'] = 'email';
+        }
+
+        $validator = \Validator::make($map, $validationArr);
+        if ($validator->fails()) {
+            throw new \Exception(join(' ', $validator->errors()->all()));
+        }
+        try {
+            \DB::beginTransaction();
+            $this->sendMail($map);
+            \DB::commit();
+
+            return response()->json(['ok']);
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            return ['error', ['Mail Not sent']];
+        } catch (\Throwable $exception) {
+            \DB::rollBack();
+            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
+        }
     }
 
     /**
      * @param Request $request
      */
-    public function makeCampaign(Request $request)
+    public function saveAndResend(Request $request)
     {
-        dd($request->all());
 
-        return $this->mailCampaign->generateCampaign($request);
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function sendMail(array $data)
+    {
+        $mailRepository = app(MailRepositoryEloquent::class);
+        $mailRepository->sendAsync(
+            [
+                'template' => 'admin.mail.custom_body',
+                'to' => !empty($data['to']) ? $data['to'] : config('mail.store_admin'),
+                'bcc' => $data['bcc'],
+                'cc' => $data['cc'],
+                'reply' => $data['reply_to'],
+                'from' => $data['from'],
+                'subject' => $data['subject'],
+                'body' => $data['body'],
+                'delay_time' => !empty($data['delay_time']) ? $data['delay_time'] : null,
+                'drafted' => !empty($data['drafted']) ? $data['drafted'] : false,
+                'id' => !empty($data['id']) ? $data['id'] : ''
+            ]
+        );
     }
 }

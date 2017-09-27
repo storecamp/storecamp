@@ -17,17 +17,18 @@ class SelectBuilder
     }
 
     /**
-     * @param $actionUrl
-     * @param $attrName
-     * @param $multiple
+     * @param string $actionUrl
+     * @param string $attrName
+     * @param bool $multiple
      * @param array $data
      * @param array $selected
-     * @param null  $class
-     * @param null  $placeholder
-     *
+     * @param null $class
+     * @param null $placeholder
+     * @param bool $tags
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render(string $actionUrl, string $attrName, bool $multiple, $data = [], $selected = [], $class = null, $placeholder = null)
+    public function render(string $actionUrl, string $attrName, bool $multiple, $data = [],
+                           $selected = [], $class = null, $placeholder = null, $tags = false)
     {
         $result = [];
         $multiple = $multiple ? $multiple : false;
@@ -48,9 +49,13 @@ class SelectBuilder
         }
 
         return view('_builders.select2',
-            compact('result', 'placeholder', 'selected', 'multiple', 'attrName', 'class', 'className', 'actionUrl'));
+            compact('result', 'placeholder', 'selected', 'multiple', 'attrName', 'class', 'className', 'actionUrl', 'tags'));
     }
 
+    /**
+     * @param null $attrName
+     * @return bool|null
+     */
     protected function resolveAttrName($attrName = null)
     {
         if (isset($attrName)) {

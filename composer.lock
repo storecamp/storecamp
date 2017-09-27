@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5739b0cbc49b31994c9d1d9a5129d93",
+    "content-hash": "3f93be6d690ffbf60c6e2dfc7949cc84",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -488,6 +488,50 @@
             "description": "Helps manage timezones in Laravel. Includes <select> form builder for timezones.",
             "homepage": "http://www.camroncade.com/managing-timezones-with-laravel/",
             "time": "2015-05-20T20:32:03+00:00"
+        },
+        {
+            "name": "clarification/sendgrid-laravel-driver",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clarification/sendgrid-laravel-driver.git",
+                "reference": "be6526b3e7f59863e8da987881dbc7640c8f40ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clarification/sendgrid-laravel-driver/zipball/be6526b3e7f59863e8da987881dbc7640c8f40ec",
+                "reference": "be6526b3e7f59863e8da987881dbc7640c8f40ec",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": ">=5.0",
+                "swiftmailer/swiftmailer": "~5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clarification\\MailDrivers\\Sendgrid\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Lidbetter",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Sendgrid mail driver for Laravel",
+            "homepage": "http://clarification.io",
+            "keywords": [
+                "driver",
+                "laravel",
+                "mail",
+                "sendgrid"
+            ],
+            "time": "2016-06-06T13:38:00+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -7131,16 +7175,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9501bab711403a1ab5b8378a8adb4ec3db3debdb"
+                "reference": "c0ff817b36a827e64bf5f57bc72278150cf30a77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9501bab711403a1ab5b8378a8adb4ec3db3debdb",
-                "reference": "9501bab711403a1ab5b8378a8adb4ec3db3debdb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c0ff817b36a827e64bf5f57bc72278150cf30a77",
+                "reference": "c0ff817b36a827e64bf5f57bc72278150cf30a77",
                 "shasum": ""
             },
             "require": {
@@ -7211,7 +7255,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-04T05:20:39+00:00"
+            "time": "2017-09-24T07:25:54+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
