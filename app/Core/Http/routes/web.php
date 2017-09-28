@@ -677,7 +677,11 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'uses' => 'Admin\MailController@show',
                 'middleware' => 'auth'
             ]);
-
+            $this->delete('{id}', [
+                'as' => 'delete',
+                'uses' => 'Admin\MailController@destroy',
+                'middleware' => 'auth'
+            ]);
         });
 
         //campaign

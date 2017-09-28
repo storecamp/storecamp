@@ -21,8 +21,9 @@ class Kernel extends ConsoleKernel
         'App\Core\Generators\Commands\EntityCommand',
         'App\Core\Generators\Commands\ControllerCommand',
         'App\Core\Commands\ClearTablesCommand',
-        'App\Console\Commands\DockerUp',
-        'App\Console\Commands\DockerDown',
+        'App\Core\Commands\DockerUp',
+        'App\Core\Commands\DockerDown',
+        'App\Core\Commands\DockerRun',
     ];
 
     /**

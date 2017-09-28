@@ -25,7 +25,7 @@ class MailController extends BaseController
     /**
      * @var string
      */
-    public $errorRedirectPath = 'admin/mail';
+    public $errorRedirectPath = 'admin/mail/index';
 
     /**
      * @var EmailLogRepository
@@ -90,8 +90,13 @@ class MailController extends BaseController
     public function show(Request $request, $id)
     {
         $mail = $this->emailLogRepository->find($id);
+        $total = $this->emailLogRepository->count();
+        // get previous mail id
+        $previous = $this->emailLogRepository->getModel()->where('id', '<', $mail->id)->max('id');
+        // get next mail id
+        $next =$this->emailLogRepository->getModel()->where('id', '>', $mail->id)->min('id');
 
-        return view('show', compact('mail'));
+        return $this->view('show', compact('mail', 'total', 'previous', 'next'));
     }
 
     /**
@@ -310,5 +315,13 @@ class MailController extends BaseController
                 'id' => !empty($data['id']) ? $data['id'] : ''
             ]
         );
+    }
+
+    public function destroy($id)
+    {
+        $mail = $this->emailLogRepository->findOrFail($id);
+        $mail->delete();
+
+        return $this->redirectNotFound();
     }
 }
