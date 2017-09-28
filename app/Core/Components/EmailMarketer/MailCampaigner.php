@@ -135,11 +135,11 @@ class MailCampaigner extends Command
         $reader = Reader::createFromPath($file, 'r');
         $reader->setOffset(1);
         $result = $reader->fetchAll();
-////		$mails=['vmayaki@techneeks.com.ng','vmeregini@techneeks.com.ng','nohadoma@techneeks.com.ng'];
-// 		$rawMails=file_get_contents(storage_path()."/".$file);
+        ////		$mails=['vmayaki@techneeks.com.ng','vmeregini@techneeks.com.ng','nohadoma@techneeks.com.ng'];
+        // 		$rawMails=file_get_contents(storage_path()."/".$file);
         // $rawMails=preg_replace('/\s+|(<|>)/S', '', $rawMails);
-// 		$mails=explode("\n",trim(trim($rawMails)));
-// 		$mails=array_filter($mails);
+        // 		$mails=explode("\n",trim(trim($rawMails)));
+        // 		$mails=array_filter($mails);
         return $result;
     }
 }

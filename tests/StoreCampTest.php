@@ -67,7 +67,7 @@ class StoreCampTest extends \tests\BrowserKitTestCase
             ->type('passw0RD', 'password')
             ->press('Sign In')
             ->seePageIs('/home')
-            ->see($user->name);
+            ->see(str_limit($user->name, 20));
     }
 
     /**

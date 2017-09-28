@@ -14,8 +14,7 @@ use App\Core\Providers\ViewComposerServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class AppServiceProvider
- * @package App\Providers
+ * Class AppServiceProvider.
  */
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         MenuBuilderProvider::class,
         RepositoriesServiceProvider::class,
         SupportProvider::class,
-        ViewComposerServiceProvider::class
+        ViewComposerServiceProvider::class,
     ];
 
     /**
@@ -41,10 +40,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Illuminate\Pagination\LengthAwarePaginator::defaultView('partials.paginator');
+        \Illuminate\Pagination\LengthAwarePaginator::defaultView('site.partials.paginator');
         foreach ($this->storecampProviders as $provider) {
             $this->app->register($provider);
         }
+
+        ini_set('curl.cainfo', asset('cacert.pem'));
     }
 
     /**
@@ -54,7 +55,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         if ($this->app->environment() == 'local') {
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }

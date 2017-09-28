@@ -18,12 +18,12 @@ class CartCheckout
      */
     public $id;
 
-     /**
-      * Flag that indicates if the checkout was successful or not.
-      *
-      * @var bool
-      */
-     public $success;
+    /**
+     * Flag that indicates if the checkout was successful or not.
+     *
+     * @var bool
+     */
+    public $success;
 
     /**
      * Create a new event instance.

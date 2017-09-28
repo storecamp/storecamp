@@ -115,6 +115,7 @@ class ShopSystem implements ShopSystemContract
     public static function checkout($cart = null)
     {
         $success = true;
+
         try {
             if (empty(static::$gatewayKey)) {
                 throw new ShopException('Payment gateway not selected.');
@@ -223,6 +224,7 @@ class ShopSystem implements ShopSystemContract
     public static function callback($order, $transaction, $status, $data = null)
     {
         $statusCode = $order->statusCode;
+
         try {
             if (in_array($status, ['success', 'fail'])) {
                 static::$gatewayKey = $transaction->gateway;

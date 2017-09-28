@@ -81,6 +81,7 @@ class Category extends Model implements Transformable
     use CacheableEloquent {
         CacheableEloquent::newEloquentBuilder as cache_newEloquentBuilder;
     }
+    use \App\Core\Traits\Searchable;
 
     public function newEloquentBuilder($query)
     {
@@ -108,6 +109,24 @@ class Category extends Model implements Transformable
      * @var array
      */
     protected $appends = ['type'];
+    /**
+     * Searchable rules.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        /*
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'categories.name'        => 10,
+            'categories.description' => 1,
+        ],
+    ];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -178,7 +197,7 @@ class Category extends Model implements Transformable
     /**
      * @return string
      */
-    public function getType() : string
+    public function getType(): string
     {
         if ($this->parent_id) {
             return 'child';
@@ -192,7 +211,7 @@ class Category extends Model implements Transformable
      *
      * @return bool
      */
-    public function isType($type) : bool
+    public function isType($type): bool
     {
         if ($this->parent_id) {
             return 'child' == $type;

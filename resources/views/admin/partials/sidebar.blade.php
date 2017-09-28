@@ -14,14 +14,12 @@
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
-            <!-- search form (Optional) -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                    <span class="input-group-btn">
-        <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i
-                    class="fa fa-search"></i></button>
-        </span>
+            <form class="sidebar-form" id="search-type" method="get" role="search" style="margin: initial;overflow: visible">
+                <div class="input-group" style="width: 100%;">
+                    <input name="search" type="search" class="form-control search-input pull-right"
+                           style="width: inherit; position: relative; margin-right: 1px; border: 1px solid #ddd; background-color: #e5e5e5;"
+                           placeholder="Search">
+                    </span>
                 </div>
             </form>
             <!-- /.search form -->

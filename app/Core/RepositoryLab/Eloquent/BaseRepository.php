@@ -489,6 +489,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
             return $this->parserResult($result);
         }
+
         throw (new ModelNotFoundException())->setModel(get_class($this->model), $id);
     }
 
@@ -509,6 +510,15 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         $this->resetModel();
 
         return $this->parserResult($model);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        $model = $this->model->count();
+        return $model;
     }
 
     /**

@@ -217,6 +217,11 @@ return [
         Yajra\Datatables\DatatablesServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         Spatie\CookieConsent\CookieConsentServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
+        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+        \Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
+        \App\Core\Providers\MailboxServiceProvider::class,
+        Clarification\MailDrivers\Sendgrid\SendgridServiceProvider::class,
     ],
 
     /*

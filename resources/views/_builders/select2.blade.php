@@ -4,49 +4,71 @@
         name="{!!$attrName!!}"
         class="form-control {!! $class !!}"
         title="{!! isset($title) ? $title : ""!!}">
-    <?php echo $placeholder; ?>
-        @foreach($selected as $item => $tag)
-            <?php $i++; ?>
-            @if($i <= 1)
-                <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
-                <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
-            @else
-                <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
+    <?php echo !empty($placeholder) ? $placeholder : null; ?>
+    @foreach($selected as $item => $tag)
+        <?php $i++; ?>
+        @if($i <= 1)
+            @if(!empty($placeholder))
+                <option value="" disabled selected>{!! !empty($placeholder) ? $placeholder : null !!}</option>
             @endif
-        @endforeach
-        @if(!count($selected))
-            <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
+            <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
+        @else
+            <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
         @endif
-</select>
-@push('scripts-add_on')
-<script>
-    @if($className)
-    if($('.{{$className}}').length > 0) {
-        var selector = $('.{{$className}}');
-    } else {
-        var selector = $('.select_builder_select');
-    }
-    @else
-    var selector = $('.select_builder_select');
+    @endforeach
+    @if(!count($selected) && !empty($placeholder))
+        <option value="" disabled selected>{!! !empty($placeholder) ? $placeholder : null !!}</option>
     @endif
-
-    selector.select2({
-        ajax: {
-            url: "{!! $actionUrl !!}",
-            delay: 250,
-            data: function (params) {
-                var query = {
-                    search: params.term, // search term
-                    page: params.page
-                };
-                return query;
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            }
+</select>
+<?php $tags = !empty($tags) ? true : false; ?>
+@push('scripts-add_on')
+    <script>
+        @if($className)
+        if ($('.{{$className}}').length > 0) {
+            var selector = $('.{{$className}}');
+        } else {
+            var selector = $('.select_builder_select');
         }
-    });
-</script>
+                @else
+        var selector = $('.select_builder_select');
+        @endif
+
+        selector.select2({
+            ajax: {
+                url: "{!! $actionUrl !!}",
+                delay: 250,
+                tags: true,
+                tokenSeparators: [',',' '],
+                data: function (params) {
+                    var query = {
+                        search: params.term, // search term
+                        page: params.page
+                    };
+                    return query;
+                },
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                },
+                insertTag: function (data, tag) {
+                    // Insert the tag at the end of the results
+                    data.push(tag);
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });
+    </script>
 @endpush

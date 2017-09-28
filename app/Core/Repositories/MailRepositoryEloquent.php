@@ -2,175 +2,257 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Models\Mail;
-use Illuminate\Container\Container as Application;
-use Illuminate\Contracts\Bus\Dispatcher;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use RepositoryLab\Repository\Eloquent\BaseRepository;
+use App\Core\Support\Email\EmailCustomization;
 
+use App\Core\Handlers\MailEventHandler;
+use App\Mail\DeliverMail;
+use App\Core\Mappers\MailAddressesMapper;
+use App\Core\Validators\Emails\EmailsValidator;
+use Carbon\Carbon;
 /**
  * Class MailRepositoryEloquent.
  */
-class MailRepositoryEloquent extends BaseRepository implements MailRepository
+class MailRepositoryEloquent implements MailRepository
 {
-    protected $defaultTemplatesPath;
-    protected $personalTemplatesPath;
-
-    public function __construct(Application $app, Dispatcher $dispatcher)
-    {
-        parent::__construct($app, $dispatcher);
-        $this->defaultTemplatesPath = config('mail.default_mail_templates_path', 'uploads/mails/');
-    }
 
     /**
-     * Specify Model class name.
+     * Array for the delayed sending of emails
      *
-     * @return string
+     * @var array
      */
-    public function model()
-    {
-        return Mail::class;
-    }
+    public static $emailsDelayedStack = [];
 
     /**
-     * Boot up the repository, pushing criteria.
-     */
-    public function boot()
-    {
-        $this->pushCriteria(app(RequestCriteria::class));
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDefaultMailTemplatesPath()
-    {
-        return config('mail.default_mail_templates_path');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomMailTemplatesPath()
-    {
-        return config('mail.personal_mail_templates_path');
-    }
-
-    /**
-     * @return array
-     */
-    public function resolveTmpMails()
-    {
-        $mails = [];
-
-        $emailArr = \File::allFiles(base_path('public/views/tmp_mails'));
-
-        foreach ($emailArr as $path) {
-            $mails[] = pathinfo($path);
-        }
-
-        return $mails;
-    }
-
-    /**
-     * @param $uid
      *
-     * @return array
+     * @param array $data [
+     *    'template'    => 'emails.template_name',
+     *    'to'          => ['email@store.com' , 'Person Name'],
+     *    'subject'     => 'Subject',
+     *    'reply'       => ['email@store.com' , 'Person Name'],
+     *    'bcc'         => ['email@store.com' , 'Person Name'],
+     *    'cc'          => ['email@store.com' , 'Person Name'],
+     *    'data'        => ['key' => 'value', ...],
+     *    'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
+     * ];*
+     * @param bool $async
      */
-    public function resolveMailHistory($uid)
+    public function send(array $data, $async = false)
     {
-        $mailHistory = [];
-        $pathToHistory = base_path('resources/views/storage/tmp_mails/'.$uid);
-        if (\File::exists($pathToHistory)) {
-            $emailArr = \File::allFiles($pathToHistory);
+        try {
+            $data['to'] = isset($data['to']) ? self::validateInputEmails($data['to']) : [];
+            $data['cc'] = isset($data['cc']) ? self::validateInputEmails($data['cc']) : [];
+            $data['bcc'] = isset($data['bcc']) ? self::validateInputEmails($data['bcc']) : [];
+            $data['reply'] = isset($data['reply']) ? self::validateInputEmails($data['reply']) : [];
 
-            foreach ($emailArr as $path) {
-                if (pathinfo($path)['extension'] == 'php') {
-                    $mailHistory[] = pathinfo($path);
+            if (empty($data['to'])) {
+                throw new \Exception('To property for mail not provided. Please provide it.', 422);
+            }
+            $mailData = new DeliverMail($data);
+            if (!empty($data['delay_time']) || !empty($data['drafted'])) {
+                $this->saveDelayed($data);
+            } else {
+                if ($async) {
+                    \Mail::queue($mailData);
+                    \Log::info('Mail Sent to queue');
+                } else {
+                    \Mail::send($mailData);
+                    \Log::info('Mail Sent');
                 }
             }
-        }
-
-        return $mailHistory;
-    }
-
-    /**
-     * @param $file
-     *
-     * @return mixed
-     */
-    public function getTmpMail($file)
-    {
-        $path = base_path($this->defaultTemplatesPath);
-
-        try {
-            $path = $path.$file.'.html';
-            if (\File::exists($path)) {
-                return \File::get($path);
-            }
         } catch (\Throwable $e) {
-            return back()->withErrors($e);
+            \Log::error('Send Mail Fail', $e->getTrace());
         }
     }
 
     /**
-     * @param $folder
-     * @param $filename
-     *
-     * @return $this|null|string
+     * @param array $data [
+     *    'template'    => 'emails.template_name',
+     *    'to'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *    'subject'     => 'Subject',
+     *    'reply'       => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *    'bcc'         => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *    'cc'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *    'data'        => ['key' => 'value', ...],
+     *    'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
+     * ];
      */
-    public function getHistoryTmpMail($folder, $filename)
+    public function sendAsync(array $data)
     {
-        $path = base_path('resources/views/storage/tmp_mails/');
-
         try {
-            $path = $path.'/'.$folder.'/'.$filename.'.php';
-
-            if (\File::exists($path)) {
-                return \File::get($path);
-            } else {
-                return;
-            }
-        } catch (\Throwable $e) {
-            return back()->withErrors($e);
+            \Log::info(json_encode($data));
+            $this->send($data, true);
+        } catch (\Exception $e) {
+            \Log::error($e->getTraceAsString());
         }
     }
 
     /**
-     * @param $request
-     * @param $uid
-     *
-     * @return array
+     * @param array $mailData
      */
-    private function putMail($request, $uid)
+    public function sendCampaign(array $mailData)
     {
-        $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
-        if (!\File::exists($root)) {
-            \File::makeDirectory($root, 0775, true, true);
+        try {
+            if (empty($mailData)) {
+                throw new \Exception('Please provide data for mail campaign');
+            }
+            foreach ($mailData as $mail) {
+                if (!is_array($mail)) {
+                    self::pushToDelayedStack($mailData);
+                    $this->sendDelayedEmails(true);
+                    return;
+                }
+                self::pushToDelayedStack($mail);
+            }
+            $this->sendDelayedEmails(true);
+        } catch (\Exception $e) {
+            \Log::error($e->getTraceAsString());
         }
-        $randomStr = str_random(5);
-        $filename = $randomStr.'.blade.php';
-        $path = $root.$filename;
-        $viewFolder = 'storage/tmp_mails'.'/'.$uid.'/'.$randomStr;
-        \File::put($path, $request->mail);
-
-        return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
     }
 
     /**
-     * @param $root
-     *
+     * @param $emails
+     * @return array|string
+     * @throws \Exception
+     */
+    public static function validateInputEmails($emails)
+    {
+        if (is_string($emails)) {
+            EmailsValidator::validateEmail($emails);
+            return !self::isIgnoredEmail($emails) ? $emails : [];
+        }
+
+        if (!is_array($emails)) {
+            throw new \Exception('Not valid argument EMAILS');
+        }
+
+        $validatedEmails = [];
+        foreach (MailAddressesMapper::map($emails) as $mail) {
+            if (!self::isIgnoredEmail($mail['address'])) {
+                EmailsValidator::validateEmail($mail['address']);
+                $data = [
+                    'email' => $mail["address"],
+                    'name' => $mail["name"]
+                ];
+                $validatedEmails[] = $data;
+            }
+        }
+
+        return $emails;
+    }
+
+    /**
+     * @param string $dateTime
      * @return string
      */
-    private function putCSV($root)
+    public function createDateTimeStringForMail($dateTime)
     {
-        if (!\File::exists($root)) {
-            \File::makeDirectory($root, 0775, true, true);
+        $carbonObj = Carbon::createFromFormat('Y-m-d H:i:s', $dateTime);
+
+        return $carbonObj->format('m/d/Y \\a\\t h:iA');
+    }
+
+    /**
+     * @param array $emailData
+     */
+    public static function pushToDelayedStack(array $emailData)
+    {
+        self::$emailsDelayedStack[] = $emailData;
+    }
+
+    /**
+     * @param bool $async
+     */
+    public static function sendDelayedEmails($async = true)
+    {
+        $mailRepo = app(MailRepository::class);
+        $method = $async ? 'sendAsync' : 'send';
+
+        foreach (self::$emailsDelayedStack as $emailData) {
+            $mailRepo->$method($emailData);
+        }
+        self::clearDelayedStack();
+    }
+
+    /**
+     *
+     */
+    public static function clearDelayedStack()
+    {
+        self::$emailsDelayedStack = [];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getIgnoredEmails()
+    {
+        return EmailCustomization::getIgnoredEmails();
+    }
+
+    /**
+     * @param array $emails
+     * @return array
+     */
+    public static function getNotIgnoredEmails(array $emails)
+    {
+        $ignoredEmails = self::getIgnoredEmails();
+        $return = [];
+
+        foreach ($emails as $email) {
+            !in_array($email, $ignoredEmails) && $return[] = $email;
         }
 
-        $path = $root.str_random(5).'.csv';
-        \File::put($path, null);
+        return $return;
+    }
 
-        return $path;
+    /**
+     * @param $email
+     * @return bool
+     */
+    public static function isIgnoredEmail($email)
+    {
+        return in_array($email, self::getIgnoredEmails());
+    }
+
+    /** store email fro delay
+     * @param $message
+     */
+    public function saveDelayed($message)
+    {
+        try {
+            list($from, $fromName) = MailEventHandler::getFromAddresses($message);
+
+            //prepare message data
+            $data = [
+                'from' => $from,
+                'fromName' => $fromName,
+                'message_id' => '',
+                'subject' => $message['subject'],
+                'reply_to' => MailEventHandler::getReplyTo($message),
+                'html' => $message['body'],
+                'text' => isset($message['text']) ? $message['text'] : '',
+            ];
+
+            if(isset($message['delay_time'])) {
+                $data['delay_time'] = $message['delay_time'];
+            }
+
+            if(isset($message['drafted']) && $message['drafted']) {
+                $data['is_drafted'] = true;
+                $data['status'] = 'pending';
+            }
+
+            $recipients = MailEventHandler::getRecipients($message);
+            if(!empty($message['id'])) {
+                $data['id'] = $message['id'];
+                $emailLogRepository = app(EmailLogRepository::class);
+                $emailLogRepository->update($data, $recipients);
+            } else {
+                $emailLogRepository = app(EmailLogRepository::class);
+                $emailLogRepository->create($data, $recipients);
+            }
+        } catch (\Exception $e) {
+            \Log::error($e);
+        }
     }
 }

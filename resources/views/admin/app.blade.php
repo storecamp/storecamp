@@ -5,7 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 
-@include('partials.htmlheader')
+@include('admin.partials.htmlheader')
 
 <!--
 BODY TAG OPTIONS:
@@ -30,12 +30,12 @@ desired effect
 @yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
 <div id="app" class="wrapper">
-    @include('partials.mainheader')
-    @include('partials.sidebar')
-    <!-- Content Wrapper. Contains page content -->
+@include('admin.partials.mainheader')
+@include('admin.partials.sidebar')
+<!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @include('partials.contentheader')
-            <div class="clearfix"></div>
+        @include('admin.partials.contentheader')
+        <div class="clearfix"></div>
         <!-- Main content -->
         <section class="content">
             <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
@@ -45,9 +45,9 @@ desired effect
             @yield('main-content')
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-    @include('partials.controlsidebar')
+    @include('admin.partials.controlsidebar')
 </div><!-- ./wrapper -->
-@include('partials.scripts')
+@include('admin.partials.scripts')
 @yield('scripts-add')
 @stack('scripts-add_on')
 {!! Toastr::render() !!}

@@ -42,6 +42,10 @@ interface RepositoryInterface
     public function find($id, $columns = ['*']);
 
     /**
+     * @return mixed
+     */
+    public function count();
+    /**
      * @param $id
      * @param array $columns
      *

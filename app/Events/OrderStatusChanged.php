@@ -15,19 +15,19 @@ class OrderStatusChanged
      */
     public $id;
 
-     /**
-      * Order status code.
-      *
-      * @var string
-      */
-     public $statusCode;
+    /**
+     * Order status code.
+     *
+     * @var string
+     */
+    public $statusCode;
 
-     /**
-      * Previous order status code.
-      *
-      * @var string
-      */
-     public $previousStatusCode;
+    /**
+     * Previous order status code.
+     *
+     * @var string
+     */
+    public $previousStatusCode;
 
     /**
      * Create a new event instance.

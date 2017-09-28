@@ -35,13 +35,6 @@ class FolderTableSeeder extends Seeder
             'locked'    => true,
         ]);
 
-        \App\Core\Models\Folder::create([
-            'name'      => '',
-            'parent_id' => null,
-            'disk'      => 'mails',
-            'locked'    => true,
-        ]);
-
         $uploadsPath = public_path('uploads');
         $this->synchronizer->synchronizeWithFiles($uploadsPath, 'local');
     }

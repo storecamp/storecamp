@@ -6,18 +6,34 @@
     overflow-x: hidden;
     overflow-y: auto;text-align: left">
         <!-- /.box-header -->
-        {!! Form::open(['id' => 'generateForm', 'route' => 'admin::mail::makeCampaign']) !!}
+        {!! Form::open(['id' => 'generateForm', 'route' => 'admin::mail::saveAsNewAndResend']) !!}
         <div class="box-body">
             <div style="text-align: left" class="form-group">
-                <label style="text-align: left" for="to">To(select campaign)</label>
-                {!! buildSelect(route('admin::campaign::get::json'), 'to', false, [], [], "to", "select campaign listed clients") !!}
-            </div>
-            <div style="text-align: left" class="form-group">
-                <label style="text-align: left" for="to">Subject</label>
+                <label style="text-align: left" class="control-label" for="subject">Subject</label>
                 <input class="form-control" name="subject" id="subject" placeholder="Subject:">
             </div>
+            <div class="form-group">
+                <label for="from" class="control-label">From</label>
+                <input type="text" name="from" id="from" value="" placeholder="From" class="form-control">
+            </div>
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">To</label>
+                {!! buildSelect(route('admin::search::searchUser'), 'to', true, [], [], "to", null, true) !!}
+            </div>
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">Bcc</label>
+                {!! buildSelect(route('admin::search::searchUser'), 'bcc', true, [], [], "bcc", null, true) !!}
+            </div>
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">CC</label>
+                {!! buildSelect(route('admin::search::searchUser'), 'cc', true, [], [], "cc", null, true) !!}
+            </div>
+            <div style="text-align: left" class="form-group">
+                <label style="text-align: left" for="to">Reply To</label>
+                {!! buildSelect(route('admin::search::searchUser'), 'reply_to', true, [], [], "reply_to", null, true) !!}
+            </div>
             <span class="mail-output"></span>
-            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $prefix="mail", $outputElementPath = ".mail-output", $disk = "mails"])
+            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $prefix="mail", $outputElementPath = ".mail-output", $disk = "local"])
             <span class="files selected-block" style="float: right;clear: both;"></span>
             <div class="form-group">
                 @include('admin.components.description-form', [$property_name='message'])
@@ -36,7 +52,7 @@
                     Start Campaign
                 </button>
             </div>
-            <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
+            <button type="reset" class="btn btn-default pull-left"><i class="fa fa-times"></i> Discard</button>
         </div>
     {!! Form::close() !!}
         <!-- /.box-footer -->
@@ -70,12 +86,16 @@
             var to = $(".to").val();
             var attachment = $("#attachment").val();
             var subject = $("#subject").val();
+            var cc = $("#cc").val();
+            var bcc = $("#bcc").val();
+            var reply_to = $("#reply_to").val();
+            var from = $("#from").val();
             event.preventDefault();
 
             var request = $.ajax({
                 url: link,
                 method: "POST",
-                data: {mail: markupStr, to: to, attachment: attachment},
+                data: {body: markupStr, subject: subject,cc: cc, bcc: bcc, reply_to: reply_to, from: from, to: to, attachment: attachment},
                 beforeSend: function (jqXHR, s) {
                     var data = "<i class=\"fa fa-spin fa-spin-2x fa-3x fa-spinner fa-fw\" style='margin: 0 auto; padding: 0 auto; width: 25%; height: 25%'></i>" + "<strong class='text-warning'>Please wait</strong>";
                     $('#note').summernote({height: 100});

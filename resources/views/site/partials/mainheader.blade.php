@@ -35,17 +35,17 @@ $user = $auth->user() ? $auth->user() : null; ?>
                     @include('site.partials.toggle-language')
                 </ul>
                 <div class="form-inline pull-left">
-                    <form class="navbar-form active" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control pull-right"
-                                   style="width: 300px; margin-right: 1px; border: 1px solid #ddd; background-color: #e5e5e5;"
+                    <form class="navbar-form active" id="search-type" method="get" role="search">
+                        <div class="input-group" style="width: 300px;">
+                            <input name="search" type="search" class="form-control search-input pull-right"
+                                   style="width: inherit; position: relative; margin-right: 1px; border: 1px solid #ddd; background-color: #e5e5e5;"
                                    placeholder="Search">
-                            <span class="input-group-btn">
-							<button type="submit" class="btn btn-default">
-								<span class="glyphicon glyphicon-search">
-									<span class="sr-only">Search</span>
-								</span>
-							</button>
+                            {{--<span class="input-group-btn">--}}
+							{{--<button type="submit" class="btn btn-default">--}}
+								{{--<span class="glyphicon glyphicon-search">--}}
+									{{--<span class="sr-only">Search</span>--}}
+								{{--</span>--}}
+							{{--</button>--}}
 						</span>
                         </div>
                     </form>
@@ -142,3 +142,4 @@ $user = $auth->user() ? $auth->user() : null; ?>
     </nav>
 </header>
 @include('cookieConsent::index')
+@include('site.partials.search.search-block')

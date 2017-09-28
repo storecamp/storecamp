@@ -130,6 +130,7 @@ class GatewayOmnipay extends PaymentGateway
         if ($this->isCreditCard && !isset($this->creditCard)) {
             throw new GatewayException('Credit Card not set.', 1);
         }
+
         try {
             $response = $this->omnipay->authorize(array_merge([
                 'amount'    => $cart->total,
@@ -166,6 +167,7 @@ class GatewayOmnipay extends PaymentGateway
         if (!isset($this->omnipay)) {
             throw new ShopException('Omnipay gateway not set.', 0);
         }
+
         try {
             $response = $this->omnipay->purchase(array_merge([
                 'amount'    => $order->total,

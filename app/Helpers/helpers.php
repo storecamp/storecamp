@@ -81,19 +81,20 @@ if (!function_exists('buildSelect')) {
     /**
      * @param $actionUrl
      * @param $attrName
-     * @param $multiple
+     * @param bool $multiple
      * @param array $data
      * @param array $selected
-     * @param null  $class
-     * @param null  $placeholder
-     *
+     * @param null $class
+     * @param null $placeholder
+     * @param bool $tags
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    function buildSelect($actionUrl, $attrName, bool $multiple, $data = [], $selected = [], $class = null, $placeholder = null)
+    function buildSelect($actionUrl, $attrName, bool $multiple, $data = [], $selected = [],
+                         $class = null, $placeholder = null, $tags = false)
     {
         $selector = new \App\Core\Components\Select\SelectBuilder();
 
-        return $selector->render($actionUrl, $attrName, $multiple, $data, $selected, $class, $placeholder);
+        return $selector->render($actionUrl, $attrName, $multiple, $data, $selected, $class, $placeholder, $tags);
     }
 }
 

@@ -543,6 +543,7 @@ class Youtube
             if (isset($resObj->error->errors[0])) {
                 $msg .= ' : '.$resObj->error->errors[0]->reason;
             }
+
             throw new \Exception($msg, $resObj->error->code);
         } else {
             $itemsArray = $resObj->items;
@@ -571,6 +572,7 @@ class Youtube
             if (isset($resObj->error->errors[0])) {
                 $msg .= ' : '.$resObj->error->errors[0]->reason;
             }
+
             throw new \Exception($msg, $resObj->error->code);
         } else {
             $this->page_info = [

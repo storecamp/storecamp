@@ -336,6 +336,11 @@ $.StoreCamp = {}
 ###
 
 $.StoreCamp.options =
+  baseDateFormat: 'YYYY-MM-DD'
+  baseDateTimeFormat: 'YYYY-MM-DD HH:mm:ss'
+  appDateFormat: 'M/D/YYYY'
+  appDateTimeFormat: 'M/D/YYYY h:mma'
+  appTimeCalendarFormat: 'h:mma'
   navbarMenuSlimscroll: true
   navbarMenuSlimscrollWidth: '3px'
   navbarMenuHeight: '200px'
@@ -364,6 +369,9 @@ $.StoreCamp.options =
   directChat:
     enable: true
     contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+  search:
+    searchBTN : $('#search button')
+    searchResult : $('.search-result #search-result-body')
   colors:
     lightBlue: '#3c8dbc'
     red: '#f56954'
