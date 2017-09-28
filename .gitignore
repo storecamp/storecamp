@@ -71,3 +71,4 @@ storage/*.key
 !/app/Http/Controllers/
 /public/uploads/Logo.png
 !/public/uploads/mails/
+!/laradock/.env
