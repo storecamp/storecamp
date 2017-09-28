@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Core\Commands;
 
 use Illuminate\Console\Command;
 
-class DockerUp extends Command
+class DockerRun extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'docker:up';
+    protected $signature = 'docker:run';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Launch and build docker containers!';
+    protected $description = 'Run Docker Workspace in bash';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,12 @@ class DockerUp extends Command
      */
     public function handle()
     {
-        exec('cd laradock && chcp 850 >> nul && docker-compose up -d nginx php-fpm mailhog mysql phpmyadmin elasticsearch redis memcached  && cd ../');
+        $proc = proc_open('cd laradock && chcp 850 >> nul && docker-compose exec workspace bash && cd ../', [STDIN, STDOUT, STDERR], $pipes);
+        if ($proc === false) {
+            $this->error("Failed to open process");
+            return 2;
+        }
+
+        return proc_close($proc);
     }
 }

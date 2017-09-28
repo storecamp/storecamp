@@ -14,9 +14,8 @@
     </style>
     <!-- Main content -->
     <div class="row">
-    @include('admin.mail.mail_sidebar')
     <!-- /.col -->
-        <div class="col-md-9">
+        <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">List of emails</h3>
@@ -143,10 +142,10 @@
                         title: 'Is Delayed', data: 'delay_time', width: 'auto',
                         render: function (data, type, full, meta) {
                             if (data) {
-                                return data;
+                                return "<div class='label label-info' style='width: 100%; display: block;position: relative;text-align: center;'>" + data + "</div>";
                             } else {
-                                return "<div style='width: 100%; display: block;position: relative;text-align: left;'>" +
-                                    "<i class='fa fa-times text-center text-danger'></i>" +
+                                return "<div class='label label-default' style='width: 100%; display: block;position: relative;text-align: center;'>" +
+                                    "No" +
                                     "</div>";
                             }
                         }
@@ -157,7 +156,7 @@
                         width: 'auto',
                         render: function (data, type, full, meta) {
                             var buttons = '<div class="btn-group">' +
-                                '<button class="btn btn-xs btn-default edit-mail" data-row="' + meta.row + '" onclick="">View</button>';
+                                '<a class="btn btn-xs btn-default edit-mail" href="'+ data.url +'" data-row="' + meta.row + '" onclick="">View</a>';
                             buttons +=
                                 '<button class="btn btn-xs btn-default show-recepients" ' +
                                 'data-row="' + meta.row + '" onclick="">Statuses</button>' + '</div>';
@@ -179,17 +178,17 @@
                         var filterByRangeHtml = $(
                             '<div class="form-inline">' +
                             '<div class="form-group" style="margin-right: 10px;margin-bottom: 10px">' +
-                            '<label class="control-label" >Status:</label>' +
+                            '<label class="control-label" >Status:' +
                             '<select class="form-control input-sm"  style="margin-left:5px" id="module" ><option>All</option><option>Pending</option><option>Failed</option><option>Sent</option></select>' +
-                            '</div>' +
+                            '</label></div>' +
                             '<div class="form-group" style="margin-right: 10px;margin-bottom: 10px">' +
-                            '<label  class="control-label"  >Start:</label>' +
+                            '<label  class="control-label"  >Start:' +
                             '<input class="form-control input-sm"  style="margin-left:5px" id="startRange" type="text" placeholder="">' +
-                            '</div>'+
+                            '</label></div>'+
                             '<div class="form-group" style="margin-right: 10px;margin-bottom: 10px">'+
-                            '<label style="margin-left:10px" class="control-label">End:</label>' +
+                            '<label style="margin-left:10px" class="control-label">End:' +
                             '<input class="form-control input-sm" style="margin-left:5px"  id="endRange" type="text" placeholder="">' +
-                            '</div>' +
+                            '</label></div>' +
                             '</div>' +
                             '</div>'
                         );
@@ -217,9 +216,9 @@
                     $('#mailErrorMess').html('Fill Subject and Body fields, please!').show();
                     return false;
                 }
-                if (emailHistory.additionalMails(cc) &&
-                    emailHistory.additionalMails(bcc)
-                    && emailHistory.additionalMails(replyTo)) {
+                if ($.StoreCamp.MailStory.additionalMails(cc) &&
+                    $.StoreCamp.MailStory.additionalMails(bcc)
+                    && $.StoreCamp.MailStory.additionalMails(replyTo)) {
                     $('#mailErrorMess').html('Emails(cc,bcc,reply to) not filled properly!').show();
                     return false;
                 }

@@ -18,6 +18,7 @@ class MailHistoryTransformer extends TransformerAbstract
             'id' => $emailLog->id,
             'message_id' => $emailLog->message_id,
             'from' => $this->presentFrom($emailLog),
+            'url' => route('admin::mail::show', [$emailLog]),
             'reply_to' => $emailLog->reply_to,
             'cc' => $emailLog->cc,
             'bcc' => $emailLog->bcc,

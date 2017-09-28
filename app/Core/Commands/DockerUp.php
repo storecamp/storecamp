@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Core\Commands;
 
 use Illuminate\Console\Command;
 
-class DockerDown extends Command
+class DockerUp extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'docker:down';
+    protected $signature = 'docker:up';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Stop and remove docker containers!';
+    protected $description = 'Launch and build docker containers!';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,6 @@ class DockerDown extends Command
      */
     public function handle()
     {
-        shell_exec('cd laradock && chcp 850 >> nul && docker-compose down && cd ../');
+        exec('cd laradock && chcp 850 >> nul && docker-compose up -d nginx php-fpm mailhog mysql phpmyadmin elasticsearch redis memcached  && cd ../');
     }
 }
