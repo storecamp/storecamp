@@ -18,12 +18,24 @@ if (\App::environment('local', 'staging')) {
     header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PATCH, PUT, DELETE');
     header('Access-Control-Allow-Headers:  Content-Type, X-Auth_old-Token, X-CSRF-Token, Origin, Authorization');
 }
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('jwt.auth');
-Route::get('/users', 'Api\AuthController@getUsers')->middleware('jwt.auth');
 
-//Route::resource('authenticate', 'Api\AuthController');
-Route::post('authenticate', 'Api\AuthController@authenticate');
-Route::post('register', 'Api\AuthController@register');
-Route::post('getUser', 'Api\AuthController@getAuthenticatedUser')->middleware('user.additional');
+
+Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
+    Route::post('/register', [
+        'uses' => 'Api\AuthController@register',
+    ]);
+
+    Route::post('/signin', [
+        'uses' => 'Api\AuthController@signin',
+    ]);
+    Route::get('/user', function (Request $request) {
+        $data = [];
+        $data['id'] = $request->user()->id;
+        $data['name'] = $request->user()->name;
+        $data['email'] = $request->user()->email;
+        $data['roles'] = $request->user()->roles;
+        return response()->json([
+            'data' => $data,
+        ]);
+    })->middleware('jwt.auth');
+});

@@ -4,6 +4,8 @@ namespace App\Core\Http\Controllers\Api;
 
 use App\Core\Http\Controllers\Controller;
 use App\Core\Models\User;
+use App\Core\Validators\User\UsersFormRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -11,91 +13,51 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class AuthController extends Controller
 {
     /**
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @param UsersFormRequest $request
      */
-    public function authenticate(Request $request)
+    public function register(UsersFormRequest $request)
     {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
-
-        try {
-            // attempt to verify the credentials and create a token for the user
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        // all good so return the token
-        return response()->json(compact('token'));
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAuthenticatedUser()
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
-
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function register(Request $request)
-    {
-        $validator = \Validator::make($request->all(), [
-            'name'     => 'required',
-            'password' => 'required|min:8',
-            'email'    => 'required|email',
+        $user = User::create([
+            'name' => $request->json('name'),
+            'email' => $request->json('email'),
+            'password' => $request->json('password'),
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'msg' => $validator->getMessageBag()->all()], 400);
-        }
-
-        $credentials = $request->only('name', 'email', 'password');
-        $password = \Hash::make($request->input('password'));
-        $credentials['password'] = $password;
-//        $credentials['type'] = 2;
-        try {
-            $user = User::create($credentials);
-            $token_creds = $request->only('email', 'password');
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'msg' => $e->getMessage()], 409);
-        }
-        if (!$token = JWTAuth::attempt($token_creds)) {
-            return response()->json(['error' => 'invalid_credentials'], 401);
-        } else {
-            return response()->json(compact('user', 'token'));
-        }
+        $user->attachRole(3);
     }
 
+
     /**
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUsers()
+    public function signin(Request $request)
     {
-        $users = User::all();
+        try {
+            $token = JWTAuth::attempt($request->only('email', 'password'), [
+                'exp' => Carbon::now()->addWeek()->timestamp,
+            ]);
+        } catch (JWTException $e) {
+            return response()->json([
+                'error' => 'Could not authenticate',
+            ], 500);
+        }
 
-        return response()->json(compact('users'));
+        if (!$token) {
+            return response()->json([
+                'error' => 'Could not authenticate',
+            ], 401);
+        } else {
+            $data = [];
+            $meta = [];
+
+            $data['name'] = $request->user()->name;
+            $meta['token'] = $token;
+
+            return response()->json([
+                'data' => $data,
+                'meta' => $meta
+            ]);
+        }
     }
 }
