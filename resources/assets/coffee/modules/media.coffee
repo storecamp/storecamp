@@ -132,8 +132,8 @@ $.StoreCamp.media =
         e.preventDefault();
         display = $(this).data('name');
         $('#delete_filename').text(display);
-        $('#delete_file_form')[0].action = 
-$('#delete_file_form')[0].action.replace('__id', $(this).data('id'));
+        $('#delete_file_form')[0].action = $('#delete_file_form')[0]
+          .action.replace('__id', $(this).data('id'));
         $('.delete-confirm b').text($('.delete-confirm b').text().replace('__name', $(this).data('name')));
         $('#delete_file_modal').modal('show');
         return

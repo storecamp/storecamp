@@ -3728,16 +3728,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
             "require": {
@@ -3772,7 +3772,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "paypal/rest-api-sdk-php",
@@ -5713,16 +5713,16 @@
         },
         {
             "name": "tamayo/laravel-scout-elastic",
-            "version": "3.0.6",
+            "version": "3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ErickTamayo/laravel-scout-elastic.git",
-                "reference": "85bc852ca059910c77d98c6960e7999a6cec5ea6"
+                "reference": "12c8d2fb4d8dfa21fb47d2b2ece58a95c44d64c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ErickTamayo/laravel-scout-elastic/zipball/85bc852ca059910c77d98c6960e7999a6cec5ea6",
-                "reference": "85bc852ca059910c77d98c6960e7999a6cec5ea6",
+                "url": "https://api.github.com/repos/ErickTamayo/laravel-scout-elastic/zipball/12c8d2fb4d8dfa21fb47d2b2ece58a95c44d64c8",
+                "reference": "12c8d2fb4d8dfa21fb47d2b2ece58a95c44d64c8",
                 "shasum": ""
             },
             "require": {
@@ -5739,6 +5739,13 @@
                 "elasticsearch/elasticsearch": "Required to use the Elasticsearch engine (^5.0)."
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ScoutEngines\\Elasticsearch\\ElasticsearchProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ScoutEngines\\Elasticsearch\\": "src/"
@@ -5752,7 +5759,7 @@
                 "laravel",
                 "scout"
             ],
-            "time": "2017-08-21T14:07:01+00:00"
+            "time": "2017-09-27T22:39:34+00:00"
         },
         {
             "name": "that0n3guy/transliteration",
