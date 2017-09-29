@@ -37,6 +37,10 @@ class DockerDown extends Command
      */
     public function handle()
     {
-        shell_exec('cd laradock && chcp 850 >> nul && docker-compose down && cd ../');
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            shell_exec('cd laradock && chcp 850 >> nul && docker-compose down && cd ../');
+        } else {
+            shell_exec('cd laradock && sudo docker-compose down && cd ../');
+        }
     }
 }

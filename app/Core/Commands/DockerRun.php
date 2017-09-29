@@ -37,12 +37,22 @@ class DockerRun extends Command
      */
     public function handle()
     {
-        $proc = proc_open('cd laradock && chcp 850 >> nul && docker-compose exec workspace bash && cd ../', [STDIN, STDOUT, STDERR], $pipes);
-        if ($proc === false) {
-            $this->error("Failed to open process");
-            return 2;
-        }
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $proc = proc_open('cd laradock && chcp 850 >> nul && docker-compose exec workspace bash && cd ../', [STDIN, STDOUT, STDERR], $pipes);
+            if ($proc === false) {
+                $this->error("Failed to open process");
+                return 2;
+            }
 
-        return proc_close($proc);
+            return proc_close($proc);
+        } else {
+            $proc = proc_open('cd laradock && sudo docker-compose exec workspace bash && cd ../', [STDIN, STDOUT, STDERR], $pipes);
+            if ($proc === false) {
+                $this->error("Failed to open process");
+                return 2;
+            }
+
+            return proc_close($proc);
+        }
     }
 }
