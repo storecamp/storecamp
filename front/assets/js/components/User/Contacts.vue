@@ -90,7 +90,7 @@
     import Multiselect from 'vue-multiselect'
     import VueImgInputer from 'vue-img-inputer'
     import File from '../FileUpload/Main.vue'
-    import * as uploader from '../../services/file-upload.service.js';
+    import {UploadService} from '../../services/file-upload.service.js';
 
     export default {
         data() {
@@ -164,20 +164,20 @@
                 const resumeFormData = new FormData();
                 if (this.file.name) {
                     avatarformData.append('file', this.file, this.file.name);
-                    uploader.uploadAvatar(avatarformData);
+                    UploadService.uploadAvatar(avatarformData);
                 }
                 let resumeStatus = $("input[name='file_status']").val();
                 let updateStatus = true;
                 if (this.resume.name) {
                     resumeFormData.append('resume', this.resume, this.resume.name);
                     resumeFormData.append('file_status', $("input[name='file_status']").val());
-                    uploader.uploadResume(resumeFormData, this);
+                    UploadService.uploadResume(resumeFormData, this);
                     updateStatus = false;
                     this.$root.$emit('resume_changed');
                 }
                 if (resumeStatus == 'removed') {
                     resumeFormData.append('file_status', $("input[name='file_status']").val());
-                    uploader.uploadResume(resumeFormData, this);
+                    UploadService.uploadResume(resumeFormData, this);
                     updateStatus = false;
                     this.$root.$emit('resume_changed');
                 }

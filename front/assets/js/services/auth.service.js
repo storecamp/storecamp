@@ -1,5 +1,6 @@
 import Vue from '../app.js';
 import {router} from '../routes.js';
+
 export default {
     options: {
         redirectIfLoggedInPath: '/dash',
@@ -8,7 +9,7 @@ export default {
     user: {
         authenticated: false,
         profile: null,
-        roles : []
+        roles: []
     },
     authBefore() {
         var _this = this;
@@ -41,10 +42,10 @@ export default {
         })
     },
     beforeHandler(response, to, from, next) {
-        var user= {authenticated: false};
-        user.authenticated = true
-        user.profile = response.data.data
-        user.roles = response.data.data.roles
+        var user = {authenticated: false};
+        user.authenticated = true;
+        user.profile = response.data.data;
+        user.roles = response.data.data.roles;
         if (to.matched.some(record => record.meta.auth)) {
             // this route requires auth, check if logged in
             // if not, redirect to login page.
@@ -56,7 +57,7 @@ export default {
                 if ((user.roles.display_name == 'admin') && to.matched.some(record => record.meta.isAdmin)) {
                     next();
                 } else {
-                    if(to.matched.some(record => record.meta.isAdmin)) {
+                    if (to.matched.some(record => record.meta.isAdmin)) {
                         next({
                             path: this.redirectIfLoggedInPath
                         });
@@ -108,15 +109,13 @@ export default {
                 password: password
             }
         ).then(response => {
-            context.error = false
+            context.error = false;
             localStorage.setItem('id_token', response.data.meta.token);
             localStorage.setItem('client', response.data.meta.name);
-            Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token')
-
-            this.user.authenticated = true
-            this.user.profile = response.data.data
-
-            router.push('/vacancies/all')
+            Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
+            this.user.authenticated = true;
+            this.user.profile = response.data.data;
+            router.push(this.redirectIfLoggedInPath);
         }, response => {
             localStorage.removeItem('id_token');
             localStorage.removeItem('client');
@@ -130,7 +129,7 @@ export default {
         this.user.profile = null;
 
         router.push({
-            name: 'dash'
+            name: this.redirectIfLoggedInPath
         })
     },
     loggedIn() {
