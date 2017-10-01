@@ -11,16 +11,22 @@
 
     <meta base="/front">
     <!-- Styles -->
+    <link href="{{ asset('css/main/app.css') }}" rel="stylesheet">
     <link href="{{ asset('front/css/app.css') }}" rel="stylesheet">
-    <link href="https://unpkg.com/vue-multiselect@2.0.0-beta.14/dist/vue-multiselect.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/admin_skins.css') }}">
+    <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/app_less.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/vue-multiselect.min.css') }}" rel="stylesheet">
+
 </head>
-<body>
+<body class="sidebar-mini skin-blue">
 <div id="app"></div>
 <script>
     window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
             ]) !!};
 </script>
+
 <!-- Scripts -->
 <script src="{{ asset('front/js/app.js') }}"></script>
 </body>

@@ -8,6 +8,9 @@ import Contact from './components/User/Contacts.vue';
 import Account from './components/User/Account.vue';
 import AdditionalSettings from './components/User/AdditionalSettings.vue';
 import PublicProfile from './components/User/PublicProfile.vue';
+import All from "./components/Users/All.vue";
+import UserEdit from "./components/Users/Edit.vue";
+import UserCreate from "./components/Users/Create.vue";
 import auth from './services/auth.service.js';
 
 export let router = new VueRouter({
@@ -64,6 +67,24 @@ export let router = new VueRouter({
                     meta: { auth: true }
                 },
             ]
+        },
+        {
+            path: '/users',
+            name: 'users',
+            component: All,
+            props: { auth: auth },
+        },
+        {
+            path: '/users/edit/:id',
+            name: 'usersEdit',
+            component: UserEdit,
+            props: { auth: auth },
+        },
+        {
+            path: '/users/create',
+            name: 'usersCreate',
+            component: UserCreate,
+            props: { auth: auth },
         }
     ]
 });

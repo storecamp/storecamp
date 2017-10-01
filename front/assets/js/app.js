@@ -5,7 +5,6 @@
  */
 require('./bootstrap');
 window.Vue = require('vue');
-
 /**
  * system imports
  */
@@ -15,11 +14,16 @@ import auth from './services/auth.service';
 
 //before interceptor
 auth.authBefore();
+
 // Export App
 export default Vue;
+
+//setup global vue dependencies
 require('./config/globalProvider');
+
 //globalData mixin
 require('./mixins/globalMixin');
+
 //app vue instance set up
 const app = new Vue({
     el: '#app',

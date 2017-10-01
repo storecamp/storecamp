@@ -48,7 +48,7 @@
 <script src="{{ asset('plugins/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
 <script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{asset('plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
-<script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/js/appConfig.js') }}" type="text/javascript"></script>
 <script src="{{asset('plugins/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/typeahead.js/dist/typeahead.bundle.min.js')}}"></script>
 <!-- Page script -->

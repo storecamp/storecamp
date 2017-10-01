@@ -10,6 +10,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
+    require('admin-lte');
+    require('admin-lte/dist/css/AdminLTE.min.css');
 } catch (e) {
 }
 

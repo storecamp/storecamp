@@ -1,5 +1,5 @@
 <template>
-    <ul class="pagination">
+    <ul class="pagination pagination-sm no-margin pull-right">
     <li v-if="pagination.current_page > 1">
         <a href="#" aria-label="Previous" v-on:click.prevent="changePage(pagination.current_page - 1)">
             <span aria-hidden="true">←</span>
@@ -16,6 +16,7 @@
 </ul>
 </template>
 <script>
+    import {router} from '../../routes.js';
     export default{
         props: {
             pagination: {

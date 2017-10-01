@@ -65,7 +65,11 @@ class UsersSystem implements UsersSystemContract
     {
         $role = $data['role'];
         $user = $this->userRepository->create($data);
-        $user->addRole($role);
+        if(is_array($role)) {
+            $user->roles()->sync((array) $role);
+        } else {
+            $user->addRole($role);
+        }
 
         return $user;
     }
@@ -78,8 +82,9 @@ class UsersSystem implements UsersSystemContract
      */
     public function update(array $data, $id) : User
     {
-        $user = $this->userRepository->update($data, $id);
+        $user = $this->userRepository->findOrFail($id);
         $user->roles()->sync((array) $data['role']);
+        $user = $this->userRepository->update($data, $id);
 
         return $user;
     }

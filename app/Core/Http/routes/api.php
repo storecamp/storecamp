@@ -38,4 +38,38 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
             'data' => $data,
         ]);
     })->middleware('jwt.auth');
+
+    Route::group(['prefix' => 'users','middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'users.'], function () {
+        Route::get('/', [
+            'as' => 'all',
+            'uses' => 'Api\UsersController@index'
+        ]);
+        Route::post('/store', [
+            'as' => 'store',
+            'uses' => 'Api\UsersController@store'
+        ]);
+        Route::put('/update/{id}', [
+            'as' => 'update',
+            'uses' => 'Api\UsersController@update'
+        ]);
+        Route::get('/{id}', [
+            'as' => 'show',
+            'uses' => 'Api\UsersController@show'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'delete',
+            'uses' => 'Api\UsersController@destroy'
+        ]);
+    });
+
+    Route::group(['prefix' => 'role_perm','middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'role_permission.'], function () {
+        Route::get('/roles', [
+            'as' => 'roles',
+            'uses' => 'Api\RolePermissionController@getAllRoles'
+        ]);
+        Route::get('/permissions', [
+            'as' => 'permissions',
+            'uses' => 'Api\RolePermissionController@getAllPermissions'
+        ]);
+    });
 });
