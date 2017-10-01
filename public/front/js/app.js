@@ -46323,19 +46323,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "sidebar-menu "
   }, [_c('li', {
     staticClass: "header"
-  }, [_vm._v("\n                    MAIN NAVIGATION\n                ")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('li', {
-    staticClass: "treeview item "
-  }, [_c('router-link', {
-    staticClass: "link",
+  }, [_vm._v("\n                    MAIN NAVIGATION\n                ")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('router-link', {
+    staticClass: "treeview item ",
     attrs: {
+      "active-class": "active",
       "exact-active-class": "active",
       "to": {
         name: 'users'
-      }
+      },
+      "tag": "li"
     }
+  }, [_c('a', {
+    staticClass: "link"
   }, [_c('i', {
     staticClass: "fa fa-user"
-  }), _vm._v("\n                        Users\n                    ")])], 1)]), _vm._v(" "), _vm._m(5)])])])
+  }), _vm._v("\n                        Users\n                    ")])])], 1), _vm._v(" "), _vm._m(5)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', {
     staticClass: "treeview item "

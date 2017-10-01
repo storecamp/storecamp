@@ -150,12 +150,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="treeview item ">
-                        <router-link exact-active-class="active" class="link" :to="{ name: 'users' }">
+                    <router-link active-class="active" exact-active-class="active"  :to="{ name: 'users' }" class="treeview item " tag="li">
+                        <a class="link">
                             <i class="fa fa-user"></i>
                             Users
-                        </router-link>
-                    </li>
+                        </a>
+                    </router-link>
                 </ul>
                 <ul class="sidebar-menu ">
                     <li class="header">
