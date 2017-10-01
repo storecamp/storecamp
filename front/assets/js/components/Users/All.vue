@@ -42,6 +42,12 @@
                             <router-link :to="{ name: 'usersEdit', params: { id: user.id }}"
                                          class="btn btn-default edit" title="Edit">
                                 <em class="fa fa-pencil-square-o"></em></router-link>
+                            <button v-if="user.banned" role="link" class="btn btn-warning text-warning" :data-id="user.id"  v-on:click="toggleBan">
+                                unban
+                            </button>
+                            <button v-if="!user.banned" role="link" class="btn btn-default text-warning" :data-id="user.id"  v-on:click="toggleBan">
+                                ban
+                            </button>
                             <button v-on:click="deleteUser" :data-id="user.id" class="btn btn-danger delete text-warning" role="link"
                                     title="Are you sure you want to delete?"><em v-on:click="deleteUser" :data-id="user.id" class="fa fa-trash-o"></em></button>
                         </td>
@@ -97,6 +103,19 @@
                 console.log($(e.target));
                 let userId = $(e.target).attr('data-id');
                 Vue.http.delete(window.BASE_URL + '/api/users/' + userId)
+                    .then(response => {
+                        this.error = false;
+                        let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+                        this.getAllUsers(page);
+                    }, response => {
+                        this.error = true;
+                        this.errorMsg = response.error;
+                    })
+            },
+            toggleBan(e) {
+                console.log($(e.target));
+                let userId = $(e.target).attr('data-id');
+                Vue.http.get(window.BASE_URL + '/api/users/toggleBan/' + userId)
                     .then(response => {
                         this.error = false;
                         let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;

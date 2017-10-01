@@ -3,7 +3,7 @@
         <!-- sidebar: style can be found in sidebar.less -->
 
         <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 438px;">
-            <section class="sidebar" style="height: 438px; overflow: hidden; width: auto;">
+            <section class="sidebar">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu ">
                     <li class="header">
@@ -150,7 +150,8 @@
                             </li>
                         </ul>
                     </li>
-                    <router-link active-class="active" exact-active-class="active"  :to="{ name: 'users' }" class="treeview item " tag="li">
+                    <router-link active-class="active" exact-active-class="active" :to="{ name: 'users' }"
+                                 class="treeview item " tag="li">
                         <a class="link">
                             <i class="fa fa-user"></i>
                             Users
@@ -259,3 +260,46 @@
         <!-- /.sidebar -->
     </aside>
 </template>
+
+
+<script>
+    export default {
+        data() {
+            return {}
+        },
+        methods: {},
+        mounted() {
+            (function ($) {
+                var items;
+                items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar'), $('.default-menu')];
+                items.forEach(function (item, i, arr) {
+                    var makeAnchorActive, nav;
+                    nav = item;
+                    makeAnchorActive = function (navigtation) {
+                        var activeParents, anchor, current, definedLinks, results;
+                        anchor = navigtation.find('a');
+                        current = window.location.href;
+                        i = 0;
+                        results = [];
+                        while (i < anchor.length) {
+                            definedLinks = anchor[i].href;
+                            if (definedLinks === current) {
+                                activeParents = nav.attr('data-active-parents');
+                                if (activeParents) {
+                                    $(anchor[i]).parent().parent().closest('li').addClass('active');
+                                    $(anchor[i]).parent().addClass('active');
+                                } else {
+
+                                }
+                                $(anchor[i]).parent().addClass('active');
+                            }
+                            results.push(i++);
+                        }
+                        return results;
+                    };
+                    return makeAnchorActive(nav);
+                });
+            })($);
+        }
+    }
+</script>

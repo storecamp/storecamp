@@ -29,38 +29,5 @@
 
 <!-- Scripts -->
 <script src="{{ asset('front/js/app.js') }}"></script>
-<script>
-    (function($) {
-        var items;
-        items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar'), $('.default-menu')];
-        items.forEach(function(item, i, arr) {
-            var makeAnchorActive, nav;
-            nav = item;
-            makeAnchorActive = function(navigtation) {
-                var activeParents, anchor, current, definedLinks, results;
-                anchor = navigtation.find('a');
-                current = window.location.href;
-                i = 0;
-                results = [];
-                while (i < anchor.length) {
-                    definedLinks = anchor[i].href;
-                    if (definedLinks === current) {
-                        activeParents = nav.attr('data-active-parents');
-                        if (activeParents) {
-                            $(anchor[i]).parent().parent().closest('li').addClass('active');
-                            $(anchor[i]).parent().addClass('active');
-                        } else {
-
-                        }
-                        $(anchor[i]).parent().addClass('active');
-                    }
-                    results.push(i++);
-                }
-                return results;
-            };
-            return makeAnchorActive(nav);
-        });
-    })($);
-</script>
 </body>
 </html>

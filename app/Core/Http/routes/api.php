@@ -39,7 +39,7 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
         ]);
     })->middleware('jwt.auth');
 
-    Route::group(['prefix' => 'users','middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'users.'], function () {
+    Route::group(['prefix' => 'users', 'middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'users.'], function () {
         Route::get('/', [
             'as' => 'all',
             'uses' => 'Api\UsersController@index'
@@ -52,6 +52,10 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
             'as' => 'update',
             'uses' => 'Api\UsersController@update'
         ]);
+        Route::get('toggleBan/{id}', [
+            'uses' => 'Api\UsersController@toggleBan',
+            'as' => 'toggleBan'
+        ])->where('id', '[0-9]+');
         Route::get('/{id}', [
             'as' => 'show',
             'uses' => 'Api\UsersController@show'
@@ -62,7 +66,7 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
         ]);
     });
 
-    Route::group(['prefix' => 'role_perm','middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'role_permission.'], function () {
+    Route::group(['prefix' => 'role_perm', 'middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'role_permission.'], function () {
         Route::get('/roles', [
             'as' => 'roles',
             'uses' => 'Api\RolePermissionController@getAllRoles'

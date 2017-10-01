@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Core\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * Class UserssController
@@ -105,6 +106,45 @@ class UsersController extends Controller
         } catch (\Throwable $exception) {
             \DB::rollBack();
             return response()->json(['msg' => 'Error during user create', 'server_msg' => $exception->getMessage()], $exception->getCode());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function toggleBan(Request $request, $id)
+    {
+        try {
+            $user = $this->user->find($id);
+            if ($user->hasRole('Admin')) {
+                $msg = 'Error! ' . '<b>Not allowed</b>' . 'Can\'t be banned!';
+
+                return response()->json(['msg' => $msg]);
+            } else {
+                try {
+                    $actionUser = \JWTAuth::parseToken()->authenticate();
+                } catch (JWTException $exception) {
+                    $actionUser = null;
+                }
+                if ($actionUser && $actionUser->hasRole('Admin')) {
+                    if ($user->banned === 0) {
+                        $msg = 'Warning! User Banned';
+                        $user->banned = 1;
+                    } else {
+                        $msg = 'Info! User UnBanned';
+                        $user->banned = 0;
+                    }
+                    $user->save();
+                } else {
+                    return response()->json(['msg' => 'Error! <b>Not allowed</b>' . 'Can\'t be banned!']);
+                }
+            }
+
+            return response()->json(['msg' => $msg]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['msg' => $e->getMessage()], $e->getCode());
         }
     }
 
