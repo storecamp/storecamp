@@ -53,6 +53,12 @@
         </header>
     </div>
 </template>
+<style>
+    .navbar-custom-menu {
+        width: 100%;
+        padding-right: 10px;
+    }
+</style>
 <script>
     export default {
         props: ['auth'],

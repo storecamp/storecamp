@@ -5359,6 +5359,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['auth'],
@@ -6925,13 +6931,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             count: 0,
             error: false,
-            errorMsg: ''
+            errorMsg: '',
+            routeName: ''
         };
     },
 
     props: ['count', 'msg'],
     methods: {},
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        this.routeName = this.$route.name;
+        console.log(this.$route.name);
+    },
     components: {}
 });
 
@@ -43987,6 +43997,10 @@ module.exports = Component.exports
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(138)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(50),
@@ -45611,7 +45625,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "breadcrumb"
   }), _vm._v(" "), _c('small', [_c('div', {
     staticClass: "btn-group"
-  }, [_c('router-link', {
+  }, [((_vm.routeName != 'usersCreate') && (_vm.routeName != 'usersEdit')) ? _c('router-link', {
     staticClass: "btn btn-info",
     attrs: {
       "active-class": "disabled",
@@ -45619,7 +45633,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         name: 'usersCreate'
       }
     }
-  }, [_vm._v("Add New User")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('ul', {
+  }, [_vm._v("Add New User")]) : _vm._e(), _vm._v(" "), ((_vm.routeName === 'usersCreate') || (_vm.routeName === 'usersEdit')) ? _c('router-link', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "to": {
+        name: 'users'
+      }
+    }
+  }, [_vm._v("All Users")]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('ul', {
     staticClass: "dropdown-menu dropdown-menu-right"
   })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
@@ -59154,6 +59175,45 @@ module.exports = function(module) {
 __webpack_require__(6);
 module.exports = __webpack_require__(22);
 
+
+/***/ }),
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n.navbar-custom-menu {\n    width: 100%;\n    padding-right: 10px;\n}\n", ""]);
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(137);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("281856a0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0431a4e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Navigation.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0431a4e6\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Navigation.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

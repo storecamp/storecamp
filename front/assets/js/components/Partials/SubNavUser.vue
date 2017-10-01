@@ -8,11 +8,11 @@
                         </span>
             </h4>
             <ol class="breadcrumb">
-
             </ol>
             <small>
                 <div class="btn-group" style="">
-                <router-link active-class="disabled" :to="{ name: 'usersCreate'}" class="btn btn-info">Add New User</router-link>
+                <router-link v-if="(routeName != 'usersCreate') && (routeName != 'usersEdit')" active-class="disabled" :to="{ name: 'usersCreate'}" class="btn btn-info">Add New User</router-link>
+                <router-link v-if="(routeName === 'usersCreate') || (routeName === 'usersEdit')" :to="{ name: 'users' }" class="btn btn-info">All Users</router-link>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-filter fa-fw"></i> Options <span class="fa fa-angle-down"></span>
                 </button>
@@ -31,12 +31,15 @@
             return {
                 count: 0,
                 error: false,
-                errorMsg: ''
+                errorMsg: '',
+                routeName: ''
             }
         },
         props: ['count', 'msg'],
         methods: {},
         mounted: function () {
+            this.routeName = this.$route.name;
+            console.log(this.$route.name);
         },
         components: {}
     }
