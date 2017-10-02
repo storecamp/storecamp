@@ -16,6 +16,8 @@
   "devDependencies": {
     "axios": "^0.15.3",
     "bootstrap-sass": "^3.3.7",
+    "coffee-loader": "^0.8.0",
+    "coffeescript": "^2.0.1",
     "cross-env": "^3.2.3",
     "eslint": "^4.7.2",
     "jquery": "^3.1.1",

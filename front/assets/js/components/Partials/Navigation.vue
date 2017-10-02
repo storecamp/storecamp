@@ -9,26 +9,45 @@
                 </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg navbar-brand">
-                    <img style="" src="http://storecamp.dev/img/Logo!.png"
-                                                        alt="storecamp"></span>
+                    <img style="" src="http://storecamp.dev/img/Logo!.png" alt="storecamp"></span>
             </a>
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a> -->
+                <ul class="nav navbar-nav">
+                    <li>
+                        <router-link :to="{ name: 'dash' }">Dash</router-link>
+                    </li>
+                </ul>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li>
-                            <router-link :to="{ name: 'dash' }">Dash</router-link>
-                        </li>
+
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-language"></i>
-                                en <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-language"></i>
+                                en
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="http://storecamp.dev/en/language/de">German</a></li>
-                                <li class="active"><a href="http://storecamp.dev/en/language/en">English</a></li>
-                                <li><a href="http://storecamp.dev/en/language/es">Spanish</a></li>
-                                <li><a href="http://storecamp.dev/en/language/fr">French</a></li>
-                                <li><a href="http://storecamp.dev/en/language/ru">Russian</a></li>
+                                <li>
+                                    <a href="http://storecamp.dev/en/language/de">German</a>
+                                </li>
+                                <li class="active">
+                                    <a href="http://storecamp.dev/en/language/en">English</a>
+                                </li>
+                                <li>
+                                    <a href="http://storecamp.dev/en/language/es">Spanish</a>
+                                </li>
+                                <li>
+                                    <a href="http://storecamp.dev/en/language/fr">French</a>
+                                </li>
+                                <li>
+                                    <a href="http://storecamp.dev/en/language/ru">Russian</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -54,38 +73,37 @@
     </div>
 </template>
 <style>
-    .navbar-custom-menu {
-        width: 100%;
-        padding-right: 10px;
-    }
+.navbar-custom-menu {
+    padding-right: 10px;
+}
 </style>
 <script>
-    export default {
-        props: ['auth'],
-        data() {
-            return {
-                roles: []
-            }
-        },
-        created() {
-            let _this = this;
-            this.eventHub.$on('user:visibility', function (status) {
-                _this.auth.user.profile.visible = status.visible;
-            });
-        },
-        methods: {
-            signout() {
-                this.auth.signout()
-            }
-        },
-        events: {
-            'user:visibility': function (data) {
-                // do your stuff here
-                console.log(data);
-            }
-        },
-        mounted() {
-            console.log('Navigation mounted.')
+export default {
+    props: ['auth'],
+    data() {
+        return {
+            roles: []
         }
+    },
+    created() {
+        let _this = this;
+        this.eventHub.$on('user:visibility', function(status) {
+            _this.auth.user.profile.visible = status.visible;
+        });
+    },
+    methods: {
+        signout() {
+            this.auth.signout()
+        }
+    },
+    events: {
+        'user:visibility': function(data) {
+            // do your stuff here
+            console.log(data);
+        }
+    },
+    mounted() {
+        console.log('Navigation mounted.')
     }
+}
 </script>

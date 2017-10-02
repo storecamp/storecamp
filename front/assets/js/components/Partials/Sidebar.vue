@@ -1,264 +1,46 @@
 <template>
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-
-        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 438px;">
-            <section class="sidebar">
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu ">
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 336px;">
+        <section class="sidebar" style="height: 336px; overflow: hidden; width: auto;">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel" style="">
+                <div class="pull-left text-center">
+                    <strong  v-if="auth.user.authenticated" class="text-muted ">
+                       <i class="fa fa-circle text-success"></i> {{ auth.user.profile.name }}
+                    </strong>
+                </div>
+            </div>
+            <form class="sidebar-form" id="search-type" method="get" role="search" style="margin: initial;overflow: visible">
+                <div class="input-group" style="width: 100%;">
+                    <input name="search" type="search" class="form-control search-input pull-right"
+                           style="width: inherit; position: relative; margin-right: 1px; border: 1px solid #ddd; background-color: #e5e5e5;"
+                           placeholder="Search">
+                    </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+              <ul class="sidebar-menu ">
                     <li class="header">
                         MAIN NAVIGATION
                     </li>
-                    <li class="treeview item ">
-                        <a class="link" href="http://storecamp.dev/en/admin">
-
-                            <i class="fa fa-th"></i> Widgets
-
-                        </a>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/products">
-
-                            <i class="fa fa-cube"></i>Manage Products
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/products">
-
-                                    List of Products
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/products/create">
-
-                                    Create Product
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/reviews/index">
-
-                                    <span class="nav-text"> Reviews</span>
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/categories">
-
-                                    Categories
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/attributes">
-
-                                    Attributes
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/attribute_groups">
-
-                                    Attribute Groups
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/sales/orders">
-
-                            <i class="fa fa-shopping-cart"></i> Sales
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/sales/orders">
-
-                                    Orders
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/attribute_groups">
-
-                                    Returns
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/attribute_groups">
-
-                                    Promocodes
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/subscribers">
-
-                            <i class="fa fa-line-chart"></i> Marketing
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/subscribers">
-
-                                    Subscribers
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/mail/index">
-
-                                    Mail
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/design/pages">
-
-                            <i class="fa fa-paint-brush"></i> Design
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/design/pages">
-
-                                    Static Pages
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/design/banners">
-
-                                    Banners
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/design/menus">
-
-                                    Menus
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <router-link active-class="active" exact-active-class="active" :to="{ name: 'users' }"
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+              <router-link active-class="active" exact-active-class="active" :to="{ name: 'users' }"
                                  class="treeview item " tag="li">
                         <a class="link">
                             <i class="fa fa-user"></i>
                             Users
                         </a>
-                    </router-link>
-                </ul>
-                <ul class="sidebar-menu ">
-                    <li class="header">
-                        Administration
-                    </li>
-                    <li class="treeview item ">
-                        <a class="link" href="http://storecamp.dev/en/admin/parsers/index">
-
-                            <i class="fa fa-suitcase"></i> Parsers
-
-                        </a>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/log-viewer">
-
-                            <i class="fa fa-bug"></i> LogsViewer
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/log-viewer">
-
-                                    <i class="fa fa-dashboard"></i> Dashboard
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/log-viewer/logs">
-
-                                    <i class="fa fa-archive"></i> Logs
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/roles">
-
-                            <i class="fa fa-key"></i> Access
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/roles">
-
-                                    All roles
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/roles/create">
-
-                                    Create role
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/media/index">
-
-                            <i class="fa fa-files-o"></i> MediaStorage
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/media/index">
-
-                                    Media Storage
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview  ">
-                        <a class="link" href="http://storecamp.dev/en/admin/settings/default">
-
-                            <i class="fa fa-cogs"></i> Settings
-
-                        </a>
-                        <ul class="treeview-menu ">
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/settings/default">
-
-                                    Settings
-
-                                </a>
-                            </li>
-                            <li class="treeview item ">
-                                <a class="link" href="http://storecamp.dev/en/admin/settings/currency">
-
-                                    Currencies
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-        </div>
-        <!-- /.sidebar -->
-    </aside>
+                </router-link>
+              </ul>
+        </section>
+        <div class="slimScrollBar"
+             style="background: rgba(0, 0, 0, 0.2); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 114.499px;"></div>
+        <div class="slimScrollRail"
+             style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+    </div>
+    <!-- /.sidebar -->
+</aside>
 </template>
 
 
@@ -267,6 +49,7 @@
         data() {
             return {}
         },
+        props: ['auth'],
         methods: {},
         mounted() {
             (function ($) {

@@ -2,26 +2,29 @@
     <div>
         <navigation :auth="auth"></navigation>
         <sidebar :auth="auth"></sidebar>
-        <div class="wrapper">
-            <router-view style="max-width: inherit;" class="container-fluid content-wrapper" :auth="auth"></router-view>
-        </div>
+        <router-view class="content-wrapper" style="max-width: inherit;padding: 0 15px;" :auth="auth"></router-view>
     </div>
 </template>
 <style></style>
 <script>
-    import auth from '../services/auth.service.js'
-
+    import auth from '../services/auth.service.js';
+    import storecamp from './Storecamp';
     export default {
         data() {
             return {
                 auth: auth
             }
         },
-        methods: {},
+        methods: {
+            
+        },
         mounted: function () {
             this.$nextTick(function () {
                 auth.check()
             })
+        },
+        components: {
+            storecamp
         }
     }
 </script>
