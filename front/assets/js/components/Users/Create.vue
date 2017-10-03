@@ -60,7 +60,7 @@
     </div>
 </template>
 <script>
-    import SubNavUser from '../partials/SubNavUser.vue';
+    import SubNavUser from '../Partials/Subnavuser.vue';
     import Multiselect from 'vue-multiselect';
     import {router} from '../../routes.js';
 

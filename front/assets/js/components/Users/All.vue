@@ -66,7 +66,7 @@
     </div>
 </template>
 <script>
-    import SubNavUser from '../partials/SubNavUser.vue';
+    import SubNavUser from '../Partials/Subnavuser.vue';
     import Pagination from '../System/pagination.vue';
 
     export default {

@@ -1129,17 +1129,17 @@ module.exports = defaults;
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(64),
+  __webpack_require__(53),
   /* template */
-  __webpack_require__(106),
+  __webpack_require__(105),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\partials\\SubNavUser.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Partials/Subnavuser.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] SubNavUser.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] Subnavuser.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -1148,9 +1148,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-388691c0", Component.options)
+    hotAPI.createRecord("data-v-36458300", Component.options)
   } else {
-    hotAPI.reload("data-v-388691c0", Component.options)
+    hotAPI.reload("data-v-36458300", Component.options)
   }
 })()}
 
@@ -1552,7 +1552,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\FileUpload\\Main.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/FileUpload/Main.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Main.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -1578,7 +1578,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(53),
+  __webpack_require__(54),
   /* template */
   __webpack_require__(118),
   /* scopeId */
@@ -1586,7 +1586,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\System\\pagination.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/System/pagination.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] pagination.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5550,6 +5550,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            count: 0,
+            error: false,
+            errorMsg: '',
+            routeName: ''
+        };
+    },
+
+    props: ['count', 'msg'],
+    methods: {},
+    mounted: function mounted() {
+        this.routeName = this.$route.name;
+        console.log(this.$route.name);
+    },
+    components: {}
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__routes_js__ = __webpack_require__(6);
 //
 //
@@ -5615,7 +5673,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5682,7 +5740,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5767,7 +5825,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5888,7 +5946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6107,7 +6165,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6404,7 +6462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6449,7 +6507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6633,13 +6691,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__System_pagination_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__System_pagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__System_pagination_vue__);
 //
@@ -6787,19 +6845,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getAllUsers(page);
     },
     components: {
-        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default.a,
+        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default.a,
         Pagination: __WEBPACK_IMPORTED_MODULE_1__System_pagination_vue___default.a
     }
 });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_multiselect__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_multiselect__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes_js__ = __webpack_require__(6);
@@ -6922,19 +6980,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getPossibleRoles();
     },
     components: {
-        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default.a,
+        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default.a,
         Multiselect: __WEBPACK_IMPORTED_MODULE_1_vue_multiselect___default.a
     }
 });
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_multiselect__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_multiselect__);
 //
@@ -7055,67 +7113,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getUser(this.$route.params.id);
     },
     components: {
-        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__partials_SubNavUser_vue___default.a,
+        SubNavUser: __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default.a,
         Multiselect: __WEBPACK_IMPORTED_MODULE_1_vue_multiselect___default.a
     }
-});
-
-/***/ }),
-/* 64 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            count: 0,
-            error: false,
-            errorMsg: '',
-            routeName: ''
-        };
-    },
-
-    props: ['count', 'msg'],
-    methods: {},
-    mounted: function mounted() {
-        this.routeName = this.$route.name;
-        console.log(this.$route.name);
-    },
-    components: {}
 });
 
 /***/ }),
@@ -10169,7 +10169,7 @@ exports.push([module.i, "/*!\n *   AdminLTE v2.4.0\n *   Author: Almsaeed Studio
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n.navbar-custom-menu {\r\n    padding-right: 10px;\n}\r\n", ""]);
+exports.push([module.i, "\n.navbar-custom-menu {\n    padding-right: 10px;\n}\n", ""]);
 
 /***/ }),
 /* 69 */
@@ -10231,7 +10231,7 @@ exports.push([module.i, "\n.img-inputer--small {\n    height: 100% !important;\n
 /* 77 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/vendor/admin-lte/dist/boxed-bg.jpg?be7e10bf7d65195693df834c73fbe313";
+module.exports = "/images/vendor/admin-lte/dist/boxed-bg.jpg?5bbbd344130f0926b70aa3499638a387";
 
 /***/ }),
 /* 78 */
@@ -44707,7 +44707,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\App.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44741,7 +44741,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Auth\\Register.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Auth/Register.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Register.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44775,7 +44775,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Auth\\Signin.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Auth/Signin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Signin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44809,7 +44809,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Dashboard.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44847,7 +44847,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Navigation.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Partials/Navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44881,7 +44881,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Sidebar.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Partials/Sidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Sidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44915,7 +44915,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Storecamp.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Storecamp.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -44940,7 +44940,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(54),
+  __webpack_require__(55),
   /* template */
   __webpack_require__(104),
   /* scopeId */
@@ -44948,7 +44948,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\System\\simple-pagination.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/System/simple-pagination.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] simple-pagination.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44978,7 +44978,7 @@ __webpack_require__(126)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(55),
+  __webpack_require__(56),
   /* template */
   __webpack_require__(109),
   /* scopeId */
@@ -44986,7 +44986,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Account.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/Account.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Account.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45016,7 +45016,7 @@ __webpack_require__(130)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(56),
+  __webpack_require__(57),
   /* template */
   __webpack_require__(119),
   /* scopeId */
@@ -45024,7 +45024,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\AdditionalSettings.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/AdditionalSettings.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AdditionalSettings.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45054,15 +45054,15 @@ __webpack_require__(124)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(57),
+  __webpack_require__(58),
   /* template */
-  __webpack_require__(105),
+  __webpack_require__(106),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Contacts.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/Contacts.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Contacts.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45092,7 +45092,7 @@ __webpack_require__(123)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(58),
+  __webpack_require__(59),
   /* template */
   __webpack_require__(102),
   /* scopeId */
@@ -45100,7 +45100,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Profile.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45130,7 +45130,7 @@ __webpack_require__(128)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(59),
+  __webpack_require__(60),
   /* template */
   __webpack_require__(112),
   /* scopeId */
@@ -45138,7 +45138,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\PublicProfile.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/PublicProfile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] PublicProfile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45168,7 +45168,7 @@ __webpack_require__(127)
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(60),
+  __webpack_require__(61),
   /* template */
   __webpack_require__(111),
   /* scopeId */
@@ -45176,7 +45176,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Skills.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/User/Skills.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Skills.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45202,7 +45202,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(61),
+  __webpack_require__(62),
   /* template */
   __webpack_require__(116),
   /* scopeId */
@@ -45210,7 +45210,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\All.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Users/All.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] All.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45236,7 +45236,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(62),
+  __webpack_require__(63),
   /* template */
   __webpack_require__(103),
   /* scopeId */
@@ -45244,7 +45244,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\Create.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Users/Create.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Create.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45270,7 +45270,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(63),
+  __webpack_require__(64),
   /* template */
   __webpack_require__(115),
   /* scopeId */
@@ -45278,7 +45278,7 @@ var Component = __webpack_require__(0)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\Edit.vue"
+Component.options.__file = "/var/www/Code/storecamp/front/assets/js/components/Users/Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Edit.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46154,6 +46154,67 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('section', {
+    staticClass: "content-header row",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('h4', [_vm._v("\n            " + _vm._s(_vm.msg) + "\n            "), _c('span', {
+    staticClass: "pull-right-container"
+  }, [_c('small', {
+    staticClass: "label bg-blue text-sm"
+  }, [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('ol', {
+    staticClass: "breadcrumb"
+  }), _vm._v(" "), _c('small', [_c('div', {
+    staticClass: "btn-group"
+  }, [((_vm.routeName != 'usersCreate') && (_vm.routeName != 'usersEdit')) ? _c('router-link', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "active-class": "disabled",
+      "to": {
+        name: 'usersCreate'
+      }
+    }
+  }, [_vm._v("Add New User\n                ")]) : _vm._e(), _vm._v(" "), ((_vm.routeName === 'usersCreate') || (_vm.routeName === 'usersEdit')) ? _c('router-link', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "to": {
+        name: 'users'
+      }
+    }
+  }, [_vm._v("All Users\n                ")]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu dropdown-menu-right"
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  })])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-default dropdown-toggle",
+    attrs: {
+      "type": "button",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-filter fa-fw"
+  }), _vm._v(" Options "), _c('span', {
+    staticClass: "fa fa-angle-down"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-36458300", module.exports)
+  }
+}
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -46441,67 +46502,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-37f1a08c", module.exports)
-  }
-}
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('section', {
-    staticClass: "content-header row",
-    staticStyle: {
-      "margin-bottom": "10px"
-    }
-  }, [_c('h4', [_vm._v("\n            " + _vm._s(_vm.msg) + "\n            "), _c('span', {
-    staticClass: "pull-right-container"
-  }, [_c('small', {
-    staticClass: "label bg-blue text-sm"
-  }, [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('ol', {
-    staticClass: "breadcrumb"
-  }), _vm._v(" "), _c('small', [_c('div', {
-    staticClass: "btn-group"
-  }, [((_vm.routeName != 'usersCreate') && (_vm.routeName != 'usersEdit')) ? _c('router-link', {
-    staticClass: "btn btn-info",
-    attrs: {
-      "active-class": "disabled",
-      "to": {
-        name: 'usersCreate'
-      }
-    }
-  }, [_vm._v("Add New User\n                ")]) : _vm._e(), _vm._v(" "), ((_vm.routeName === 'usersCreate') || (_vm.routeName === 'usersEdit')) ? _c('router-link', {
-    staticClass: "btn btn-info",
-    attrs: {
-      "to": {
-        name: 'users'
-      }
-    }
-  }, [_vm._v("All Users\n                ")]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('ul', {
-    staticClass: "dropdown-menu dropdown-menu-right"
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "clearfix"
-  })])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-default dropdown-toggle",
-    attrs: {
-      "type": "button",
-      "data-toggle": "dropdown",
-      "aria-haspopup": "true",
-      "aria-expanded": "false"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-filter fa-fw"
-  }), _vm._v(" Options "), _c('span', {
-    staticClass: "fa fa-angle-down"
-  })])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-388691c0", module.exports)
   }
 }
 

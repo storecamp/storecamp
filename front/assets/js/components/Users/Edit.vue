@@ -53,7 +53,7 @@
     </div>
 </template>
 <script>
-    import SubNavUser from '../partials/SubNavUser.vue';
+    import SubNavUser from '../Partials/Subnavuser.vue';
     import Multiselect from 'vue-multiselect';
 
     export default {
