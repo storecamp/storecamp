@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="page-header">
             <h1>My Account</h1>
             <p v-if="visible == 'visible'" style="font-size: 13px;">

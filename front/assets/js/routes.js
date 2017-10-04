@@ -1,6 +1,5 @@
 import VueRouter from 'vue-router';
 import Dashboard from './components/Dashboard.vue';
-import Register from './components/Auth/Register.vue';
 import Signin from './components/Auth/Signin.vue';
 import Profile from './components/User/Profile.vue';
 import Skills from './components/User/Skills.vue';
@@ -19,11 +18,6 @@ export let router = new VueRouter({
             path: '/',
             name: 'dash',
             component: Dashboard
-        },
-        {
-            path: '/register',
-            name: 'register',
-            component: Register
         },
         {
             path: '/signin',
@@ -73,18 +67,21 @@ export let router = new VueRouter({
             name: 'users',
             component: All,
             props: { auth: auth },
+            meta: { auth: true }
         },
         {
             path: '/users/edit/:id',
             name: 'usersEdit',
             component: UserEdit,
             props: { auth: auth },
+            meta: { auth: true }
         },
         {
             path: '/users/create',
             name: 'usersCreate',
             component: UserCreate,
             props: { auth: auth },
+            meta: { auth: true }
         }
     ]
 });

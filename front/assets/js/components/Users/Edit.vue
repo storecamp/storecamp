@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <sub-nav-user :count="count" :msg="'AMOUNT OF USERS - '"></sub-nav-user>
         <div class="box">
             <div class="box-header">
