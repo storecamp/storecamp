@@ -10,10 +10,10 @@ export default {
         roles: []
     },
     authBefore() {
-        var _this = this;
+        let _this = this;
         router.beforeEach(function (to, from, next) {
             let token = localStorage.getItem('id_token');
-            var vue = Vue;
+            let vue = Vue;
             if (token !== null) {
                 Vue.http.get(
                     'api/user?token=' + token,
@@ -71,7 +71,7 @@ export default {
     },
     check() {
         let token = localStorage.getItem('id_token');
-        var vue = Vue;
+        let vue = Vue;
         if (token !== null) {
             Vue.http.get(
                 'api/user?token=' + token,

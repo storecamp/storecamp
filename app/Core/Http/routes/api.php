@@ -66,6 +66,41 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
         ]);
     });
 
+
+    Route::group(
+        ['prefix' => '/backlogs'], function () {
+        $this->get('/', [
+            'as' => 'log-viewer::dashboard',
+            'uses' => 'Api\LogsController@index',
+        ]);
+        $this->group(['prefix' => '/logs'], function () {
+            $this->get('/', [
+                'as' => 'log-viewer::logs.list',
+                'uses' => 'Api\LogsController@listLogs',
+            ]);
+            $this->delete('delete', [
+                'as' => 'log-viewer::logs.delete',
+                'uses' => 'Api\LogsController@delete',
+            ]);
+        });
+
+        Route::group(['prefix' => '/{date}'], function () {
+            $this->get('/', [
+                'as' => 'log-viewer::logs.show',
+                'uses' => 'Api\LogsController@show',
+            ]);
+
+            $this->get('download', [
+                'as' => 'log-viewer::logs.download',
+                'uses' => 'Api\LogsController@download',
+            ]);
+            $this->get('{level}', [
+                'as' => 'log-viewer::logs.filter',
+                'uses' => 'Api\LogsController@showByLevel',
+            ]);
+        });
+    });
+
     Route::group(['prefix' => 'role_perm', 'middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'role_permission.'], function () {
         Route::get('/roles', [
             'as' => 'roles',

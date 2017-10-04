@@ -10,6 +10,8 @@ import PublicProfile from './components/User/PublicProfile.vue';
 import All from "./components/Users/All.vue";
 import UserEdit from "./components/Users/Edit.vue";
 import UserCreate from "./components/Users/Create.vue";
+import Logs from "./components/Logs/Logs.vue";
+import LogsDash from "./components/Logs/Dashboard.vue";
 import auth from './services/auth.service.js';
 
 export let router = new VueRouter({
@@ -80,6 +82,20 @@ export let router = new VueRouter({
             path: '/users/create',
             name: 'usersCreate',
             component: UserCreate,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/logs',
+            name: 'logs',
+            component: Logs,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/logs_dash',
+            name: 'logsDash',
+            component: LogsDash,
             props: { auth: auth },
             meta: { auth: true }
         }

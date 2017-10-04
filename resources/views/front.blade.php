@@ -35,7 +35,7 @@
     <link href="{{ asset('css/vue-multiselect.min.css') }}" rel="stylesheet">
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
 <!-- Site wrapper -->
@@ -46,11 +46,14 @@
                 'csrfToken' => csrf_token(),
             ]) !!};
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment-with-locales.min.js"></script>
+
 <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 
 <!-- Scripts -->
 <script src="{{ asset('front/js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.15.35/js/bootstrap-datetimepicker.min.js"></script>
 <script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 
 <!-- SlimScroll 1.3.0 -->
@@ -62,8 +65,12 @@
 <script src="{{ asset('custom_vendors/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
 <script src="{{ asset('custom_vendors/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
 <!-- ChartJS 1.0.1 -->
-<script src="{{ asset('plugins/chart.js/Chart.js') }}"></script>
 <script src="{{ asset('plugins/morris.js/morris.min.js') }}"></script>
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.scaleFontFamily = "'Source Sans Pro'";
+    Chart.defaults.global.animationEasing = "easeOutQuart";
+</script>
 <script>
     toastr.options = {
         "progressBar": true,
@@ -79,5 +86,6 @@
         "hideMethod": "fadeOut"
     }
 </script>
+
 </body>
 </html>
