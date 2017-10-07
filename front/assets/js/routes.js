@@ -12,7 +12,8 @@ import UserEdit from "./components/Users/Edit.vue";
 import UserCreate from "./components/Users/Create.vue";
 import Logs from "./components/Logs/Logs.vue";
 import LogsDash from "./components/Logs/Dashboard.vue";
-import Logshow from "./components/Logs/Logshow.vue";
+import LogshowDateKey from "./components/Logs/LogshowDateKey.vue";
+import LogshowDate from "./components/Logs/LogshowDate.vue";
 import auth from './services/auth.service.js';
 
 export let router = new VueRouter({
@@ -101,9 +102,16 @@ export let router = new VueRouter({
             meta: { auth: true }
         },
         {
-            path: '/logs_show',
-            name: 'logsShow',
-            component: Logshow,
+            path: '/logs_date/:date',
+            name: 'logsShowDate',
+            component: LogshowDate,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/logs_date_key/:date/:key',
+            name: 'logsShowDateKey',
+            component: LogshowDateKey,
             props: { auth: auth },
             meta: { auth: true }
         }

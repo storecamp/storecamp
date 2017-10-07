@@ -18,12 +18,12 @@
                         :class="key == 'date' ? 'text-left' : 'text-center'">
                         <span v-if="key == 'date'" class="label label-primary">{{ date.date }}</span>
                         <span v-else-if="value == 0" class="level level-empty">{{ value }}</span>
-                        <router-link v-else :to="{name: 'logsShow', query: {date: date.date, key: key}}">
+                        <router-link v-else :to="{name: 'logsShowDateKey', params: {date: date.date, key: key}}">
                             <span :class="'level level-' + key">{{ value }}</span>
                         </router-link>
                     </td>
                     <td class="text-right">
-                        <router-link :to="{name: 'logsShow', query: {date: date.date}}" class="btn btn-xs btn-info">
+                        <router-link :to="{name: 'logsShowDate', params: {date: date.date}}" class="btn btn-xs btn-info">
                             <i class="fa fa-search"></i>
                         </router-link>
 

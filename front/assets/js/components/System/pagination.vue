@@ -23,6 +23,7 @@
                 type: Object,
                 required: true
             },
+            path: "",
             offset: {
                 type: Number,
                 default: 4
@@ -52,9 +53,17 @@
             changePage: function (page) {
                 this.pagination.current_page = page;
                 if (page != 1) {
-                    router.push('?page='+page);
+                    if(this.path) {
+                        router.push(this.path + '?page=' + page);
+                    } else {
+                        router.push('?page='+page);
+                    }
                 } else {
-                    router.push('');
+                    if(this.path) {
+                        router.push(this.path);
+                    } else {
+                        router.push('');
+                    }
                 }
                 window.scrollTo(0, 0);
             }

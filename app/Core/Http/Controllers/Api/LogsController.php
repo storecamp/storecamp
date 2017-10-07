@@ -6,11 +6,13 @@ use App\Core\Contracts\LogViewerSystemContract;
 use App\Core\Http\Controllers\Controller;
 use Arcanedev\LogViewer\Http\Controllers\LogViewerController as LogBaseController;
 use Illuminate\Http\Request;
+
 /**
  * Class LogsControllersController
  * @package App\Http\Controllers
  */
-class LogsController extends LogBaseController {
+class LogsController extends LogBaseController
+{
 
     /* ------------------------------------------------------------------------------------------------
    |  Properties
@@ -40,7 +42,7 @@ class LogsController extends LogBaseController {
 
     public function view($view, $data = [], $mergeData = [])
     {
-        return view('admin.logs.'.$view, $data, $mergeData);
+        return view('admin.logs.' . $view, $data, $mergeData);
     }
 
     /**
@@ -56,8 +58,8 @@ class LogsController extends LogBaseController {
         $percents = $data['percents'];
         $count = count($stats->rows());
         $icons = [];
-        foreach($percents as $level => $item) {
-            $icons[$level] = log_styler()->icon($level) ;
+        foreach ($percents as $level => $item) {
+            $icons[$level] = log_styler()->icon($level);
         }
         return response()->json(compact('chartData', 'percents', 'stats', 'count', 'icons'));
     }
@@ -75,8 +77,15 @@ class LogsController extends LogBaseController {
         $stats = $data['stats'];
         $headers = $data['headers'];
         $rows = $data['rows'];
+        $empty_logs = trans('log-viewer::general.empty-logs');
+        $count = $rows->count();
+        $icons = [];
+        foreach ($headers as $key => $header) {
+            $icons[$key] = log_styler()->icon($key) . ' ' . $header;
+        }
 
-        return response()->json(compact('headers', 'rows', 'footer', 'stats'));
+        return response()->json(compact('headers', 'rows', 'footer', 'stats',
+            'empty_logs', 'count', 'icons'));
     }
 
     /**
@@ -93,8 +102,24 @@ class LogsController extends LogBaseController {
         $log = $data['log'];
         $levels = $data['levels'];
         $entries = $data['entries'];
-
-        return response()->json(compact('log', 'levels', 'entries', 'stats'));
+        $count = $entries->total();
+        $menu = $log->menu();
+        $colors = [];
+        foreach ($levels as $key => $level) {
+            $colors[$key] = log_styler()->color(strtolower($level));
+        }
+        $path = $log->getPath();
+        $size = $log->size();
+        $entriesTotal = $entries->total();
+        $created_at = $log->createdAt();
+        $updated_at = $log->updatedAt();
+        $envs = [];
+        foreach ($entries as $key => $entry) {
+            $envs[$key] = $entry->env;
+        }
+        return response()->json(compact('log', 'levels', 'entries', 'stats',
+            'count', 'menu', 'date', 'colors', 'path', 'size', 'entriesTotal',
+            'created_at', 'updated_at', 'envs'));
     }
 
     /**
@@ -108,7 +133,6 @@ class LogsController extends LogBaseController {
     public function showByLevel($date, $level)
     {
         $data = $this->viewerSystem->showByLevel($date, $level);
-
         $stats = $data['stats'];
         $log = $data['log'];
 
@@ -118,7 +142,24 @@ class LogsController extends LogBaseController {
 
         $levels = $data['levels'];
         $entries = $data['entries'];
-        return response()->json(compact('log', 'levels', 'entries', 'stats'));
+        $count = $entries->total();
+        $menu = $log->menu();
+        $colors = [];
+        foreach ($levels as $key => $level) {
+            $colors[$key] = log_styler()->color(strtolower($level));
+        }
+        $path = $log->getPath();
+        $size = $log->size();
+        $entriesTotal = $entries->total();
+        $created_at = $log->createdAt();
+        $updated_at = $log->updatedAt();
+        $envs = [];
+        foreach ($entries as $key => $entry) {
+            $envs[$key] = $entry->env;
+        }
+        return response()->json(compact('log', 'levels', 'entries', 'stats', 'count',
+            'menu', 'date', 'colors', 'path', 'size', 'entriesTotal',
+            'created_at', 'updated_at', 'envs'));
     }
 
     /**
