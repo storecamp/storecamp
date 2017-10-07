@@ -12,6 +12,7 @@ import UserEdit from "./components/Users/Edit.vue";
 import UserCreate from "./components/Users/Create.vue";
 import Logs from "./components/Logs/Logs.vue";
 import LogsDash from "./components/Logs/Dashboard.vue";
+import Logshow from "./components/Logs/Logshow.vue";
 import auth from './services/auth.service.js';
 
 export let router = new VueRouter({
@@ -96,6 +97,13 @@ export let router = new VueRouter({
             path: '/logs_dash',
             name: 'logsDash',
             component: LogsDash,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/logs_show',
+            name: 'logsShow',
+            component: Logshow,
             props: { auth: auth },
             meta: { auth: true }
         }
