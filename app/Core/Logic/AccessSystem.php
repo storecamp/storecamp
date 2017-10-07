@@ -40,7 +40,11 @@ class AccessSystem implements AccessSystemContract
     public function presentRoles(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $roles = $this->rolesRepository->find($id);
+            if(!empty($with)) {
+                $roles = $this->rolesRepository->with($with)->find($id);                
+            } else {
+                $roles = $this->rolesRepository->find($id);                
+            }
         } else {
             if (!empty($with)) {
                 $roles = $this->rolesRepository->with($with)->paginate();

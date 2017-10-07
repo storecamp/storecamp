@@ -14,6 +14,10 @@ import Logs from "./components/Logs/Logs.vue";
 import LogsDash from "./components/Logs/Dashboard.vue";
 import LogshowDateKey from "./components/Logs/LogshowDateKey.vue";
 import LogshowDate from "./components/Logs/LogshowDate.vue";
+import AccessAll from "./components/Access/All.vue";
+import AccessCreate from "./components/Access/Create.vue";
+import AccessEdit from "./components/Access/Edit.vue";
+
 import auth from './services/auth.service.js';
 
 export let router = new VueRouter({
@@ -84,6 +88,27 @@ export let router = new VueRouter({
             path: '/users/create',
             name: 'usersCreate',
             component: UserCreate,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/access',
+            name: 'access',
+            component: AccessAll,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/access/edit/:id',
+            name: 'rolesEdit',
+            component: AccessEdit,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/access/create',
+            name: 'rolesCreate',
+            component: AccessCreate,
             props: { auth: auth },
             meta: { auth: true }
         },

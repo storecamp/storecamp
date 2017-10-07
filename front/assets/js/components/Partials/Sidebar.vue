@@ -17,7 +17,6 @@
                         <input name="search" type="search" class="form-control search-input pull-right"
                                style="width: inherit; position: relative; margin-right: 1px; border: 1px solid #ddd; background-color: #e5e5e5;"
                                placeholder="Search">
-                        </span>
                     </div>
                 </form>
                 <!-- /.search form -->
@@ -31,6 +30,14 @@
                         <a class="link">
                             <i class="fa fa-user"></i>
                             Users
+                        </a>
+                    </router-link>
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <router-link active-class="active" exact-active-class="active" :to="{ name: 'access' }"
+                                 class="treeview item " tag="li">
+                        <a class="link">
+                            <i class="fa fa-key"></i>
+                            Access
                         </a>
                     </router-link>
                     <router-link active-class="active" exact-active-class="active" :to="{ name: 'logsDash' }"

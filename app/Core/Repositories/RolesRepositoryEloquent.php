@@ -64,17 +64,16 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     public function renew($data, $dataPerm, $role)
     {
         $role->update($data);
-        $permissionsCount = count($role->perms()->get());
-
+        $permissionsCount = $role->perms()->count();
         if ($permissionsCount) {
             $role->detachAllPermissions();
             foreach ($dataPerm as $key => $value) {
-                $role->attachPermission(Permission::find($value));
+                $role->attachPermission($value);
             }
         }
         if ($permissionsCount == 0 && count(Input::get('permissions')) > 0) {
             foreach ($dataPerm as $key => $value) {
-                $role->attachPermission(Permission::find($value));
+                $role->attachPermission($value);
             }
         }
     }

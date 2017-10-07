@@ -82,7 +82,7 @@ trait AccessRoleTrait
     public function attachPermission($permission)
     {
         if (is_object($permission)) {
-            $permission = $permission->getKey();
+            $permission = $permission->id;
         }
 
         if (is_array($permission)) {
@@ -102,7 +102,7 @@ trait AccessRoleTrait
     public function detachPermission($permission)
     {
         if (is_object($permission)) {
-            $permission = $permission->getKey();
+            $permission = $permission->id;
         }
 
         if (is_array($permission)) {

@@ -5,7 +5,7 @@
             <span aria-hidden="true">←</span>
         </a>
     </li>
-    <li v-for="page in pagesNumber" :class="{'active': page == pagination.current_page}">
+    <li v-if="pagination.last_page > 1" v-for="page in pagesNumber" :class="{'active': page == pagination.current_page}">
         <a href="#" v-on:click.prevent="changePage(page)">{{ page }}</a>
     </li>
     <li v-if="pagination.current_page < pagination.last_page">
@@ -14,6 +14,7 @@
         </a>
     </li>
 </ul>
+
 </template>
 <script>
     import {router} from '../../routes.js';
