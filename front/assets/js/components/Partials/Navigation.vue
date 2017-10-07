@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <header class="main-header">
+   <header class="main-header">
             <!-- Logo -->
             <a href="http://storecamp.dev/admin/dashboard" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -70,7 +69,6 @@
                 </div>
             </nav>
         </header>
-    </div>
 </template>
 <style>
 .navbar-custom-menu {
