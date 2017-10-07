@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -11,11 +11,7 @@
 
     <meta base="/front">
     <!-- Styles -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Fixed Layout</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{asset('plugins/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
@@ -72,6 +68,39 @@
     Chart.defaults.global.animationEasing = "easeOutQuart";
 </script>
 <script>
+    (function ($) {
+        var items;
+        items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar'), $('.default-menu'), $('.logs-panel')];
+        items.forEach(function (item, i, arr) {
+            var makeAnchorActive, nav;
+            nav = item;
+            makeAnchorActive = function (navigtation) {
+                var activeParents, anchor, current, definedLinks, results;
+                anchor = navigtation.find('a');
+                current = window.location.href;
+                i = 0;
+                results = [];
+                while (i < anchor.length) {
+                    definedLinks = anchor[i].href;
+                    if (definedLinks === current) {
+                        activeParents = nav.attr('data-active-parents');
+                        if (activeParents) {
+                            $(anchor[i]).parent().parent().closest('li').addClass('active');
+                            $(anchor[i]).parent().addClass('active');
+                        } else {
+
+                        }
+                        $(anchor[i]).parent().addClass('active');
+                    }
+                    results.push(i++);
+                }
+                return results;
+            };
+            return makeAnchorActive(nav);
+        });
+    })($);
+</script>
+<script>
     toastr.options = {
         "progressBar": true,
         "positionClass": "toast-bottom-right",
@@ -86,6 +115,5 @@
         "hideMethod": "fadeOut"
     }
 </script>
-
 </body>
 </html>

@@ -51,7 +51,8 @@
                         </div>
                         <div class="form-group">
                             <button v-on:click="storeUser" class="btn btn-primary btn-lg form_btn"
-                                    value="Create User">Create User</button>
+                                    value="Create User">Create User
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -82,7 +83,7 @@
         },
         methods: {
             getPossibleRoles() {
-                Vue.http.get(window.BASE_URL + '/api/role_perm/roles')
+                Vue.http.get(window.BASE_URL + '/api/access/getAllRoles')
                     .then(response => {
                         this.error = false;
                         this.possibleRoles = response.data;

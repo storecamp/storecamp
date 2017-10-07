@@ -82,7 +82,7 @@
                     })
             },
             getPossibleRoles() {
-                Vue.http.get(window.BASE_URL + '/api/role_perm/roles')
+                Vue.http.get(window.BASE_URL + '/api/access/getAllRoles')
                     .then(response => {
                         this.error = false;
                         this.possibleRoles = response.data;

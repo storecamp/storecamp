@@ -101,14 +101,39 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
         });
     });
 
-    Route::group(['prefix' => 'role_perm', 'middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'role_permission.'], function () {
-        Route::get('/roles', [
-            'as' => 'roles',
-            'uses' => 'Api\RolePermissionController@getAllRoles'
-        ]);
-        Route::get('/permissions', [
-            'as' => 'permissions',
-            'uses' => 'Api\RolePermissionController@getAllPermissions'
-        ]);
-    });
+    Route::group(['prefix' => 'access', 'middleware' => ['jwt.auth', 'role:Admin'], 'as' => 'access.'],
+        function () {
+            Route::get('/getAllRoles', [
+                'as' => 'roles',
+                'uses' => 'Api\AccessController@getAllRoles'
+            ]);
+            Route::get('/getRolesCount', [
+                'as' => 'roles.count',
+                'uses' => 'Api\AccessController@getRolesCount'
+            ]);
+            Route::get('/roles', [
+                'as' => 'roles',
+                'uses' => 'Api\AccessController@indexRoles'
+            ]);
+            Route::post('/roles/store', [
+                'as' => 'roles.store',
+                'uses' => 'Api\AccessController@store'
+            ]);
+            Route::put('/roles/update/{id}', [
+                'as' => 'roles.put',
+                'uses' => 'Api\AccessController@update'
+            ]);
+            Route::get('/roles/{id}', [
+                'as' => 'roles',
+                'uses' => 'Api\AccessController@show'
+            ]);
+            Route::get('/getAllPermissions', [
+                'as' => 'permissions',
+                'uses' => 'Api\AccessController@getAllPermissions'
+            ]);
+            Route::get('/permissions', [
+                'as' => 'permissions',
+                'uses' => 'Api\AccessController@indexPermissions'
+            ]);
+        });
 });
