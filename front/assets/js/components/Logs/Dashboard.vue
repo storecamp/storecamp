@@ -20,7 +20,7 @@
                 <h1 class="page-header">Dashboard</h1>
                 <div class="row">
                     <div class="col-md-3">
-                        <doughnut :chartData="logs.chartData" :options="chartOptions" :height="300"></doughnut>
+                        <doughnut :chartData="logs.chartData" :options="chartOptions" :height="500"></doughnut>
                     </div>
                     <div class="col-md-9">
                         <section class="box-body">

@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <section class="content-header row" style="margin-bottom: 10px">
             <h4>
                 {{msg}}
@@ -10,7 +11,6 @@
             <ol class="breadcrumb">
             </ol>
             <small>
-
                 <div class="btn-group" style="">
                     <router-link
                                  :to="{ name: 'rolesCreate'}" class="btn btn-info">
@@ -27,6 +27,7 @@
                     </ul>
                 </div>
             </small>
+
             <div class="clearfix"></div>
         </section>
     </div>
@@ -61,4 +62,5 @@
         },
         components: {}
     }
+
 </script>
