@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ $1 == 'run' ]]; then
     cd laradock && sudo docker-compose exec workspace bash && cd ../
 fi
