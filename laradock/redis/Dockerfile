@@ -8,7 +8,7 @@ MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 
 VOLUME /data
 
-EXPOSE 6379
+EXPOSE 6389
 
 #CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
 CMD ["redis-server"]
