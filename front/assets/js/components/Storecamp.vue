@@ -591,3 +591,9 @@ $.StoreCamp.sidebar.activate()
 
 # ---
 </script>
+
+<style lang="scss">
+    .content-wrapper {
+        background-color: transparent;
+    }
+</style>

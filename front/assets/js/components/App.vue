@@ -2,7 +2,7 @@
     <div>
         <navigation :auth="auth"></navigation>
         <sidebar :auth="auth"></sidebar>
-        <router-view class="content-wrapper" style="max-width: inherit;padding: 0 15px;" :auth="auth"></router-view>
+        <router-view  class="content-wrapper" :auth="auth"></router-view>
     </div>
 </template>
 <style></style>

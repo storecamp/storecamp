@@ -2,20 +2,18 @@ import Vue from '../app.js';
 import {router} from '../routes.js';
 
 export default {
-    options: {
-        redirectIfLoggedInPath: '/dash',
-        redirectIfNotLoggedInPath: '/signin'
-    },
+    redirectIfLoggedInPath: 'dash',
+    redirectIfNotLoggedInPath: 'signin',
     user: {
         authenticated: false,
         profile: null,
         roles: []
     },
     authBefore() {
-        var _this = this;
+        let _this = this;
         router.beforeEach(function (to, from, next) {
             let token = localStorage.getItem('id_token');
-            var vue = Vue;
+            let vue = Vue;
             if (token !== null) {
                 Vue.http.get(
                     'api/user?token=' + token,
@@ -25,7 +23,7 @@ export default {
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('client');
                     next({
-                        path: this.redirectIfNotLoggedInPath
+                        path: _this.redirectIfNotLoggedInPath
                     })
                 });
             } else {
@@ -33,7 +31,7 @@ export default {
                     localStorage.removeItem('id_token');
                     localStorage.removeItem('client');
                     next({
-                        path: this.redirectIfNotLoggedInPath
+                        path: _this.redirectIfNotLoggedInPath
                     });
                 } else {
                     next()
@@ -42,7 +40,8 @@ export default {
         })
     },
     beforeHandler(response, to, from, next) {
-        var user = {authenticated: false};
+        let user = {authenticated: false};
+        let that = this;
         user.authenticated = true;
         user.profile = response.data.data;
         user.roles = response.data.data.roles;
@@ -59,7 +58,7 @@ export default {
                 } else {
                     if (to.matched.some(record => record.meta.isAdmin)) {
                         next({
-                            path: this.redirectIfLoggedInPath
+                            path: that.redirectIfLoggedInPath
                         });
                     } else {
                         next();
@@ -72,7 +71,7 @@ export default {
     },
     check() {
         let token = localStorage.getItem('id_token');
-        var vue = Vue;
+        let vue = Vue;
         if (token !== null) {
             Vue.http.get(
                 'api/user?token=' + token,
@@ -102,6 +101,7 @@ export default {
         })
     },
     signin(context, email, password) {
+        let that = this;
         Vue.http.post(
             'api/signin',
             {
@@ -115,7 +115,7 @@ export default {
             Vue.http.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('id_token');
             this.user.authenticated = true;
             this.user.profile = response.data.data;
-            router.push(this.redirectIfLoggedInPath);
+            router.push(that.redirectIfLoggedInPath);
         }, response => {
             localStorage.removeItem('id_token');
             localStorage.removeItem('client');

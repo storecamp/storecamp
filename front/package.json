@@ -30,7 +30,10 @@
   },
   "dependencies": {
     "admin-lte": "^2.4.0",
+    "chart.js": "^2.7.0",
+    "font-awesome": "^4.7.0",
     "vee-validate": "^2.0.0-rc.5",
+    "vue-chartjs": "^2.8.7",
     "vue-img-inputer": "^1.1.0",
     "vue-multiselect": "^2.0.0-beta.15",
     "vue-slider-component": "^2.2.9"
