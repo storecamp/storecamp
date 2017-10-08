@@ -1,1 +1,0 @@
-cd laradock && sudo docker-compose up -d nginx php-fpm mailhog mariadb elasticsearch redis memcached  && cd ../
