@@ -7,6 +7,7 @@
                                     <small class="label bg-blue text-sm">{{count}}</small>
                         </span>
             </h4>
+
             <ol class="breadcrumb">
             </ol>
             <small>
@@ -27,9 +28,9 @@
             </small>
             <div class="clearfix"></div>
         </section>
+        
     </div>
 </template>
-
 <script>
     export default {
         data() {
@@ -40,11 +41,22 @@
                 routeName: ''
             }
         },
-        props: ['count', 'msg'],
-        methods: {},
+        props: ['msg'],
+        methods: {
+            getUsersCount() {
+                 Vue.http.get(window.BASE_URL + '/api/users/count')
+                    .then(response => {
+                        this.error = false;
+                        this.count = response.data;
+                    }, response => {
+                        this.error = true;
+                        this.errorMsg = response.error;
+                    })
+            }
+        },
         mounted: function () {
             this.routeName = this.$route.name;
-            console.log(this.$route.name);
+            this.getUsersCount(); 
         },
         components: {}
     }

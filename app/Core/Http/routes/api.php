@@ -56,13 +56,18 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
             'uses' => 'Api\UsersController@toggleBan',
             'as' => 'toggleBan'
         ])->where('id', '[0-9]+');
+        Route::get('/count', [
+            'as' => 'count',
+            'uses' => 'Api\UsersController@count'
+        ]);
         Route::get('/{id}', [
             'as' => 'show',
             'uses' => 'Api\UsersController@show'
         ]);
         Route::delete('/{id}', [
             'as' => 'delete',
-            'uses' => 'Api\UsersController@destroy'
+            'uses' => 'Api\UsersController@destroy',
+            'middleware' => ['canBeDeleted']
         ]);
     });
 

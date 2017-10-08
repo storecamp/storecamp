@@ -45,7 +45,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment-with-locales.min.js"></script>
 
 <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
-<script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 
 <!-- Scripts -->
 <script src="{{ asset('front/js/app.js') }}"></script>
@@ -101,19 +100,6 @@
     })($);
 </script>
 <script>
-    toastr.options = {
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "showDuration": 300,
-        "hideDuration": 1000,
-        "timeOut": 5000,
-        "extendedTimeOut": 1000,
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
 </script>
 </body>
 </html>

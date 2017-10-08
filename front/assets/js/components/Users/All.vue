@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <sub-nav-user :count="count" :msg="'AMOUNT OF USERS - '"></sub-nav-user>
+        <sub-nav-user :msg="'AMOUNT OF USERS - '"></sub-nav-user>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">List of Users</h3>
@@ -31,7 +31,7 @@
                         <th>Updated At</th>
                         <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                     </tr>
-                    <tr v-for="user in users">
+                    <tr v-bind:key="user.id" v-for="user in users">
                         <td>{{user.id}}</td>
                         <td>{{user.name}}</td>
                         <td>{{user.email}}</td>
@@ -48,8 +48,9 @@
                             <button v-if="!user.banned" role="link" class="btn btn-default text-warning" :data-id="user.id"  v-on:click="toggleBan">
                                 ban
                             </button>
-                            <button v-on:click="deleteUser" :data-id="user.id" class="btn btn-danger delete text-warning" role="link"
-                                    title="Are you sure you want to delete?"><em v-on:click="deleteUser" :data-id="user.id" class="fa fa-trash-o"></em></button>
+                            <button  :data-href="'delete-user-'+user.id" :data-id="user.id" class="btn btn-danger delete text-warning" role="link"
+                                    title="Are you sure you want to delete?"><em :data-id="user.id" :data-href="'delete-user-'+user.id" class="fa fa-trash-o"></em></button>
+                            <modal title="Are you sure to delete the user?" :confirmData="{id: user.id}" :modalId="'delete-user-'+user.id" :triggerConfirm="deleteUser" :content="'User ' + user.name + ' is going to be deleted!'"></modal>   
                         </td>
                     </tr>
                     </tbody>
@@ -62,11 +63,12 @@
                             :offset="offset"
                 ></pagination>
             </div>
-        </div>
+        </div>      
     </div>
 </template>
 <script>
     import SubNavUser from '../Partials/Subnavuser.vue';
+    import Modal from '../Partials/Modal.vue';
     import Pagination from '../System/pagination.vue';
 
     export default {
@@ -99,17 +101,22 @@
                         this.errorMsg = response.error;
                     })
             },
-            deleteUser(e) {
-                console.log($(e.target));
-                let userId = $(e.target).attr('data-id');
-                Vue.http.delete(window.BASE_URL + '/api/users/' + userId)
+            deleteUser(e, data) {
+                Vue.http.delete(window.BASE_URL + '/api/users/' + data.id)
                     .then(response => {
                         this.error = false;
+                        toastr.success('User Deleted!');
                         let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
                         this.getAllUsers(page);
                     }, response => {
                         this.error = true;
-                        this.errorMsg = response.error;
+                        this.errorMsg = response.data.msg;
+                        console.log(response);
+                        if(response.data.msg) {
+                            toastr.error('User Not Deleted! ' + response.data.msg);
+                        } else {
+                            toastr.error('User Not Deleted!');
+                        }
                     })
             },
             toggleBan(e) {
@@ -133,6 +140,9 @@
                 });
 
                 return rolesArr.join(", ");
+            },
+            triggerConfirm(event) {
+                console.log('Hello confirm modal');
             }
         },
         mounted: function () {
@@ -141,6 +151,7 @@
         },
         components: {
             SubNavUser,
+            Modal,
             Pagination
         }
     }

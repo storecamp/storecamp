@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckIfUserBanned::class,
+            
         ],
 
         'api' => [
@@ -81,5 +82,6 @@ class Kernel extends HttpKernel
         'localizationRedirect'  => LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => LocaleSessionRedirect::class,
         'cartEmpty'             => \App\Http\Middleware\CartEmpty::class,
+        'canBeDeleted'          => \App\Http\Middleware\CanBeDeleted::class,
     ];
 }

@@ -32,6 +32,7 @@
     "admin-lte": "^2.4.0",
     "chart.js": "^2.7.0",
     "font-awesome": "^4.7.0",
+    "toastr": "^2.1.2",
     "vee-validate": "^2.0.0-rc.5",
     "vue-chartjs": "^2.8.7",
     "vue-img-inputer": "^1.1.0",

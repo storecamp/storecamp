@@ -8,10 +8,24 @@ window._ = require('lodash');
 
 try {
     window.$ = window.jQuery = require('jquery');
-
+    window.toastr = toastr = require('toastr');
+    toastr.options = {
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "showDuration": 300,
+        "hideDuration": 1000,
+        "timeOut": 5000,
+        "extendedTimeOut": 1000,
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
     require('bootstrap-sass');
     require('admin-lte');
     require('admin-lte/dist/css/AdminLTE.min.css');
+    require('toastr/build/toastr.min.css');
 } catch (e) {
 }
 

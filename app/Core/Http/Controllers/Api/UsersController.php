@@ -39,6 +39,8 @@ class UsersController extends Controller
     }
 
     /**
+     * Get all Users
+     * 
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -50,7 +52,10 @@ class UsersController extends Controller
     }
 
     /**
+     * Show the user by id
+     * 
      * @param Request $request
+     * @param int|string $id
      * @return \Illuminate\View\View
      */
     public function show(Request $request, $id)
@@ -58,6 +63,20 @@ class UsersController extends Controller
         $user = $this->user->findOrFail($id);
 
         return response()->json($user);
+    }
+
+    /**
+     * Get amount of users
+     * 
+     * @param Request $request
+     * @param int|string $id
+     * @return \Illuminate\View\View
+     */
+    public function count(Request $request)
+    {
+        $count = $this->user->count();
+
+        return response()->json($count);
     }
 
     /**
@@ -160,13 +179,13 @@ class UsersController extends Controller
             \DB::beginTransaction();
             $deleted = $this->usersSystem->delete($id);
             if (!$deleted) {
-                return response()->json(['msg' => 'Sorry user is not deleted'], 500);
+                throw new \Exception('Sorry user is not deleted', 500);
             }
             \DB::commit();
             return response()->json(['msg' => 'ok']);
-        } catch (ModelNotFoundException $e) {
+        } catch (\Throwable $e) {
             \DB::rollBack();
-            return response()->json(['msg' => 'Error during user delete'], $e->getCode());
+            return response()->json(['msg' => $e->getMessage()], $e->getCode());
         }
     }
 }
