@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CategoriesController.
@@ -65,11 +65,11 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = Category::with(['media']);
 

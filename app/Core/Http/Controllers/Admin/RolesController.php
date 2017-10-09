@@ -11,7 +11,7 @@ use App\Core\Validators\Role\RolesFormRequest;
 use App\Core\Validators\Role\RolesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class RolesController.
@@ -63,11 +63,11 @@ class RolesController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = Role::with('perms');
 

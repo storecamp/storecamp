@@ -214,14 +214,15 @@ return [
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
         \storecamp\htmlelements\HtmlElementsServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
         Spatie\CookieConsent\CookieConsentServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
         \Yab\MySQLScout\Providers\MySQLScoutServiceProvider::class,
         \App\Core\Providers\MailboxServiceProvider::class,
-        Clarification\MailDrivers\Sendgrid\SendgridServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\Datatables\FractalServiceProvider::class,
+//        Clarification\MailDrivers\Sendgrid\SendgridServiceProvider::class,
     ],
 
     /*
@@ -309,6 +310,7 @@ return [
         'Menu'                  => \storecamp\htmlelements\Facades\Menu::class,
         'Breadcrumbs'           => DaveJamesMiller\Breadcrumbs\Facade::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

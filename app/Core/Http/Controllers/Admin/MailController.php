@@ -10,7 +10,7 @@ use App\Core\Repositories\MailRepository;
 use App\Core\Repositories\MailRepositoryEloquent;
 use Illuminate\Http\Request;
 use App\Core\Transformers\MailHistoryTransformer;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MailController.
@@ -70,10 +70,10 @@ class MailController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      * @return mixed
      */
-    public function history(Datatables $datatables)
+    public function history(DataTables $datatables)
     {
         $query = EmailLog::select('*');
         return $datatables->eloquent($query)

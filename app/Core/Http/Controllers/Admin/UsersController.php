@@ -11,7 +11,7 @@ use App\Core\Validators\User\UsersFormRequest;
 use App\Core\Validators\User\UsersUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class UsersController.
@@ -65,11 +65,11 @@ class UsersController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = User::with('roles')->select('users.*');
 

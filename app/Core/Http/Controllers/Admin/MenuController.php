@@ -7,7 +7,7 @@ use App\Core\Repositories\MenuItemsRepository;
 use App\Core\Repositories\MenuRepository;
 use App\Core\Transformers\MenusDataTransformer;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class MenusController.
@@ -52,11 +52,11 @@ class MenuController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = Menu::with('items')->select('menus.*');
 

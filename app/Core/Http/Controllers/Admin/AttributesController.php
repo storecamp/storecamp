@@ -7,7 +7,7 @@ use App\Core\Models\AttributeGroupDescription;
 use App\Core\Transformers\AttributeGroupDescriptionDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class AttributesController.
@@ -60,11 +60,11 @@ class AttributesController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = AttributeGroupDescription::with('attributesGroup');
 

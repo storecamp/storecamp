@@ -11,7 +11,7 @@ use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class ProductsController.
@@ -65,11 +65,11 @@ class ProductsController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = Product::with('categories')->select('products.*');
 

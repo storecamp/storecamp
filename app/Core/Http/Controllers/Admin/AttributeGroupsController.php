@@ -9,7 +9,7 @@ use App\Core\Repositories\AttributeGroupRepository;
 use App\Core\Transformers\AttributeGroupsDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class AttributeGroupsController.
@@ -67,11 +67,11 @@ class AttributeGroupsController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = AttributeGroup::query();
 

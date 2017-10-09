@@ -17,9 +17,11 @@
                                 <i class="fa fa-download"></i> DOWNLOAD
                             </a>
                             <a :data-href="'delete-log'+log.date" class="btn btn-xs btn-danger">
-                                <i  :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
+                                <i :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
                             </a>
-                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}" :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog" :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
+                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}"
+                                   :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog"
+                                   :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
                         </div>
                     </div>
                     <div class="table-responsive">

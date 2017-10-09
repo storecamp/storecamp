@@ -13,7 +13,7 @@ use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
 use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class ProductReviewController.
@@ -74,11 +74,11 @@ class ProductReviewController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = ProductReview::with(['product', 'user']);
 

@@ -7,11 +7,11 @@
     "license": "MIT",
     "require": {
         "php": ">=5.5.9",
-        "illuminate/bus": "5.2.*|5.3.*|5.4.*",
-        "illuminate/contracts": "5.2.*|5.3.*|5.4.*",
-        "illuminate/database": "5.2.*|5.3.*|5.4.*",
-        "illuminate/queue": "5.2.*|5.3.*|5.4.*",
-        "illuminate/support": "5.2.*|5.3.*|5.4.*",
+        "illuminate/bus": "5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/contracts": "5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/database": "5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/queue": "5.2.*|5.3.*|5.4.*|5.5.*",
+        "illuminate/support": "5.2.*|5.3.*|5.4.*|5.5.*",
         "ramsey/uuid": "~3.0"
     },
     "require-dev": {

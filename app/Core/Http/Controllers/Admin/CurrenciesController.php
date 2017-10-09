@@ -7,7 +7,7 @@ use App\Core\Repositories\CurrencyRepository;
 use App\Core\Transformers\CurrenciesDataTransformer;
 use App\Core\Validators\Currencies\StoreCurrenciesRequest;
 use App\Core\Validators\Currencies\UpdateCurrenciesRequest;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class CurrenciesController.
@@ -43,11 +43,11 @@ class CurrenciesController extends BaseController
     }
 
     /**
-     * @param Datatables $datatables
+     * @param DataTables $datatables
      *
      * @return mixed
      */
-    public function data(Datatables $datatables)
+    public function data(DataTables $datatables)
     {
         $query = Currency::select('currencies.*');
 

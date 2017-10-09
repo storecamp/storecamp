@@ -115,7 +115,7 @@
                         this.error = true;
                         this.errorMsg = response.data.msg;
                         console.log(response);
-                        if(response.data.msg) {
+                        if (response.data.msg) {
                             toastr.error('User Not Deleted! ' + response.data.msg);
                         } else {
                             toastr.error('User Not Deleted!');
