@@ -44225,6 +44225,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Logstable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Logstable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Partials_Modal_vue__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Partials_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Partials_Modal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__routes_js__ = __webpack_require__(13);
 //
 //
 //
@@ -44291,6 +44294,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
+
 
 
 
@@ -44346,21 +44352,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         dLink: function dLink(event) {
             var date = $(event.target).attr('data-date');
             return window.BASE_URL + '/api/backlogs/' + date;
+        },
+        deleteLog: function deleteLog(e, data) {
+            var _this2 = this;
+
+            Vue.http.post(window.BASE_URL + '/api/backlogs/logs/delete', { date: data.date }).then(function (response) {
+                _this2.error = false;
+                toastr.success('Log Deleted!');
+                __WEBPACK_IMPORTED_MODULE_4__routes_js__["a" /* router */].push({ name: 'logs' });
+            }, function (response) {
+                _this2.error = true;
+                _this2.errorMsg = response.data.msg;
+                if (response.data.msg) {
+                    toastr.error('Log Not Deleted! ' + response.data.msg);
+                } else {
+                    toastr.error('Log Not Deleted!');
+                }
+            });
+        },
+        loadLogs: function loadLogs() {
+            var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+            var date = this.$route.params.date ? this.$route.params.date : false;
+            if (!date) {
+                this.$router.push('logs');
+                return;
+            }
+            this.getAllLogs(page, date);
         }
     },
     mounted: function mounted() {
-        var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-        var date = this.$route.params.date ? this.$route.params.date : false;
-        if (!date) {
-            this.$router.push('logs');
-            return;
-        }
-        this.getAllLogs(page, date);
+        this.loadLogs();
     },
     components: {
         Pagination: __WEBPACK_IMPORTED_MODULE_0__System_pagination_vue___default.a,
         Logstable: __WEBPACK_IMPORTED_MODULE_1__Logstable_vue___default.a,
-        LogsPanel: __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default.a
+        LogsPanel: __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default.a,
+        Modal: __WEBPACK_IMPORTED_MODULE_3__Partials_Modal_vue___default.a
     }
 });
 
@@ -44377,6 +44404,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Partials_Modal_vue__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Partials_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Partials_Modal_vue__);
 //
 //
 //
@@ -44442,6 +44471,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -44493,6 +44524,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.errorMsg = response.error;
             });
         },
+        deleteLog: function deleteLog(e, data) {
+            var _this2 = this;
+
+            Vue.http.post(window.BASE_URL + '/api/backlogs/logs/delete', { date: data.date }).then(function (response) {
+                _this2.error = false;
+                toastr.success('Log Deleted!');
+                __WEBPACK_IMPORTED_MODULE_3__routes_js__["a" /* router */].push({ name: 'logs' });
+            }, function (response) {
+                _this2.error = true;
+                _this2.errorMsg = response.data.msg;
+                if (response.data.msg) {
+                    toastr.error('Log Not Deleted! ' + response.data.msg);
+                } else {
+                    toastr.error('Log Not Deleted!');
+                }
+            });
+        },
         getAllLogsPager: function getAllLogsPager(page) {
             var paths = this.path.split('/');
             var level = paths[paths.length - 1];
@@ -44536,7 +44584,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         Pagination: __WEBPACK_IMPORTED_MODULE_0__System_pagination_vue___default.a,
         Logstable: __WEBPACK_IMPORTED_MODULE_1__Logstable_vue___default.a,
-        LogsPanel: __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default.a
+        LogsPanel: __WEBPACK_IMPORTED_MODULE_2__LogsPanel_vue___default.a,
+        Modal: __WEBPACK_IMPORTED_MODULE_4__Partials_Modal_vue___default.a
     }
 });
 
@@ -91925,7 +91974,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-download"
-  }), _vm._v(" DOWNLOAD\n                        ")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" DOWNLOAD\n                        ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-xs btn-danger",
+    attrs: {
+      "data-href": 'delete-log' + _vm.log.date
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o",
+    attrs: {
+      "data-href": 'delete-log' + _vm.log.date
+    }
+  }), _vm._v(" DELETE\n                        ")]), _vm._v(" "), _c('modal', {
+    attrs: {
+      "title": "Are you sure to delete this log file?",
+      "confirmData": {
+        date: _vm.log.date
+      },
+      "modalId": 'delete-log' + _vm.log.date,
+      "triggerConfirm": _vm.deleteLog,
+      "content": 'Log by date ' + _vm.log.date + ' is going to be deleted!'
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "table-responsive"
   }, [_c('table', {
     staticClass: "table table-condensed"
@@ -91966,17 +92035,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    staticClass: "btn btn-xs btn-danger",
-    attrs: {
-      "href": "#delete-log-modal",
-      "data-toggle": "modal"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-trash-o"
-  }), _vm._v(" DELETE\n                        ")])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -94219,7 +94278,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(_vm.__transformRoles(role.perms))
       }
-    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(role.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(role.updated_at))]), _vm._v(" "), _c('td', [(role.default) ? _c('strong', {
+    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(role.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(role.updated_at))]), _vm._v(" "), _c('td', {
+      staticClass: "text-center"
+    }, [(role.default) ? _c('strong', {
       staticClass: "text-warning"
     }, [_vm._v("\n                            This role is default! "), _c('br'), _vm._v("Cannot be Edited or Deleted!\n                        ")]) : _vm._e(), _vm._v(" "), (!role.default) ? _c('router-link', {
       staticClass: "btn btn-default edit",
@@ -94347,7 +94408,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-download"
-  }), _vm._v(" DOWNLOAD\n                        ")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" DOWNLOAD\n                        ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-xs btn-danger",
+    attrs: {
+      "data-href": 'delete-log' + _vm.log.date
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o",
+    attrs: {
+      "data-href": 'delete-log' + _vm.log.date
+    }
+  }), _vm._v(" DELETE\n                        ")]), _vm._v(" "), _c('modal', {
+    attrs: {
+      "title": "Are you sure to delete this log file?",
+      "confirmData": {
+        date: _vm.log.date
+      },
+      "modalId": 'delete-log' + _vm.log.date,
+      "triggerConfirm": _vm.deleteLog,
+      "content": 'Log by date ' + _vm.log.date + ' is going to be deleted!'
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "table-responsive"
   }, [_c('table', {
     staticClass: "table table-condensed"
@@ -94388,17 +94469,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    staticClass: "btn btn-xs btn-danger",
-    attrs: {
-      "href": "#delete-log-modal",
-      "data-toggle": "modal"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-trash-o"
-  }), _vm._v(" DELETE\n                        ")])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -94776,7 +94847,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(_vm.__transformRoles(user.roles))
       }
-    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))]), _vm._v(" "), (!_vm.__inAdminRolesList(user.roles)) ? _c('td', [_c('router-link', {
+    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))]), _vm._v(" "), (!_vm.__inAdminRolesList(user.roles)) ? _c('td', {
+      staticClass: "text-center"
+    }, [_c('router-link', {
       staticClass: "btn btn-default edit",
       attrs: {
         "to": {
@@ -94831,8 +94904,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "triggerConfirm": _vm.deleteUser,
         "content": 'User ' + user.name + ' is going to be deleted!'
       }
-    })], 1) : _c('td', [_c('strong', {
-      staticClass: "text-info"
+    })], 1) : _c('td', {
+      staticClass: "text-center"
+    }, [_c('strong', {
+      staticClass: "text-warning"
     }, [_vm._v("User is admin")])])])
   })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "box-footer clearfix"

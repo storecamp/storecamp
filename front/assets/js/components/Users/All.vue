@@ -38,7 +38,7 @@
                         <td v-html="__transformRoles(user.roles)"></td>
                         <td>{{user.created_at}}</td>
                         <td>{{user.updated_at}}</td>
-                        <td v-if="!__inAdminRolesList(user.roles)">
+                        <td class="text-center" v-if="!__inAdminRolesList(user.roles)">
                             <router-link :to="{ name: 'usersEdit', params: { id: user.id }}"
                                          class="btn btn-default edit" title="Edit">
                                 <em class="fa fa-pencil-square-o"></em></router-link>
@@ -52,7 +52,7 @@
                                     title="Are you sure you want to delete?"><em :data-id="user.id" :data-href="'delete-user-'+user.id" class="fa fa-trash-o"></em></button>
                             <modal title="Are you sure to delete the user?" :confirmData="{id: user.id}" :modalId="'delete-user-'+user.id" :triggerConfirm="deleteUser" :content="'User ' + user.name + ' is going to be deleted!'"></modal>   
                         </td>
-                        <td v-else><strong class="text-info">User is admin</strong></td>
+                        <td  class="text-center" v-else><strong class="text-warning">User is admin</strong></td>
                     </tr>
                     </tbody>
                 </table>

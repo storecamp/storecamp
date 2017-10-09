@@ -33,7 +33,7 @@
                         <td v-html="__transformRoles(role.perms)"></td>
                         <td>{{role.created_at}}</td>
                         <td>{{role.updated_at}}</td>
-                        <td>
+                        <td class="text-center">
                             <strong v-if="role.default" class="text-warning">
                                 This role is default! <br>Cannot be Edited or Deleted!
                             </strong>

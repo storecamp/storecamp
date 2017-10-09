@@ -83,7 +83,7 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
                 'as' => 'log-viewer::logs.list',
                 'uses' => 'Api\LogsController@listLogs',
             ]);
-            $this->delete('delete', [
+            $this->post('delete', [
                 'as' => 'log-viewer::logs.delete',
                 'uses' => 'Api\LogsController@delete',
             ]);

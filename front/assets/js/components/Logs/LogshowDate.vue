@@ -16,9 +16,10 @@
                             <a :href="'/api/backlogs/' + log.date + '/download'" class="btn btn-xs btn-success">
                                 <i class="fa fa-download"></i> DOWNLOAD
                             </a>
-                            <a href="#delete-log-modal" class="btn btn-xs btn-danger" data-toggle="modal">
-                                <i class="fa fa-trash-o"></i> DELETE
+                            <a :data-href="'delete-log'+log.date" class="btn btn-xs btn-danger">
+                                <i  :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
                             </a>
+                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}" :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog" :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -68,6 +69,8 @@
     import Pagination from '../System/pagination.vue';
     import Logstable from './Logstable.vue';
     import LogsPanel from './LogsPanel.vue';
+    import Modal from '../Partials/Modal.vue';
+    import {router} from '../../routes.js';
 
     export default {
         data() {
@@ -117,21 +120,41 @@
             dLink(event) {
                 let date = $(event.target).attr('data-date');
                 return window.BASE_URL + '/api/backlogs/' + date;
+            },
+            deleteLog(e, data) {
+                Vue.http.post(window.BASE_URL + '/api/backlogs/logs/delete', {date: data.date})
+                    .then(response => {
+                        this.error = false;
+                        toastr.success('Log Deleted!');
+                        router.push({name: 'logs'});
+                    }, response => {
+                        this.error = true;
+                        this.errorMsg = response.data.msg;
+                        if(response.data.msg) {
+                            toastr.error('Log Not Deleted! ' + response.data.msg);
+                        } else {
+                            toastr.error('Log Not Deleted!');
+                        }
+                    })
+            },
+            loadLogs() {
+                let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+                let date = this.$route.params.date ? this.$route.params.date : false;
+                if (!date) {
+                    this.$router.push('logs');
+                    return;
+                }
+                this.getAllLogs(page, date);
             }
         },
         mounted: function () {
-            let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-            let date = this.$route.params.date ? this.$route.params.date : false;
-            if (!date) {
-                this.$router.push('logs');
-                return;
-            }
-            this.getAllLogs(page, date);
+            this.loadLogs();
         },
         components: {
             Pagination,
             Logstable,
-            LogsPanel
+            LogsPanel,
+            Modal
         }
     }
 </script>

@@ -15,9 +15,10 @@
                             <a :href="'/api/backlogs/' + log.date + '/download'" class="btn btn-xs btn-success">
                                 <i class="fa fa-download"></i> DOWNLOAD
                             </a>
-                            <a href="#delete-log-modal" class="btn btn-xs btn-danger" data-toggle="modal">
-                                <i class="fa fa-trash-o"></i> DELETE
+                            <a :data-href="'delete-log'+log.date" class="btn btn-xs btn-danger">
+                                <i  :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
                             </a>
+                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}" :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog" :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -68,6 +69,7 @@
     import Logstable from './Logstable.vue';
     import LogsPanel from './LogsPanel.vue';
     import {router} from '../../routes.js';
+    import Modal from '../Partials/Modal.vue';
 
     export default {
         data() {
@@ -112,6 +114,22 @@
                         this.errorMsg = response.error;
                     })
             },
+            deleteLog(e, data) {
+                Vue.http.post(window.BASE_URL + '/api/backlogs/logs/delete', {date: data.date})
+                    .then(response => {
+                        this.error = false;
+                        toastr.success('Log Deleted!');
+                        router.push({name: 'logs'});
+                    }, response => {
+                        this.error = true;
+                        this.errorMsg = response.data.msg;
+                        if(response.data.msg) {
+                            toastr.error('Log Not Deleted! ' + response.data.msg);
+                        } else {
+                            toastr.error('Log Not Deleted!');
+                        }
+                    })
+            },
             getAllLogsPager(page) {
                 let paths = this.path.split('/');
                 let level = paths[paths.length - 1];
@@ -154,7 +172,8 @@
         components: {
             Pagination,
             Logstable,
-            LogsPanel
+            LogsPanel,
+            Modal
         }
     }
 </script>

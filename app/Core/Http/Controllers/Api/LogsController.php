@@ -185,10 +185,6 @@ class LogsController extends LogBaseController
      */
     public function delete(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(405, 'Method Not Allowed');
-        }
-
         $deleted = $this->viewerSystem->delete($request);
 
         return response()->json([
