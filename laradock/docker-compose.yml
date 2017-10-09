@@ -344,7 +344,7 @@ services:
       volumes:
         - ${DATA_SAVE_PATH}/redis:/data
       ports:
-        - "${REDIS_PORT}:6389"
+        - "${REDIS_PORT}:6379"
       networks:
         - backend
 

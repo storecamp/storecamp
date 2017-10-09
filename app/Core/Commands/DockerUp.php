@@ -38,10 +38,10 @@ class DockerUp extends Command
     public function handle()
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            exec('cd laradock && chcp 850 >> nul && docker-compose up -d nginx php-fpm mailhog mariadb elasticsearch redis memcached  && cd ../');
+            exec('cd laradock && chcp 850 >> nul && docker-compose up -d nginx php-fpm mailhog mysql elasticsearch redis memcached  && cd ../');
         }
         else {
-            shell_exec('cd laradock && sudo docker-compose up -d nginx php-fpm mailhog mariadb elasticsearch redis memcached  && cd ../');
+            shell_exec('cd laradock && sudo docker-compose up -d nginx php-fpm mailhog mysql elasticsearch redis memcached  && cd ../');
         }
     }
 }
