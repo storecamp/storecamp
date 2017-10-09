@@ -38,7 +38,7 @@
                         <td v-html="__transformRoles(user.roles)"></td>
                         <td>{{user.created_at}}</td>
                         <td>{{user.updated_at}}</td>
-                        <td>
+                        <td v-if="!__inAdminRolesList(user.roles)">
                             <router-link :to="{ name: 'usersEdit', params: { id: user.id }}"
                                          class="btn btn-default edit" title="Edit">
                                 <em class="fa fa-pencil-square-o"></em></router-link>
@@ -48,10 +48,11 @@
                             <button v-if="!user.banned" role="link" class="btn btn-default text-warning" :data-id="user.id"  v-on:click="toggleBan">
                                 ban
                             </button>
-                            <button  :data-href="'delete-user-'+user.id" :data-id="user.id" class="btn btn-danger delete text-warning" role="link"
+                            <button :data-href="'delete-user-'+user.id" :data-id="user.id" class="btn btn-danger delete text-warning" role="link"
                                     title="Are you sure you want to delete?"><em :data-id="user.id" :data-href="'delete-user-'+user.id" class="fa fa-trash-o"></em></button>
                             <modal title="Are you sure to delete the user?" :confirmData="{id: user.id}" :modalId="'delete-user-'+user.id" :triggerConfirm="deleteUser" :content="'User ' + user.name + ' is going to be deleted!'"></modal>   
                         </td>
+                        <td v-else><strong class="text-info">User is admin</strong></td>
                     </tr>
                     </tbody>
                 </table>
@@ -66,6 +67,7 @@
         </div>      
     </div>
 </template>
+
 <script>
     import SubNavUser from '../Partials/Subnavuser.vue';
     import Modal from '../Partials/Modal.vue';
@@ -75,6 +77,7 @@
         data() {
             return {
                 users: [],
+                auth: {},
                 pagination: {
                     total: 0,
                     per_page: 2,
@@ -132,6 +135,19 @@
                         this.errorMsg = response.error;
                     })
             },
+            __inAdminRolesList(roles) {
+                let counter = 0;
+                roles.forEach(function (item, index, arr) {
+                    if(item.display_name == 'admin') {
+                        counter++;
+                    }
+                });
+                if(counter) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
             __transformRoles(roles) {
                 let rolesArr = [];
                 roles.forEach(function (item, arr) {
@@ -148,6 +164,7 @@
         mounted: function () {
             let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
             this.getAllUsers(page);
+            this.auth = this.$parent.auth;
         },
         components: {
             SubNavUser,

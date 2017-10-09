@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
  */
 class AccessController extends \App\Core\Http\Controllers\Controller
 {
-     /**
+    /**
      * @var RolesRepository
      */
     protected $rolesRepository;
@@ -60,7 +60,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
         $roles = $this->rolesRepository->with('perms')->paginate();
 
         $roles->getCollection()->map(function ($item) {
-            if($item->display_name == "admin" || $item->display_name == "client") {
+            if ($item->display_name == "admin" || $item->display_name == "client") {
                 $item['default'] = true;
             } else {
                 $item['default'] = false;
@@ -69,17 +69,17 @@ class AccessController extends \App\Core\Http\Controllers\Controller
 
         return response()->json($roles);
     }
-    
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-     public function getRolesCount(Request $request)
-     {
-         $count = $this->rolesRepository->count();
-         
-         return response()->json($count);
-     }
+    public function getRolesCount(Request $request)
+    {
+        $count = $this->rolesRepository->count();
+
+        return response()->json($count);
+    }
 
     /**
      * @param Request $request
@@ -101,15 +101,6 @@ class AccessController extends \App\Core\Http\Controllers\Controller
         $permissions = $this->permissionRepository->paginate();
 
         return response()->json($permissions);
-    }
-    /**
-     * @param Request $request
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        return $this->view('index');
     }
 
     /**
@@ -141,26 +132,6 @@ class AccessController extends \App\Core\Http\Controllers\Controller
     }
 
     /**
-     * @param Request $request
-     * @param $id
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
-    public function edit(Request $request, $id)
-    {
-        try {
-            $data = $request->all();
-            $role = $this->accessSystem->presentRoles($data, $id);
-            $permissions = $this->permissionRepository->all()->pluck('name', 'id');
-            $selectedPerms = $role->perms()->orderBy('id')->pluck('name', 'id');
-
-            return $this->view('edit', compact('role', 'permissions', 'selectedPerms'));
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['msg' => $e->getMessage()], $e->getCode());
-        }
-    }
-
-    /**
      * @param RolesUpdateFormRequest $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -170,31 +141,11 @@ class AccessController extends \App\Core\Http\Controllers\Controller
         try {
             $data = $request->all();
             $this->accessSystem->updateRole($data, $id);
-    
+
             return response()->json(['msg' => 'Role updated']);
         } catch (ModelNotFoundException $e) {
             return response()->json(['msg' => $e->getMessage()], $e->getCode());
         }
-    }
-
-    /**
-     * get permissions name in json format.
-     *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getPermsJson(Request $request)
-    {
-        $query = $this->parserSearchValue($request->get('search'));
-        $permGroup = $this->permissionRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
-        $permGroupArr = [];
-        foreach ($permGroup as $key => $attrGroupItem) {
-            $permGroupArr[$key]['text'] = $attrGroupItem['name'];
-            $permGroupArr[$key]['id'] = $attrGroupItem['id'];
-        }
-
-        return response()->json($permGroupArr);
     }
 
     /**

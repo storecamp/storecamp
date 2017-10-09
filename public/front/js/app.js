@@ -15987,7 +15987,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/System/pagination.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\System\\pagination.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] pagination.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -27000,7 +27000,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Partials/SubNavAccess.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\SubNavAccess.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SubNavAccess.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -27034,7 +27034,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Partials/Subnavuser.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Subnavuser.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Subnavuser.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -39806,7 +39806,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/FileUpload/Main.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\FileUpload\\Main.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Main.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -39844,7 +39844,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/LogsPanel.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\LogsPanel.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LogsPanel.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -39878,7 +39878,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/Logstable.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\Logstable.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Logstable.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -46177,6 +46177,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -46186,6 +46188,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             users: [],
+            auth: {},
             pagination: {
                 total: 0,
                 per_page: 2,
@@ -46247,6 +46250,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this3.errorMsg = response.error;
             });
         },
+        __inAdminRolesList: function __inAdminRolesList(roles) {
+            var counter = 0;
+            roles.forEach(function (item, index, arr) {
+                if (item.display_name == 'admin') {
+                    counter++;
+                }
+            });
+            if (counter) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         __transformRoles: function __transformRoles(roles) {
             var rolesArr = [];
             roles.forEach(function (item, arr) {
@@ -46262,6 +46278,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
         this.getAllUsers(page);
+        this.auth = this.$parent.auth;
     },
     components: {
         SubNavUser: __WEBPACK_IMPORTED_MODULE_0__Partials_Subnavuser_vue___default.a,
@@ -62742,7 +62759,7 @@ exports.push([module.i, "\n.img-inputer--small {\n    height: 100% !important;\n
 /* 311 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/vendor/admin-lte/dist/boxed-bg.jpg?5bbbd344130f0926b70aa3499638a387";
+module.exports = "/images/vendor/admin-lte/dist/boxed-bg.jpg?be7e10bf7d65195693df834c73fbe313";
 
 /***/ }),
 /* 312 */
@@ -90779,7 +90796,7 @@ module.exports = {
 /* 333 */
 /***/ (function(module, exports) {
 
-module.exports = {"_args":[["vue-chartjs@2.8.7","/var/www/front"]],"_from":"vue-chartjs@2.8.7","_id":"vue-chartjs@2.8.7","_inBundle":false,"_integrity":"sha512-XNNCQHwP1zUe739q0h0DdObx7qC+umJ50P8N4uab4N964rHSSq7sbRAdyoevObI3K2eYuCTLhnzjA1F90uQwtQ==","_location":"/vue-chartjs","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"vue-chartjs@2.8.7","name":"vue-chartjs","escapedName":"vue-chartjs","rawSpec":"2.8.7","saveSpec":null,"fetchSpec":"2.8.7"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/vue-chartjs/-/vue-chartjs-2.8.7.tgz","_spec":"2.8.7","_where":"/var/www/front","author":{"name":"Jakub Juszczak","email":"jakub@posteo.de"},"babel":{"presets":["es2015"]},"browserify":{"transform":["babelify"]},"bugs":{"url":"https://github.com/apertureless/vue-chartjs/issues"},"contributors":[{"name":"Thorsten Lünborg","url":"https://github.com/LinusBorg"},{"name":"Juan Carlos Alonso","url":"https://github.com/jcalonso"}],"dependencies":{"lodash.merge":"^4.6.0"},"description":"Vue.js wrapper for chart.js for creating beautiful charts.","devDependencies":{"babel-cli":"^6.24.1","babel-core":"^6.25.0","babel-loader":"^7.0.0","babel-plugin-transform-object-assign":"^6.22.0","babel-plugin-transform-runtime":"^6.23.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","babel-runtime":"^6.23.0","chai":"^3.5.0","chart.js":"^2.7.0","chromedriver":"^2.28.0","connect-history-api-fallback":"^1.1.0","cross-env":"^3.2.4","cross-spawn":"^5.1.0","css-loader":"^0.28.0","eslint":"^3.19.0","eslint-config-standard":"^10.2.1","eslint-friendly-formatter":"^2.0.7","eslint-loader":"^1.7.1","eslint-plugin-html":"^2.0.1","eslint-plugin-import":"^2.2.0","eslint-plugin-node":"^4.2.2","eslint-plugin-promise":"^3.5.0","eslint-plugin-standard":"^3.0.1","eventsource-polyfill":"^0.9.6","express":"^4.15.2","extract-text-webpack-plugin":"^1.0.1","file-loader":"^0.10.1","function-bind":"^1.0.2","html-webpack-plugin":"^2.28.0","http-proxy-middleware":"^0.17.4","inject-loader":"^3.0.0","isparta-loader":"^2.0.0","jasmine-core":"^2.5.2","json-loader":"^0.5.4","karma":"^1.5.0","karma-coverage":"^1.1.1","karma-jasmine":"^1.0.2","karma-mocha":"^1.2.0","karma-phantomjs-launcher":"^1.0.4","karma-sinon-chai":"^1.2.0","karma-sourcemap-loader":"^0.3.7","karma-spec-reporter":"0.0.30","karma-webpack":"1.8.1","lolex":"^1.6.0","mocha":"^3.1.0","nightwatch":"^0.9.14","ora":"^1.2.0","phantomjs-prebuilt":"^2.1.13","selenium-server":"^3.3.1","shelljs":"^0.7.7","sinon":"^2.1.0","sinon-chai":"^2.9.0","url-loader":"^0.5.8","vue":"^2.4.4","vue-hot-reload-api":"^2.1.0","vue-html-loader":"^1.2.4","vue-loader":"^12.2.2","vue-style-loader":"^3.0.1","vue-template-compiler":"^2.4.2","webpack":"^1.13.2","webpack-dev-middleware":"^1.10.1","webpack-hot-middleware":"^2.17.1","webpack-merge":"1.1.1"},"engines":{"node":">=6.9.0"},"files":["src","dist","es"],"greenkeeper":{"ignore":["extract-text-webpack-plugin","karma-webpack","webpack","webpack-merge"]},"homepage":"http://vue-chartjs.org","jsnext:main":"es/index.js","keywords":["ChartJs","Vue","Visualisation","Wrapper","Charts"],"license":"MIT","main":"dist/vue-chartjs.js","maintainers":[{"name":"Jakub Juszczak","email":"jakub@posteo.de","url":"http://www.jakubjuszczak.de"}],"module":"es/index.js","name":"vue-chartjs","peerDependencies":{"chart.js":"^2.7.0","vue":"^2.4.4"},"repository":{"type":"git","url":"git+ssh://git@github.com/apertureless/vue-chartjs.git"},"scripts":{"build":"yarn run release && yarn run build:es","build:es":"cross-env BABEL_ENV=es babel src --out-dir es","dev":"node build/dev-server.js","e2e":"node test/e2e/runner.js","lint":"eslint --ext .js,.vue src test/unit/specs test/e2e/specs","prepublish":"yarn run lint && yarn run test && yarn run build","release":"webpack --progress --hide-modules --config  ./build/webpack.release.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js && webpack --progress --hide-modules --config  ./build/webpack.release.full.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.full.min.js","test":"npm run unit","unit":"karma start test/unit/karma.conf.js --single-run"},"unpkg":"dist/vue-chartjs.full.min.js","version":"2.8.7"}
+module.exports = {"_args":[["vue-chartjs@2.8.7","C:\\Users\\nilse\\Code\\storecamp\\front"]],"_from":"vue-chartjs@2.8.7","_id":"vue-chartjs@2.8.7","_inBundle":false,"_integrity":"sha512-XNNCQHwP1zUe739q0h0DdObx7qC+umJ50P8N4uab4N964rHSSq7sbRAdyoevObI3K2eYuCTLhnzjA1F90uQwtQ==","_location":"/vue-chartjs","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"vue-chartjs@2.8.7","name":"vue-chartjs","escapedName":"vue-chartjs","rawSpec":"2.8.7","saveSpec":null,"fetchSpec":"2.8.7"},"_requiredBy":["/"],"_resolved":"https://registry.npmjs.org/vue-chartjs/-/vue-chartjs-2.8.7.tgz","_spec":"2.8.7","_where":"C:\\Users\\nilse\\Code\\storecamp\\front","author":{"name":"Jakub Juszczak","email":"jakub@posteo.de"},"babel":{"presets":["es2015"]},"browserify":{"transform":["babelify"]},"bugs":{"url":"https://github.com/apertureless/vue-chartjs/issues"},"contributors":[{"name":"Thorsten Lünborg","url":"https://github.com/LinusBorg"},{"name":"Juan Carlos Alonso","url":"https://github.com/jcalonso"}],"dependencies":{"lodash.merge":"^4.6.0"},"description":"Vue.js wrapper for chart.js for creating beautiful charts.","devDependencies":{"babel-cli":"^6.24.1","babel-core":"^6.25.0","babel-loader":"^7.0.0","babel-plugin-transform-object-assign":"^6.22.0","babel-plugin-transform-runtime":"^6.23.0","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","babel-runtime":"^6.23.0","chai":"^3.5.0","chart.js":"^2.7.0","chromedriver":"^2.28.0","connect-history-api-fallback":"^1.1.0","cross-env":"^3.2.4","cross-spawn":"^5.1.0","css-loader":"^0.28.0","eslint":"^3.19.0","eslint-config-standard":"^10.2.1","eslint-friendly-formatter":"^2.0.7","eslint-loader":"^1.7.1","eslint-plugin-html":"^2.0.1","eslint-plugin-import":"^2.2.0","eslint-plugin-node":"^4.2.2","eslint-plugin-promise":"^3.5.0","eslint-plugin-standard":"^3.0.1","eventsource-polyfill":"^0.9.6","express":"^4.15.2","extract-text-webpack-plugin":"^1.0.1","file-loader":"^0.10.1","function-bind":"^1.0.2","html-webpack-plugin":"^2.28.0","http-proxy-middleware":"^0.17.4","inject-loader":"^3.0.0","isparta-loader":"^2.0.0","jasmine-core":"^2.5.2","json-loader":"^0.5.4","karma":"^1.5.0","karma-coverage":"^1.1.1","karma-jasmine":"^1.0.2","karma-mocha":"^1.2.0","karma-phantomjs-launcher":"^1.0.4","karma-sinon-chai":"^1.2.0","karma-sourcemap-loader":"^0.3.7","karma-spec-reporter":"0.0.30","karma-webpack":"1.8.1","lolex":"^1.6.0","mocha":"^3.1.0","nightwatch":"^0.9.14","ora":"^1.2.0","phantomjs-prebuilt":"^2.1.13","selenium-server":"^3.3.1","shelljs":"^0.7.7","sinon":"^2.1.0","sinon-chai":"^2.9.0","url-loader":"^0.5.8","vue":"^2.4.4","vue-hot-reload-api":"^2.1.0","vue-html-loader":"^1.2.4","vue-loader":"^12.2.2","vue-style-loader":"^3.0.1","vue-template-compiler":"^2.4.2","webpack":"^1.13.2","webpack-dev-middleware":"^1.10.1","webpack-hot-middleware":"^2.17.1","webpack-merge":"1.1.1"},"engines":{"node":">=6.9.0"},"files":["src","dist","es"],"greenkeeper":{"ignore":["extract-text-webpack-plugin","karma-webpack","webpack","webpack-merge"]},"homepage":"http://vue-chartjs.org","jsnext:main":"es/index.js","keywords":["ChartJs","Vue","Visualisation","Wrapper","Charts"],"license":"MIT","main":"dist/vue-chartjs.js","maintainers":[{"name":"Jakub Juszczak","email":"jakub@posteo.de","url":"http://www.jakubjuszczak.de"}],"module":"es/index.js","name":"vue-chartjs","peerDependencies":{"chart.js":"^2.7.0","vue":"^2.4.4"},"repository":{"type":"git","url":"git+ssh://git@github.com/apertureless/vue-chartjs.git"},"scripts":{"build":"yarn run release && yarn run build:es","build:es":"cross-env BABEL_ENV=es babel src --out-dir es","dev":"node build/dev-server.js","e2e":"node test/e2e/runner.js","lint":"eslint --ext .js,.vue src test/unit/specs test/e2e/specs","prepublish":"yarn run lint && yarn run test && yarn run build","release":"webpack --progress --hide-modules --config  ./build/webpack.release.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.min.js && webpack --progress --hide-modules --config  ./build/webpack.release.full.js && NODE_ENV=production webpack --progress --hide-modules --config  ./build/webpack.release.full.min.js","test":"npm run unit","unit":"karma start test/unit/karma.conf.js --single-run"},"unpkg":"dist/vue-chartjs.full.min.js","version":"2.8.7"}
 
 /***/ }),
 /* 334 */
@@ -90795,7 +90812,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Access/All.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Access\\All.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] All.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -90829,7 +90846,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Access/Create.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Access\\Create.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Create.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -90863,7 +90880,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Access/Edit.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Access\\Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Edit.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -90901,7 +90918,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/App.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -90935,7 +90952,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Auth/Signin.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Auth\\Signin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Signin.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -90969,7 +90986,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Dashboard.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91007,7 +91024,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/Dashboard.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Dashboard.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91041,7 +91058,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/Doughnut.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\Doughnut.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -91074,7 +91091,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/Logs.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\Logs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Logs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91112,7 +91129,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/LogshowDate.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\LogshowDate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LogshowDate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91150,7 +91167,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Logs/LogshowDateKey.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Logs\\LogshowDateKey.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LogshowDateKey.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91184,7 +91201,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Partials/Modal.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Modal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91222,7 +91239,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Partials/Navigation.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91256,7 +91273,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Partials/Sidebar.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Partials\\Sidebar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Sidebar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91294,7 +91311,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Storecamp.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Storecamp.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -91327,7 +91344,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/System/simple-pagination.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\System\\simple-pagination.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] simple-pagination.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91365,7 +91382,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/Account.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Account.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Account.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91403,7 +91420,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/AdditionalSettings.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\AdditionalSettings.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AdditionalSettings.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91441,7 +91458,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/Contacts.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Contacts.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Contacts.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91479,7 +91496,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/Profile.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Profile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Profile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91517,7 +91534,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/PublicProfile.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\PublicProfile.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] PublicProfile.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91555,7 +91572,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/User/Skills.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\User\\Skills.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Skills.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91589,7 +91606,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Users/All.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\All.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] All.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91623,7 +91640,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Users/Create.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\Create.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Create.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -91657,7 +91674,7 @@ var Component = __webpack_require__(2)(
   /* cssModules */
   null
 )
-Component.options.__file = "/var/www/front/assets/js/components/Users/Edit.vue"
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\Users\\Edit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Edit.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -94759,7 +94776,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       domProps: {
         "innerHTML": _vm._s(_vm.__transformRoles(user.roles))
       }
-    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))]), _vm._v(" "), _c('td', [_c('router-link', {
+    }), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.updated_at))]), _vm._v(" "), (!_vm.__inAdminRolesList(user.roles)) ? _c('td', [_c('router-link', {
       staticClass: "btn btn-default edit",
       attrs: {
         "to": {
@@ -94814,7 +94831,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "triggerConfirm": _vm.deleteUser,
         "content": 'User ' + user.name + ' is going to be deleted!'
       }
-    })], 1)])
+    })], 1) : _c('td', [_c('strong', {
+      staticClass: "text-info"
+    }, [_vm._v("User is admin")])])])
   })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "box-footer clearfix"
   }, [_c('pagination', {
