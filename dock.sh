@@ -9,5 +9,5 @@ if [[ $1 == 'down' ]]; then
 fi
 
 if [[ $1 == 'up' ]]; then
-    cd laradock && sudo docker-compose up -d nginx php-fpm mailhog mariadb elasticsearch redis memcached  && cd ../
+    cd laradock && sudo docker-compose up -d nginx php-fpm php-worker mailhog mysql elasticsearch redis memcached  && cd ../
 fi
