@@ -4,9 +4,9 @@ namespace App\Mail;
 
 use App\Core\Mappers\MailAddressesMapper;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class DeliverMail extends Mailable implements ShouldQueue
 {
@@ -18,6 +18,7 @@ class DeliverMail extends Mailable implements ShouldQueue
 
     /**
      * DeliverMail constructor.
+     *
      * @param $data
      */
     public function __construct($data)
@@ -72,15 +73,15 @@ class DeliverMail extends Mailable implements ShouldQueue
             foreach ($this->data['attachments'] as $attachment) {
                 \File::exists($attachment['filename']) && $this->attach(
                     $attachment['filename'], [
-                        'as' => !empty($attachment['as']) ? $attachment['as'] : pathinfo($attachment['filename'], PATHINFO_BASENAME),
-                        'mime' => mime_content_type($attachment['filename'])
+                        'as'   => !empty($attachment['as']) ? $attachment['as'] : pathinfo($attachment['filename'], PATHINFO_BASENAME),
+                        'mime' => mime_content_type($attachment['filename']),
                     ]
                 );
             }
         }
 
         $data = [
-            'to' => $this->data['to'],
+            'to'      => $this->data['to'],
             'subject' => $this->data['subject'],
             'message' => !empty($this->data['message']) ? $this->data['message'] : '',
         ];
@@ -101,6 +102,5 @@ class DeliverMail extends Mailable implements ShouldQueue
         } else {
             return $this->view($this->data['template'], compact('data', 'body'));
         }
-
     }
 }

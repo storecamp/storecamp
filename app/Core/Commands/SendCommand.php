@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: nilse
  * Date: 9/24/2017
- * Time: 11:49 PM
+ * Time: 11:49 PM.
  */
 
 namespace App\Core\Commands;
 
-
 use Illuminate\Console\Command;
 use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendCommand extends Command
@@ -58,6 +56,6 @@ class SendCommand extends Command
                 ->subject($data['subject']);
         });
 
-        echo 'Done' . PHP_EOL;
+        echo 'Done'.PHP_EOL;
     }
 }

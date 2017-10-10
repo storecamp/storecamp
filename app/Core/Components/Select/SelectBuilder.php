@@ -19,12 +19,13 @@ class SelectBuilder
     /**
      * @param string $actionUrl
      * @param string $attrName
-     * @param bool $multiple
-     * @param array $data
-     * @param array $selected
-     * @param null $class
-     * @param null $placeholder
-     * @param bool $tags
+     * @param bool   $multiple
+     * @param array  $data
+     * @param array  $selected
+     * @param null   $class
+     * @param null   $placeholder
+     * @param bool   $tags
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render(string $actionUrl, string $attrName, bool $multiple, $data = [],
@@ -54,6 +55,7 @@ class SelectBuilder
 
     /**
      * @param null $attrName
+     *
      * @return bool|null
      */
     protected function resolveAttrName($attrName = null)

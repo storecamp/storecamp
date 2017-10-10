@@ -12,7 +12,5 @@ class MailSubscribersSeeder extends Seeder
     public function run()
     {
         \App\Core\Base\Model::unguard();
-
-
     }
 }

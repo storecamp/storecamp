@@ -22,6 +22,7 @@ class MailEventHandler
 
     /**
      * MailEventHandler constructor.
+     *
      * @param EmailLogRepository $emailLogRepository
      */
     public function __construct(EmailLogRepository $emailLogRepository)
@@ -30,17 +31,18 @@ class MailEventHandler
     }
 
     /**
-     * listen to the global mail sent event
+     * listen to the global mail sent event.
      *
      * @param $events
      */
     public function subscribe($events)
     {
-        $events->listen('Illuminate\Mail\Events\MessageSending', MailEventHandler::class . '@onSending');
+        $events->listen('Illuminate\Mail\Events\MessageSending', self::class.'@onSending');
     }
 
     /**
      * @param $emails
+     *
      * @return string
      */
     public function originEmailsForTestMetaData($emails): string
@@ -55,35 +57,35 @@ class MailEventHandler
 
         $validatedEmails = [];
         foreach ($emails as $key => $value) {
-
             $validatedEmails[] = $value ? "$value <$key>" : $key;
         }
 
-        return join(', ', $validatedEmails);
+        return implode(', ', $validatedEmails);
     }
 
     /**
-     * Save email information to logs
+     * Save email information to logs.
+     *
      * @param $mailSending
      */
     public function onSending($mailSending)
     {
         $message = $mailSending->message;
+
         try {
-            list($from, $fromName) = MailEventHandler::getFromAddresses($message);
+            list($from, $fromName) = self::getFromAddresses($message);
 
             //prepare message data
             $data = [
-                'from' => $from,
-                'fromName' => $fromName,
+                'from'       => $from,
+                'fromName'   => $fromName,
                 'message_id' => $message->getId(),
-                'subject' => $message->getSubject(),
-                'reply_to' => MailEventHandler::getReplyTo($message),
-                'html' => $message->getBody(),
-                'text' => $this->getText($message)
+                'subject'    => $message->getSubject(),
+                'reply_to'   => self::getReplyTo($message),
+                'html'       => $message->getBody(),
+                'text'       => $this->getText($message),
             ];
             if (config('univer.emails_test_mode') && config('univer.test_email_to')) {
-
                 $data['to'] = $this->originEmailsForTestMetaData($message->getTo());
                 $message->setTo(config('univer.test_email_to'));
                 $data['cc'] = null;
@@ -104,32 +106,32 @@ class MailEventHandler
                     $message->setBcc(config('univer.test_emails_bcc'));
                 }
 
-                $message->setBody($message->getBody() . view('emails.append-original-data-for-test-email', $data)->render());
+                $message->setBody($message->getBody().view('emails.append-original-data-for-test-email', $data)->render());
 
                 $data = [
-                    'from' => $from,
-                    'fromName' => $fromName,
+                    'from'       => $from,
+                    'fromName'   => $fromName,
                     'message_id' => $message->getId(),
-                    'subject' => $message->getSubject(),
-                    'reply_to' => MailEventHandler::getReplyTo($message),
-                    'html' => $message->getBody(),
-                    'text' => $this->getText($message),
+                    'subject'    => $message->getSubject(),
+                    'reply_to'   => self::getReplyTo($message),
+                    'html'       => $message->getBody(),
+                    'text'       => $this->getText($message),
                 ];
             }
 
-            $recipients = MailEventHandler::getRecipients($message);
+            $recipients = self::getRecipients($message);
 
             $this->emailLogRepository->create($data, $recipients);
-
         } catch (\Exception $e) {
             \Log::error($e);
         }
     }
 
-
     /**
      * Set text contents.
+     *
      * @param $message
+     *
      * @return string
      */
     protected function getText($message)
@@ -138,19 +140,20 @@ class MailEventHandler
             if (!$attachment instanceof \Swift_MimePart) {
                 continue;
             }
+
             return $attachment->getBody();
         }
     }
 
     /**
      * @param $message
+     *
      * @return array
      */
     public static function getRecipients($message): array
     {
         $result = [];
-        if($message instanceof \Swift_Message) {
-
+        if ($message instanceof \Swift_Message) {
             if ($list = $message->getTo()) {
                 self::addRecipients($result, $list, 'to');
             }
@@ -164,8 +167,7 @@ class MailEventHandler
             }
         }
 
-        if(is_array($message)) {
-
+        if (is_array($message)) {
             if ($list = !empty($message['to']) ? $message['to'] : null) {
                 self::addRecipients($result, $list, 'to');
             }
@@ -183,19 +185,20 @@ class MailEventHandler
     }
 
     /**
-     * Add recipients to the
+     * Add recipients to the.
+     *
      * @param $result
      * @param $list
      * @param $type
      */
-    public static function addRecipients(Array &$result, $list, $type)
+    public static function addRecipients(array &$result, $list, $type)
     {
         $mails = MailAddressesMapper::map($list);
         foreach ($mails as $mail) {
             $data = [
-                'email' => $mail["address"],
-                'name' => $mail["name"],
-                'type' => $type,
+                'email' => $mail['address'],
+                'name'  => $mail['name'],
+                'type'  => $type,
             ];
             $result[] = $data;
         }
@@ -203,18 +206,19 @@ class MailEventHandler
 
     /**
      * @param \Swift_Message $message
+     *
      * @return mixed|null
      */
     public static function getReplyTo($message)
     {
         $result = null;
-        if($message instanceof \Swift_Message) {
+        if ($message instanceof \Swift_Message) {
             if ($list = $message->getReplyTo()) {
                 $first = current(array_keys($list));
                 $result = $first;
             }
         }
-        if(is_array($message)) {
+        if (is_array($message)) {
             if ($list = !empty($message['reply_to']) ? $message['reply_to'] : null) {
                 $first = current(array_keys($list));
                 $result = $first;
@@ -222,12 +226,15 @@ class MailEventHandler
                 $result = config('mail.dserec_admin', 'dserec_admin');
             }
         }
+
         return $result;
     }
+
     /**
      * Get From Addresses.
      *
      * @param \Swift_Message $message
+     *
      * @return array
      */
     public static function getFromAddresses($message): array
@@ -242,7 +249,7 @@ class MailEventHandler
 
         if (is_array($message)) {
             if (!empty($message['from'])) {
-                if(is_string($message['from'])) {
+                if (is_string($message['from'])) {
                     return [$message['from'], ''];
                 }
                 foreach ($message['from'] as $address => $name) {

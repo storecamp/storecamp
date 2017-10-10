@@ -5,8 +5,7 @@ namespace App\Core\Repositories;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface EmailLogRepository
- * @package namespace App\Core\Repositories;
+ * Interface EmailLogRepository.
  */
 interface EmailLogRepository extends RepositoryInterface
 {

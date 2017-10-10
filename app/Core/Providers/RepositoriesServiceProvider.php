@@ -60,7 +60,7 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Currency',
             'Parser',
             'EmailLog',
-            'EmailLogRecipients'
+            'EmailLogRecipients',
         ];
 
         foreach ($models as $repo) {

@@ -518,6 +518,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     public function count()
     {
         $model = $this->model->count();
+
         return $model;
     }
 

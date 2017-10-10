@@ -2,39 +2,37 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Support\Email\EmailCustomization;
-
 use App\Core\Handlers\MailEventHandler;
-use App\Mail\DeliverMail;
 use App\Core\Mappers\MailAddressesMapper;
+use App\Core\Support\Email\EmailCustomization;
 use App\Core\Validators\Emails\EmailsValidator;
+use App\Mail\DeliverMail;
 use Carbon\Carbon;
+
 /**
  * Class MailRepositoryEloquent.
  */
 class MailRepositoryEloquent implements MailRepository
 {
-
     /**
-     * Array for the delayed sending of emails
+     * Array for the delayed sending of emails.
      *
      * @var array
      */
     public static $emailsDelayedStack = [];
 
     /**
-     *
-     * @param array $data [
-     *    'template'    => 'emails.template_name',
-     *    'to'          => ['email@store.com' , 'Person Name'],
-     *    'subject'     => 'Subject',
-     *    'reply'       => ['email@store.com' , 'Person Name'],
-     *    'bcc'         => ['email@store.com' , 'Person Name'],
-     *    'cc'          => ['email@store.com' , 'Person Name'],
-     *    'data'        => ['key' => 'value', ...],
-     *    'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
-     * ];*
-     * @param bool $async
+     * @param array $data  [
+     *                     'template'    => 'emails.template_name',
+     *                     'to'          => ['email@store.com' , 'Person Name'],
+     *                     'subject'     => 'Subject',
+     *                     'reply'       => ['email@store.com' , 'Person Name'],
+     *                     'bcc'         => ['email@store.com' , 'Person Name'],
+     *                     'cc'          => ['email@store.com' , 'Person Name'],
+     *                     'data'        => ['key' => 'value', ...],
+     *                     'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
+     *                     ];*
+     * @param bool  $async
      */
     public function send(array $data, $async = false)
     {
@@ -66,15 +64,15 @@ class MailRepositoryEloquent implements MailRepository
 
     /**
      * @param array $data [
-     *    'template'    => 'emails.template_name',
-     *    'to'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
-     *    'subject'     => 'Subject',
-     *    'reply'       => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
-     *    'bcc'         => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
-     *    'cc'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
-     *    'data'        => ['key' => 'value', ...],
-     *    'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
-     * ];
+     *                    'template'    => 'emails.template_name',
+     *                    'to'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *                    'subject'     => 'Subject',
+     *                    'reply'       => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *                    'bcc'         => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *                    'cc'          => 'email@store.com' | ['email@store.com' => 'Person Name', 'email@store.com', ...],
+     *                    'data'        => ['key' => 'value', ...],
+     *                    'attachments' => [['filename' => '/dir/users.csv'(, 'as' => 'Users.csv' optional)], ...],
+     *                    ];
      */
     public function sendAsync(array $data)
     {
@@ -99,6 +97,7 @@ class MailRepositoryEloquent implements MailRepository
                 if (!is_array($mail)) {
                     self::pushToDelayedStack($mailData);
                     $this->sendDelayedEmails(true);
+
                     return;
                 }
                 self::pushToDelayedStack($mail);
@@ -111,13 +110,16 @@ class MailRepositoryEloquent implements MailRepository
 
     /**
      * @param $emails
-     * @return array|string
+     *
      * @throws \Exception
+     *
+     * @return array|string
      */
     public static function validateInputEmails($emails)
     {
         if (is_string($emails)) {
             EmailsValidator::validateEmail($emails);
+
             return !self::isIgnoredEmail($emails) ? $emails : [];
         }
 
@@ -130,8 +132,8 @@ class MailRepositoryEloquent implements MailRepository
             if (!self::isIgnoredEmail($mail['address'])) {
                 EmailsValidator::validateEmail($mail['address']);
                 $data = [
-                    'email' => $mail["address"],
-                    'name' => $mail["name"]
+                    'email' => $mail['address'],
+                    'name'  => $mail['name'],
                 ];
                 $validatedEmails[] = $data;
             }
@@ -142,6 +144,7 @@ class MailRepositoryEloquent implements MailRepository
 
     /**
      * @param string $dateTime
+     *
      * @return string
      */
     public function createDateTimeStringForMail($dateTime)
@@ -173,9 +176,6 @@ class MailRepositoryEloquent implements MailRepository
         self::clearDelayedStack();
     }
 
-    /**
-     *
-     */
     public static function clearDelayedStack()
     {
         self::$emailsDelayedStack = [];
@@ -191,6 +191,7 @@ class MailRepositoryEloquent implements MailRepository
 
     /**
      * @param array $emails
+     *
      * @return array
      */
     public static function getNotIgnoredEmails(array $emails)
@@ -207,6 +208,7 @@ class MailRepositoryEloquent implements MailRepository
 
     /**
      * @param $email
+     *
      * @return bool
      */
     public static function isIgnoredEmail($email)
@@ -224,26 +226,26 @@ class MailRepositoryEloquent implements MailRepository
 
             //prepare message data
             $data = [
-                'from' => $from,
-                'fromName' => $fromName,
+                'from'       => $from,
+                'fromName'   => $fromName,
                 'message_id' => '',
-                'subject' => $message['subject'],
-                'reply_to' => MailEventHandler::getReplyTo($message),
-                'html' => $message['body'],
-                'text' => isset($message['text']) ? $message['text'] : '',
+                'subject'    => $message['subject'],
+                'reply_to'   => MailEventHandler::getReplyTo($message),
+                'html'       => $message['body'],
+                'text'       => isset($message['text']) ? $message['text'] : '',
             ];
 
-            if(isset($message['delay_time'])) {
+            if (isset($message['delay_time'])) {
                 $data['delay_time'] = $message['delay_time'];
             }
 
-            if(isset($message['drafted']) && $message['drafted']) {
+            if (isset($message['drafted']) && $message['drafted']) {
                 $data['is_drafted'] = true;
                 $data['status'] = 'pending';
             }
 
             $recipients = MailEventHandler::getRecipients($message);
-            if(!empty($message['id'])) {
+            if (!empty($message['id'])) {
                 $data['id'] = $message['id'];
                 $emailLogRepository = app(EmailLogRepository::class);
                 $emailLogRepository->update($data, $recipients);

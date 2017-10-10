@@ -39,7 +39,7 @@ class EmailLog extends Model implements Transformable
         'html',
         'status',
         'delay_time',
-        'is_drafted'
+        'is_drafted',
     ];
 
     /**
@@ -49,11 +49,12 @@ class EmailLog extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**
      * EmailLog constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
@@ -79,6 +80,7 @@ class EmailLog extends Model implements Transformable
     {
         return $this->recipients->where('type', 'bcc')->pluck('email');
     }
+
     /**
      * @return mixed
      */
@@ -86,7 +88,6 @@ class EmailLog extends Model implements Transformable
     {
         return $this->recipients->where('type', 'to')->pluck('email');
     }
-
 
     /**
      * @return mixed
@@ -98,13 +99,17 @@ class EmailLog extends Model implements Transformable
 
     /**
      * @param $arr
+     *
      * @return array
      */
-    public static function array_reverse_recursive($arr) {
+    public static function array_reverse_recursive($arr)
+    {
         foreach ($arr as $key => $val) {
-            if (is_array($val))
+            if (is_array($val)) {
                 $arr[$key] = self::array_reverse_recursive($val);
+            }
         }
+
         return array_reverse($arr);
     }
 
@@ -115,9 +120,10 @@ class EmailLog extends Model implements Transformable
     {
         if ($this->attributes['status']) {
             $statuses = [];
-            foreach($this->statuses as $key => $item) {
+            foreach ($this->statuses as $key => $item) {
                 $statuses[$item] = $key;
-            };
+            }
+
             return $statuses[$this->attributes['status']];
         } else {
             return 'pending';
@@ -133,7 +139,7 @@ class EmailLog extends Model implements Transformable
                     $this->attributes['status'] = $this->statuses[$value];
                 }
             }
-            if (is_integer($value) && $value <= 2) {
+            if (is_int($value) && $value <= 2) {
                 $this->attributes['status'] = $value;
             }
         } else {

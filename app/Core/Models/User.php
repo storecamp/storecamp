@@ -160,10 +160,11 @@ class User extends Authenticatable implements
          * @var array
          */
         'columns' => [
-            'users.name'      => 10,
-            'users.email'      => 10
+            'users.name'       => 10,
+            'users.email'      => 10,
         ],
     ];
+
     /**
      * bootable methods fix.
      */

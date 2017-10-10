@@ -1,4 +1,5 @@
 <?php
+
 return [
 
     /*
@@ -56,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', null),
-        'name' => env('MAIL_FROM_NAME', 'Admin'),
+        'name'    => env('MAIL_FROM_NAME', 'Admin'),
     ],
 
     /*
@@ -120,12 +121,12 @@ return [
     ],
 
     'sendgrid' => [
-        'api_key' => env('MAIL_API_KEY') ?? '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'
+        'api_key' => env('MAIL_API_KEY') ?? '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',
     ],
     'ssloptions' => [
         'allow_self_signed' => env('MAIL_SSLOPTIONS_ALLOW_SELF_SIGNED', false),
-        'verify_peer' => env('MAIL_SSLOPTIONS_VERIFY_PEER', true),
-        'verify_peer_name' => env('MAIL_SSLOPTIONS_VERIFY_PEER_NAME', true),
+        'verify_peer'       => env('MAIL_SSLOPTIONS_VERIFY_PEER', true),
+        'verify_peer_name'  => env('MAIL_SSLOPTIONS_VERIFY_PEER_NAME', true),
     ],
     'store_admin' => 'admin@store.com',
 ];

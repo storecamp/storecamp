@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\EmailLogRepository;
 use App\Core\Models\EmailLog;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class EmailLogRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class EmailLogRepositoryEloquent.
  */
 class EmailLogRepositoryEloquent extends BaseRepository implements EmailLogRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class EmailLogRepositoryEloquent extends BaseRepository implements EmailLogRepos
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

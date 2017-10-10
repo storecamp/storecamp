@@ -5,11 +5,10 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Core\Models\EmailLog;
 use App\Core\Models\EmailLogRecipient;
 use App\Core\Repositories\EmailLogRepository;
-use App\Core\Repositories\EmailLogRepositoryEloquent;
 use App\Core\Repositories\MailRepository;
 use App\Core\Repositories\MailRepositoryEloquent;
-use Illuminate\Http\Request;
 use App\Core\Transformers\MailHistoryTransformer;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 /**
@@ -42,9 +41,10 @@ class MailController extends BaseController
 
     /**
      * AdminEmailsController constructor.
+     *
      * @param EmailLogRepository $emailLogRepository
-     * @param EmailLogRecipient $emailLogRecipient
-     * @param MailRepository $mailRepository
+     * @param EmailLogRecipient  $emailLogRecipient
+     * @param MailRepository     $mailRepository
      */
     public function __construct(EmailLogRepository $emailLogRepository,
                                 EmailLogRecipient $emailLogRecipient,
@@ -71,11 +71,13 @@ class MailController extends BaseController
 
     /**
      * @param Datatables $datatables
+     *
      * @return mixed
      */
     public function history(Datatables $datatables)
     {
         $query = EmailLog::select('*');
+
         return $datatables->eloquent($query)
             ->setTransformer(new MailHistoryTransformer())
             ->make(true);
@@ -94,7 +96,7 @@ class MailController extends BaseController
         // get previous mail id
         $previous = $this->emailLogRepository->getModel()->where('id', '<', $mail->id)->max('id');
         // get next mail id
-        $next =$this->emailLogRepository->getModel()->where('id', '>', $mail->id)->min('id');
+        $next = $this->emailLogRepository->getModel()->where('id', '>', $mail->id)->min('id');
 
         return $this->view('show', compact('mail', 'total', 'previous', 'next'));
     }
@@ -125,27 +127,28 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
-     * @return array
+     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function save(Request $request)
     {
-
         $map = [
-            'subject' => $request->get('subject'),
-            'to' => $request->get('to'),
-            'body' => $request->get('body'),
-            'bcc' => $request->get('bcc'),
-            'cc' => $request->get('cc'),
-            'from' => $request->get('from'),
-            'reply_to' => $request->get('reply_to'),
+            'subject'    => $request->get('subject'),
+            'to'         => $request->get('to'),
+            'body'       => $request->get('body'),
+            'bcc'        => $request->get('bcc'),
+            'cc'         => $request->get('cc'),
+            'from'       => $request->get('from'),
+            'reply_to'   => $request->get('reply_to'),
             'delay_time' => $request->get('delay_time'),
-            'id' => $request->get('id')
+            'id'         => $request->get('id'),
         ];
         if ($map['delay_time']) {
             $validationArr = [
                 'subject' => 'required',
-                'body' => 'required',
+                'body'    => 'required',
             ];
             if (!empty($map['cc'])) {
                 $validationArr['cc'] = 'array';
@@ -156,11 +159,12 @@ class MailController extends BaseController
             if (!empty($map['from'])) {
                 $validationArr['from'] = 'email';
             }
+
             try {
                 \DB::beginTransaction();
                 $validator = \Validator::make($map, $validationArr);
                 if ($validator->fails()) {
-                    throw new \Exception(join(' ', $validator->errors()->all()));
+                    throw new \Exception(implode(' ', $validator->errors()->all()));
                 }
                 $failures = \Mail::failures();
                 if ($failures) {
@@ -168,14 +172,17 @@ class MailController extends BaseController
                 }
                 $this->sendMail($map);
                 \DB::commit();
+
                 return response()->json(['ok']);
             } catch (\Exception $exception) {
                 \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent! Server msg: ' . $exception->getMessage()],
+
+                return response()->json(['error' => 'Mail Not sent! Server msg: '.$exception->getMessage()],
                     $exception->getCode());
             } catch (\Throwable $exception) {
                 \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent. Code - ' . $exception->getCode()],
+
+                return response()->json(['error' => 'Mail Not sent. Code - '.$exception->getCode()],
                     $exception->getCode());
             }
         } else {
@@ -185,26 +192,28 @@ class MailController extends BaseController
 
     /**
      * @param Request $request
-     * @return array
+     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function saveAsNew(Request $request)
     {
         $map = [
-            'subject' => $request->get('subject'),
-            'to' => $request->get('to'),
-            'body' => $request->get('body'),
-            'bcc' => $request->get('bcc'),
-            'cc' => $request->get('cc'),
-            'from' => $request->get('from'),
-            'reply_to' => $request->get('reply_to'),
-            'delay_time' => $request->get('delay_time')
+            'subject'    => $request->get('subject'),
+            'to'         => $request->get('to'),
+            'body'       => $request->get('body'),
+            'bcc'        => $request->get('bcc'),
+            'cc'         => $request->get('cc'),
+            'from'       => $request->get('from'),
+            'reply_to'   => $request->get('reply_to'),
+            'delay_time' => $request->get('delay_time'),
         ];
 
         $map['drafted'] = true;
         $validationArr = [
             'subject' => 'required',
-            'body' => 'required',
+            'body'    => 'required',
         ];
         if (!empty($map['cc'])) {
             $validationArr['cc'] = 'array';
@@ -218,43 +227,49 @@ class MailController extends BaseController
 
         $validator = \Validator::make($map, $validationArr);
         if ($validator->fails()) {
-            throw new \Exception(join(' ', $validator->errors()->all()));
+            throw new \Exception(implode(' ', $validator->errors()->all()));
         }
+
         try {
             \DB::beginTransaction();
             $this->sendMail($map);
             \DB::commit();
+
             return response()->json(['ok']);
         } catch (\Exception $exception) {
             \DB::rollBack();
+
             return ['error', ['Mail Not sent']];
         } catch (\Throwable $exception) {
             \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
+
+            return ['error', ['Mail Not sent. Code - '.$exception->getCode()]];
         }
     }
 
     /**
      * @param Request $request
-     * @return array
+     *
      * @throws \Exception
+     *
+     * @return array
      */
     public function saveAsNewAndResend(Request $request)
     {
         $map = [
-            'subject' => $request->get('subject'),
-            'to' => $request->get('to'),
-            'body' => $request->get('body'),
-            'bcc' => $request->get('bcc'),
-            'cc' => $request->get('cc'),
-            'from' => $request->get('from'),
-            'reply_to' => $request->get('reply_to'),
-            'delay_time' => $request->get('delay_time')
+            'subject'    => $request->get('subject'),
+            'to'         => $request->get('to'),
+            'body'       => $request->get('body'),
+            'bcc'        => $request->get('bcc'),
+            'cc'         => $request->get('cc'),
+            'from'       => $request->get('from'),
+            'reply_to'   => $request->get('reply_to'),
+            'delay_time' => $request->get('delay_time'),
         ];
 
         $validationArr = [
             'subject' => 'required',
-            'body' => 'required',
+            'body'    => 'required',
         ];
         if (!empty($map['cc'])) {
             $validationArr['cc'] = 'array';
@@ -268,8 +283,9 @@ class MailController extends BaseController
 
         $validator = \Validator::make($map, $validationArr);
         if ($validator->fails()) {
-            throw new \Exception(join(' ', $validator->errors()->all()));
+            throw new \Exception(implode(' ', $validator->errors()->all()));
         }
+
         try {
             \DB::beginTransaction();
             $this->sendMail($map);
@@ -278,10 +294,12 @@ class MailController extends BaseController
             return response()->json(['ok']);
         } catch (\Exception $exception) {
             \DB::rollBack();
+
             return ['error', ['Mail Not sent']];
         } catch (\Throwable $exception) {
             \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
+
+            return ['error', ['Mail Not sent. Code - '.$exception->getCode()]];
         }
     }
 
@@ -290,11 +308,11 @@ class MailController extends BaseController
      */
     public function saveAndResend(Request $request)
     {
-
     }
 
     /**
      * @param array $data
+     *
      * @return array
      */
     private function sendMail(array $data)
@@ -302,17 +320,17 @@ class MailController extends BaseController
         $mailRepository = app(MailRepositoryEloquent::class);
         $mailRepository->sendAsync(
             [
-                'template' => 'admin.mail.custom_body',
-                'to' => !empty($data['to']) ? $data['to'] : config('mail.store_admin'),
-                'bcc' => $data['bcc'],
-                'cc' => $data['cc'],
-                'reply' => $data['reply_to'],
-                'from' => $data['from'],
-                'subject' => $data['subject'],
-                'body' => $data['body'],
+                'template'   => 'admin.mail.custom_body',
+                'to'         => !empty($data['to']) ? $data['to'] : config('mail.store_admin'),
+                'bcc'        => $data['bcc'],
+                'cc'         => $data['cc'],
+                'reply'      => $data['reply_to'],
+                'from'       => $data['from'],
+                'subject'    => $data['subject'],
+                'body'       => $data['body'],
                 'delay_time' => !empty($data['delay_time']) ? $data['delay_time'] : null,
-                'drafted' => !empty($data['drafted']) ? $data['drafted'] : false,
-                'id' => !empty($data['id']) ? $data['id'] : ''
+                'drafted'    => !empty($data['drafted']) ? $data['drafted'] : false,
+                'id'         => !empty($data['id']) ? $data['id'] : '',
             ]
         );
     }

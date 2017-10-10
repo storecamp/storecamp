@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 /**
- * Class MailWebhookController
- * @package App\Http\Controllers
+ * Class MailWebhookController.
  */
-class MailWebhookController extends Controller {
-
+class MailWebhookController extends Controller
+{
     /**
      * @var EmailLogRepository
      */
@@ -19,6 +18,7 @@ class MailWebhookController extends Controller {
 
     /**
      * WebhookController constructor.
+     *
      * @param EmailLogRepository $emailLogRepository
      */
     public function __construct(EmailLogRepository $emailLogRepository)
@@ -27,9 +27,10 @@ class MailWebhookController extends Controller {
     }
 
     /**
-     * Accept request from webhooks and change status in Email Log record
+     * Accept request from webhooks and change status in Email Log record.
      *
      * @param Request $request
+     *
      * @return bool
      */
     public function notify(Request $request)
@@ -38,21 +39,21 @@ class MailWebhookController extends Controller {
         $dataArr = $request->json()->all();
         foreach ($dataArr as $data) {
             \Log::info(json_encode($data));
-            if(isset($data['smtp-id'])) {
+            if (isset($data['smtp-id'])) {
                 $message_id = preg_replace('/[^A-Za-z0-9.@\-]/', '', $data['smtp-id']);
             }
             $input = [
-                "message_id" => isset($data['smtp-id']) ?
+                'message_id' => isset($data['smtp-id']) ?
                     preg_replace('/[^A-Za-z0-9.@\-]/', '', $data['smtp-id']) : '',
-                "email" => isset($data['email']) ? $data['email'] : '',
-                "timestamp" => isset($data['timestamp']) ? $data['timestamp'] : '',
-                "event" => isset($data['event']) ? $data['event'] : '',
-                "userid" => isset($data['userid']) ? $data['userid'] : '',
-                "url" => isset($data['url']) ? $data['url'] : '',
-                "template" => isset($data['template']) ? $data['template'] : '',
-                "useragent" => isset($data['useragent']) ? $data['useragent'] : '',
-                "ip" => isset($data['ip']) ? $data['ip'] : '',
-                "reason" => isset($data['reason']) ? $data['reason'] : '',
+                'email'     => isset($data['email']) ? $data['email'] : '',
+                'timestamp' => isset($data['timestamp']) ? $data['timestamp'] : '',
+                'event'     => isset($data['event']) ? $data['event'] : '',
+                'userid'    => isset($data['userid']) ? $data['userid'] : '',
+                'url'       => isset($data['url']) ? $data['url'] : '',
+                'template'  => isset($data['template']) ? $data['template'] : '',
+                'useragent' => isset($data['useragent']) ? $data['useragent'] : '',
+                'ip'        => isset($data['ip']) ? $data['ip'] : '',
+                'reason'    => isset($data['reason']) ? $data['reason'] : '',
             ];
 
 //        $input = [
@@ -64,20 +65,18 @@ class MailWebhookController extends Controller {
 //            'email' => 'eugene.telyatnik@gmail.com',
 //            'timestamp' => '1459178808',
 //        ];
-            \Log::info('Email Notification performed - ' . json_encode($input));
+            \Log::info('Email Notification performed - '.json_encode($input));
 
             if (!is_array($input)
                 || !isset($input['message_id'])
                 || !isset($input['event'])
-                || !isset($input['email']))
-            {
+                || !isset($input['email'])) {
                 return false;
             }
 
             $this->emailLogRepository->updateRecipientStatus(
                 $input['message_id'], $input['email'], $input['event'],
                 $input);
-
         }
         die('ok');
     }

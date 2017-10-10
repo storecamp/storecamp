@@ -81,12 +81,13 @@ if (!function_exists('buildSelect')) {
     /**
      * @param $actionUrl
      * @param $attrName
-     * @param bool $multiple
+     * @param bool  $multiple
      * @param array $data
      * @param array $selected
-     * @param null $class
-     * @param null $placeholder
-     * @param bool $tags
+     * @param null  $class
+     * @param null  $placeholder
+     * @param bool  $tags
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     function buildSelect($actionUrl, $attrName, bool $multiple, $data = [], $selected = [],
