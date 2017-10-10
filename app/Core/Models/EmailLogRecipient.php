@@ -31,12 +31,9 @@ class EmailLogRecipient extends Model implements Transformable
 
     private $rules = [
         'email' => 'required',
-        'type' => 'required',
+        'type'  => 'required',
     ];
 
-    /**
-     *
-     */
     public static function boot()
     {
         parent::boot();
@@ -44,12 +41,14 @@ class EmailLogRecipient extends Model implements Transformable
 
     /**
      * @param \Illuminate\Database\Query\Builder $query
+     *
      * @return \App\Core\Support\Cacheable\EloquentBuilder
      */
     public function newEloquentBuilder($query)
     {
         return $this->cache_newEloquentBuilder($query);
     }
+
     /**
      * Get the log for the recipient.
      */
@@ -57,5 +56,4 @@ class EmailLogRecipient extends Model implements Transformable
     {
         return $this->belongsTo(EmailLog::class);
     }
-
 }

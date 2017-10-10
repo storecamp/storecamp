@@ -19,7 +19,7 @@ return [
      * Uploader will throw an exception if a disk not in this list is selected
      */
     'allowed_disks' => [
-        'local'
+        'local',
     ],
 
     /*
@@ -129,7 +129,7 @@ return [
                 'm4v',
                 'mov',
                 'ogv',
-                'webm'
+                'webm',
             ],
         ],
         Plank\Mediable\Media::TYPE_ARCHIVE => [

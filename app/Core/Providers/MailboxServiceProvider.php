@@ -3,22 +3,20 @@
  * Created by PhpStorm.
  * User: nilse
  * Date: 9/24/2017
- * Time: 11:48 PM
+ * Time: 11:48 PM.
  */
 
 namespace App\Core\Providers;
 
-
 use App\Core\Commands\SendCommand;
 use App\Core\Handlers\MailEventHandler;
+use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 
 class MailboxServiceProvider extends MailServiceProvider
 {
-
     /**
      * Register the application services.
      *
@@ -29,14 +27,15 @@ class MailboxServiceProvider extends MailServiceProvider
         parent::register();
 
         $this->commands([
-            SendCommand::class
+            SendCommand::class,
         ]);
     }
 
     /**
      * Register any other events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+     * @param \Illuminate\Contracts\Events\Dispatcher $events
+     *
      * @return void
      */
     public function boot(DispatcherContract $events)
@@ -47,12 +46,11 @@ class MailboxServiceProvider extends MailServiceProvider
 
         \Queue::after(function (JobProcessed $event) {
             $data = $event->job->payload();
-            if($data["displayName"]  == "App\\Mail\\DeliverMail") {
+            if ($data['displayName'] == 'App\\Mail\\DeliverMail') {
                 \Log::info('Email is sent');
             }
         });
 
         \Event::subscribe(MailEventHandler::class);
     }
-
 }

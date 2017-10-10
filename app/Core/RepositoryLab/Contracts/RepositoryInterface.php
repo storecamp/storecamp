@@ -45,6 +45,7 @@ interface RepositoryInterface
      * @return mixed
      */
     public function count();
+
     /**
      * @param $id
      * @param array $columns

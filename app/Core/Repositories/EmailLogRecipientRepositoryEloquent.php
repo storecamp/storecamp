@@ -2,19 +2,17 @@
 
 namespace App\Core\Repositories;
 
-use RepositoryLab\Repository\Eloquent\BaseRepository;
-use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\EmailLogRecipientRepository;
 use App\Core\Models\EmailLogRecipient;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
 
 /**
- * Class EmailLogRecipientRepositoryEloquent
- * @package namespace App\Core\Repositories;
+ * Class EmailLogRecipientRepositoryEloquent.
  */
 class EmailLogRecipientRepositoryEloquent extends BaseRepository implements EmailLogRecipientRepository
 {
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -24,7 +22,7 @@ class EmailLogRecipientRepositoryEloquent extends BaseRepository implements Emai
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {

@@ -39,7 +39,8 @@ class DockerRun extends Command
     {
         $proc = proc_open('cd laradock && chcp 850 >> nul && docker-compose exec workspace bash && cd ../', [STDIN, STDOUT, STDERR], $pipes);
         if ($proc === false) {
-            $this->error("Failed to open process");
+            $this->error('Failed to open process');
+
             return 2;
         }
 

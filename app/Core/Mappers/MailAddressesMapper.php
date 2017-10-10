@@ -3,18 +3,17 @@
  * Created by PhpStorm.
  * User: nilse
  * Date: 9/24/2017
- * Time: 11:33 PM
+ * Time: 11:33 PM.
  */
 
 namespace App\Core\Mappers;
-
 
 class MailAddressesMapper
 {
     public static function map($address)
     {
         $addresses = [];
-        if(is_array($address)) {
+        if (is_array($address)) {
             foreach ($address as $key => $value) {
                 $name = '';
                 $email = '';
@@ -27,9 +26,9 @@ class MailAddressesMapper
                 if (!is_array($value) && !empty($value)) {
                     $email = $value;
                 } else {
-                    if (!empty($value) && !is_integer($value)) {
+                    if (!empty($value) && !is_int($value)) {
                         foreach ($value as $key2 => $value2) {
-                            if (is_integer($key2)) {
+                            if (is_int($key2)) {
                                 $email = isset($value[0]) ? $value[0] : '';
                                 $name = isset($value[1]) ? $value[1] : '';
                             }
