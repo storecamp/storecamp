@@ -3,12 +3,19 @@
 namespace App\Core\Contracts;
 
 use App\Core\Models\User;
+use App\Core\Repositories\RolesRepositoryEloquent;
+use App\Core\Repositories\UserRepositoryEloquent;
 
 /**
  * Interface UsersSystemContract.
  */
 interface UsersSystemContract
 {
+    /**
+     * @return UserRepositoryEloquent
+     */
+    public function getUserRepository(): UserRepositoryEloquent;
+
     /**
      * @param $data
      * @param null  $id

@@ -29,6 +29,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public $productReview;
 
+    /**
+     * @var MessageRepository
+     */
     public $message;
 
     /**
