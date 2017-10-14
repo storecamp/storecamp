@@ -15720,8 +15720,11 @@ module.exports = Vue$3;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_Access_Create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_Access_Create_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Access_Edit_vue__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Access_Edit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_Access_Edit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue__ = __webpack_require__(418);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return router; });
+
 
 
 
@@ -15757,7 +15760,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
         path: '/account',
         name: 'account',
         component: __WEBPACK_IMPORTED_MODULE_6__components_User_Account_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         children: [{
             path: 'profile',
             name: 'profile',
@@ -15788,61 +15791,79 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
         path: '/users',
         name: 'users',
         component: __WEBPACK_IMPORTED_MODULE_9__components_Users_All_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/users/edit/:id',
         name: 'usersEdit',
         component: __WEBPACK_IMPORTED_MODULE_10__components_Users_Edit_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/users/create',
         name: 'usersCreate',
         component: __WEBPACK_IMPORTED_MODULE_11__components_Users_Create_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/access',
         name: 'access',
         component: __WEBPACK_IMPORTED_MODULE_16__components_Access_All_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/access/edit/:id',
         name: 'rolesEdit',
         component: __WEBPACK_IMPORTED_MODULE_18__components_Access_Edit_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/access/create',
         name: 'rolesCreate',
         component: __WEBPACK_IMPORTED_MODULE_17__components_Access_Create_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/logs',
         name: 'logs',
         component: __WEBPACK_IMPORTED_MODULE_12__components_Logs_Logs_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/logs_dash',
         name: 'logsDash',
         component: __WEBPACK_IMPORTED_MODULE_13__components_Logs_Dashboard_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/logs_date/:date',
         name: 'logsShowDate',
         component: __WEBPACK_IMPORTED_MODULE_15__components_Logs_LogshowDate_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }, {
         path: '/logs_date_key/:date/:key',
         name: 'logsShowDateKey',
         component: __WEBPACK_IMPORTED_MODULE_14__components_Logs_LogshowDateKey_vue___default.a,
-        props: { auth: __WEBPACK_IMPORTED_MODULE_19__services_auth_service_js__["a" /* default */] },
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
+        meta: { auth: true }
+    }, {
+        path: '/media',
+        name: 'media',
+        component: __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default.a,
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
+        meta: { auth: true }
+    }, {
+        path: '/media_disk/:disk',
+        name: 'mediaDisk',
+        component: __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default.a,
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
+        meta: { auth: true }
+    }, {
+        path: '/media_disk_folder/:disk/:folder_id',
+        name: 'mediaDiskFolder',
+        component: __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default.a,
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
     }]
 });
@@ -44868,6 +44889,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -94362,6 +94393,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "auth": _vm.auth
     }
   }), _vm._v(" "), _c('router-view', {
+    key: _vm.$route.name,
     staticClass: "content-wrapper",
     attrs: {
       "auth": _vm.auth
@@ -94529,6 +94561,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-user"
   }), _vm._v("\n                        Users\n                    ")])]), _vm._v(" "), _c('router-link', {
+    staticClass: "treeview item ",
+    attrs: {
+      "active-class": "active",
+      "exact-active-class": "active",
+      "to": {
+        name: 'media'
+      },
+      "tag": "li"
+    }
+  }, [_c('a', {
+    staticClass: "link"
+  }, [_c('i', {
+    staticClass: "fa fa-files-o"
+  }), _vm._v("\n                        FileSystem\n                    ")])]), _vm._v(" "), _c('router-link', {
     staticClass: "treeview item ",
     attrs: {
       "active-class": "active",
@@ -97224,6 +97270,1115 @@ module.exports = function() {
 __webpack_require__(17);
 module.exports = __webpack_require__(168);
 
+
+/***/ }),
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Folders_vue__ = __webpack_require__(420);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Folders_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Files_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            count: 0,
+            directories: [],
+            disk: "local",
+            folder: {},
+            media: {},
+            path: "",
+            rootFolders: [],
+            urlFolderPathBuild: ""
+        };
+    },
+
+    methods: {
+        getFolder: function getFolder(page, disk, folder_id) {
+            var _this = this;
+
+            var pageNum = page ? page : 1;
+            var url = '/api/media/index';
+            if (disk) {
+                url += "/" + disk;
+            }
+            if (folder_id) {
+                url += "/" + folder_id;
+            }
+            Vue.http.get(window.BASE_URL + url + '?page=' + pageNum).then(function (response) {
+                _this.error = false;
+                _this.count = response.data.count;
+                _this.directories = response.data.directories;
+                _this.disk = response.data.disk;
+                _this.folder = response.data.folder;
+                _this.media = response.data.media;
+                _this.path = response.data.media;
+                _this.rootFolders = response.data.rootFolders;
+                _this.urlFolderPathBuild = response.data.urlFolderPathBuild;
+            }, function (response) {
+                _this.error = true;
+                _this.errorMsg = response.error;
+            });
+        }
+    },
+    mounted: function mounted() {
+        var page = this.$route.params.page ? this.$route.params.page : 0;
+        var disk = this.$route.params.disk ? this.$route.params.disk : "local";
+        var folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
+        this.getFolder(page, disk, folder_id);
+    },
+    components: {
+        folders: __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default.a,
+        files: __WEBPACK_IMPORTED_MODULE_1__Files_vue___default.a
+    }
+});
+
+/***/ }),
+/* 415 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['']
+});
+
+/***/ }),
+/* 416 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['folder']
+});
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\n.delete-file, .rename-file, .download-file, .tag-file {\n  position: absolute;\n  top: auto;\n  right: 0;\n  display: none;\n  padding: 3px;\n}\n.rename-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.locked-file {\n  position: absolute;\n  top: 5px;\n  color: chocolate;\n}\n.download-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.file-item {\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n.file-item.checked {\n    box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;\n}\n.file-item .mailbox-attachment-icon {\n    border: 1px solid transparent;\n}\n.file-item .mailbox-attachment-info {\n    overflow: hidden;\n}\n.file-item:hover .mailbox-attachment-icon {\n    border: 1px solid #3c8dbc;\n}\n.file-item .item-icons {\n    height: 2em;\n}\n.file-item .item-icon {\n    width: 100%;\n    height: 150px;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item .item-image {\n    width: 100%;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item:hover .delete-file {\n    display: block;\n    z-index: 9999;\n}\n.file-item:hover .download-file {\n    display: block;\n    z-index: 9999;\n}\n#my-awesome-dropzone-body {\n  border: 2px dashed aliceblue;\n  border-radius: 5px;\n  background: white;\n}\n#my-awesome-dropzone-body .dz-message {\n    text-decoration: dashed;\n    font-weight: 700;\n}\n#my-awesome-dropzone-body > .dz-preview {\n    display: none;\n}\n.files li {\n  list-style-type: none;\n}\n.directory-item:hover .delete-file {\n  display: block;\n  z-index: 9999;\n}\n.directory-item:hover .rename-file {\n  display: block;\n  z-index: 9999;\n}\n.media_tags {\n  display: inline-block;\n}\n.media_tags li {\n    list-style-type: none;\n    display: inline;\n}\n.media_tags li a {\n      border-bottom: 2px solid transparent;\n      background: transparent;\n}\n.media_tags li.active a, .media_tags li:hover a {\n      border-radius: 0;\n      background: #3d3d3d;\n      color: whitesmoke;\n      border-bottom: 2px solid #3d3d3d;\n}\n.dropzone {\n  border: 2px dashed aliceblue !important;\n  border-radius: 5px;\n  background: white;\n}\n.playing .mailbox-attachment-icon {\n  border: 1px solid #3c8dbc;\n}\n.directories .box-default {\n  border: none;\n  box-shadow: none;\n  border-left: 2px dashed aliceblue;\n  min-height: 400px;\n}\n.directories .box-header {\n  border-bottom: 2px dashed aliceblue;\n}\n#fileLinker-modal .selected-block {\n  word-wrap: break-word;\n}\n#fileLinker-modal .selected-block div {\n    text-align: center;\n}\n#fileLinker-modal .selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n#fileLinker-modal .selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.files.selected-block {\n  word-wrap: break-word;\n  display: block;\n  width: 100%;\n}\n.files.selected-block div {\n    text-align: center;\n}\n.files.selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n.files.selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.selected-block .selected-item {\n  padding-left: 0;\n}\n.selected-block .selected-item .remove-selected {\n    color: #F44336;\n}\n.items-list .delete-btn, .items-list .rename-btn, .items-list .download-btn, .items-list .info-btn {\n  display: inline-block;\n  position: relative;\n}\n", ""]);
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(424)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(414),
+  /* template */
+  __webpack_require__(422),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\FileSystem\\All.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] All.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5b8668b8", Component.options)
+  } else {
+    hotAPI.reload("data-v-5b8668b8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 419 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(415),
+  /* template */
+  __webpack_require__(423),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\FileSystem\\Files.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Files.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c25bea64", Component.options)
+  } else {
+    hotAPI.reload("data-v-c25bea64", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 420 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(416),
+  /* template */
+  __webpack_require__(421),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\nilse\\Code\\storecamp\\front\\assets\\js\\components\\FileSystem\\Folders.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Folders.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-137a175c", Component.options)
+  } else {
+    hotAPI.reload("data-v-137a175c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 421 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    attrs: {
+      "id": "folders-side"
+    }
+  }, [_c('div', {
+    staticClass: "col-xs-5 col-sm-5 col-md-4 col-lg-3 directories"
+  }, [_c('div', {
+    staticClass: "box box-default"
+  }, [_c('div', {
+    staticClass: "box-header with-border"
+  }, [_c('h3', {
+    staticClass: "box-title"
+  }, [_vm._v("Folders")]), _vm._v(" "), _c('div', {
+    staticClass: "box-tools pull-right"
+  }, [_c('button', {
+    staticClass: "btn btn-box-tool",
+    attrs: {
+      "type": "button",
+      "data-widget": "collapse"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "box-body",
+    staticStyle: {
+      "display": "block"
+    }
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6 directory-item"
+  }, [_c('a', {
+    staticClass: "delete-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "type": "delete",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/delete/folder/local/d8dbcd87-d3ac-4ddd-97e2-86ecf0b0a265"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "rename-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#renameDir-modal",
+      "data-new_name": "mails",
+      "data-rename-id": "d8dbcd87-d3ac-4ddd-97e2-86ecf0b0a265",
+      "type": "rename",
+      "role": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-app",
+    attrs: {
+      "href": "http://storecamp.dev/en/admin/media/index/local/d8dbcd87-d3ac-4ddd-97e2-86ecf0b0a265"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file"
+  }), _vm._v(" "), _c('span', [_vm._v("mails")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6 directory-item"
+  }, [_c('a', {
+    staticClass: "delete-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "type": "delete",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/delete/folder/local/63b6c976-2e1e-48f5-be3e-714c8bcae16f"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "rename-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#renameDir-modal",
+      "data-new_name": "ivan",
+      "data-rename-id": "63b6c976-2e1e-48f5-be3e-714c8bcae16f",
+      "type": "rename",
+      "role": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-app",
+    attrs: {
+      "href": "http://storecamp.dev/en/admin/media/index/local/63b6c976-2e1e-48f5-be3e-714c8bcae16f"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file"
+  }), _vm._v(" "), _c('span', [_vm._v("ivan")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6 directory-item"
+  }, [_c('a', {
+    staticClass: "delete-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "type": "delete",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/delete/folder/local/1125f67f-6b07-4eda-84b3-79680a7f9875"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "rename-file text-danger btn btn-default btn-xs",
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#renameDir-modal",
+      "data-new_name": "badCoder",
+      "data-rename-id": "1125f67f-6b07-4eda-84b3-79680a7f9875",
+      "type": "rename",
+      "role": "button"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-app",
+    attrs: {
+      "href": "http://storecamp.dev/en/admin/media/index/local/1125f67f-6b07-4eda-84b3-79680a7f9875"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file"
+  }), _vm._v(" "), _c('span', [_vm._v("badCoder")])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-137a175c", module.exports)
+  }
+}
+
+/***/ }),
+/* 422 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [(_vm.folder) ? _c('div', [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-md-5 pull-right text-right",
+    attrs: {
+      "id": "disks"
+    }
+  }, [_c('small', [_vm._v("Disks")]), _vm._v(" "), _vm._l((_vm.rootFolders), function(disk) {
+    return _c('b', {
+      staticClass: "text-info",
+      staticStyle: {
+        "font-size": "20px",
+        "text-decoration": "underline"
+      }
+    }, [_c('router-link', {
+      class: disk.class,
+      staticStyle: {
+        "margin-left": "10px"
+      },
+      attrs: {
+        "to": {
+          name: 'mediaDiskFolder',
+          params: {
+            disk: disk.disk,
+            folder_id: disk.folder_id
+          }
+        },
+        "data-folder-id": disk.folder_id,
+        "data-disk": disk.disk,
+        "data-folder-url": disk.folder_url
+      }
+    }, [_vm._v(_vm._s(disk.disk) + "\n                ")])], 1)
+  })], 2)]) : _vm._e(), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12"
+  }, [_c('div', {
+    staticClass: "box"
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "box-body folder-body",
+    attrs: {
+      "id": "folder-body",
+      "data-folder-url": "http://storecamp.dev/en/admin/media/getIndex/local/c52ae992-f435-4014-acf4-8959204658d0"
+    }
+  }, [_c('files'), _vm._v(" "), _c('folders')], 1)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-7 pull-left"
+  }, [_c('small', [_vm._v("\n                Folder\n            ")]), _vm._v(" "), _c('b', {
+    staticClass: "text-info",
+    staticStyle: {
+      "font-size": "20px",
+      "text-decoration": "underline"
+    }
+  }, [_c('a', {
+    staticClass: "active",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#",
+      "data-folder-id": "#",
+      "data-folder-url": ""
+    }
+  }, [_vm._v("../")])]), _vm._v(" "), _c('a', {
+    staticClass: "text-info",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#",
+      "data-folder-id": "",
+      "data-folder-url": ""
+    }
+  }, [_vm._v("\n                local\n            ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "hidden"
+  }, [_c('div', {
+    attrs: {
+      "id": "current-container"
+    }
+  }, [_c('button', {
+    staticClass: "upload-browse-button btn btn-primary",
+    attrs: {
+      "type": "button",
+      "id": "upload-browse-button"
+    }
+  }, [_vm._v("Browse...\n            ")]), _vm._v(" "), _c('button', {
+    staticClass: "upload-start-upload btn btn-success",
+    attrs: {
+      "type": "button",
+      "id": "uploadfiles"
+    }
+  }, [_vm._v("Upload")])]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "uploader"
+    }
+  }, [_vm._v("Your browser doesn't support native upload.")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "box-header"
+  }, [_c('h3', {
+    staticClass: "box-title"
+  }, [_vm._v("List of Media Files")]), _vm._v(" "), _c('div', {
+    staticClass: "box-tools"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('a', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("\n                                back\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#upload-modal"
+    }
+  }, [_vm._v("\n                                upload\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#newdir-modal"
+    }
+  }, [_vm._v("\n                                create directory\n                            ")]), _vm._v(" "), _c('form', {
+    staticClass: "input-group pull-right",
+    staticStyle: {
+      "width": "200px",
+      "margin-left": "10px"
+    },
+    attrs: {
+      "method": "get"
+    }
+  }, [_c('input', {
+    staticClass: "form-control pull-right",
+    attrs: {
+      "type": "text",
+      "name": "search",
+      "placeholder": "Search"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "clearifx"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "media_tags"
+  }, [_c('span', {
+    staticClass: "text-muted"
+  }, [_vm._v("only: ")]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("\n                        - all\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#video"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-video-camera"
+  }), _vm._v(" - video\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "audio"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-music"
+  }), _vm._v(" - audio\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#image"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-image"
+  }), _vm._v(" - image\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "pdf"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-pdf-o"
+  }), _vm._v(" - pdf\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "archive"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-archive-o"
+  }), _vm._v(" - archive\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#document"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-archive-o"
+  }), _vm._v(" - document\n                        ")])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5b8668b8", module.exports)
+  }
+}
+
+/***/ }),
+/* 423 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-xs-7 col-sm-7 col-md-8 col-lg-9 files"
+  }, [_c('div', {
+    staticClass: "panel"
+  }, [_c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "media file-item",
+    attrs: {
+      "data-file-id": "113",
+      "data-filename": "1.png",
+      "data-disk": "local",
+      "data-file-type": "image",
+      "data-modified": "2017-10-04 10:20:05",
+      "data-size": "4.18 MB",
+      "data-href": "http://storecamp.dev/uploads/1.png"
+    }
+  }, [_c('div', {
+    staticClass: "pull-left text-muted"
+  }, [_c('img', {
+    staticClass: "item-icons",
+    attrs: {
+      "src": "http://storecamp.dev/uploads/1.png",
+      "alt": "1"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "media-body"
+  }, [_c('div', [_c('div', {
+    staticClass: "pull-right inline items-list"
+  }, [_c('a', {
+    staticClass: "btn info-btn btn-default btn-xs",
+    attrs: {
+      "data-name": "1",
+      "data-id": "113",
+      "data-url": "http://storecamp.dev/uploads/1.png",
+      "data-toggle": "modal",
+      "data-mime": "image/png",
+      "type": "info",
+      "role": "button",
+      "href": "#info-modal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-play",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                info\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn download-btn btn-info btn-xs",
+    attrs: {
+      "type": "download",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/download/local/113/1"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-cloud-download",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                Download")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-default rename-btn btn-xs",
+    attrs: {
+      "data-rename-file": "1",
+      "data-rename-path": "113",
+      "data-toggle": "modal",
+      "type": "rename",
+      "role": "button",
+      "href": "#renameFile-modal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                edit\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "delete-file-btn text-danger btn btn-default btn-xs",
+    attrs: {
+      "type": "delete",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/delete/113",
+      "data-id": "113",
+      "data-with-modal": "true",
+      "data-name": "1"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                delete\n                            ")])]), _vm._v(" "), _c('strong', [_vm._v("1.png")])]), _vm._v(" "), _c('div', {
+    staticClass: "text-muted"
+  }, [_c('small', [_vm._v("size: 4.18 MB")]), _vm._v(" "), _c('small', [_vm._v("last_modified: 2017-10-04 10:20:05")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "media file-item",
+    attrs: {
+      "data-file-id": "114",
+      "data-filename": "Logo.png",
+      "data-disk": "local",
+      "data-file-type": "image",
+      "data-modified": "2017-10-04 10:20:05",
+      "data-size": "4.83 KB",
+      "data-href": "http://storecamp.dev/uploads/Logo.png"
+    }
+  }, [_c('div', {
+    staticClass: "pull-left text-muted"
+  }, [_c('img', {
+    staticClass: "item-icons",
+    attrs: {
+      "src": "http://storecamp.dev/uploads/Logo.png",
+      "alt": "Logo"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "media-body"
+  }, [_c('div', [_c('div', {
+    staticClass: "pull-right inline items-list"
+  }, [_c('a', {
+    staticClass: "btn info-btn btn-default btn-xs",
+    attrs: {
+      "data-name": "Logo",
+      "data-id": "114",
+      "data-url": "http://storecamp.dev/uploads/Logo.png",
+      "data-toggle": "modal",
+      "data-mime": "image/png",
+      "type": "info",
+      "role": "button",
+      "href": "#info-modal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-play",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                info\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn download-btn btn-info btn-xs",
+    attrs: {
+      "type": "download",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/download/local/114/1"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-cloud-download",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                Download")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-default rename-btn btn-xs",
+    attrs: {
+      "data-rename-file": "Logo",
+      "data-rename-path": "114",
+      "data-toggle": "modal",
+      "type": "rename",
+      "role": "button",
+      "href": "#renameFile-modal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                edit\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "delete-file-btn text-danger btn btn-default btn-xs",
+    attrs: {
+      "type": "delete",
+      "role": "button",
+      "href": "http://storecamp.dev/en/admin/media/delete/114",
+      "data-id": "114",
+      "data-with-modal": "true",
+      "data-name": "Logo"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n                                delete\n                            ")])]), _vm._v(" "), _c('strong', [_vm._v("Logo.png")])]), _vm._v(" "), _c('div', {
+    staticClass: "text-muted"
+  }, [_c('small', [_vm._v("size: 4.83 KB")]), _vm._v(" "), _c('small', [_vm._v("last_modified: 2017-10-04 10:20:05")])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c25bea64", module.exports)
+  }
+}
+
+/***/ }),
+/* 424 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(417);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("4da7383d", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5b8668b8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./All.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5b8668b8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./All.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

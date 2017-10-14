@@ -2,7 +2,7 @@
     <div>
         <navigation :auth="auth"></navigation>
         <sidebar :auth="auth"></sidebar>
-        <router-view  class="content-wrapper" :auth="auth"></router-view>
+        <router-view  :key="$route.name" class="content-wrapper" :auth="auth"></router-view>
     </div>
 </template>
 <style></style>

@@ -11,7 +11,6 @@ if (env('APP_ENV') !== 'testing') {
 $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'checkBannedUser']], function (\Illuminate\Routing\Router $router) {
 
 
-
     /*
      * Client Site routes
      */
@@ -982,12 +981,12 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
     });
 });
 
-\Route::group(['as' => 'mailbox.', 'prefix' => 'mailbox'], function() {
+\Route::group(['as' => 'mailbox.', 'prefix' => 'mailbox'], function () {
     \Route::post('notify', ['as' => 'notify', 'uses' => 'Webhooks\MailWebhookController@notify']);
 });
 /*
 * Client Front routes
 */
-\Route::get("{$prefix}/front", function(\Illuminate\Http\Request $request) {
-    return view('front');
+\Route::get("{$prefix}/front", function (\Illuminate\Http\Request $request) use ($prefix) {
+    return view('front', compact('prefix'));
 });
