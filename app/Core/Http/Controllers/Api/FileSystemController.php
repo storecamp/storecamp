@@ -100,18 +100,27 @@ class FileSystemController extends Controller
     public function index(Request $request, $disk = '', $folder = null)
     {
 //        try {
-            $diskName = $disk;
-            $predefined = $this->preDefineIndexPart($request, $disk, $folder);
-            $media = $predefined['media'];
-            $directories = $predefined['directories'];
-            $path = $predefined['path'];
-            $folder = $predefined['folder'];
-            $count = $predefined['count'];
-            $disk = $predefined['disk'];
-            $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
-            $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
+        $diskName = $disk;
+        $predefined = $this->preDefineIndexPart($request, $disk, $folder);
+        $media = $predefined['media'];
+        $directories = $predefined['directories'];
+        $path = $predefined['path'];
+        $folder = $predefined['folder'];
+        $count = $predefined['count'];
+        $disk = $predefined['disk'];
+        $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
+        $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
+        $media['media']->getCollection()->map(function ($item) use ($disk, $folder) {
+            $item['url'] = $item->getUrl();
+            $item['download_url'] = route("api.media::download", [$disk, $item->id, $folder->id]);
+            $item['delete_url'] = route("api.media::get.delete", [$disk, $item->id]);
+        });
 
-            return response()->json(compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
+        $directories->map(function ($item) use ($disk, $folder) {
+            $item['delete_url'] = route("api.media::get.folder.delete", [$disk, $item->unique_id]);
+        });
+
+        return response()->json(compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
 //        } catch (ModelNotFoundException $e) {
 //            \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
 //            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);

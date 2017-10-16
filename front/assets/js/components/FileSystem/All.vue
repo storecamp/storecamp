@@ -45,7 +45,6 @@
                         <h3 class="box-title">List of Media Files</h3>
                         <div class="box-tools">
                             <div class="form-group">
-
                                 <a class="btn btn-xs btn-default" href="#"
                                    style="margin-left: 10px">
                                     back
@@ -60,7 +59,6 @@
                                    class="btn btn-xs btn-default" style="margin-left: 10px">
                                     create directory
                                 </a>
-
                                 <form method="get"
                                       class="input-group pull-right"
                                       style="width: 200px; margin-left: 10px">
@@ -126,8 +124,8 @@
                     <div id="folder-body"
                          data-folder-url="http://storecamp.dev/en/admin/media/getIndex/local/c52ae992-f435-4014-acf4-8959204658d0"
                          class="box-body folder-body">
-                        <files></files>
-                        <folders></folders>
+                        <files :media="media" :disk="disk" :count="count"></files>
+                        <folders :directories="directories" :count="count" :folder="folder" :disk="disk"></folders>
                     </div>
 
                 </div>
@@ -169,7 +167,7 @@
                         this.directories = response.data.directories;
                         this.disk = response.data.disk;
                         this.folder = response.data.folder;
-                        this.media = response.data.media;
+                        this.media = response.data.media.media.data;
                         this.path = response.data.media;
                         this.rootFolders = response.data.rootFolders;
                         this.urlFolderPathBuild = response.data.urlFolderPathBuild;

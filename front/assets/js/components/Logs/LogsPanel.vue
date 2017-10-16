@@ -28,7 +28,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .logs-panel {
         .all.router-link-active {
             background-color: #8A8A8A;
