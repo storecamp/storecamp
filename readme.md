@@ -2,6 +2,8 @@
 
 [![StyleCI](https://styleci.io/repos/83136388/shield?branch=master)](https://styleci.io/repos/83136388)
 
+[Telegram Channel](https://t.me/storecamp)
+
 ###ecommerce platform
 ###see the main code base in app/Core directory
 ###the project is still in active development and it is not required to use it anywhere
