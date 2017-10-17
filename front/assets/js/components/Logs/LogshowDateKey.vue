@@ -139,34 +139,30 @@
             dLink(event) {
                 let date = $(event.target).attr('data-date');
                 return window.BASE_URL + '/api/backlogs/' + date;
+            },
+            loadData: function() {
+                let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+                let date = this.$route.params.date ? this.$route.params.date : false;
+                let level = this.$route.params.key ? this.$route.params.key : false;
+                if (!date) {
+                    this.$router.push('logs');
+                    return;
+                }
+                this.getAllLogs(page, date, level);
             }
         },
         mounted: function () {
-            let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-            let date = this.$route.params.date ? this.$route.params.date : false;
-            let level = this.$route.params.key ? this.$route.params.key : false;
-            if (!date) {
-                this.$router.push('logs');
-                return;
-            }
-            this.getAllLogs(page, date, level);
+            this.loadData();
         },
-        beforeRouteUpdate (to, from, next) {
-//           Fix Vue bug on same component update
-            next();
-            if(!to.query.page) {
-                if(this.path != to.path || this.routeCounter >= 1) {
-                    this.pagination = {
-                        current_page: 0
-                    };
-                    let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-                    let date = this.$route.params.date ? this.$route.params.date : false;
-                    let level = this.$route.params.key ? this.$route.params.key : false;
-                    this.getAllLogs(page, date, level);
-                    this.name = this.$route.name;
-                    this.path = this.$route.path;
-                }
-                this.routeCounter++;
+        watch: {
+            '$route.query.page'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.params.date'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.params.level'(newVal, oldVal) {
+                this.loadData();
             }
         },
         components: {

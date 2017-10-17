@@ -44,6 +44,14 @@
 
 <script>
     export default {
-        props: ['folder', "directories", "disk"]
+        data() {
+            return {
+
+            }
+        },
+        props: ['folder', "directories", "disk"],
+        mounted: function () {
+            this.$parent.$parent.routeKey = this.$route.fullPath;
+        }
     }
 </script>

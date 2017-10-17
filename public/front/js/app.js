@@ -39849,7 +39849,7 @@ function updateLink(linkElement, obj) {
 
 
 /* styles */
-__webpack_require__(435)
+__webpack_require__(410)
 
 var Component = __webpack_require__(1)(
   /* script */
@@ -39887,7 +39887,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(433)
+__webpack_require__(405)
 
 var Component = __webpack_require__(1)(
   /* script */
@@ -43820,7 +43820,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            auth: __WEBPACK_IMPORTED_MODULE_0__services_auth_service_js__["a" /* default */]
+            auth: __WEBPACK_IMPORTED_MODULE_0__services_auth_service_js__["a" /* default */],
+            routeKey: this.$route.name + this.$route.params + this.$route.query
         };
     },
 
@@ -44050,7 +44051,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+var vm = {
     data: function data() {
         return {
             count: 0,
@@ -44060,7 +44061,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             media: {},
             path: "",
             rootFolders: [],
-            urlFolderPathBuild: ""
+            urlFolderPathBuild: "",
+            name: this.$route.name,
+            pathRoute: this.$route.path,
+            routeCounter: 0
+
         };
     },
 
@@ -44090,19 +44095,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.error = true;
                 _this.errorMsg = response.error;
             });
+        },
+
+        loadData: function loadData() {
+            var page = this.$route.query.page ? this.$route.query.page : 0;
+            var disk = this.$route.params.disk ? this.$route.params.disk : "local";
+            var folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
+            this.getFolder(page, disk, folder_id);
         }
     },
     mounted: function mounted() {
-        var page = this.$route.params.page ? this.$route.params.page : 0;
-        var disk = this.$route.params.disk ? this.$route.params.disk : "local";
-        var folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
-        this.getFolder(page, disk, folder_id);
+        this.loadData();
+    },
+    watch: {
+        '$route.query.page': function $routeQueryPage(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.params.disk': function $routeParamsDisk(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.params.folder_id': function $routeParamsFolder_id(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.query.tag': function $routeQueryTag(newVal, oldVal) {
+            this.loadData();
+        }
     },
     components: {
         folders: __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default.a,
         files: __WEBPACK_IMPORTED_MODULE_1__Files_vue___default.a
     }
-});
+};
+/* harmony default export */ __webpack_exports__["default"] = (vm);
 
 /***/ }),
 /* 198 */
@@ -44293,7 +44317,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['folder', "directories", "disk"]
+    data: function data() {
+        return {};
+    },
+
+    props: ['folder', "directories", "disk"],
+    mounted: function mounted() {
+        this.$parent.$parent.routeKey = this.$route.fullPath;
+    }
 });
 
 /***/ }),
@@ -45002,37 +45033,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         dLink: function dLink(event) {
             var date = $(event.target).attr('data-date');
             return window.BASE_URL + '/api/backlogs/' + date;
+        },
+
+        loadData: function loadData() {
+            var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
+            var date = this.$route.params.date ? this.$route.params.date : false;
+            var level = this.$route.params.key ? this.$route.params.key : false;
+            if (!date) {
+                this.$router.push('logs');
+                return;
+            }
+            this.getAllLogs(page, date, level);
         }
     },
     mounted: function mounted() {
-        var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-        var date = this.$route.params.date ? this.$route.params.date : false;
-        var level = this.$route.params.key ? this.$route.params.key : false;
-        if (!date) {
-            this.$router.push('logs');
-            return;
-        }
-        this.getAllLogs(page, date, level);
+        this.loadData();
     },
-    beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
-        //           Fix Vue bug on same component update
-        next();
-        if (!to.query.page) {
-            if (this.path != to.path || this.routeCounter >= 1) {
-                this.pagination = {
-                    current_page: 0
-                };
-                var page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
-                var date = this.$route.params.date ? this.$route.params.date : false;
-                var level = this.$route.params.key ? this.$route.params.key : false;
-                this.getAllLogs(page, date, level);
-                this.name = this.$route.name;
-                this.path = this.$route.path;
-            }
-            this.routeCounter++;
+    watch: {
+        '$route.query.page': function $routeQueryPage(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.params.date': function $routeParamsDate(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.params.level': function $routeParamsLevel(newVal, oldVal) {
+            this.loadData();
         }
     },
-
     components: {
         Pagination: __WEBPACK_IMPORTED_MODULE_0__System_pagination_vue___default.a,
         Logstable: __WEBPACK_IMPORTED_MODULE_1__Logstable_vue___default.a,
@@ -63176,8 +63203,20 @@ exports = module.exports = __webpack_require__(4)();
 exports.push([module.i, "\n.navbar-custom-menu {\r\n    padding-right: 10px;\n}\r\n", ""]);
 
 /***/ }),
-/* 303 */,
-/* 304 */,
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\nhtml[data-v-0ef12dca] {\n  position: relative;\n  min-height: 100%;\n}\nbody[data-v-0ef12dca] {\n  /* Margin bottom by footer height */\n  /*margin-bottom: 50px;*/\n  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;*/\n  /*font-weight: 600;*/\n}\nh1[data-v-0ef12dca], h2[data-v-0ef12dca], h3[data-v-0ef12dca] {\n  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, sans-serif;\n}\n.sub-header[data-v-0ef12dca] {\n  padding-bottom: 10px;\n  border-bottom: 1px solid #EEE;\n}\n.navbar-inverse[data-v-0ef12dca] {\n  background-color: #1a237e;\n  border-color: #1a237e;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca] {\n    background-color: #3949ab;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca]:focus, .navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca]:hover {\n      background-color: #3949ab;\n}\n.navbar-inverse .navbar-brand[data-v-0ef12dca], .navbar-inverse .navbar-nav > li > a[data-v-0ef12dca] {\n    color: #c5cae9;\n}\n.navbar-fixed-top[data-v-0ef12dca] {\n  border: 0;\n}\n.main[data-v-0ef12dca] {\n  padding: 20px;\n}\n.main .page-header[data-v-0ef12dca] {\n    margin-top: 0;\n}\nfooter.main-footer[data-v-0ef12dca] {\n  position: absolute;\n  padding: 10px 0;\n  bottom: 0;\n  width: 100%;\n  background-color: #e8eaf6;\n  font-weight: 600;\n}\nfooter.main-footer p[data-v-0ef12dca] {\n    margin: 0;\n}\nfooter.main-footer i.fa.fa-heart[data-v-0ef12dca] {\n    color: #C62828;\n}\n.pagination[data-v-0ef12dca] {\n  margin: 0;\n}\n.pagination > li > a[data-v-0ef12dca], .pagination > li > span[data-v-0ef12dca] {\n    padding: 4px 10px;\n}\n.table-condensed > tbody > tr > td.stack[data-v-0ef12dca], .table-condensed > tfoot > tr > td.stack[data-v-0ef12dca], .table-condensed > thead > tr > td.stack[data-v-0ef12dca] {\n  padding: 0;\n  border-top: none;\n}\n.stack-content[data-v-0ef12dca] {\n  padding: 8px;\n  background-color: #F6F6F6;\n  border-top: 1px solid #D1D1D1;\n  color: #AE0E0E;\n  font-family: consolas, sans-serif;\n  font-size: 12px;\n}\n.info-box.level[data-v-0ef12dca] {\n  display: block;\n  padding: 0;\n  margin-bottom: 15px;\n  min-height: 70px;\n  background: #fff;\n  width: 100%;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n  border-radius: 2px;\n}\n.info-box.level .info-box-text[data-v-0ef12dca], .info-box.level .info-box-number[data-v-0ef12dca], .info-box.level .info-box-icon > i[data-v-0ef12dca] {\n    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n}\n.info-box.level .info-box-text[data-v-0ef12dca] {\n    display: block;\n    font-size: 14px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.info-box.level .info-box-content[data-v-0ef12dca] {\n    padding: 5px 10px;\n    margin-left: 70px;\n}\n.info-box.level .info-box-number[data-v-0ef12dca] {\n    display: block;\n    font-weight: bold;\n    font-size: 18px;\n}\n.info-box.level .info-box-icon[data-v-0ef12dca] {\n    border-radius: 2px 0 0 2px;\n    display: block;\n    float: left;\n    height: 70px;\n    width: 70px;\n    text-align: center;\n    font-size: 40px;\n    line-height: 70px;\n    background: rgba(0, 0, 0, 0.2);\n}\n.info-box.level .progress[data-v-0ef12dca] {\n    background: rgba(0, 0, 0, 0.2);\n    margin: 5px -10px 5px -10px;\n    height: 2px;\n}\n.info-box.level .progress .progress-bar[data-v-0ef12dca] {\n      background: #fff;\n}\n.info-box.level-empty[data-v-0ef12dca] {\n  opacity: .6;\n  -webkit-filter: grayscale(1);\n  -moz-filter: grayscale(1);\n  -ms-filter: grayscale(1);\n  filter: grayscale(1);\n  transition: all 0.2s ease-in-out;\n  transition-property: -webkit-filter, -moz-filter, -o-filter, filter, opacity;\n}\n.info-box.level-empty[data-v-0ef12dca]:hover {\n    opacity: 1;\n    -webkit-filter: grayscale(0);\n    -moz-filter: grayscale(0);\n    -ms-filter: grayscale(0);\n    filter: grayscale(0);\n}\n.level[data-v-0ef12dca] {\n  padding: 2px 6px;\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n  border-radius: 2px;\n  font-size: .9em;\n  font-weight: 600;\n}\n.badge.level-all[data-v-0ef12dca], .badge.level-emergency[data-v-0ef12dca], .badge.level-alert[data-v-0ef12dca], .badge.level-critical[data-v-0ef12dca], .badge.level-error[data-v-0ef12dca], .badge.level-warning[data-v-0ef12dca], .badge.level-notice[data-v-0ef12dca], .badge.level-info[data-v-0ef12dca], .badge.level-debug[data-v-0ef12dca] {\n  color: #FFF;\n}\n.level[data-v-0ef12dca] {\n  color: #FFF;\n}\n.level i[data-v-0ef12dca] {\n    color: #FFF;\n}\n.info-box.level-all[data-v-0ef12dca], .info-box.level-emergency[data-v-0ef12dca], .info-box.level-alert[data-v-0ef12dca], .info-box.level-critical[data-v-0ef12dca], .info-box.level-error[data-v-0ef12dca], .info-box.level-warning[data-v-0ef12dca], .info-box.level-notice[data-v-0ef12dca], .info-box.level-info[data-v-0ef12dca], .info-box.level-debug[data-v-0ef12dca] {\n  color: #FFF;\n}\n.label-env[data-v-0ef12dca] {\n  font-size: .85em;\n}\n.badge.level-all[data-v-0ef12dca], .level.level-all[data-v-0ef12dca], .info-box.level-all[data-v-0ef12dca] {\n  background-color: #8A8A8A;\n}\n.badge.level-emergency[data-v-0ef12dca], .level.level-emergency[data-v-0ef12dca], .info-box.level-emergency[data-v-0ef12dca] {\n  background-color: #B71C1C;\n}\n.badge.level-alert[data-v-0ef12dca], .level.level-alert[data-v-0ef12dca], .info-box.level-alert[data-v-0ef12dca] {\n  background-color: #D32F2F;\n}\n.badge.level-critical[data-v-0ef12dca], .level.level-critical[data-v-0ef12dca], .info-box.level-critical[data-v-0ef12dca] {\n  background-color: #F44336;\n}\n.badge.level-error[data-v-0ef12dca], .level.level-error[data-v-0ef12dca], .info-box.level-error[data-v-0ef12dca] {\n  background-color: #FF5722;\n}\n.badge.level-warning[data-v-0ef12dca], .level.level-warning[data-v-0ef12dca], .info-box.level-warning[data-v-0ef12dca] {\n  background-color: #FF9100;\n}\n.badge.level-notice[data-v-0ef12dca], .level.level-notice[data-v-0ef12dca], .info-box.level-notice[data-v-0ef12dca] {\n  background-color: #4CAF50;\n}\n.badge.level-info[data-v-0ef12dca], .level.level-info[data-v-0ef12dca], .info-box.level-info[data-v-0ef12dca] {\n  background-color: #1976D2;\n}\n.badge.level-debug[data-v-0ef12dca], .level.level-debug[data-v-0ef12dca], .info-box.level-debug[data-v-0ef12dca] {\n  background-color: #90CAF9;\n}\n.badge.level-empty[data-v-0ef12dca], .level.level-empty[data-v-0ef12dca] {\n  background-color: #D1D1D1;\n}\n.badge.label-env[data-v-0ef12dca], .label.label-env[data-v-0ef12dca] {\n  background-color: #6A1B9A;\n}\n.stack[data-v-0ef12dca] {\n  word-wrap: break-word;\n  word-break: break-word;\n}\n", ""]);
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\n.logs-panel .all.router-link-active[data-v-193c1990] {\n  background-color: #8A8A8A;\n}\n.logs-panel .emergency.router-link-active[data-v-193c1990] {\n  background-color: #B71C1C;\n}\n.logs-panel .emergency.router-link-active .badge[data-v-193c1990], .logs-panel .emergency.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .alert.router-link-active[data-v-193c1990] {\n  background-color: #D32F2F;\n}\n.logs-panel .alert.router-link-active .badge[data-v-193c1990], .logs-panel .alert.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .critical.router-link-active[data-v-193c1990] {\n  background-color: #F44336;\n}\n.logs-panel .critical.router-link-active .badge[data-v-193c1990], .logs-panel .critical.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .error.router-link-active[data-v-193c1990] {\n  background-color: #FF5722;\n}\n.logs-panel .error.router-link-active .badge[data-v-193c1990], .logs-panel .error.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .warning.router-link-active[data-v-193c1990] {\n  background-color: #FF9100;\n}\n.logs-panel .warning.router-link-active .badge[data-v-193c1990], .logs-panel .warning.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .notice.router-link-active[data-v-193c1990] {\n  background-color: #4CAF50;\n}\n.logs-panel .notice.router-link-active .badge[data-v-193c1990], .logs-panel .notice.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .info.router-link-active[data-v-193c1990] {\n  background-color: #1976D2;\n}\n.logs-panel .info.router-link-active .badge[data-v-193c1990], .logs-panel .info.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .debug.router-link-active[data-v-193c1990] {\n  background-color: #90CAF9;\n}\n.logs-panel .debug.router-link-active .badge[data-v-193c1990], .logs-panel .debug.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .empty.router-link-active[data-v-193c1990] {\n  background-color: #D1D1D1;\n}\n.logs-panel .empty.router-link-active .badge[data-v-193c1990], .logs-panel .empty.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .env.router-link-active[data-v-193c1990] {\n  background-color: #6A1B9A;\n}\n.logs-panel .env.router-link-active .badge[data-v-193c1990], .logs-panel .env.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n", ""]);
+
+/***/ }),
 /* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -63206,7 +63245,13 @@ exports = module.exports = __webpack_require__(4)();
 exports.push([module.i, "\n.content-wrapper {\n  background-color: transparent;\n}\n", ""]);
 
 /***/ }),
-/* 309 */,
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\n#fileContainer[data-v-4e2721c0] {\n    text-align: left;\n}\nimg[data-v-4e2721c0] {\n    width: 30%;\n    margin: auto;\n    display: block;\n    margin-bottom: 10px;\n}\n.removeFile[data-v-4e2721c0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n#fileContainer[data-v-4e2721c0] {\n    padding-top: 7px;\n}\nbutton[data-v-4e2721c0] {\n}\n", ""]);
+
+/***/ }),
 /* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -63242,7 +63287,13 @@ exports = module.exports = __webpack_require__(4)();
 exports.push([module.i, "\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
-/* 315 */,
+/* 315 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+exports.push([module.i, "\nhtml[data-v-9519fe36] {\n  position: relative;\n  min-height: 100%;\n}\nbody[data-v-9519fe36] {\n  /* Margin bottom by footer height */\n  /*margin-bottom: 50px;*/\n  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;*/\n  /*font-weight: 600;*/\n}\nh1[data-v-9519fe36], h2[data-v-9519fe36], h3[data-v-9519fe36] {\n  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, sans-serif;\n}\n.sub-header[data-v-9519fe36] {\n  padding-bottom: 10px;\n  border-bottom: 1px solid #EEE;\n}\n.navbar-inverse[data-v-9519fe36] {\n  background-color: #1a237e;\n  border-color: #1a237e;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-9519fe36] {\n    background-color: #3949ab;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-9519fe36]:focus, .navbar-inverse .navbar-nav > .active > a[data-v-9519fe36]:hover {\n      background-color: #3949ab;\n}\n.navbar-inverse .navbar-brand[data-v-9519fe36], .navbar-inverse .navbar-nav > li > a[data-v-9519fe36] {\n    color: #c5cae9;\n}\n.navbar-fixed-top[data-v-9519fe36] {\n  border: 0;\n}\n.main[data-v-9519fe36] {\n  padding: 20px;\n}\n.main .page-header[data-v-9519fe36] {\n    margin-top: 0;\n}\nfooter.main-footer[data-v-9519fe36] {\n  position: absolute;\n  padding: 10px 0;\n  bottom: 0;\n  width: 100%;\n  background-color: #e8eaf6;\n  font-weight: 600;\n}\nfooter.main-footer p[data-v-9519fe36] {\n    margin: 0;\n}\nfooter.main-footer i.fa.fa-heart[data-v-9519fe36] {\n    color: #C62828;\n}\n.pagination[data-v-9519fe36] {\n  margin: 0;\n}\n.pagination > li > a[data-v-9519fe36], .pagination > li > span[data-v-9519fe36] {\n    padding: 4px 10px;\n}\n.table-condensed > tbody > tr > td.stack[data-v-9519fe36], .table-condensed > tfoot > tr > td.stack[data-v-9519fe36], .table-condensed > thead > tr > td.stack[data-v-9519fe36] {\n  padding: 0;\n  border-top: none;\n}\n.stack-content[data-v-9519fe36] {\n  padding: 8px;\n  background-color: #F6F6F6;\n  border-top: 1px solid #D1D1D1;\n  color: #AE0E0E;\n  font-family: consolas, sans-serif;\n  font-size: 12px;\n}\n.info-box.level[data-v-9519fe36] {\n  display: block;\n  padding: 0;\n  margin-bottom: 15px;\n  min-height: 70px;\n  background: #fff;\n  width: 100%;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n  border-radius: 2px;\n}\n.info-box.level .info-box-text[data-v-9519fe36], .info-box.level .info-box-number[data-v-9519fe36], .info-box.level .info-box-icon > i[data-v-9519fe36] {\n    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n}\n.info-box.level .info-box-text[data-v-9519fe36] {\n    display: block;\n    font-size: 14px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.info-box.level .info-box-content[data-v-9519fe36] {\n    padding: 5px 10px;\n    margin-left: 70px;\n}\n.info-box.level .info-box-number[data-v-9519fe36] {\n    display: block;\n    font-weight: bold;\n    font-size: 18px;\n}\n.info-box.level .info-box-icon[data-v-9519fe36] {\n    border-radius: 2px 0 0 2px;\n    display: block;\n    float: left;\n    height: 70px;\n    width: 70px;\n    text-align: center;\n    font-size: 40px;\n    line-height: 70px;\n    background: rgba(0, 0, 0, 0.2);\n}\n.info-box.level .progress[data-v-9519fe36] {\n    background: rgba(0, 0, 0, 0.2);\n    margin: 5px -10px 5px -10px;\n    height: 2px;\n}\n.info-box.level .progress .progress-bar[data-v-9519fe36] {\n      background: #fff;\n}\n.info-box.level-empty[data-v-9519fe36] {\n  opacity: .6;\n  -webkit-filter: grayscale(1);\n  -moz-filter: grayscale(1);\n  -ms-filter: grayscale(1);\n  filter: grayscale(1);\n  transition: all 0.2s ease-in-out;\n  transition-property: -webkit-filter, -moz-filter, -o-filter, filter, opacity;\n}\n.info-box.level-empty[data-v-9519fe36]:hover {\n    opacity: 1;\n    -webkit-filter: grayscale(0);\n    -moz-filter: grayscale(0);\n    -ms-filter: grayscale(0);\n    filter: grayscale(0);\n}\n.level[data-v-9519fe36] {\n  padding: 2px 6px;\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n  border-radius: 2px;\n  font-size: .9em;\n  font-weight: 600;\n}\n.badge.level-all[data-v-9519fe36], .badge.level-emergency[data-v-9519fe36], .badge.level-alert[data-v-9519fe36], .badge.level-critical[data-v-9519fe36], .badge.level-error[data-v-9519fe36], .badge.level-warning[data-v-9519fe36], .badge.level-notice[data-v-9519fe36], .badge.level-info[data-v-9519fe36], .badge.level-debug[data-v-9519fe36] {\n  color: #FFF;\n}\n.level[data-v-9519fe36] {\n  color: #FFF;\n}\n.level i[data-v-9519fe36] {\n    color: #FFF;\n}\n.info-box.level-all[data-v-9519fe36], .info-box.level-emergency[data-v-9519fe36], .info-box.level-alert[data-v-9519fe36], .info-box.level-critical[data-v-9519fe36], .info-box.level-error[data-v-9519fe36], .info-box.level-warning[data-v-9519fe36], .info-box.level-notice[data-v-9519fe36], .info-box.level-info[data-v-9519fe36], .info-box.level-debug[data-v-9519fe36] {\n  color: #FFF;\n}\n.label-env[data-v-9519fe36] {\n  font-size: .85em;\n}\n.badge.level-all[data-v-9519fe36], .level.level-all[data-v-9519fe36], .info-box.level-all[data-v-9519fe36] {\n  background-color: #8A8A8A;\n}\n.badge.level-emergency[data-v-9519fe36], .level.level-emergency[data-v-9519fe36], .info-box.level-emergency[data-v-9519fe36] {\n  background-color: #B71C1C;\n}\n.badge.level-alert[data-v-9519fe36], .level.level-alert[data-v-9519fe36], .info-box.level-alert[data-v-9519fe36] {\n  background-color: #D32F2F;\n}\n.badge.level-critical[data-v-9519fe36], .level.level-critical[data-v-9519fe36], .info-box.level-critical[data-v-9519fe36] {\n  background-color: #F44336;\n}\n.badge.level-error[data-v-9519fe36], .level.level-error[data-v-9519fe36], .info-box.level-error[data-v-9519fe36] {\n  background-color: #FF5722;\n}\n.badge.level-warning[data-v-9519fe36], .level.level-warning[data-v-9519fe36], .info-box.level-warning[data-v-9519fe36] {\n  background-color: #FF9100;\n}\n.badge.level-notice[data-v-9519fe36], .level.level-notice[data-v-9519fe36], .info-box.level-notice[data-v-9519fe36] {\n  background-color: #4CAF50;\n}\n.badge.level-info[data-v-9519fe36], .level.level-info[data-v-9519fe36], .info-box.level-info[data-v-9519fe36] {\n  background-color: #1976D2;\n}\n.badge.level-debug[data-v-9519fe36], .level.level-debug[data-v-9519fe36], .info-box.level-debug[data-v-9519fe36] {\n  background-color: #90CAF9;\n}\n.badge.level-empty[data-v-9519fe36], .level.level-empty[data-v-9519fe36] {\n  background-color: #D1D1D1;\n}\n.badge.label-env[data-v-9519fe36], .label.label-env[data-v-9519fe36] {\n  background-color: #6A1B9A;\n}\n.stack[data-v-9519fe36] {\n  word-wrap: break-word;\n  word-break: break-word;\n}\n", ""]);
+
+/***/ }),
 /* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -91751,7 +91802,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(430)
+__webpack_require__(404)
 
 var Component = __webpack_require__(1)(
   /* script */
@@ -91789,7 +91840,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(431)
+__webpack_require__(416)
 
 var Component = __webpack_require__(1)(
   /* script */
@@ -95367,7 +95418,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "auth": _vm.auth
     }
   }), _vm._v(" "), _c('router-view', {
-    key: _vm.$route.name,
+    key: _vm.routeKey,
     staticClass: "content-wrapper",
     attrs: {
       "auth": _vm.auth
@@ -97907,8 +97958,58 @@ if(false) {
 }
 
 /***/ }),
-/* 404 */,
-/* 405 */,
+/* 404 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(303);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("531c2c8f", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0ef12dca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDate.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0ef12dca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDate.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(304);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("ff846720", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-193c1990\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogsPanel.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-193c1990\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogsPanel.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -98013,7 +98114,32 @@ if(false) {
 }
 
 /***/ }),
-/* 410 */,
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(309);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("151165f0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e2721c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e2721c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -98144,7 +98270,32 @@ if(false) {
 }
 
 /***/ }),
-/* 416 */,
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(315);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("08b55770", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9519fe36\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDateKey.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9519fe36\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDateKey.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -98225,144 +98376,6 @@ module.exports = function() {
 __webpack_require__(17);
 module.exports = __webpack_require__(168);
 
-
-/***/ }),
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\nhtml[data-v-0ef12dca] {\n  position: relative;\n  min-height: 100%;\n}\nbody[data-v-0ef12dca] {\n  /* Margin bottom by footer height */\n  /*margin-bottom: 50px;*/\n  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;*/\n  /*font-weight: 600;*/\n}\nh1[data-v-0ef12dca], h2[data-v-0ef12dca], h3[data-v-0ef12dca] {\n  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, sans-serif;\n}\n.sub-header[data-v-0ef12dca] {\n  padding-bottom: 10px;\n  border-bottom: 1px solid #EEE;\n}\n.navbar-inverse[data-v-0ef12dca] {\n  background-color: #1a237e;\n  border-color: #1a237e;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca] {\n    background-color: #3949ab;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca]:focus, .navbar-inverse .navbar-nav > .active > a[data-v-0ef12dca]:hover {\n      background-color: #3949ab;\n}\n.navbar-inverse .navbar-brand[data-v-0ef12dca], .navbar-inverse .navbar-nav > li > a[data-v-0ef12dca] {\n    color: #c5cae9;\n}\n.navbar-fixed-top[data-v-0ef12dca] {\n  border: 0;\n}\n.main[data-v-0ef12dca] {\n  padding: 20px;\n}\n.main .page-header[data-v-0ef12dca] {\n    margin-top: 0;\n}\nfooter.main-footer[data-v-0ef12dca] {\n  position: absolute;\n  padding: 10px 0;\n  bottom: 0;\n  width: 100%;\n  background-color: #e8eaf6;\n  font-weight: 600;\n}\nfooter.main-footer p[data-v-0ef12dca] {\n    margin: 0;\n}\nfooter.main-footer i.fa.fa-heart[data-v-0ef12dca] {\n    color: #C62828;\n}\n.pagination[data-v-0ef12dca] {\n  margin: 0;\n}\n.pagination > li > a[data-v-0ef12dca], .pagination > li > span[data-v-0ef12dca] {\n    padding: 4px 10px;\n}\n.table-condensed > tbody > tr > td.stack[data-v-0ef12dca], .table-condensed > tfoot > tr > td.stack[data-v-0ef12dca], .table-condensed > thead > tr > td.stack[data-v-0ef12dca] {\n  padding: 0;\n  border-top: none;\n}\n.stack-content[data-v-0ef12dca] {\n  padding: 8px;\n  background-color: #F6F6F6;\n  border-top: 1px solid #D1D1D1;\n  color: #AE0E0E;\n  font-family: consolas, sans-serif;\n  font-size: 12px;\n}\n.info-box.level[data-v-0ef12dca] {\n  display: block;\n  padding: 0;\n  margin-bottom: 15px;\n  min-height: 70px;\n  background: #fff;\n  width: 100%;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n  border-radius: 2px;\n}\n.info-box.level .info-box-text[data-v-0ef12dca], .info-box.level .info-box-number[data-v-0ef12dca], .info-box.level .info-box-icon > i[data-v-0ef12dca] {\n    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n}\n.info-box.level .info-box-text[data-v-0ef12dca] {\n    display: block;\n    font-size: 14px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.info-box.level .info-box-content[data-v-0ef12dca] {\n    padding: 5px 10px;\n    margin-left: 70px;\n}\n.info-box.level .info-box-number[data-v-0ef12dca] {\n    display: block;\n    font-weight: bold;\n    font-size: 18px;\n}\n.info-box.level .info-box-icon[data-v-0ef12dca] {\n    border-radius: 2px 0 0 2px;\n    display: block;\n    float: left;\n    height: 70px;\n    width: 70px;\n    text-align: center;\n    font-size: 40px;\n    line-height: 70px;\n    background: rgba(0, 0, 0, 0.2);\n}\n.info-box.level .progress[data-v-0ef12dca] {\n    background: rgba(0, 0, 0, 0.2);\n    margin: 5px -10px 5px -10px;\n    height: 2px;\n}\n.info-box.level .progress .progress-bar[data-v-0ef12dca] {\n      background: #fff;\n}\n.info-box.level-empty[data-v-0ef12dca] {\n  opacity: .6;\n  -webkit-filter: grayscale(1);\n  -moz-filter: grayscale(1);\n  -ms-filter: grayscale(1);\n  filter: grayscale(1);\n  transition: all 0.2s ease-in-out;\n  transition-property: -webkit-filter, -moz-filter, -o-filter, filter, opacity;\n}\n.info-box.level-empty[data-v-0ef12dca]:hover {\n    opacity: 1;\n    -webkit-filter: grayscale(0);\n    -moz-filter: grayscale(0);\n    -ms-filter: grayscale(0);\n    filter: grayscale(0);\n}\n.level[data-v-0ef12dca] {\n  padding: 2px 6px;\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n  border-radius: 2px;\n  font-size: .9em;\n  font-weight: 600;\n}\n.badge.level-all[data-v-0ef12dca], .badge.level-emergency[data-v-0ef12dca], .badge.level-alert[data-v-0ef12dca], .badge.level-critical[data-v-0ef12dca], .badge.level-error[data-v-0ef12dca], .badge.level-warning[data-v-0ef12dca], .badge.level-notice[data-v-0ef12dca], .badge.level-info[data-v-0ef12dca], .badge.level-debug[data-v-0ef12dca] {\n  color: #FFF;\n}\n.level[data-v-0ef12dca] {\n  color: #FFF;\n}\n.level i[data-v-0ef12dca] {\n    color: #FFF;\n}\n.info-box.level-all[data-v-0ef12dca], .info-box.level-emergency[data-v-0ef12dca], .info-box.level-alert[data-v-0ef12dca], .info-box.level-critical[data-v-0ef12dca], .info-box.level-error[data-v-0ef12dca], .info-box.level-warning[data-v-0ef12dca], .info-box.level-notice[data-v-0ef12dca], .info-box.level-info[data-v-0ef12dca], .info-box.level-debug[data-v-0ef12dca] {\n  color: #FFF;\n}\n.label-env[data-v-0ef12dca] {\n  font-size: .85em;\n}\n.badge.level-all[data-v-0ef12dca], .level.level-all[data-v-0ef12dca], .info-box.level-all[data-v-0ef12dca] {\n  background-color: #8A8A8A;\n}\n.badge.level-emergency[data-v-0ef12dca], .level.level-emergency[data-v-0ef12dca], .info-box.level-emergency[data-v-0ef12dca] {\n  background-color: #B71C1C;\n}\n.badge.level-alert[data-v-0ef12dca], .level.level-alert[data-v-0ef12dca], .info-box.level-alert[data-v-0ef12dca] {\n  background-color: #D32F2F;\n}\n.badge.level-critical[data-v-0ef12dca], .level.level-critical[data-v-0ef12dca], .info-box.level-critical[data-v-0ef12dca] {\n  background-color: #F44336;\n}\n.badge.level-error[data-v-0ef12dca], .level.level-error[data-v-0ef12dca], .info-box.level-error[data-v-0ef12dca] {\n  background-color: #FF5722;\n}\n.badge.level-warning[data-v-0ef12dca], .level.level-warning[data-v-0ef12dca], .info-box.level-warning[data-v-0ef12dca] {\n  background-color: #FF9100;\n}\n.badge.level-notice[data-v-0ef12dca], .level.level-notice[data-v-0ef12dca], .info-box.level-notice[data-v-0ef12dca] {\n  background-color: #4CAF50;\n}\n.badge.level-info[data-v-0ef12dca], .level.level-info[data-v-0ef12dca], .info-box.level-info[data-v-0ef12dca] {\n  background-color: #1976D2;\n}\n.badge.level-debug[data-v-0ef12dca], .level.level-debug[data-v-0ef12dca], .info-box.level-debug[data-v-0ef12dca] {\n  background-color: #90CAF9;\n}\n.badge.level-empty[data-v-0ef12dca], .level.level-empty[data-v-0ef12dca] {\n  background-color: #D1D1D1;\n}\n.badge.label-env[data-v-0ef12dca], .label.label-env[data-v-0ef12dca] {\n  background-color: #6A1B9A;\n}\n.stack[data-v-0ef12dca] {\n  word-wrap: break-word;\n  word-break: break-word;\n}\n", ""]);
-
-/***/ }),
-/* 429 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\nhtml[data-v-9519fe36] {\n  position: relative;\n  min-height: 100%;\n}\nbody[data-v-9519fe36] {\n  /* Margin bottom by footer height */\n  /*margin-bottom: 50px;*/\n  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;*/\n  /*font-weight: 600;*/\n}\nh1[data-v-9519fe36], h2[data-v-9519fe36], h3[data-v-9519fe36] {\n  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, sans-serif;\n}\n.sub-header[data-v-9519fe36] {\n  padding-bottom: 10px;\n  border-bottom: 1px solid #EEE;\n}\n.navbar-inverse[data-v-9519fe36] {\n  background-color: #1a237e;\n  border-color: #1a237e;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-9519fe36] {\n    background-color: #3949ab;\n}\n.navbar-inverse .navbar-nav > .active > a[data-v-9519fe36]:focus, .navbar-inverse .navbar-nav > .active > a[data-v-9519fe36]:hover {\n      background-color: #3949ab;\n}\n.navbar-inverse .navbar-brand[data-v-9519fe36], .navbar-inverse .navbar-nav > li > a[data-v-9519fe36] {\n    color: #c5cae9;\n}\n.navbar-fixed-top[data-v-9519fe36] {\n  border: 0;\n}\n.main[data-v-9519fe36] {\n  padding: 20px;\n}\n.main .page-header[data-v-9519fe36] {\n    margin-top: 0;\n}\nfooter.main-footer[data-v-9519fe36] {\n  position: absolute;\n  padding: 10px 0;\n  bottom: 0;\n  width: 100%;\n  background-color: #e8eaf6;\n  font-weight: 600;\n}\nfooter.main-footer p[data-v-9519fe36] {\n    margin: 0;\n}\nfooter.main-footer i.fa.fa-heart[data-v-9519fe36] {\n    color: #C62828;\n}\n.pagination[data-v-9519fe36] {\n  margin: 0;\n}\n.pagination > li > a[data-v-9519fe36], .pagination > li > span[data-v-9519fe36] {\n    padding: 4px 10px;\n}\n.table-condensed > tbody > tr > td.stack[data-v-9519fe36], .table-condensed > tfoot > tr > td.stack[data-v-9519fe36], .table-condensed > thead > tr > td.stack[data-v-9519fe36] {\n  padding: 0;\n  border-top: none;\n}\n.stack-content[data-v-9519fe36] {\n  padding: 8px;\n  background-color: #F6F6F6;\n  border-top: 1px solid #D1D1D1;\n  color: #AE0E0E;\n  font-family: consolas, sans-serif;\n  font-size: 12px;\n}\n.info-box.level[data-v-9519fe36] {\n  display: block;\n  padding: 0;\n  margin-bottom: 15px;\n  min-height: 70px;\n  background: #fff;\n  width: 100%;\n  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);\n  border-radius: 2px;\n}\n.info-box.level .info-box-text[data-v-9519fe36], .info-box.level .info-box-number[data-v-9519fe36], .info-box.level .info-box-icon > i[data-v-9519fe36] {\n    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n}\n.info-box.level .info-box-text[data-v-9519fe36] {\n    display: block;\n    font-size: 14px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.info-box.level .info-box-content[data-v-9519fe36] {\n    padding: 5px 10px;\n    margin-left: 70px;\n}\n.info-box.level .info-box-number[data-v-9519fe36] {\n    display: block;\n    font-weight: bold;\n    font-size: 18px;\n}\n.info-box.level .info-box-icon[data-v-9519fe36] {\n    border-radius: 2px 0 0 2px;\n    display: block;\n    float: left;\n    height: 70px;\n    width: 70px;\n    text-align: center;\n    font-size: 40px;\n    line-height: 70px;\n    background: rgba(0, 0, 0, 0.2);\n}\n.info-box.level .progress[data-v-9519fe36] {\n    background: rgba(0, 0, 0, 0.2);\n    margin: 5px -10px 5px -10px;\n    height: 2px;\n}\n.info-box.level .progress .progress-bar[data-v-9519fe36] {\n      background: #fff;\n}\n.info-box.level-empty[data-v-9519fe36] {\n  opacity: .6;\n  -webkit-filter: grayscale(1);\n  -moz-filter: grayscale(1);\n  -ms-filter: grayscale(1);\n  filter: grayscale(1);\n  transition: all 0.2s ease-in-out;\n  transition-property: -webkit-filter, -moz-filter, -o-filter, filter, opacity;\n}\n.info-box.level-empty[data-v-9519fe36]:hover {\n    opacity: 1;\n    -webkit-filter: grayscale(0);\n    -moz-filter: grayscale(0);\n    -ms-filter: grayscale(0);\n    filter: grayscale(0);\n}\n.level[data-v-9519fe36] {\n  padding: 2px 6px;\n  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);\n  border-radius: 2px;\n  font-size: .9em;\n  font-weight: 600;\n}\n.badge.level-all[data-v-9519fe36], .badge.level-emergency[data-v-9519fe36], .badge.level-alert[data-v-9519fe36], .badge.level-critical[data-v-9519fe36], .badge.level-error[data-v-9519fe36], .badge.level-warning[data-v-9519fe36], .badge.level-notice[data-v-9519fe36], .badge.level-info[data-v-9519fe36], .badge.level-debug[data-v-9519fe36] {\n  color: #FFF;\n}\n.level[data-v-9519fe36] {\n  color: #FFF;\n}\n.level i[data-v-9519fe36] {\n    color: #FFF;\n}\n.info-box.level-all[data-v-9519fe36], .info-box.level-emergency[data-v-9519fe36], .info-box.level-alert[data-v-9519fe36], .info-box.level-critical[data-v-9519fe36], .info-box.level-error[data-v-9519fe36], .info-box.level-warning[data-v-9519fe36], .info-box.level-notice[data-v-9519fe36], .info-box.level-info[data-v-9519fe36], .info-box.level-debug[data-v-9519fe36] {\n  color: #FFF;\n}\n.label-env[data-v-9519fe36] {\n  font-size: .85em;\n}\n.badge.level-all[data-v-9519fe36], .level.level-all[data-v-9519fe36], .info-box.level-all[data-v-9519fe36] {\n  background-color: #8A8A8A;\n}\n.badge.level-emergency[data-v-9519fe36], .level.level-emergency[data-v-9519fe36], .info-box.level-emergency[data-v-9519fe36] {\n  background-color: #B71C1C;\n}\n.badge.level-alert[data-v-9519fe36], .level.level-alert[data-v-9519fe36], .info-box.level-alert[data-v-9519fe36] {\n  background-color: #D32F2F;\n}\n.badge.level-critical[data-v-9519fe36], .level.level-critical[data-v-9519fe36], .info-box.level-critical[data-v-9519fe36] {\n  background-color: #F44336;\n}\n.badge.level-error[data-v-9519fe36], .level.level-error[data-v-9519fe36], .info-box.level-error[data-v-9519fe36] {\n  background-color: #FF5722;\n}\n.badge.level-warning[data-v-9519fe36], .level.level-warning[data-v-9519fe36], .info-box.level-warning[data-v-9519fe36] {\n  background-color: #FF9100;\n}\n.badge.level-notice[data-v-9519fe36], .level.level-notice[data-v-9519fe36], .info-box.level-notice[data-v-9519fe36] {\n  background-color: #4CAF50;\n}\n.badge.level-info[data-v-9519fe36], .level.level-info[data-v-9519fe36], .info-box.level-info[data-v-9519fe36] {\n  background-color: #1976D2;\n}\n.badge.level-debug[data-v-9519fe36], .level.level-debug[data-v-9519fe36], .info-box.level-debug[data-v-9519fe36] {\n  background-color: #90CAF9;\n}\n.badge.level-empty[data-v-9519fe36], .level.level-empty[data-v-9519fe36] {\n  background-color: #D1D1D1;\n}\n.badge.label-env[data-v-9519fe36], .label.label-env[data-v-9519fe36] {\n  background-color: #6A1B9A;\n}\n.stack[data-v-9519fe36] {\n  word-wrap: break-word;\n  word-break: break-word;\n}\n", ""]);
-
-/***/ }),
-/* 430 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(428);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("531c2c8f", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0ef12dca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDate.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0ef12dca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDate.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 431 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(429);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("08b55770", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9519fe36\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDateKey.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9519fe36\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogshowDateKey.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 432 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n.logs-panel .all.router-link-active[data-v-193c1990] {\n  background-color: #8A8A8A;\n}\n.logs-panel .emergency.router-link-active[data-v-193c1990] {\n  background-color: #B71C1C;\n}\n.logs-panel .emergency.router-link-active .badge[data-v-193c1990], .logs-panel .emergency.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .alert.router-link-active[data-v-193c1990] {\n  background-color: #D32F2F;\n}\n.logs-panel .alert.router-link-active .badge[data-v-193c1990], .logs-panel .alert.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .critical.router-link-active[data-v-193c1990] {\n  background-color: #F44336;\n}\n.logs-panel .critical.router-link-active .badge[data-v-193c1990], .logs-panel .critical.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .error.router-link-active[data-v-193c1990] {\n  background-color: #FF5722;\n}\n.logs-panel .error.router-link-active .badge[data-v-193c1990], .logs-panel .error.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .warning.router-link-active[data-v-193c1990] {\n  background-color: #FF9100;\n}\n.logs-panel .warning.router-link-active .badge[data-v-193c1990], .logs-panel .warning.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .notice.router-link-active[data-v-193c1990] {\n  background-color: #4CAF50;\n}\n.logs-panel .notice.router-link-active .badge[data-v-193c1990], .logs-panel .notice.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .info.router-link-active[data-v-193c1990] {\n  background-color: #1976D2;\n}\n.logs-panel .info.router-link-active .badge[data-v-193c1990], .logs-panel .info.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .debug.router-link-active[data-v-193c1990] {\n  background-color: #90CAF9;\n}\n.logs-panel .debug.router-link-active .badge[data-v-193c1990], .logs-panel .debug.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .empty.router-link-active[data-v-193c1990] {\n  background-color: #D1D1D1;\n}\n.logs-panel .empty.router-link-active .badge[data-v-193c1990], .logs-panel .empty.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n.logs-panel .env.router-link-active[data-v-193c1990] {\n  background-color: #6A1B9A;\n}\n.logs-panel .env.router-link-active .badge[data-v-193c1990], .logs-panel .env.router-link-active .level[data-v-193c1990] {\n    background: #8A8A8A;\n}\n", ""]);
-
-/***/ }),
-/* 433 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(432);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("ff846720", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-193c1990\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogsPanel.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-193c1990\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./LogsPanel.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 434 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n#fileContainer[data-v-4e2721c0] {\n    text-align: left;\n}\nimg[data-v-4e2721c0] {\n    width: 30%;\n    margin: auto;\n    display: block;\n    margin-bottom: 10px;\n}\n.removeFile[data-v-4e2721c0]:hover {\n    cursor: pointer;\n    text-decoration: underline;\n}\n#fileContainer[data-v-4e2721c0] {\n    padding-top: 7px;\n}\nbutton[data-v-4e2721c0] {\n}\n", ""]);
-
-/***/ }),
-/* 435 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(434);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("151165f0", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e2721c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e2721c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
 
 /***/ })
 /******/ ]);

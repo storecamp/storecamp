@@ -137,7 +137,7 @@
     import Folders from "./Folders.vue";
     import Files from "./Files.vue";
 
-    export default {
+    let vm = ({
         data() {
             return {
                 count: 0,
@@ -147,7 +147,11 @@
                 media: {},
                 path: "",
                 rootFolders: [],
-                urlFolderPathBuild: ""
+                urlFolderPathBuild: "",
+                name: this.$route.name,
+                pathRoute: this.$route.path,
+                routeCounter: 0
+
             }
         },
         methods: {
@@ -175,20 +179,37 @@
                         this.error = true;
                         this.errorMsg = response.error;
                     })
-            }
+            },
+            loadData: function() {
+                let page = this.$route.query.page ? this.$route.query.page : 0;
+                let disk = this.$route.params.disk ? this.$route.params.disk : "local";
+                let folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
+                this.getFolder(page, disk, folder_id);
+            },
         },
         mounted: function () {
-            let page = this.$route.params.page ? this.$route.params.page : 0;
-            let disk = this.$route.params.disk ? this.$route.params.disk : "local";
-            let folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
-            this.getFolder(page, disk, folder_id);
-
+            this.loadData();
+        },
+        watch: {
+            '$route.query.page'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.params.disk'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.params.folder_id'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.query.tag'(newVal, oldVal) {
+                this.loadData();
+            },
         },
         components: {
             folders: Folders,
             files: Files
         }
-    }
+    });
+    export default vm;
 </script>
 <style lang="scss">
     //colors
