@@ -44322,9 +44322,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     props: ['folder', "directories", "disk"],
-    mounted: function mounted() {
-        this.$parent.$parent.routeKey = this.$route.fullPath;
-    }
+    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -92722,7 +92720,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "aria-hidden": "true"
       }
     })]) : _vm._e()])], 1)
-  }), _vm._v(" "), (!_vm.directories && !_vm.directories.length) ? _c('h3', {
+  }), _vm._v(" "), (!_vm.directories.length) ? _c('h3', {
     staticClass: "text-warning"
   }, [_vm._v("No folders found")]) : _vm._e()], 2)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

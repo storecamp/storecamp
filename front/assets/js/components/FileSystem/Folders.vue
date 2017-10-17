@@ -34,7 +34,7 @@
 
                     </router-link>
                 </div>
-            <h3 v-if="!directories && !directories.length" class="text-warning">No folders found</h3>
+            <h3 v-if="!directories.length" class="text-warning">No folders found</h3>
         </div>
         <!-- /.box-body -->
     </div>
@@ -51,7 +51,6 @@
         },
         props: ['folder', "directories", "disk"],
         mounted: function () {
-            this.$parent.$parent.routeKey = this.$route.fullPath;
         }
     }
 </script>
