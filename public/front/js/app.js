@@ -43820,8 +43820,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            auth: __WEBPACK_IMPORTED_MODULE_0__services_auth_service_js__["a" /* default */],
-            routeKey: this.$route.name + this.$route.params + this.$route.query
+            auth: __WEBPACK_IMPORTED_MODULE_0__services_auth_service_js__["a" /* default */]
         };
     },
 
@@ -43912,8 +43911,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Folders_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Files_vue__);
-//
-//
 //
 //
 //
@@ -94738,7 +94735,28 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [(_vm.folder) ? _c('div', [_vm._m(0), _vm._v(" "), _c('div', {
+  return _c('div', [(_vm.folder) ? _c('div', [_c('div', {
+    staticClass: "col-md-7 pull-left"
+  }, [_c('strong', [_vm._v("\n                Folder Path\n            ")]), _vm._v(" "), _vm._l((_vm.urlFolderPathBuild), function(root, index) {
+    return _c('router-link', {
+      key: root.folder_id,
+      staticClass: "text-info",
+      staticStyle: {
+        "margin-left": "4px",
+        "font-size": "x-large"
+      },
+      attrs: {
+        "to": {
+          name: 'mediaDiskFolder',
+          params: {
+            disk: root.disk,
+            folder_id: root.folder_id
+          }
+        },
+        "data-folder-id": root.folder_id
+      }
+    }, [(index) ? _c('strong', [_vm._v("/" + _vm._s(root.folder_name))]) : _c('strong', [_vm._v("...")])])
+  })], 2), _vm._v(" "), _c('div', {
     staticClass: "col-md-5 pull-right text-right",
     attrs: {
       "id": "disks"
@@ -94768,13 +94786,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "data-folder-url": disk.folder_url
       }
     }, [_vm._v(_vm._s(disk.disk) + "\n                ")])], 1)
-  })], 2)]) : _vm._e(), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  })], 2)]) : _vm._e(), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12"
   }, [_c('div', {
     staticClass: "box"
-  }, [_vm._m(2), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "box-body folder-body",
     attrs: {
       "id": "folder-body",
@@ -94795,36 +94813,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-md-7 pull-left"
-  }, [_c('small', [_vm._v("\n                Folder\n            ")]), _vm._v(" "), _c('b', {
-    staticClass: "text-info",
-    staticStyle: {
-      "font-size": "20px",
-      "text-decoration": "underline"
-    }
-  }, [_c('a', {
-    staticClass: "active",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#",
-      "data-folder-id": "#",
-      "data-folder-url": ""
-    }
-  }, [_vm._v("../")])]), _vm._v(" "), _c('a', {
-    staticClass: "text-info",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#",
-      "data-folder-id": "",
-      "data-folder-url": ""
-    }
-  }, [_vm._v("\n                local\n            ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "hidden"
   }, [_c('div', {
@@ -95416,7 +95404,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "auth": _vm.auth
     }
   }), _vm._v(" "), _c('router-view', {
-    key: _vm.routeKey,
     staticClass: "content-wrapper",
     attrs: {
       "auth": _vm.auth

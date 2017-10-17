@@ -2,20 +2,18 @@
     <div>
         <div v-if="folder">
             <div class="col-md-7 pull-left">
-                <small>
-                    Folder
-                </small>
-                <b style="font-size: 20px; text-decoration: underline;" class="text-info">
-                    <a href="#" class="active" style="margin-left: 10px" data-folder-id="#"
-                       data-folder-url="">../</a>
-                </b>
-                <a href="#"
-                   style="margin-left: 10px"
-                   class="text-info"
-                   data-folder-id=""
-                   data-folder-url="">
-                    local
-                </a>
+                <strong>
+                    Folder Path
+                </strong>
+                <router-link
+                        style="margin-left: 4px; font-size: x-large"
+                        class="text-info"
+                        v-bind:key="root.folder_id" v-for="(root, index) in urlFolderPathBuild"
+                        :to="{name: 'mediaDiskFolder', params: {disk: root.disk, folder_id: root.folder_id}}"
+                        :data-folder-id="root.folder_id">
+                    <strong v-if="index">/{{root.folder_name}}</strong>
+                    <strong v-else>...</strong>
+                </router-link>
             </div>
             <div id="disks" class="col-md-5 pull-right text-right">
                 <small>Disks</small>

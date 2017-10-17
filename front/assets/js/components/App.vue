@@ -2,7 +2,7 @@
     <div>
         <navigation :auth="auth"></navigation>
         <sidebar :auth="auth"></sidebar>
-        <router-view  :key="routeKey" class="content-wrapper" :auth="auth"></router-view>
+        <router-view class="content-wrapper" :auth="auth"></router-view>
     </div>
 </template>
 <style></style>
@@ -12,8 +12,7 @@
     export default {
         data() {
             return {
-                auth: auth,
-                routeKey: this.$route.name + this.$route.params + this.$route.query
+                auth: auth
             }
         },
         methods: {
