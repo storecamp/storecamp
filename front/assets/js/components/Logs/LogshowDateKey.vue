@@ -16,9 +16,11 @@
                                 <i class="fa fa-download"></i> DOWNLOAD
                             </a>
                             <a :data-href="'delete-log'+log.date" class="btn btn-xs btn-danger">
-                                <i  :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
+                                <i :data-href="'delete-log'+log.date" class="fa fa-trash-o"></i> DELETE
                             </a>
-                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}" :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog" :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
+                            <modal title="Are you sure to delete this log file?" :confirmData="{date: log.date}"
+                                   :modalId="'delete-log'+log.date" :triggerConfirm="deleteLog"
+                                   :content="'Log by date ' +log.date + ' is going to be deleted!'"></modal>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -54,7 +56,8 @@
                 </div>
 
                 <div class="panel panel-default">
-                    <logstable v-for="(entry, num) in log.entries" :envs="log.envs" :num="num" :entry="entry" :log="log" :key="num"></logstable>
+                    <logstable v-for="(entry, num) in log.entries" :envs="log.envs" :num="num" :entry="entry" :log="log"
+                               :key="num"></logstable>
                 </div>
             </div>
         </div>
@@ -123,7 +126,7 @@
                     }, response => {
                         this.error = true;
                         this.errorMsg = response.data.msg;
-                        if(response.data.msg) {
+                        if (response.data.msg) {
                             toastr.error('Log Not Deleted! ' + response.data.msg);
                         } else {
                             toastr.error('Log Not Deleted!');
@@ -140,7 +143,7 @@
                 let date = $(event.target).attr('data-date');
                 return window.BASE_URL + '/api/backlogs/' + date;
             },
-            loadData: function() {
+            loadData: function () {
                 let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
                 let date = this.$route.params.date ? this.$route.params.date : false;
                 let level = this.$route.params.key ? this.$route.params.key : false;
