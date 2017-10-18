@@ -232,10 +232,10 @@ class MediaSystem implements MediaSystemContract
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();
-        $tmpPath = storage_path().'/plupload/';
-        if (!empty(\File::files($tmpPath))) {
-            \File::deleteDirectory($tmpPath);
-            \File::makeDirectory($tmpPath);
+
+        $path = storage_path().'/receiver';
+        if (is_dir($path)) {
+            \File::deleteDirectory($path);
         }
 
         return $media;

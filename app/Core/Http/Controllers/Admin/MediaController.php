@@ -234,7 +234,7 @@ class MediaController extends BaseController
      */
     public function upload(Request $request, $disk = '')
     {
-        try {
+//        try {
             $mediaReceiver = new MediaReceiver($request);
             $media = $mediaReceiver->receive('file', function ($file) use ($request, $disk) {
                 return $this->mediaSystem->makeChunkedFile($request, $file, $disk);
@@ -243,13 +243,13 @@ class MediaController extends BaseController
             return response()->json([
                 'media' => json_encode($media),
             ]);
-        } catch (MediaUploadException $e) {
-            throw $this->transformMediaUploadException($e);
-        } catch (FilesystemException $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        } catch (\Throwable $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        }
+//        } catch (MediaUploadException $e) {
+//            throw $this->transformMediaUploadException($e);
+//        } catch (FilesystemException $exception) {
+//            return response()->json($exception->getMessage(), $exception->getCode());
+//        } catch (\Throwable $exception) {
+//            return response()->json($exception->getMessage(), $exception->getCode());
+//        }
     }
 
     /**
