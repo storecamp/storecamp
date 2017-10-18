@@ -65,7 +65,7 @@ storage/*.key
 .env.*.php
 .env.php
 
-
+/storage/framework/cache/*
 /storage/framework/sessions/*
 /storage/framework/views/*
 /storage/debugbar/*
