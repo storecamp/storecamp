@@ -68,6 +68,7 @@ storage/*.key
 /storage/framework/cache/*
 /storage/framework/sessions/*
 /storage/framework/views/*
+/storage/receiver/*
 /storage/debugbar/*
 !/app/Http/Controllers/
 /public/uploads/Logo.png

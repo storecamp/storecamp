@@ -10,6 +10,7 @@ use App\Core\Support\Media\MediaUploader;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class MediaSystem.
@@ -229,14 +230,11 @@ class MediaSystem implements MediaSystemContract
         $filename = implode('.', $filenameArr);
         $media = $this->mediaUploader->fromSource($file)
             ->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
+        $this->mediaUploader->update($media);
+
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();
-
-        $path = storage_path().'/receiver';
-        if (is_dir($path)) {
-            \File::deleteDirectory($path);
-        }
 
         return $media;
     }
