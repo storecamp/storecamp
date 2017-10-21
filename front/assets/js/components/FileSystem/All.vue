@@ -123,7 +123,6 @@
                         <i class="fa fa-file-archive-o"></i> - document
                             </a>
                         </li>
-
                     </span>
                     </div><!-- /.box-header -->
                     <div id="folder-body"
@@ -133,17 +132,16 @@
                         <folders :directories="directories" :count="count" :folder="folder" :disk="disk"
                                  :path="path"></folders>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script>
     import Folders from "./Folders.vue";
     import Files from "./Files.vue";
     import Modal from "../Partials/Modal.vue";
-
     let vm = ({
         data() {
             return {

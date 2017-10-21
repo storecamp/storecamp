@@ -86,7 +86,7 @@
             },
             deleteFolder(event, data, form) {
                 let _this = this;
-                Vue.http.get(window.BASE_URL + '/api/media/delete/folder/' + data.disk + '/' +data.id)
+                Vue.http.get(window.BASE_URL + '/api/media/delete/folder/' + data.disk + '/' + data.id)
                     .then(response => {
                         this.error = false;
                         _this.$parent.$parent.eventHub.$emit('delete-dir', response.data);
