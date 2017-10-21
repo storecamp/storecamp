@@ -52,11 +52,18 @@
                                    class="btn btn-xs btn-default" style="margin-left: 10px">
                                     upload
                                 </a>
-                                <a data-toggle="modal"
-                                   href="#newdir-modal"
-                                   class="btn btn-xs btn-default" style="margin-left: 10px">
+                                <button :data-href="'create-folder-'+folder.id"
+                                        class="btn btn-xs btn-default" role="link"
+                                        style="margin-left: 10px"
+                                        title="Are you sure you want to create this folder?">
                                     create directory
-                                </a>
+                                </button>
+                                <modal title="Are you sure you want to create this folder?"
+                                       :confirmData="{id: folder.id, disk: folder.disk}"
+                                       :modalId="'create-folder-'+folder.id" :triggerConfirm="createFolder"
+                                       :content="createDirContent(folder.id, folder.disk, path.path)">
+                                </modal>
+
                                 <form method="get"
                                       class="input-group pull-right"
                                       style="width: 200px; margin-left: 10px">
@@ -123,7 +130,8 @@
                          data-folder-url="http://storecamp.dev/en/admin/media/getIndex/local/c52ae992-f435-4014-acf4-8959204658d0"
                          class="box-body folder-body">
                         <files :media="media" :disk="disk" :count="count"></files>
-                        <folders :directories="directories" :count="count" :folder="folder" :disk="disk"></folders>
+                        <folders :directories="directories" :count="count" :folder="folder" :disk="disk"
+                                 :path="path"></folders>
                     </div>
 
                 </div>
@@ -134,6 +142,7 @@
 <script>
     import Folders from "./Folders.vue";
     import Files from "./Files.vue";
+    import Modal from "../Partials/Modal.vue";
 
     let vm = ({
         data() {
@@ -178,7 +187,32 @@
                         this.errorMsg = response.error;
                     })
             },
-            loadData: function() {
+            createDirContent(folder, disk, path) {
+                path = path ? path : "../";
+                return '<div class="input-group margin">' +
+                    '<div class="input-group-btn">' +
+                    '<button type="button" class="btn btn-info disabled">' + path + '</button>' +
+                    '</div>' +
+                    '<input name="new_path" ' +
+                    'id="create_folder-' + folder + '-input" class="create-folder-input" value="">' +
+                    '</div>';
+            },
+            createFolder(event, data, form) {
+                let new_path = form.find('.create-folder-input');
+                data.new_path = new_path.val();
+                data.folder = data.id;
+                let _this = this;
+                Vue.http.post(window.BASE_URL + '/api/media/makeDirectory/' + data.disk, data)
+                    .then(response => {
+                        this.error = false;
+                        _this.$parent.eventHub.$emit('create-dir', response.data);
+                    }, response => {
+                        this.error = true;
+                        this.errorMsg = response.error;
+                    });
+                return;
+            },
+            loadData: function () {
                 let page = this.$route.query.page ? this.$route.query.page : 0;
                 let disk = this.$route.params.disk ? this.$route.params.disk : "local";
                 let folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
@@ -187,6 +221,19 @@
         },
         mounted: function () {
             this.loadData();
+            let _this = this;
+            this.$parent.eventHub.$on('rename-dir', function (data) {
+                _this.loadData();
+                toastr.success('Folder renamed to: ' + data.folder.name);
+            });
+            this.$parent.eventHub.$on('delete-dir', function (data) {
+                _this.loadData();
+                toastr.success('Folder by the name: <b class=\'text-warning\'>' + data.name + '</b> deleted!');
+            });
+            this.$parent.eventHub.$on('create-dir', function (data) {
+                _this.loadData();
+                toastr.success('Folder created!');
+            });
         },
         watch: {
             '$route.query.page'(newVal, oldVal) {
@@ -204,7 +251,8 @@
         },
         components: {
             folders: Folders,
-            files: Files
+            files: Files,
+            modal: Modal
         }
     });
     export default vm;

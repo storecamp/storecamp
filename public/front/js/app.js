@@ -43911,6 +43911,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Folders_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Files_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Files_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Partials_Modal_vue__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Partials_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Partials_Modal_vue__);
 //
 //
 //
@@ -44044,6 +44046,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -44068,7 +44079,7 @@ var vm = {
 
     methods: {
         getFolder: function getFolder(page, disk, folder_id) {
-            var _this = this;
+            var _this2 = this;
 
             var pageNum = page ? page : 1;
             var url = '/api/media/index';
@@ -44079,19 +44090,39 @@ var vm = {
                 url += "/" + folder_id;
             }
             Vue.http.get(window.BASE_URL + url + '?page=' + pageNum).then(function (response) {
-                _this.error = false;
-                _this.count = response.data.count;
-                _this.directories = response.data.directories;
-                _this.disk = response.data.disk;
-                _this.folder = response.data.folder;
-                _this.media = response.data.media.media.data;
-                _this.path = response.data.media;
-                _this.rootFolders = response.data.rootFolders;
-                _this.urlFolderPathBuild = response.data.urlFolderPathBuild;
+                _this2.error = false;
+                _this2.count = response.data.count;
+                _this2.directories = response.data.directories;
+                _this2.disk = response.data.disk;
+                _this2.folder = response.data.folder;
+                _this2.media = response.data.media.media.data;
+                _this2.path = response.data.media;
+                _this2.rootFolders = response.data.rootFolders;
+                _this2.urlFolderPathBuild = response.data.urlFolderPathBuild;
             }, function (response) {
-                _this.error = true;
-                _this.errorMsg = response.error;
+                _this2.error = true;
+                _this2.errorMsg = response.error;
             });
+        },
+        createDirContent: function createDirContent(folder, disk, path) {
+            path = path ? path : "../";
+            return '<div class="input-group margin">' + '<div class="input-group-btn">' + '<button type="button" class="btn btn-info disabled">' + path + '</button>' + '</div>' + '<input name="new_path" ' + 'id="create_folder-' + folder + '-input" class="create-folder-input" value="">' + '</div>';
+        },
+        createFolder: function createFolder(event, data, form) {
+            var _this3 = this;
+
+            var new_path = form.find('.create-folder-input');
+            data.new_path = new_path.val();
+            data.folder = data.id;
+            var _this = this;
+            Vue.http.post(window.BASE_URL + '/api/media/makeDirectory/' + data.disk, data).then(function (response) {
+                _this3.error = false;
+                _this.$parent.eventHub.$emit('create-dir', response.data);
+            }, function (response) {
+                _this3.error = true;
+                _this3.errorMsg = response.error;
+            });
+            return;
         },
 
         loadData: function loadData() {
@@ -44103,6 +44134,19 @@ var vm = {
     },
     mounted: function mounted() {
         this.loadData();
+        var _this = this;
+        this.$parent.eventHub.$on('rename-dir', function (data) {
+            _this.loadData();
+            toastr.success('Folder renamed to: ' + data.folder.name);
+        });
+        this.$parent.eventHub.$on('delete-dir', function (data) {
+            _this.loadData();
+            toastr.success('Folder by the name: <b class=\'text-warning\'>' + data.name + '</b> deleted!');
+        });
+        this.$parent.eventHub.$on('create-dir', function (data) {
+            _this.loadData();
+            toastr.success('Folder created!');
+        });
     },
     watch: {
         '$route.query.page': function $routeQueryPage(newVal, oldVal) {
@@ -44120,7 +44164,8 @@ var vm = {
     },
     components: {
         folders: __WEBPACK_IMPORTED_MODULE_0__Folders_vue___default.a,
-        files: __WEBPACK_IMPORTED_MODULE_1__Files_vue___default.a
+        files: __WEBPACK_IMPORTED_MODULE_1__Files_vue___default.a,
+        modal: __WEBPACK_IMPORTED_MODULE_2__Partials_Modal_vue___default.a
     }
 };
 /* harmony default export */ __webpack_exports__["default"] = (vm);
@@ -44268,6 +44313,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Modal_vue__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Partials_Modal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Partials_Modal_vue__);
 //
 //
 //
@@ -44312,14 +44359,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {};
     },
 
-    props: ['folder', "directories", "disk"],
-    mounted: function mounted() {}
+    props: ['folder', "directories", "disk", "path"],
+    methods: {
+        renameDirContent: function renameDirContent(folderId, path, folderName) {
+            path = path ? path : "../";
+            return '<div class="input-group margin">' + '<div class="input-group-btn">' + '<button type="button" class="btn btn-info disabled">' + path + '</button>' + '</div>' + '<input name="new_name" ' + 'id="rename_folder-' + folderId + '-input" class="rename-folder-input" value=' + folderName + '>' + '</div>';
+        },
+        deleteFolder: function deleteFolder(event, data, form) {
+            var _this2 = this;
+
+            var _this = this;
+            Vue.http.get(window.BASE_URL + '/api/media/delete/folder/' + data.disk + '/' + data.id).then(function (response) {
+                _this2.error = false;
+                _this.$parent.$parent.eventHub.$emit('delete-dir', response.data);
+            }, function (response) {
+                _this2.error = true;
+                _this2.errorMsg = response.error;
+            });
+            return;
+        },
+        renameFolder: function renameFolder(event, data, form) {
+            var _this3 = this;
+
+            var new_name = form.find('.rename-folder-input');
+            data.new_name = new_name.val();
+            data.folder = data.id;
+            var _this = this;
+            Vue.http.post(window.BASE_URL + '/api/media/renameDirectory/' + data.disk, data).then(function (response) {
+                _this3.error = false;
+                _this.$parent.$parent.eventHub.$emit('rename-dir', response.data);
+            }, function (response) {
+                _this3.error = true;
+                _this3.errorMsg = response.error;
+            });
+            return;
+        }
+    },
+    mounted: function mounted() {},
+    components: {
+        Modal: __WEBPACK_IMPORTED_MODULE_0__Partials_Modal_vue___default.a
+    }
 });
 
 /***/ }),
@@ -45155,6 +45265,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
  // getting jQuery
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45181,8 +45295,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             event.preventDefault();
             submitBtn.button('loading');
             console.log('Confirm btn triggered!');
-            _this.triggerConfirm(event, _this.confirmData);
-            modal.modal('hide');
+            _this.triggerConfirm(event, _this.confirmData, form);
+            setTimeout(function () {
+                submitBtn.button('reset');
+                modal.modal('hide');
+            }, 1000);
             return false;
         });
         modal.on('hidden.bs.modal', function () {});
@@ -92677,22 +92794,56 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "aria-hidden": "true"
       }
-    })]), _vm._v(" "), _c('a', {
+    })]), _vm._v(" "), _c('button', {
+      staticClass: "delete-file text-danger btn btn-default btn-xs",
+      attrs: {
+        "data-href": 'delete-folder-' + directory.id,
+        "role": "link",
+        "title": "Are you sure you want to delete folder?"
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-times",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    })]), _vm._v(" "), _c('modal', {
+      attrs: {
+        "title": "Are you sure to delete the folder?",
+        "confirmData": {
+          id: _vm.folder.id,
+          disk: _vm.folder.disk
+        },
+        "modalId": 'delete-folder-' + directory.id,
+        "triggerConfirm": _vm.deleteFolder,
+        "content": 'Folder by the name: <b class=\'text-warning\'>' + directory.name + '</b> is going to be deleted!'
+      }
+    }), _vm._v(" "), _c('button', {
       staticClass: "rename-file text-danger btn btn-default btn-xs",
       attrs: {
+        "data-href": 'rename-folder-' + directory.unique_id,
         "data-toggle": "modal",
-        "href": "#renameDir-modal",
-        "data-new_name": directory.name,
-        "data-rename-id": directory.unique_id,
-        "type": "rename",
         "role": "button"
       }
     }, [_c('i', {
       staticClass: "fa fa-edit",
       attrs: {
+        "data-href": 'rename-folder-' + directory.unique_id,
         "aria-hidden": "true"
       }
-    })]), _vm._v(" "), _c('router-link', {
+    })]), _vm._v(" "), _c('modal', {
+      attrs: {
+        "title": "Are you sure to rename the folder?",
+        "confirmData": {
+          id: directory.unique_id,
+          old_name: directory.name,
+          path: _vm.path.path,
+          disk: directory.disk
+        },
+        "modalId": 'rename-folder-' + directory.unique_id,
+        "triggerConfirm": _vm.renameFolder,
+        "content": _vm.renameDirContent(directory.unique_id, _vm.path.path, directory.name)
+      }
+    }), _vm._v(" "), _c('router-link', {
       staticClass: "btn btn-app",
       attrs: {
         "to": {
@@ -94795,7 +94946,55 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-12"
   }, [_c('div', {
     staticClass: "box"
-  }, [_vm._m(1), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "box-header"
+  }, [_c('h3', {
+    staticClass: "box-title"
+  }, [_vm._v("List of Media Files")]), _vm._v(" "), _c('div', {
+    staticClass: "box-tools"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('a', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("\n                                back\n                            ")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "data-toggle": "modal",
+      "href": "#upload-modal"
+    }
+  }, [_vm._v("\n                                upload\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-xs btn-default",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "data-href": 'create-folder-' + _vm.folder.id,
+      "role": "link",
+      "title": "Are you sure you want to create this folder?"
+    }
+  }, [_vm._v("\n                                create directory\n                            ")]), _vm._v(" "), _c('modal', {
+    attrs: {
+      "title": "Are you sure you want to create this folder?",
+      "confirmData": {
+        id: _vm.folder.id,
+        disk: _vm.folder.disk
+      },
+      "modalId": 'create-folder-' + _vm.folder.id,
+      "triggerConfirm": _vm.createFolder,
+      "content": _vm.createDirContent(_vm.folder.id, _vm.folder.disk, _vm.path.path)
+    }
+  }), _vm._v(" "), _vm._m(1)], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "clearifx"
+  }), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c('div', {
     staticClass: "box-body folder-body",
     attrs: {
       "id": "folder-body",
@@ -94812,7 +95011,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "directories": _vm.directories,
       "count": _vm.count,
       "folder": _vm.folder,
-      "disk": _vm.disk
+      "disk": _vm.disk,
+      "path": _vm.path
     }
   })], 1)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -94840,41 +95040,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Your browser doesn't support native upload.")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "box-header"
-  }, [_c('h3', {
-    staticClass: "box-title"
-  }, [_vm._v("List of Media Files")]), _vm._v(" "), _c('div', {
-    staticClass: "box-tools"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('a', {
-    staticClass: "btn btn-xs btn-default",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("\n                                back\n                            ")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-xs btn-default",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "data-toggle": "modal",
-      "href": "#upload-modal"
-    }
-  }, [_vm._v("\n                                upload\n                            ")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-xs btn-default",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "data-toggle": "modal",
-      "href": "#newdir-modal"
-    }
-  }, [_vm._v("\n                                create directory\n                            ")]), _vm._v(" "), _c('form', {
+  return _c('form', {
     staticClass: "input-group pull-right",
     staticStyle: {
       "width": "200px",
@@ -94890,9 +95056,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "search",
       "placeholder": "Search"
     }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "clearifx"
-  }), _vm._v(" "), _c('span', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
     staticClass: "media_tags"
   }, [_c('span', {
     staticClass: "text-muted"
@@ -94964,7 +95130,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-file-archive-o"
-  }), _vm._v(" - document\n                        ")])])])])
+  }), _vm._v(" - document\n                        ")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -94988,13 +95154,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-dialog"
   }, [_c('div', {
     staticClass: "modal-content"
+  }, [_c('form', {
+    attrs: {
+      "id": _vm.modalId + '-form'
+    }
   }, [_c('div', {
     staticClass: "modal-header"
   }, [_vm._m(0), _vm._v(" "), _c('h4', {
     staticClass: "modal-title"
   }, [_vm._v(_vm._s(_vm.title))])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_vm._v("\n                      " + _vm._s(_vm.content) + "\n                  ")]), _vm._v(" "), _c('div', {
+    staticClass: "modal-body",
+    domProps: {
+      "innerHTML": _vm._s(_vm.content)
+    }
+  }), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-sm btn-default pull-left",
@@ -95002,13 +95175,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "data-dismiss": "modal"
     }
-  }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Cancel\n                    ")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-sm btn-info confirm-btn",
     attrs: {
       "type": "submit",
       "data-loading-text": "Loading&hellip;"
     }
-  }, [_vm._v(_vm._s(_vm.confirm))])])])])])
+  }, [_vm._v(_vm._s(_vm.confirm) + "\n                    ")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",

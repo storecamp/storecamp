@@ -117,7 +117,7 @@ class FileSystemController extends Controller
         });
 
         $directories->map(function ($item) use ($disk, $folder) {
-            $item['delete_url'] = route("api.media::get.folder.delete", [$disk, $item->unique_id]);
+            // do something
         });
 
         return response()->json(compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
@@ -298,7 +298,7 @@ class FileSystemController extends Controller
         try {
             $folder = $this->mediaSystem->renameFolder($request, $disk);
 
-            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
+            return response()->json(compact('disk', 'folder'));
         } catch (ModelNotFoundException $e) {
             \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
             return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
@@ -386,6 +386,7 @@ class FileSystemController extends Controller
             }
             $this->toastr('info', 'File Deleted', 'Success');
 
+            //TODO remove redirect and use response()
             return redirect()->route('admin::media::index', [$media->disk, $media->directory_id]);
         } catch (ModelNotFoundException $e) {
             \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
@@ -400,11 +401,12 @@ class FileSystemController extends Controller
     }
 
     /**
+     * TODO fix delete folders method
      * remove folder and the files
      * attached.
      *
      * @param Request $request
-     * @param string $disk
+     * @param string  $disk
      * @param $folder
      *
      * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
