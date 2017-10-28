@@ -21,7 +21,8 @@
                             :class="'btn info-btn btn-default btn-xs' + ' item-' + file.id"
                             data-toggle="modal"
                             role="button">
-                        <i :data-href="'info-file-'+file.id" :class="'fa fa-play' + ' item-' + file.id" aria-hidden="true"></i>
+                        <i :data-href="'info-file-'+file.id" :class="'fa fa-play' + ' item-' + file.id"
+                           aria-hidden="true"></i>
                         info
                     </button>
 
@@ -68,11 +69,12 @@
 
 <script>
     import Modal from "../Partials/Modal.vue";
+
     export default {
         data() {
             return {
                 options: {
-
+                    player: {}
                 }
             }
         },
@@ -175,7 +177,13 @@
                 return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n          <span class=\"mailbox-attachment-icon has-img\">\n              <video class='js-player' controls>\n                   <source src=\"" + mediaUrl + "\" type=\"video/mp4\">\n                    <source src=\"" + mediaUrl + "\" type=\"video/webm\">\n                    <source src=\"" + mediaUrl + "\" type=\"" + mime + "\">\n               </video>\n          </span>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n</div>";
             },
             audioTemplate: function (mediaUrl, mediaId, filename, type, modified, size) {
-                return " <div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n           <audio class='js-player' controls title=\"" + mediaUrl + "\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/mp3\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/ogg\">\n            </audio>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+                return " <div id='" + mediaId + "' data-id='" + mediaId +
+                    "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" " +
+                    "style=\"margin-bottom: 10px\">" +
+                    "<audio class='audio' id='#audio-" + mediaId + "' controls title=\"" + mediaUrl + "\">" +
+                    "<source src=\"" + mediaUrl + "\" type=\"audio/mp3\">" +
+                    "<source src=\"" + mediaUrl + "\" type=\"audio/ogg\">" +
+                    "</audio>" + (this.infoTemplate(filename, type, modified, size)) + "</div>";
             },
             documentTemplate: function (mediaUrl, mediaId, filename, type, modified, size) {
                 return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n<div class=\"text-center\">\n    <i class=\"item-icon fa fa-file-word-o fa-2x\"></i>\n</div>\n<div class='clearfix'></div>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
@@ -196,32 +204,27 @@
                     $('.media-plyr-item').removeClass('playing');
                 });
             },
-            reindex: function (mediaItems, players) {
+            destroyPlayers: function (players) {
                 let _this = this;
-                return [].forEach.call(mediaItems, function (item, i, arr) {
-                    $(item).attr('data-media-number', i);
+                return [].forEach.call(players, function (item, i, arr) {
+                    item.destroy();
                 });
             }
         },
         mounted: function () {
-            this.options = {
-                players: plyr.setup(document.querySelectorAll('.js-player'), []),
-                playerStatus: $('.play-status'),
-                mediaItems: $('.media[data-status="playable"]')
-            };
-            if (this.options.mediaItems.length > 0) {
-                this.reindex(this.options.mediaItems, this.options.players);
-            }
             let _this = this;
-            this.eventHub.$on('modal-closed', function (context) {
-                if (_this.file.aggregate_type === "video") {
-                    _this.pausePlayers(_this.options.players);
-                }
-                if (_this.file.aggregate_type === "audio") {
-                    _this.pausePlayers(_this.options.players);
-                }
+
+            this.eventHub.$on('modal-opened', function (context) {
+                _this.options.player = plyr.setup(document.querySelectorAll('.js-player'), []);
             });
-            return;
+            this.eventHub.$on('modal-closed', function (context) {
+                _this.destroyPlayers(_this.options.player);
+                if (_this.file.aggregate_type === "audio") {
+                    let audio = document.getElementById('#audio-' + _this.file.id);
+                    audio.pause()
+                }
+
+            });
         },
         components: {
             Modal
