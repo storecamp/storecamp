@@ -9,12 +9,10 @@ use App\Core\Http\Controllers\Controller;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
 use App\Core\Support\Media\MediaReceiver;
-use Arcanedev\LogViewer\Exceptions\FilesystemException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
 
 class FileSystemController extends Controller
@@ -99,7 +97,6 @@ class FileSystemController extends Controller
      */
     public function index(Request $request, $disk = '', $folder = null)
     {
-//        try {
         $diskName = $disk;
         $predefined = $this->preDefineIndexPart($request, $disk, $folder);
         $media = $predefined['media'];
@@ -110,10 +107,18 @@ class FileSystemController extends Controller
         $disk = $predefined['disk'];
         $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
         $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
-        $media['media']->getCollection()->map(function ($item) use ($disk, $folder) {
+        $media['media']->getCollection()->map(function ($item) use ($disk, $folder, $urlFolderPathBuild) {
             $item['url'] = $item->getUrl();
             $item['download_url'] = route("api.media::download", [$disk, $item->id, $folder->id]);
             $item['delete_url'] = route("api.media::get.delete", [$disk, $item->id]);
+            $pathArr = array_map(function ($item) {
+                if ($item['folder_name'] == "../") {
+                    return '..';
+                } else {
+                    return $item['folder_name'];
+                }
+            }, $urlFolderPathBuild);
+            $item['full_path'] = implode("/", $pathArr);
         });
 
         $directories->map(function ($item) use ($disk, $folder) {
@@ -121,16 +126,6 @@ class FileSystemController extends Controller
         });
 
         return response()->json(compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
-//        } catch (ModelNotFoundException $e) {
-//            \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-//            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-//        } catch (FileNotFoundException $e) {
-//            \Log::error("Filesystem Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-//            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-//        } catch (\Throwable $e) {
-//            \Log::error("Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-//            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-//        }
     }
 
     /**
@@ -319,20 +314,10 @@ class FileSystemController extends Controller
      */
     public function renameFile(Request $request, $disk = '')
     {
-        try {
-            $folder = $this->mediaSystem->disk($disk)->renameFile($request, $disk);
 
-            return redirect()->route('admin::media::index', [$folder->disk, $folder->unique_id]);
-        } catch (ModelNotFoundException $e) {
-            \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-        } catch (FileNotFoundException $e) {
-            \Log::error("Filesystem Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-        } catch (\Throwable $e) {
-            \Log::error("Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
-            return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
-        }
+        $folder = $this->mediaSystem->disk($disk)->renameFile($request, $disk);
+        return response()->json(['msg' => 'File name changed successfully!'], 200);
+
     }
 
     /**
@@ -406,7 +391,7 @@ class FileSystemController extends Controller
      * attached.
      *
      * @param Request $request
-     * @param string  $disk
+     * @param string $disk
      * @param $folder
      *
      * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse

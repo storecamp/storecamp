@@ -14,7 +14,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-default pull-left" data-dismiss="modal">Cancel
                         </button>
-                        <button type="submit" class="btn btn-sm btn-info confirm-btn"
+                        <button v-if="withConfirm" type="submit" class="btn btn-sm btn-info confirm-btn"
                                 data-loading-text="Loading&hellip;">{{confirm}}
                         </button>
                     </div>
@@ -34,6 +34,7 @@
             className: {default: ""},
             confirm: {default: "Confirm"},
             confirmData: {default: {}},
+            withConfirm: {default: true},
             triggerConfirm: {default: null}
         },
         mounted: function () {
@@ -45,6 +46,7 @@
             $("[data-href='" + this.modalId + "']").on('click', function (event) {
                 event.preventDefault();
                 modal.modal('show');
+                _this.eventHub.$emit('modal-opened', $(this));
             });
             modal.find('.confirm-btn').on('click', function (event) {
                 event.preventDefault();
@@ -58,6 +60,7 @@
                 return false;
             });
             modal.on('hidden.bs.modal', function () {
+                _this.eventHub.$emit('modal-closed', $(this));
             });
         }
     }

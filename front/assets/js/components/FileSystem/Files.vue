@@ -5,17 +5,17 @@
 
             <div class="panel-body">
                 <div v-if="media" v-for="file in media">
-                    <file-item v-if="file.aggregate_type == 'video'" :file="file"
+                    <file-item v-bind:key="file.unique_id" v-if="file.aggregate_type == 'video'" :file="file"
                                :icon="'item-icons fa fa-video-camera fa-2x'"></file-item>
-                    <file-item v-if="file.aggregate_type == 'image'" :file="file"
+                    <file-item v-bind:key="file.unique_id"  v-if="file.aggregate_type == 'image'" :file="file"
                                :icon="'item-icons fa fa-image fa-2x'"></file-item>
-                    <file-item v-if="file.aggregate_type == 'audio'" :file="file"
+                    <file-item  v-bind:key="file.unique_id" v-if="file.aggregate_type == 'audio'" :file="file"
                                :icon="'item-icons fa fa-file-audio-o fa-2x'"></file-item>
-                    <file-item v-if="file.aggregate_type == 'archive'" :file="file"
+                    <file-item  v-bind:key="file.unique_id" v-if="file.aggregate_type == 'archive'" :file="file"
                                :icon="'item-icons fa fa-archive fa-2x'"></file-item>
-                    <file-item v-if="file.aggregate_type == 'document'" :file="file"
+                    <file-item  v-bind:key="file.unique_id" v-if="file.aggregate_type == 'document'" :file="file"
                                :icon="'item-icons fa fa-file-word-o fa-2x'"></file-item>
-                    <file-item v-if="file.aggregate_type == 'pdf'" :file="file"
+                    <file-item  v-bind:key="file.unique_id" v-if="file.aggregate_type == 'pdf'" :file="file"
                                :icon="'item-icons fa fa-file-pdf-o fa-2x'"></file-item>
                 </div>
             </div><!-- /.panel-body -->
