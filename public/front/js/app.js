@@ -15865,6 +15865,12 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
         component: __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default.a,
         props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
         meta: { auth: true }
+    }, {
+        path: '/media_disk_folder_filter/:disk/:folder_id/:filter',
+        name: 'mediaDiskFolderFilter',
+        component: __WEBPACK_IMPORTED_MODULE_19__components_FileSystem_All_vue___default.a,
+        props: { auth: __WEBPACK_IMPORTED_MODULE_20__services_auth_service_js__["a" /* default */] },
+        meta: { auth: true }
     }]
 });
 
@@ -44066,6 +44072,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -44089,7 +44105,7 @@ var vm = {
     },
 
     methods: {
-        getFolder: function getFolder(page, disk, folder_id) {
+        getFolder: function getFolder(page, disk, folder_id, filter) {
             var _this2 = this;
 
             var pageNum = page ? page : 1;
@@ -44100,7 +44116,11 @@ var vm = {
             if (folder_id) {
                 url += "/" + folder_id;
             }
-            Vue.http.get(window.BASE_URL + url + '?page=' + pageNum).then(function (response) {
+            var queryParams = '?page=' + pageNum;
+            if (filter) {
+                queryParams += "&" + 'tag=' + filter;
+            }
+            Vue.http.get(window.BASE_URL + url + queryParams).then(function (response) {
                 _this2.error = false;
                 _this2.count = response.data.count;
                 _this2.directories = response.data.directories;
@@ -44140,7 +44160,8 @@ var vm = {
             var page = this.$route.query.page ? this.$route.query.page : 0;
             var disk = this.$route.params.disk ? this.$route.params.disk : "local";
             var folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
-            this.getFolder(page, disk, folder_id);
+            var filter = this.$route.params.filter ? this.$route.params.filter : null;
+            this.getFolder(page, disk, folder_id, filter);
         }
     },
     mounted: function mounted() {
@@ -44164,6 +44185,9 @@ var vm = {
             this.loadData();
         },
         '$route.params.disk': function $routeParamsDisk(newVal, oldVal) {
+            this.loadData();
+        },
+        '$route.params.filter': function $routeParamsFilter(newVal, oldVal) {
             this.loadData();
         },
         '$route.params.folder_id': function $routeParamsFolder_id(newVal, oldVal) {
@@ -63529,7 +63553,7 @@ exports.push([module.i, "\n.form-group {\n    margin-left: 0!important;\n}\n.for
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n.delete-file, .rename-file, .download-file, .tag-file {\n  position: absolute;\n  top: auto;\n  right: 0;\n  display: none;\n  padding: 3px;\n}\n.rename-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.locked-file {\n  position: absolute;\n  top: 5px;\n  color: chocolate;\n}\n.download-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.file-item {\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n.file-item.checked {\n    box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;\n}\n.file-item .mailbox-attachment-icon {\n    border: 1px solid transparent;\n}\n.file-item .mailbox-attachment-info {\n    overflow: hidden;\n}\n.file-item:hover .mailbox-attachment-icon {\n    border: 1px solid #3c8dbc;\n}\n.file-item .item-icons {\n    height: 2em;\n}\n.file-item .item-icon {\n    width: 100%;\n    height: 150px;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item .item-image {\n    width: 100%;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item:hover .delete-file {\n    display: block;\n    z-index: 9999;\n}\n.file-item:hover .download-file {\n    display: block;\n    z-index: 9999;\n}\n#my-awesome-dropzone-body {\n  border: 2px dashed aliceblue;\n  border-radius: 5px;\n  background: white;\n}\n#my-awesome-dropzone-body .dz-message {\n    text-decoration: dashed;\n    font-weight: 700;\n}\n#my-awesome-dropzone-body > .dz-preview {\n    display: none;\n}\n.files li {\n  list-style-type: none;\n}\n.directory-item:hover .delete-file {\n  display: block;\n  z-index: 9999;\n}\n.directory-item:hover .rename-file {\n  display: block;\n  z-index: 9999;\n}\n.media_tags {\n  display: inline-block;\n}\n.media_tags li {\n    list-style-type: none;\n    display: inline;\n}\n.media_tags li a {\n      border-bottom: 2px solid transparent;\n      background: transparent;\n}\n.media_tags li.active a, .media_tags li:hover a {\n      border-radius: 0;\n      background: #3d3d3d;\n      color: whitesmoke;\n      border-bottom: 2px solid #3d3d3d;\n}\n.dropzone {\n  border: 2px dashed aliceblue !important;\n  border-radius: 5px;\n  background: white;\n}\n.playing .mailbox-attachment-icon {\n  border: 1px solid #3c8dbc;\n}\n.directories .box-default {\n  border: none;\n  box-shadow: none;\n  border-left: 2px dashed aliceblue;\n  min-height: 400px;\n}\n.directories .box-header {\n  border-bottom: 2px dashed aliceblue;\n}\n#fileLinker-modal .selected-block {\n  word-wrap: break-word;\n}\n#fileLinker-modal .selected-block div {\n    text-align: center;\n}\n#fileLinker-modal .selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n#fileLinker-modal .selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.files.selected-block {\n  word-wrap: break-word;\n  display: block;\n  width: 100%;\n}\n.files.selected-block div {\n    text-align: center;\n}\n.files.selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n.files.selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.selected-block .selected-item {\n  padding-left: 0;\n}\n.selected-block .selected-item .remove-selected {\n    color: #F44336;\n}\n.items-list .delete-btn, .items-list .rename-btn, .items-list .download-btn, .items-list .info-btn {\n  display: inline-block;\n  position: relative;\n}\n", ""]);
+exports.push([module.i, "\n.delete-file, .rename-file, .download-file, .tag-file {\n  position: absolute;\n  top: auto;\n  right: 0;\n  display: none;\n  padding: 3px;\n}\n.rename-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.locked-file {\n  position: absolute;\n  top: 5px;\n  color: chocolate;\n}\n.download-file {\n  display: none;\n  top: 30px;\n  z-index: 9999;\n}\n.file-item {\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n.file-item.checked {\n    box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;\n}\n.file-item .mailbox-attachment-icon {\n    border: 1px solid transparent;\n}\n.file-item .mailbox-attachment-info {\n    overflow: hidden;\n}\n.file-item:hover .mailbox-attachment-icon {\n    border: 1px solid #3c8dbc;\n}\n.file-item .item-icons {\n    height: 2em;\n}\n.file-item .item-icon {\n    width: 100%;\n    height: 150px;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item .item-image {\n    width: 100%;\n    display: block;\n    font-size: 120px;\n    text-align: center;\n    list-style-type: none !important;\n}\n.file-item:hover .delete-file {\n    display: block;\n    z-index: 9999;\n}\n.file-item:hover .download-file {\n    display: block;\n    z-index: 9999;\n}\n#my-awesome-dropzone-body {\n  border: 2px dashed aliceblue;\n  border-radius: 5px;\n  background: white;\n}\n#my-awesome-dropzone-body .dz-message {\n    text-decoration: dashed;\n    font-weight: 700;\n}\n#my-awesome-dropzone-body > .dz-preview {\n    display: none;\n}\n.files li {\n  list-style-type: none;\n}\n.directory-item:hover .delete-file {\n  display: block;\n  z-index: 9999;\n}\n.directory-item:hover .rename-file {\n  display: block;\n  z-index: 9999;\n}\n.media_tags {\n  display: inline-block;\n}\n.media_tags li {\n    list-style-type: none;\n    display: inline;\n}\n.media_tags li a {\n      border-bottom: 2px solid transparent;\n      background: transparent;\n}\n.media_tags li.active a, .media_tags li:hover a, .media_tags li .tag-active {\n      border-radius: 0;\n      background: #3d3d3d;\n      color: whitesmoke;\n      border-bottom: 2px solid #3d3d3d;\n}\n.dropzone {\n  border: 2px dashed aliceblue !important;\n  border-radius: 5px;\n  background: white;\n}\n.playing .mailbox-attachment-icon {\n  border: 1px solid #3c8dbc;\n}\n.directories .box-default {\n  border: none;\n  box-shadow: none;\n  border-left: 2px dashed aliceblue;\n  min-height: 400px;\n}\n.directories .box-header {\n  border-bottom: 2px dashed aliceblue;\n}\n#fileLinker-modal .selected-block {\n  word-wrap: break-word;\n}\n#fileLinker-modal .selected-block div {\n    text-align: center;\n}\n#fileLinker-modal .selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n#fileLinker-modal .selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.files.selected-block {\n  word-wrap: break-word;\n  display: block;\n  width: 100%;\n}\n.files.selected-block div {\n    text-align: center;\n}\n.files.selected-block div img {\n      width: 100%;\n      height: auto;\n      position: relative;\n      background: #f4f4f4;\n      border: 2px solid #f4f4f4;\n}\n.files.selected-block div .item-icon {\n      width: 100%;\n      height: 120px;\n      display: block;\n      font-size: 90px;\n      text-align: center;\n      list-style-type: none !important;\n      border: 2px solid #f4f4f4;\n      background: #f4f4f4;\n}\n.selected-block .selected-item {\n  padding-left: 0;\n}\n.selected-block .selected-item .remove-selected {\n    color: #F44336;\n}\n.items-list .delete-btn, .items-list .rename-btn, .items-list .download-btn, .items-list .info-btn {\n  display: inline-block;\n  position: relative;\n}\n", ""]);
 
 /***/ }),
 /* 312 */
@@ -99102,7 +99126,132 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _vm._m(1)], 1)]), _vm._v(" "), _c('div', {
     staticClass: "clearifx"
-  }), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('span', {
+    staticClass: "media_tags"
+  }, [_c('span', {
+    staticClass: "text-muted"
+  }, [_vm._v("only: ")]), _vm._v(" "), _c('li', [_c('router-link', {
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "to": {
+        name: 'mediaDiskFolder',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id
+        }
+      }
+    }
+  }, [_vm._v("\n                            - all\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'video'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-video-camera"
+  }), _vm._v(" - video\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'audio'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-music"
+  }), _vm._v(" - audio\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'image'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-image"
+  }), _vm._v(" - image\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'pdf'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-pdf-o"
+  }), _vm._v(" - pdf\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'archive'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-archive-o"
+  }), _vm._v(" - archive\n                        ")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+    staticClass: "btn btn-xs btn-icon",
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "exact-active-class": "tag-active",
+      "to": {
+        name: 'mediaDiskFolderFilter',
+        params: {
+          disk: _vm.folder.disk,
+          folder_id: _vm.folder.id,
+          filter: 'document'
+        }
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-file-archive-o"
+  }), _vm._v(" - document\n                        ")])], 1)])]), _vm._v(" "), _c('div', {
     staticClass: "box-body folder-body",
     attrs: {
       "id": "folder-body",
@@ -99165,80 +99314,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": "Search"
     }
   })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('span', {
-    staticClass: "media_tags"
-  }, [_c('span', {
-    staticClass: "text-muted"
-  }, [_vm._v("only: ")]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("\n                        - all\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#video"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-video-camera"
-  }), _vm._v(" - video\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "audio"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-music"
-  }), _vm._v(" - audio\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#image"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-image"
-  }), _vm._v(" - image\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "pdf"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-file-pdf-o"
-  }), _vm._v(" - pdf\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "archive"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-file-archive-o"
-  }), _vm._v(" - archive\n                        ")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "btn btn-xs btn-icon",
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "href": "#document"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-file-archive-o"
-  }), _vm._v(" - document\n                        ")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

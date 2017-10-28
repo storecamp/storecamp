@@ -161,6 +161,13 @@ export let router = new VueRouter({
             component: AllMedia,
             props: { auth: auth },
             meta: { auth: true }
+        },
+        {
+            path: '/media_disk_folder_filter/:disk/:folder_id/:filter',
+            name: 'mediaDiskFolderFilter',
+            component: AllMedia,
+            props: { auth: auth },
+            meta: { auth: true }
         }
     ]
 });

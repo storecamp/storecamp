@@ -76,52 +76,61 @@
                         <span class="media_tags">
                            <span class="text-muted">only: </span>
                         <li>
-                            <a href="#" class="btn btn-xs btn-icon" style="margin-left: 10px">
-                            - all
-                            </a>
+                            <router-link style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolder', params: {disk: folder.disk, folder_id: folder.id}}">
+                                - all
+                            </router-link>
                         </li>
                         <li>
-                            <a href="#video"
-                               class="btn btn-xs btn-icon"
-                               style="margin-left: 10px">
-                            <i class="fa fa-video-camera"></i> - video
-                            </a>
+
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'video'}}">
+                                <i class="fa fa-video-camera"></i> - video
+                            </router-link>
                         </li>
 
                         <li>
-                             <a href="audio"
-                                class="btn btn-xs btn-icon"
-                                style="margin-left: 10px">
-                        <i class="fa fa-music"></i> - audio
-                            </a>
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'audio'}}">
+                                <i class="fa fa-music"></i> - audio
+                            </router-link>
                         </li>
                         <li>
-                            <a href="#image"
-                               class="btn btn-xs btn-icon"
-                               style="margin-left: 10px">
-                            <i class="fa fa-image"></i> - image
-                            </a>
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'image'}}">
+                                <i class="fa fa-image"></i> - image
+                            </router-link>
                         </li>
                         <li>
-                            <a href="pdf"
-                               class="btn btn-xs btn-icon"
-                               style="margin-left: 10px">
-                            <i class="fa fa-file-pdf-o"></i> - pdf
-                            </a>
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'pdf'}}">
+                                <i class="fa fa-file-pdf-o"></i> - pdf
+                            </router-link>
                         </li>
                         <li>
-                             <a href="archive"
-                                class="btn btn-xs btn-icon"
-                                style="margin-left: 10px">
-                            <i class="fa fa-file-archive-o"></i> - archive
-                            </a>
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'archive'}}">
+                                <i class="fa fa-file-archive-o"></i> - archive
+                            </router-link>
                         </li>
                         <li>
-                            <a href="#document"
-                               class="btn btn-xs btn-icon"
-                               style="margin-left: 10px">
-                        <i class="fa fa-file-archive-o"></i> - document
-                            </a>
+                            <router-link exact-active-class="tag-active" class="btn btn-xs btn-icon"
+                                         style="margin-left: 10px"
+                                         :to="{name: 'mediaDiskFolderFilter', params: {disk: folder.disk, folder_id: folder.id,
+                                         filter: 'document'}}">
+                                <i class="fa fa-file-archive-o"></i> - document
+                            </router-link>
+
                         </li>
                     </span>
                     </div><!-- /.box-header -->
@@ -142,6 +151,7 @@
     import Folders from "./Folders.vue";
     import Files from "./Files.vue";
     import Modal from "../Partials/Modal.vue";
+
     let vm = ({
         data() {
             return {
@@ -160,7 +170,7 @@
             }
         },
         methods: {
-            getFolder(page, disk, folder_id) {
+            getFolder(page, disk, folder_id, filter) {
                 let pageNum = page ? page : 1;
                 let url = '/api/media/index';
                 if (disk) {
@@ -169,7 +179,11 @@
                 if (folder_id) {
                     url += "/" + folder_id;
                 }
-                Vue.http.get(window.BASE_URL + url + '?page=' + pageNum)
+                let queryParams = '?page=' + pageNum;
+                if (filter) {
+                    queryParams += "&" + 'tag=' + filter;
+                }
+                Vue.http.get(window.BASE_URL + url + queryParams)
                     .then(response => {
                         this.error = false;
                         this.count = response.data.count;
@@ -183,7 +197,7 @@
                     }, response => {
                         this.error = true;
                         this.errorMsg = response.error;
-                    })
+                    });
             },
             createDirContent(folder, disk, path) {
                 path = path ? path : "../";
@@ -214,7 +228,8 @@
                 let page = this.$route.query.page ? this.$route.query.page : 0;
                 let disk = this.$route.params.disk ? this.$route.params.disk : "local";
                 let folder_id = this.$route.params.folder_id ? this.$route.params.folder_id : null;
-                this.getFolder(page, disk, folder_id);
+                let filter = this.$route.params.filter ? this.$route.params.filter : null;
+                this.getFolder(page, disk, folder_id, filter);
             },
         },
         mounted: function () {
@@ -238,6 +253,9 @@
                 this.loadData();
             },
             '$route.params.disk'(newVal, oldVal) {
+                this.loadData();
+            },
+            '$route.params.filter'(newVal, oldVal) {
                 this.loadData();
             },
             '$route.params.folder_id'(newVal, oldVal) {
@@ -299,7 +317,9 @@
     .tag-file {
         @extend %extend_media_1;
     }
+    .tag-active {
 
+    }
     .file-item {
         padding-top: 10px;
         padding-bottom: 10px;
@@ -386,7 +406,7 @@
                 border-bottom: 2px solid transparent;
                 background: transparent;
             }
-            &.active a, &:hover a {
+            &.active a, &:hover a, .tag-active{
                 border-radius: 0;
                 background: #3d3d3d;
                 color: whitesmoke;
