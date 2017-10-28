@@ -266,7 +266,13 @@ abstract class Generator
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
 
-        return $this->filesystem->put($path, $this->getStub());
+        $old = umask(0);
+        $file = $this->filesystem->put($path, $this->getStub());
+        echo "file: " . $path . " created!" . "\n";
+        chmod($path, 0777);
+        umask($old);
+
+        return $file;
     }
 
     /**

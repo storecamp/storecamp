@@ -28,7 +28,7 @@ class TransformerCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         (new TransformerGenerator([
             'name'  => $this->argument('name'),
