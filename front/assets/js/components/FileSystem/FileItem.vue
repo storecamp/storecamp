@@ -87,14 +87,6 @@
                     return false;
                 }
             },
-            formatBytes(bytes, precision = 2) {
-                let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-                if (bytes == 0) return '0 Byte';
-                let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-
-                return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-
-            },
             renameConfirm(event, data, form) {
                 event.preventDefault();
                 let formData = {};
@@ -213,7 +205,6 @@
         },
         mounted: function () {
             let _this = this;
-
             this.eventHub.$on('modal-opened', function (context) {
                 _this.options.player = plyr.setup(document.querySelectorAll('.js-player'), []);
             });
@@ -223,7 +214,6 @@
                     let audio = document.getElementById('#audio-' + _this.file.id);
                     audio.pause()
                 }
-
             });
         },
         components: {
