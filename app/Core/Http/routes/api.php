@@ -141,4 +141,71 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
                 'uses' => 'Api\AccessController@indexPermissions'
             ]);
         });
+    
+    Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
+        $this->get('/index', [
+            'uses' => 'Api\FileSystemController@index',
+            'as' => 'indexs',
+        ]);
+        $this->get('/index/{disk}/{path?}', [
+            'uses' => 'Api\FileSystemController@index',
+            'as' => 'index',
+        ]);
+
+        $this->get('getIndex/{disk}/{path?}/', [
+            'uses' => 'Api\FileSystemController@getIndex',
+            'as' => 'get.index',
+        ]);
+
+        $this->post('file_linker/{disk}/{folder?}', [
+            'uses' => 'Api\FileSystemController@filesLinker',
+            'as' => 'file_linker',
+        ]);
+
+        $this->get('/getIndexFolders/{disk}/{folder?}', [
+            'uses' => 'Api\FileSystemController@getIndexFolders',
+            'as' => 'get.index.folders',
+        ]);
+
+        $this->get('download/{disk}/{id}/{folder}', [
+            'uses' => 'Api\FileSystemController@download',
+            'as' => 'download',
+        ]);
+
+        $this->post('/makeDirectory/{disk}', [
+            'uses' => 'Api\FileSystemController@makeFolder',
+            'as' => 'make.directory',
+        ]);
+
+        $this->post('/renameDirectory/{disk}', [
+            'uses' => 'Api\FileSystemController@renameFolder',
+            'as' => 'rename.directory',
+        ])->middleware('folderLocked');
+
+        $this->post('/renameFile/{disk}', [
+            'uses' => 'Api\FileSystemController@renameFile',
+            'as' => 'rename.file',
+        ]);
+
+        $this->delete('{id}', [
+            'uses' => 'Api\FileSystemController@destroy',
+            'as' => 'delete',
+        ]);
+
+        $this->post('upload/{disk}', [
+            'uses' => 'Api\FileSystemController@upload',
+            'as' => 'upload',
+        ]);
+
+        $this->get('delete/{id}', [
+            'uses' => 'Api\FileSystemController@destroy',
+            'as' => 'get.delete',
+        ]);
+
+        $this->get('delete/folder/{disk}/{folder}', [
+            'uses' => 'Api\FileSystemController@folderDestroy',
+            'as' => 'get.folder.delete',
+        ])->middleware('folderLocked');
+    });
+
 });

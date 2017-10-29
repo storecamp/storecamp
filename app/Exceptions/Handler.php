@@ -46,6 +46,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        \DB::rollback();
         return parent::render($request, $exception);
     }
 

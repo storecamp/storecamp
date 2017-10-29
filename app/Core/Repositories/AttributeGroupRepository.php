@@ -9,5 +9,4 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface AttributeGroupRepository extends RepositoryInterface
 {
-    //
 }

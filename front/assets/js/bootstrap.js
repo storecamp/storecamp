@@ -21,11 +21,14 @@ try {
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-    }
+    };
+    window.plyr = plyr = require('plyr');
+
     require('bootstrap-sass');
     require('admin-lte');
     require('admin-lte/dist/css/AdminLTE.min.css');
     require('toastr/build/toastr.min.css');
+    require('plyr/src/scss/plyr.scss');
 } catch (e) {
 }
 

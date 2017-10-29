@@ -15,7 +15,7 @@
         </div>
     </div>
 </template>
-<style>
+<style scoped>
     #fileContainer {
         text-align: left;
     }

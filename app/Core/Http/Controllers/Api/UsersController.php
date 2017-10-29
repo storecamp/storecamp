@@ -35,12 +35,12 @@ class UsersController extends Controller
     public function __construct(UsersSystemContract $usersSystem)
     {
         $this->usersSystem = $usersSystem;
-        $this->user = $usersSystem->userRepository;
+        $this->user = $usersSystem->getUserRepository();
     }
 
     /**
      * Get all Users
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -53,7 +53,7 @@ class UsersController extends Controller
 
     /**
      * Show the user by id
-     * 
+     *
      * @param Request $request
      * @param int|string $id
      * @return \Illuminate\View\View
@@ -67,7 +67,7 @@ class UsersController extends Controller
 
     /**
      * Get amount of users
-     * 
+     *
      * @param Request $request
      * @param int|string $id
      * @return \Illuminate\View\View

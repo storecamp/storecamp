@@ -137,9 +137,12 @@ return [
                 'application/zip',
                 'application/x-compressed-zip',
                 'multipart/x-zip',
+                'application/octet-stream'
             ],
             'extensions' => [
                 'zip',
+                'rar',
+                'gz'
             ],
         ],
         Plank\Mediable\Media::TYPE_DOCUMENT => [
@@ -153,6 +156,7 @@ return [
                 'application/application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                 'text/html',
                 'text/x-comma-separated-values',
+                'blob'
             ],
             'extensions' => [
                 'doc',
@@ -162,7 +166,7 @@ return [
                 'xml',
                 'json',
                 'html',
-                'csv',
+                'csv'
             ],
         ],
         Plank\Mediable\Media::TYPE_SPREADSHEET => [

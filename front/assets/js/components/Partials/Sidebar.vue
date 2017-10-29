@@ -32,6 +32,16 @@
                             Users
                         </a>
                     </router-link>
+
+                    <!--media routes-->
+                    <router-link active-class="active" exact-active-class="active" :to="{ name: 'media' }"
+                                 class="treeview item " tag="li">
+                        <a class="link">
+                            <i class="fa fa-files-o"></i>
+                            FileSystem
+                        </a>
+                    </router-link>
+
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <router-link active-class="active" exact-active-class="active" :to="{ name: 'access' }"
                                  class="treeview item " tag="li">

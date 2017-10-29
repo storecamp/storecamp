@@ -23,17 +23,28 @@ class FolderLocked
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        $disk = $request->disk ? $request->disk : 'local';
-        $folderId = $request->folder;
+        if ($request->id) {
+            $folderId = $request->id;
+        } else {
+            $folderId = $request->folder;
+        }
 
-        if ($this->folder->disk($disk)->find($folderId)->locked) {
-            \Toastr::warning('Folder is used in other parts of the app', "Sorry it is locked and can't be edited or deleted!");
+        $disk = $request->disk ? $request->disk : 'local';
+
+        if ($this->folder->disk($disk)->findOrFail($folderId)->locked) {
+
+            if ($request->ajax()) {
+                return response()->json(['title' => 'Folder is used in other parts of the app',
+                    'msg' => "Sorry it is locked and can't be edited or deleted!"], 403);
+            }
+            \Toastr::warning('Folder is used in other parts of the app',
+                "Sorry it is locked and can't be edited or deleted!");
 
             return redirect()->to(\URL::previous());
         }

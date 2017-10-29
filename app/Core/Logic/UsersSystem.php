@@ -4,8 +4,7 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\UsersSystemContract;
 use App\Core\Models\User;
-use App\Core\Repositories\RolesRepository;
-use App\Core\Repositories\UserRepository;
+use App\Core\Repositories\UserRepositoryEloquent;
 
 /**
  * Class UsersSystem.
@@ -13,30 +12,25 @@ use App\Core\Repositories\UserRepository;
 class UsersSystem implements UsersSystemContract
 {
     /**
-     * @var UserRepository
+     * @var UserRepositoryEloquent
      */
-    public $userRepository;
+    protected $userRepository;
 
     /**
-     * @var RolesRepository
+     * @return UserRepositoryEloquent
      */
-    public $rolesRepository;
-
-    /**
-     * UsersSystem constructor.
-     *
-     * @param UserRepository  $userRepository
-     * @param RolesRepository $rolesRepository
-     */
-    public function __construct(UserRepository $userRepository, RolesRepository $rolesRepository)
+    public function getUserRepository(): UserRepositoryEloquent
     {
-        $this->userRepository = $userRepository;
-        $this->rolesRepository = $rolesRepository;
+        if($this->userRepository && $this->userRepository instanceof UserRepositoryEloquent) {
+            return $this->userRepository;
+        } else {
+            return $this->userRepository = app('App\Core\Repositories\UserRepository');
+        }
     }
 
     /**
      * @param $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -44,12 +38,12 @@ class UsersSystem implements UsersSystemContract
     public function present($data, $id = null, array $with = [])
     {
         if ($id) {
-            $users = $this->userRepository->find($id);
+            $users = $this->getUserRepository()->find($id);
         } else {
             if (!empty($with)) {
-                $users = $this->userRepository->with($with)->paginate();
+                $users = $this->getUserRepository()->with($with)->paginate();
             } else {
-                $users = $this->userRepository->paginate();
+                $users = $this->getUserRepository()->paginate();
             }
         }
 
@@ -61,12 +55,12 @@ class UsersSystem implements UsersSystemContract
      *
      * @return User
      */
-    public function create(array $data) : User
+    public function create(array $data): User
     {
         $role = $data['role'];
-        $user = $this->userRepository->create($data);
-        if(is_array($role)) {
-            $user->roles()->sync((array) $role);
+        $user = $this->getUserRepository()->create($data);
+        if (is_array($role)) {
+            $user->roles()->sync((array)$role);
         } else {
             $user->addRole($role);
         }
@@ -80,11 +74,11 @@ class UsersSystem implements UsersSystemContract
      *
      * @return User
      */
-    public function update(array $data, $id) : User
+    public function update(array $data, $id): User
     {
-        $user = $this->userRepository->findOrFail($id);
-        $user->roles()->sync((array) $data['role']);
-        $user = $this->userRepository->update($data, $id);
+        $user = $this->getUserRepository()->findOrFail($id);
+        $user->roles()->sync((array)$data['role']);
+        $user = $this->getUserRepository()->update($data, $id);
 
         return $user;
     }
@@ -95,9 +89,9 @@ class UsersSystem implements UsersSystemContract
      *
      * @return int
      */
-    public function delete($id, array $data = []) : int
+    public function delete($id, array $data = []): int
     {
-        $deleted = $this->userRepository->delete($id);
+        $deleted = $this->getUserRepository()->delete($id);
 
         return $deleted;
     }

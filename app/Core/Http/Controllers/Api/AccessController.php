@@ -35,8 +35,8 @@ class AccessController extends \App\Core\Http\Controllers\Controller
     public function __construct(AccessSystemContract $accessSystem)
     {
         $this->accessSystem = $accessSystem;
-        $this->rolesRepository = $accessSystem->rolesRepository;
-        $this->permissionRepository = $accessSystem->permissionRepository;
+        $this->rolesRepository = $accessSystem->getRoleRepository();
+        $this->permissionRepository = $accessSystem->getPermissionsRepository();
         $this->middleware('role:Admin');
     }
 

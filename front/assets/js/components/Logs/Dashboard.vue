@@ -93,7 +93,7 @@
                     })
             },
             resolveClass(level, count) {
-                return 'info-box level level-'+ level.toLowerCase() + (count === 0 ? 'level-empty' : '');
+                return 'info-box level level-' + level.toLowerCase() + (count === 0 ? 'level-empty' : '');
             }
         },
         mounted: function () {
@@ -135,9 +135,9 @@
         border-color: #1a237e;
     }
 
-    .navbar-inverse .navbar-nav>.active>a,
-    .navbar-inverse .navbar-nav>.active>a:focus,
-    .navbar-inverse .navbar-nav>.active>a:hover {
+    .navbar-inverse .navbar-nav > .active > a,
+    .navbar-inverse .navbar-nav > .active > a:focus,
+    .navbar-inverse .navbar-nav > .active > a:hover {
         background-color: #3949ab;
     }
 
@@ -145,7 +145,7 @@
         color: #c5cae9;
     }
 
-    .navbar-inverse .navbar-nav>li>a {
+    .navbar-inverse .navbar-nav > li > a {
         color: #c5cae9;
     }
 
@@ -199,7 +199,7 @@
         background-color: #F6F6F6;
         border-top: 1px solid #D1D1D1;
         color: #AE0E0E;
-        font-family: consolas,sans-serif;
+        font-family: consolas, sans-serif;
         font-size: 12px;
     }
 
@@ -210,7 +210,7 @@
         min-height: 70px;
         background: #fff;
         width: 100%;
-        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         border-radius: 2px;
     }
 
@@ -243,15 +243,16 @@
         border-radius: 2px 0 0 2px;
         display: block;
         float: left;
-        height: 70px; width: 70px;
+        height: 70px;
+        width: 70px;
         text-align: center;
         font-size: 40px;
         line-height: 70px;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
     }
 
     .info-box.level .progress {
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
         margin: 5px -10px 5px -10px;
         height: 2px;
     }
@@ -326,7 +327,7 @@
         background-color: #B71C1C;
     }
 
-    .badge.level-alert, .level.level-alert, .info-box.level-alert  {
+    .badge.level-alert, .level.level-alert, .info-box.level-alert {
         background-color: #D32F2F;
     }
 

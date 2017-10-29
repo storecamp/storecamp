@@ -83,10 +83,9 @@ class MediaReceiver
             $this->appendData($filePath, $file);
 
             if ($chunk == $chunks - 1) {
-                $file = new UploadedFile($filePath, $originalName, 'blob', count($filePath), UPLOAD_ERR_OK, true);
+                $file = new UploadedFile($filePath, $originalName, $file->getClientMimeType() ?? 'blob', count($filePath), UPLOAD_ERR_OK, true);
 
                 $result = $handler($file);
-                event()->fire();
                 @unlink($filePath);
             }
         }

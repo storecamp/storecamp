@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/storecamp/storecamp.svg?branch=master)](https://travis-ci.org/storecamp/storecamp)
 
-[![StyleCI](https://styleci.io/repos/83136388/shield?branch=master)](https://styleci.io/repos/83136388)
+[![StyleCI](https://styleci.io/repos/83136388/shield?branch=develop)](https://styleci.io/repos/83136388)
+
+[Telegram Channel](https://t.me/storecamp)
 
 ###ecommerce platform
 ###see the main code base in app/Core directory

@@ -34,7 +34,7 @@ class EntityCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $this->call('storecamp:repository', [
             'name'       => $this->argument('name'),

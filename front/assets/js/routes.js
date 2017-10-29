@@ -17,6 +17,7 @@ import LogshowDate from "./components/Logs/LogshowDate.vue";
 import AccessAll from "./components/Access/All.vue";
 import AccessCreate from "./components/Access/Create.vue";
 import AccessEdit from "./components/Access/Edit.vue";
+import AllMedia from "./components/FileSystem/All.vue";
 
 import auth from './services/auth.service.js';
 
@@ -137,6 +138,34 @@ export let router = new VueRouter({
             path: '/logs_date_key/:date/:key',
             name: 'logsShowDateKey',
             component: LogshowDateKey,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/media',
+            name: 'media',
+            component: AllMedia,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/media_disk/:disk',
+            name: 'mediaDisk',
+            component: AllMedia,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/media_disk_folder/:disk/:folder_id',
+            name: 'mediaDiskFolder',
+            component: AllMedia,
+            props: { auth: auth },
+            meta: { auth: true }
+        },
+        {
+            path: '/media_disk_folder_filter/:disk/:folder_id/:filter',
+            name: 'mediaDiskFolderFilter',
+            component: AllMedia,
             props: { auth: auth },
             meta: { auth: true }
         }

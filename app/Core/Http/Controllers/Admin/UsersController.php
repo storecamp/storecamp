@@ -2,6 +2,7 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Contracts\AccessSystemContract;
 use App\Core\Contracts\UsersSystemContract;
 use App\Core\Models\User;
 use App\Core\Repositories\RolesRepository;
@@ -40,17 +41,22 @@ class UsersController extends BaseController
      * @var RolesRepository
      */
     protected $rolesRepository;
+    /**
+     * @var AccessSystemContract
+     */
+    private $accessSystem;
 
     /**
      * UsersController constructor.
-     *
      * @param UsersSystemContract $usersSystem
+     * @param AccessSystemContract $accessSystem
      */
-    public function __construct(UsersSystemContract $usersSystem)
+    public function __construct(UsersSystemContract $usersSystem, AccessSystemContract $accessSystem)
     {
         $this->usersSystem = $usersSystem;
-        $this->userRepository = $usersSystem->userRepository;
-        $this->rolesRepository = $usersSystem->rolesRepository;
+        $this->accessSystem = $accessSystem;
+        $this->userRepository = $usersSystem->getUserRepository();
+        $this->rolesRepository = $accessSystem->getRoleRepository();
         $this->middleware('role:Admin');
     }
 

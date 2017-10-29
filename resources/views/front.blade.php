@@ -41,6 +41,7 @@
     window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
             ]) !!};
+    window.BASE_ADMIN_URL = "{!! url('/') . '/' . $prefix . '/front' !!}";
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment-with-locales.min.js"></script>
 

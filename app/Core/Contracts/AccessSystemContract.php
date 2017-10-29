@@ -2,8 +2,21 @@
 
 namespace App\Core\Contracts;
 
+use App\Core\Repositories\PermissionRepositoryEloquent;
+use App\Core\Repositories\RolesRepositoryEloquent;
+
 interface AccessSystemContract
 {
+    /**
+     * @return RolesRepositoryEloquent
+     */
+    public function getRoleRepository(): RolesRepositoryEloquent;
+
+    /**
+     * @return PermissionRepositoryEloquent
+     */
+    public function getPermissionsRepository(): PermissionRepositoryEloquent;
+
     /**
      * @param array $data
      * @param null  $id
