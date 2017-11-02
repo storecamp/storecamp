@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [[ $1 == 'run' ]]; then
-    cd laradock && sudo docker-compose exec workspace bash && cd ../
+    cd laradock && docker-compose exec workspace bash && cd ../
 fi
 
 if [[ $1 == 'down' ]]; then
-    cd laradock && sudo docker-compose down && cd ../
+    cd laradock && docker-compose down && cd ../
 fi
 
 if [[ $1 == 'up' ]]; then
-    cd laradock && sudo docker-compose up -d nginx php-fpm php-worker mailhog mysql elasticsearch redis memcached  && cd ../
+    cd laradock && docker-compose up -d nginx php-fpm php-worker mailhog mysql elasticsearch redis memcached  && cd ../
 fi
