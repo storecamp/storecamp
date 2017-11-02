@@ -124,6 +124,10 @@ Route::group(['middleware' => ['api'], 'as' => 'api.'], function () {
                 'as' => 'roles.store',
                 'uses' => 'Api\AccessController@store'
             ]);
+            Route::post('/roles/delete/{id}', [
+                'as' => 'roles.store',
+                'uses' => 'Api\AccessController@destroy'
+            ]);
             Route::put('/roles/update/{id}', [
                 'as' => 'roles.put',
                 'uses' => 'Api\AccessController@update'

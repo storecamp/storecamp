@@ -43539,7 +43539,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             var rolesId = $(e.target).attr('data-id');
-            Vue.http.delete(window.BASE_URL + '/api/access/roles' + rolesId).then(function (response) {
+            Vue.http.post(window.BASE_URL + '/api/access/roles/delete/' + rolesId).then(function (response) {
                 _this2.error = false;
                 var page = _this2.$route.query.page ? _this2.$route.query.page : _this2.pagination.current_page;
                 _this2.getAllRoles(page);

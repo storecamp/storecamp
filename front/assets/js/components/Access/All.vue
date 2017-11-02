@@ -94,7 +94,7 @@
             },
             deleteRole(e) {
                 let rolesId = $(e.target).attr('data-id');
-                Vue.http.delete(window.BASE_URL + '/api/access/roles' + rolesId)
+                Vue.http.post(window.BASE_URL + '/api/access/roles/delete/' + rolesId)
                     .then(response => {
                         this.error = false;
                         let page = this.$route.query.page ? this.$route.query.page : this.pagination.current_page;
