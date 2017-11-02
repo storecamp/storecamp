@@ -4,6 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AccessSystemContract;
 use App\Core\Contracts\UsersSystemContract;
+use App\Core\Models\Role;
 use App\Core\Models\User;
 use App\Core\Repositories\RolesRepository;
 use App\Core\Repositories\UserRepository;
@@ -34,9 +35,9 @@ class UsersController extends BaseController
     protected $usersSystem;
 
     /**
-     * @var RolesRepository
+     * @var Role
      */
-    protected $rolesRepository;
+    protected $roles;
     /**
      * @var AccessSystemContract
      */
@@ -47,11 +48,12 @@ class UsersController extends BaseController
      * @param UsersSystemContract $usersSystem
      * @param AccessSystemContract $accessSystem
      */
-    public function __construct(UsersSystemContract $usersSystem, AccessSystemContract $accessSystem)
+    public function __construct(UsersSystemContract $usersSystem,
+                                AccessSystemContract $accessSystem)
     {
         $this->usersSystem = $usersSystem;
         $this->accessSystem = $accessSystem;
-        $this->rolesRepository = $accessSystem->getRoleRepository();
+        $this->roles = $accessSystem->role;
         $this->middleware('role:Admin');
     }
 
@@ -84,7 +86,7 @@ class UsersController extends BaseController
      */
     public function create()
     {
-        $roles = $this->rolesRepository->all()->pluck('name', 'id');
+        $roles = $this->roles->all()->pluck('name', 'id');
 
         return $this->view('create', compact('roles'));
     }
@@ -138,7 +140,7 @@ class UsersController extends BaseController
         try {
             $data = $request->all();
             $user = $this->usersSystem->present($data, $id);
-            $roles = $this->rolesRepository->all()->pluck('name', 'id');
+            $roles = $this->roles->all()->pluck('name', 'id');
             $roleEntity = $user->getRole();
             $role['name'] = $roleEntity->name;
             $role['id'] = $roleEntity->id;
