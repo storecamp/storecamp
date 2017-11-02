@@ -3,8 +3,8 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\AttributeGroupSystemContract;
-use App\Core\Repositories\AttributeGroupDescriptionRepository;
-use App\Core\Repositories\AttributeGroupRepository;
+use App\Core\Models\AttributeGroup;
+use App\Core\Models\AttributeGroupDescription;
 
 /**
  * Class AttributeGroupSystem.
@@ -12,29 +12,26 @@ use App\Core\Repositories\AttributeGroupRepository;
 class AttributeGroupSystem implements AttributeGroupSystemContract
 {
     /**
-     * @var AttributeGroupRepository
+     * @var AttributeGroup
      */
     public $group;
     /**
-     * @var AttributeGroupDescriptionRepository
+     * @var AttributeGroupDescription
      */
     public $description;
 
     /**
      * AttributeGroupSystem constructor.
-     *
-     * @param $group
-     * @param $description
      */
-    public function __construct(AttributeGroupRepository $group, AttributeGroupDescriptionRepository $description)
+    public function __construct()
     {
-        $this->group = $group;
-        $this->description = $description;
+        $this->group = new AttributeGroup();
+        $this->description = new AttributeGroupDescription();
     }
 
     /**
      * @param array $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -42,7 +39,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     public function presentGroup(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $attributes = $this->group->find($id);
+            $attributes = $this->group->findOrFail($id);
         } else {
             if (!empty($with)) {
                 $attributes = $this->group->with($with)->paginate();
@@ -56,7 +53,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
 
     /**
      * @param array $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -64,7 +61,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
     public function presentDescription(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $attributes = $this->description->find($id);
+            $attributes = $this->description->findOrFail($id);
         } else {
             if (!empty($with)) {
                 $attributes = $this->description->with($with)->paginate();
@@ -83,7 +80,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function createGroup(array $data)
     {
-        $groupAttribute = $this->group->getModel()->withTrashed()->where('name', $data['name']);
+        $groupAttribute = $this->group->withTrashed()->where('name', $data['name']);
         if ($groupAttribute->count() > 0) {
             $group = $groupAttribute->restore();
         } else {
@@ -100,7 +97,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function createDescription(array $data)
     {
-        $groupDescription = $this->description->getModel()->withTrashed()->where('name', $data['name']);
+        $groupDescription = $this->description->withTrashed()->where('name', $data['name']);
         if ($groupDescription->count() > 0) {
             $description = $groupDescription->restore();
         } else {
@@ -118,8 +115,8 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function updateGroup(array $data, $id)
     {
-        $groupAttributeOnlyTrashed = $this->group->getModel()->onlyTrashed()->where('name', $data['name']);
-        $groupAttribute = $this->group->find($id);
+        $groupAttributeOnlyTrashed = $this->group->onlyTrashed()->where('name', $data['name']);
+        $groupAttribute = $this->group->findOrFail($id);
 
         if ($groupAttributeOnlyTrashed->count() > 0) {
             $groupAttribute = $groupAttribute->restore();
@@ -138,8 +135,8 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function updateDescription(array $data, $id)
     {
-        $description = $this->description->find($id);
-        $groupDescription = $this->group->getModel()->onlyTrashed()->where('name', $data['name']);
+        $description = $this->description->findOrFail($id);
+        $groupDescription = $this->group->onlyTrashed()->where('name', $data['name']);
 
         if ($groupDescription->count() > 0) {
             $descriptionAttribute = $description->restore();
@@ -158,7 +155,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function deleteGroup($id, array $data = []): int
     {
-        $deleted = $this->group->delete($id);
+        $deleted = $this->group->findOrFail($id)->delete();
 
         return $deleted;
     }
@@ -171,7 +168,7 @@ class AttributeGroupSystem implements AttributeGroupSystemContract
      */
     public function deleteDescription($id, array $data = []): int
     {
-        $deleted = $this->description->delete($id);
+        $deleted = $this->description->findOrFail($id)->delete();
 
         return $deleted;
     }

@@ -3,6 +3,7 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\AttributeGroupDescription;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
@@ -18,21 +19,18 @@ class ProductSystem implements ProductSystemContract
      */
     public $productRepository;
     /**
-     * @var AttributeGroupDescriptionRepository
+     * @var AttributeGroupDescription
      */
-    public $attributeGroupDescriptionRepository;
+    public $attributeGroupDescription;
 
     /**
      * ProductSystem constructor.
-     *
      * @param ProductsRepository $productRepository
-     * @param AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository
      */
-    public function __construct(ProductsRepository $productRepository,
-                                AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository)
+    public function __construct(ProductsRepository $productRepository)
     {
         $this->productRepository = $productRepository;
-        $this->attributeGroupDescriptionRepository = $attributeGroupDescriptionRepository;
+        $this->attributeGroupDescription = new AttributeGroupDescription();
     }
 
     /**
@@ -101,7 +99,7 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository
+                    $this->attributeGroupDescription
                         ->find(intval($attr['attr_description_id'])),
                     ['value' => $formAttributes[$key]['value']]);
                 $attributes[] = $attribute;
@@ -138,7 +136,7 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository
+                    $this->attributeGroupDescription
                         ->find($attr['attr_description_id']),
                     ['value' => $formAttributes[$key]['value']]
                 );

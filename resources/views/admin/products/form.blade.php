@@ -61,7 +61,8 @@
                             <?php $key++; ?>
                             <tr id="attribute-row{{$key}}">
                                 <td class="text-left" style="width: 20%;">
-                                    {{ buildSelect(route('admin::attributes::get::json'), 'product_attribute['.$key.'][attr_description_id]', false , $attributesList, [$attribute->pivot->attr_description_id => $attribute->name], "selector") }}
+                                    {!! buildSelect(route('admin::attributes::get::json'), 'product_attribute['.$key.'][attr_description_id]',
+                                    false , $attributesList, [$attribute->pivot->attr_description_id => $attribute->name], "selector") !!}
                                     {!!  $errors->first('availability', '<div class="text-danger">:message</div>')!!}
                                 </td>
                                 <td class="text-left">
@@ -252,7 +253,7 @@
         $('#attribute tbody tr').each(function (index, element) {
             attributeautocomplete(index);
         });
-        @if(isset($product))
+                @if(isset($product))
         var activtyTabContent = $('#activity');
         $.ajax({
             url: "{{route('admin::audits::show', ["product", $product->id])}}",
@@ -261,7 +262,7 @@
                 activtyTabContent.html(data);
             },
             error: function (xhr, textStatus, errorThrown) {
-                activtyTabContent.html("<b class='text-warning'>"+xhr.responseJSON+"</b>"+ "<br><code class='text-warning'>" +'code - '+ xhr.status + ' statusText - '+xhr.statusText + "</code>");
+                activtyTabContent.html("<b class='text-warning'>" + xhr.responseJSON + "</b>" + "<br><code class='text-warning'>" + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + "</code>");
             }
         });
         @endif

@@ -4,8 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AttributeGroupSystemContract;
 use App\Core\Models\AttributeGroup;
-use App\Core\Repositories\AttributeGroupDescriptionRepository;
-use App\Core\Repositories\AttributeGroupRepository;
+use App\Core\Models\AttributeGroupDescription;
 use App\Core\Transformers\AttributeGroupsDataTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -26,13 +25,13 @@ class AttributeGroupsController extends BaseController
     public $errorRedirectPath = 'admin/attribute_groups';
 
     /**
-     * @var AttributeGroupRepository
+     * @var AttributeGroup
      */
-    protected $groupRepository;
+    protected $group;
     /**
-     * @var AttributeGroupDescriptionRepository
+     * @var AttributeGroupDescription
      */
-    protected $groupDescriptionRepository;
+    protected $groupDescription;
     /**
      * @var AttributeGroupSystemContract
      */
@@ -46,8 +45,8 @@ class AttributeGroupsController extends BaseController
     public function __construct(AttributeGroupSystemContract $attributeGroupSystem)
     {
         $this->attributeGroupSystem = $attributeGroupSystem;
-        $this->groupRepository = $attributeGroupSystem->group;
-        $this->groupDescriptionRepository = $attributeGroupSystem->description;
+        $this->group = $attributeGroupSystem->group;
+        $this->groupDescription = $attributeGroupSystem->description;
         $this->middleware('role:Admin');
     }
 
@@ -85,7 +84,7 @@ class AttributeGroupsController extends BaseController
      */
     public function create()
     {
-        $groupAttributes = $this->groupRepository->all()->pluck('name', 'id');
+        $groupAttributes = $this->group->all()->pluck('name', 'id');
 
         return $this->view('create', compact('groupAttributes'));
     }
@@ -114,8 +113,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
-     *
-     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request, $id)
     {
@@ -132,8 +130,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
-     *
-     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
     {
@@ -150,8 +147,7 @@ class AttributeGroupsController extends BaseController
     /**
      * @param Request $request
      * @param $id
-     *
-     * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
@@ -182,7 +178,7 @@ class AttributeGroupsController extends BaseController
     {
         try {
             \DB::beginTransaction();
-            $deleted = $this->groupRepository->delete($id);
+            $deleted = $this->group->delete($id);
             if (!$deleted) {
                 $this->flash('warning', 'Item not deleted. Some error appeared!');
                 \DB::rollBack();
@@ -207,7 +203,8 @@ class AttributeGroupsController extends BaseController
     public function getJson(Request $request)
     {
         $query = $this->parserSearchValue($request->get('search'));
-        $attrGroup = $this->groupRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
+        $attrGroup = $this->group->where('name', 'like', $query)
+            ->select('name', 'id')->get();
         $attrGroupArr = [];
         foreach ($attrGroup as $key => $attrGroupItem) {
             $attrGroupArr[$key]['text'] = $attrGroupItem['name'];
