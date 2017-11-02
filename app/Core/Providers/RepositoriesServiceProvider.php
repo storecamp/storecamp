@@ -33,7 +33,6 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Media',
             'Folder',
             'Category',
-            'User',
             'Roles',
             'Products',
             'Permission',

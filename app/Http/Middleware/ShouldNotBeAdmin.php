@@ -2,23 +2,16 @@
 
 namespace App\Http\Middleware;
 
-use App\Core\Repositories\UserRepository;
+use App\Core\Models\User;
 use Closure;
 
 class ShouldNotBeAdmin
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
@@ -26,7 +19,7 @@ class ShouldNotBeAdmin
     {
         if (\Auth::user()) {
             $userId = $request->id;
-            $user = $this->userRepository->find($userId);
+            $user = User::find($userId);
             if ($user->hasRole('Admin')) {
                 \Flash::warning("The given user with role <b>Admin</b> is default for the app. <span class='text-danger'>To delete user change his role first!!!</span>");
 

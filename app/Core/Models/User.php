@@ -221,6 +221,18 @@ class User extends Authenticatable implements
     /**
      * @return mixed
      */
+    public function getRoleName()
+    {
+        foreach ($this->roles()->get() as $role) {
+            {
+                return $role->name;
+            }
+        }
+    }
+
+    /**
+     * @return mixed
+     */
     public function getRememberToken()
     {
         return $this->remember_token;

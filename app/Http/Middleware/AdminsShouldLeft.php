@@ -3,18 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\Core\Access\AccessRole;
+use App\Core\Models\User;
 use App\Core\Repositories\UserRepository;
 use Closure;
 
 class AdminsShouldLeft
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -32,7 +26,7 @@ class AdminsShouldLeft
                 return $next($request);
             }
             $userId = $request->id;
-            $user = $this->userRepository->find($userId);
+            $user = app(User::class)->find($userId);
             if (!$user->hasRole('Admin')) {
                 return $next($request);
             }

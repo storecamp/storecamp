@@ -32,10 +32,6 @@ class UsersController extends BaseController
      * @var UsersSystemContract
      */
     protected $usersSystem;
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
 
     /**
      * @var RolesRepository
@@ -55,7 +51,6 @@ class UsersController extends BaseController
     {
         $this->usersSystem = $usersSystem;
         $this->accessSystem = $accessSystem;
-        $this->userRepository = $usersSystem->getUserRepository();
         $this->rolesRepository = $accessSystem->getRoleRepository();
         $this->middleware('role:Admin');
     }
@@ -178,8 +173,7 @@ class UsersController extends BaseController
 
     /**
      * @param $id
-     *
-     * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {

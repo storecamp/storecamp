@@ -4,6 +4,7 @@ namespace App\Core\Base;
 
 use App\Core\Support\Meta\Meta;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
 /**
@@ -44,7 +45,7 @@ abstract class Model extends Eloquent
      * Dynamically set attributes on the model.
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return void
      */
@@ -55,7 +56,7 @@ abstract class Model extends Eloquent
 
     /**
      * @param string $method
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return Meta|mixed
      */
@@ -67,6 +68,9 @@ abstract class Model extends Eloquent
 
         if ($method == 'find') {
             $this->finder(...$parameters);
+        }
+        if ($method == 'findOrFail') {
+            $this->findOrFailRewrite(...$parameters);
         }
         if ($method == 'meta') {
             $file = $this->getName();
@@ -81,7 +85,7 @@ abstract class Model extends Eloquent
      * Handle dynamic static method calls into the method.
      *
      * @param string $method
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return mixed
      */
@@ -89,6 +93,9 @@ abstract class Model extends Eloquent
     {
         if ($method == 'find') {
             return (new static())->finder(...$parameters);
+        }
+        if ($method == 'findOrFail') {
+            return (new static())->findOrFailRewrite(...$parameters);
         }
 
         return (new static())->$method(...$parameters);
@@ -133,6 +140,23 @@ abstract class Model extends Eloquent
         }
     }
 
+    private function findOrFailRewrite($id, $columns = ['*'])
+    {
+        $result = $this->finder($id, $columns);
+
+        if (is_array($id)) {
+            if (count($result) == count(array_unique($id))) {
+                return $result;
+            }
+        } elseif (!is_null($result)) {
+            return $result;
+        }
+
+        throw (new ModelNotFoundException())->setModel(
+            get_class($this->model), $id
+        );
+    }
+
     /**
      * @return string
      */
@@ -151,7 +175,7 @@ abstract class Model extends Eloquent
     private function getMetaRelation($file)
     {
         $meta = new Meta();
-        $meta->setTable($file.'_meta');
+        $meta->setTable($file . '_meta');
 
         return $meta;
     }

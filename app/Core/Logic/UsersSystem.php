@@ -4,7 +4,6 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\UsersSystemContract;
 use App\Core\Models\User;
-use App\Core\Repositories\UserRepositoryEloquent;
 
 /**
  * Class UsersSystem.
@@ -12,20 +11,16 @@ use App\Core\Repositories\UserRepositoryEloquent;
 class UsersSystem implements UsersSystemContract
 {
     /**
-     * @var UserRepositoryEloquent
+     * @var User
      */
-    protected $userRepository;
+    public $user;
 
     /**
-     * @return UserRepositoryEloquent
+     * UsersSystem constructor.
      */
-    public function getUserRepository(): UserRepositoryEloquent
+    public function __construct()
     {
-        if($this->userRepository && $this->userRepository instanceof UserRepositoryEloquent) {
-            return $this->userRepository;
-        } else {
-            return $this->userRepository = app('App\Core\Repositories\UserRepository');
-        }
+        $this->user = new User();
     }
 
     /**
@@ -38,12 +33,12 @@ class UsersSystem implements UsersSystemContract
     public function present($data, $id = null, array $with = [])
     {
         if ($id) {
-            $users = $this->getUserRepository()->find($id);
+            $users = $this->user->find($id);
         } else {
             if (!empty($with)) {
-                $users = $this->getUserRepository()->with($with)->paginate();
+                $users = $this->user->with($with)->paginate();
             } else {
-                $users = $this->getUserRepository()->paginate();
+                $users = $this->user->paginate();
             }
         }
 
@@ -58,7 +53,7 @@ class UsersSystem implements UsersSystemContract
     public function create(array $data): User
     {
         $role = $data['role'];
-        $user = $this->getUserRepository()->create($data);
+        $user = $this->user->create($data);
         if (is_array($role)) {
             $user->roles()->sync((array)$role);
         } else {
@@ -71,16 +66,20 @@ class UsersSystem implements UsersSystemContract
     /**
      * @param array $data
      * @param $id
-     *
      * @return User
+     * @throws \Exception
      */
     public function update(array $data, $id): User
     {
-        $user = $this->getUserRepository()->findOrFail($id);
+        $user = $this->user->findOrFail($id);
         $user->roles()->sync((array)$data['role']);
-        $user = $this->getUserRepository()->update($data, $id);
+        $updated = $user->update($data);
 
-        return $user;
+        if (!$updated) {
+            throw new \Exception("User not deleted");
+        }
+
+        return $this->user->findOrFail($id);
     }
 
     /**
@@ -91,7 +90,7 @@ class UsersSystem implements UsersSystemContract
      */
     public function delete($id, array $data = []): int
     {
-        $deleted = $this->getUserRepository()->delete($id);
+        $deleted = $this->user->findOrFail($id)->delete();
 
         return $deleted;
     }

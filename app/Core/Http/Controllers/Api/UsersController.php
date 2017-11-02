@@ -3,13 +3,13 @@
 namespace App\Core\Http\Controllers\Api;
 
 use App\Core\Contracts\UsersSystemContract;
-use App\Core\Repositories\UserRepository;
+use App\Core\Http\Controllers\Controller;
+use App\Core\Models\User;
 use App\Core\Validators\User\UsersFormRequest;
 use App\Core\Validators\User\UsersUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Core\Http\Controllers\Controller;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
@@ -20,7 +20,7 @@ class UsersController extends Controller
 {
 
     /**
-     * @var
+     * @var User
      */
     private $user;
     /**
@@ -35,7 +35,7 @@ class UsersController extends Controller
     public function __construct(UsersSystemContract $usersSystem)
     {
         $this->usersSystem = $usersSystem;
-        $this->user = $usersSystem->getUserRepository();
+        $this->user = $usersSystem->user;
     }
 
     /**
@@ -69,8 +69,7 @@ class UsersController extends Controller
      * Get amount of users
      *
      * @param Request $request
-     * @param int|string $id
-     * @return \Illuminate\View\View
+     * @return JsonResponse
      */
     public function count(Request $request)
     {

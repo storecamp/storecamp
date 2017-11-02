@@ -12,11 +12,6 @@ use App\Core\Repositories\UserRepositoryEloquent;
 interface UsersSystemContract
 {
     /**
-     * @return UserRepositoryEloquent
-     */
-    public function getUserRepository(): UserRepositoryEloquent;
-
-    /**
      * @param $data
      * @param null  $id
      * @param array $with
