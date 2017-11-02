@@ -7,7 +7,6 @@ use App\Core\Models\ProductReview;
 use App\Core\Models\User;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
-use App\Core\Repositories\UserRepository;
 use App\Core\Transformers\ReviewDataTransformer;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;

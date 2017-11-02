@@ -5,6 +5,7 @@ namespace App\Core\Repositories;
 use App\Core\Models\Message;
 use App\Core\Models\Participant;
 use App\Core\Models\ProductReview;
+use App\Core\Models\Role;
 use App\Core\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Container\Container as Application;
@@ -17,9 +18,9 @@ use RepositoryLab\Repository\Eloquent\BaseRepository;
 class ProductReviewRepositoryEloquent extends BaseRepository implements ProductReviewRepository
 {
     /**
-     * @var RolesRepository
+     * @var Role
      */
-    protected $roleRepository;
+    protected $role;
     /**
      * @var ProductsRepository
      */
@@ -43,19 +44,16 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 
     /**
      * ProductReviewRepositoryEloquent constructor.
-     *
-     * @param Application        $app
-     * @param Dispatcher         $dispatcher
-     * @param RolesRepository    $roleRepository
+     * @param Application $app
+     * @param Dispatcher $dispatcher
      * @param ProductsRepository $product
      */
     public function __construct(Application $app,
                                 Dispatcher $dispatcher,
-                                RolesRepository $roleRepository,
                                 ProductsRepository $product)
     {
         parent::__construct($app, $dispatcher);
-        $this->roleRepository = $roleRepository;
+        $this->role = new Role();
         $this->product = $product;
         $this->thread = new Thread();
         $this->message = new Message();
@@ -158,8 +156,8 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $this->message->create(
             [
                 'thread_id' => $thread->id,
-                'user_id'   => $user_id,
-                'body'      => $message,
+                'user_id' => $user_id,
+                'body' => $message,
             ]
         );
 
@@ -167,7 +165,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $participant = $this->participant->firstOrCreate(
             [
                 'thread_id' => $thread->id,
-                'user_id'   => $user_id,
+                'user_id' => $user_id,
             ]
         );
         $participant->last_read = new Carbon();
