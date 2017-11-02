@@ -20,7 +20,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public $product;
 
     /**
-     * @var UserRepository
+     * @var User
      */
     public $user;
 
@@ -38,12 +38,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
      * ProductReviewSystem constructor.
      *
      * @param ProductsRepository      $product
-     * @param UserRepository          $user
+     * @param User                    $user
      * @param ProductReviewRepository $productReview
      * @param MessageRepository       $message
      */
     public function __construct(ProductsRepository $product,
-                                UserRepository $user,
+                                User $user,
                                 ProductReviewRepository $productReview, MessageRepository $message)
     {
         $this->product = $product;

@@ -4,6 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\ProductReview;
+use App\Core\Models\User;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
@@ -27,7 +28,7 @@ class ProductReviewController extends BaseController
      */
     protected $product;
     /**
-     * @var UserRepository
+     * @var User
      */
     protected $user;
 
@@ -46,11 +47,11 @@ class ProductReviewController extends BaseController
      *
      * @param ProductReviewSystemContract $productReviewSystem
      * @param ProductsRepository          $product
-     * @param UserRepository              $user
+     * @param User              $user
      * @param ProductReviewRepository     $reviews
      */
     public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
-                                UserRepository $user, ProductReviewRepository $reviews)
+                                User $user, ProductReviewRepository $reviews)
     {
         $this->productReviewSystem = $productReviewSystem;
         $this->product = $productReviewSystem->product;
