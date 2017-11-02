@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 
-class AccessPermission extends Model implements AccessPermissionInterface
+class AccessPermission extends \App\Core\Base\Model implements AccessPermissionInterface
 {
     use AccessPermissionTrait;
     use SoftDeletes;

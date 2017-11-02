@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 
-class AccessRole extends Model implements AccessRoleInterface
+class AccessRole extends \App\Core\Base\Model implements AccessRoleInterface
 {
     use AccessRoleTrait;
     use SoftDeletes;

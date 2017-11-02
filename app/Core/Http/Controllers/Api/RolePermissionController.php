@@ -2,29 +2,33 @@
 
 namespace App\Core\Http\Controllers\Api;
 
-use App\Core\Repositories\PermissionRepository;
-use App\Core\Repositories\RolesRepository;
-use Illuminate\Http\Request;
 use App\Core\Http\Controllers\Controller;
+use App\Core\Models\Permission;
+use App\Core\Models\Role;
+use Illuminate\Http\Request;
 
 /**
  * Class RolePermissionsController
  * @package App\Http\Controllers
  */
-class RolePermissionController extends Controller {
+class RolePermissionController extends Controller
+{
 
+    /**
+     * @var Role
+     */
     private $role;
     /**
-     * @var PermissionRepository
+     * @var Permission
      */
     private $permission;
 
     /**
      * RolePermissionController constructor.
-     * @param RolesRepository $role
-     * @param PermissionRepository $permission
+     * @param Role $role
+     * @param Permission $permission
      */
-    public function __construct(RolesRepository $role, PermissionRepository $permission)
+    public function __construct(Role $role, Permission $permission)
     {
         $this->role = $role;
         $this->permission = $permission;

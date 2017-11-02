@@ -5,6 +5,7 @@ namespace App\Core\Models;
 use App\Core\Access\AccessRole;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Support\Facades\Input;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -97,5 +98,42 @@ class Role extends AccessRole implements Transformable
         $roleUsers = $user->getUsersByRole($name);
 
         return $roleUsers;
+    }
+    /**
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function store(array $data)
+    {
+        $listIds = $data['permissions'];
+        $role = $this->create($data);
+        foreach ($listIds as $key => $value) {
+            $role->attachPermission($value);
+        }
+
+        return $role;
+    }
+
+    /**
+     * @param $data
+     * @param $dataPerm
+     * @param $role
+     */
+    public function renew($data, $dataPerm, $role)
+    {
+        $role->update($data);
+        $permissionsCount = $role->perms()->count();
+        if ($permissionsCount) {
+            $role->detachAllPermissions();
+            foreach ($dataPerm as $key => $value) {
+                $role->attachPermission($value);
+            }
+        }
+        if ($permissionsCount == 0 && count(Input::get('permissions')) > 0) {
+            foreach ($dataPerm as $key => $value) {
+                $role->attachPermission($value);
+            }
+        }
     }
 }

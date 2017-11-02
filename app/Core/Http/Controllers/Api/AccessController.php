@@ -3,6 +3,8 @@
 namespace App\Core\Http\Controllers\Api;
 
 use App\Core\Contracts\AccessSystemContract;
+use App\Core\Models\Permission;
+use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
 use App\Core\Validators\Role\RolesFormRequest;
@@ -17,14 +19,17 @@ use Illuminate\Http\Request;
 class AccessController extends \App\Core\Http\Controllers\Controller
 {
     /**
-     * @var RolesRepository
+     * @var Role
      */
-    protected $rolesRepository;
+    protected $role;
     /**
-     * @var PermissionRepository
+     * @var Permission
      */
-    protected $permissionRepository;
+    protected $permission;
 
+    /**
+     * @var AccessSystemContract
+     */
     protected $accessSystem;
 
     /**
@@ -35,8 +40,8 @@ class AccessController extends \App\Core\Http\Controllers\Controller
     public function __construct(AccessSystemContract $accessSystem)
     {
         $this->accessSystem = $accessSystem;
-        $this->rolesRepository = $accessSystem->getRoleRepository();
-        $this->permissionRepository = $accessSystem->getPermissionsRepository();
+        $this->role = $accessSystem->role;
+        $this->permission = $accessSystem->permission;
         $this->middleware('role:Admin');
     }
 
@@ -46,7 +51,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
      */
     public function getAllRoles(Request $request)
     {
-        $roles = $this->rolesRepository->all();
+        $roles = $this->role->all();
 
         return response()->json($roles);
     }
@@ -57,7 +62,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
      */
     public function indexRoles(Request $request)
     {
-        $roles = $this->rolesRepository->with('perms')->paginate();
+        $roles = $this->role->with('perms')->paginate();
 
         $roles->getCollection()->map(function ($item) {
             if ($item->display_name == "admin" || $item->display_name == "client") {
@@ -76,7 +81,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
      */
     public function getRolesCount(Request $request)
     {
-        $count = $this->rolesRepository->count();
+        $count = $this->role->count();
 
         return response()->json($count);
     }
@@ -87,7 +92,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
      */
     public function getAllPermissions(Request $request)
     {
-        $roles = $this->permissionRepository->all();
+        $roles = $this->permission->all();
 
         return response()->json($roles);
     }
@@ -98,7 +103,7 @@ class AccessController extends \App\Core\Http\Controllers\Controller
      */
     public function indexPermissions(Request $request)
     {
-        $permissions = $this->permissionRepository->paginate();
+        $permissions = $this->permission->paginate();
 
         return response()->json($permissions);
     }

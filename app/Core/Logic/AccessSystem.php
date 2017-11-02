@@ -3,6 +3,8 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\AccessSystemContract;
+use App\Core\Models\Permission;
+use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\PermissionRepositoryEloquent;
 use App\Core\Repositories\RolesRepository;
@@ -11,38 +13,24 @@ use App\Core\Repositories\RolesRepositoryEloquent;
 class AccessSystem implements AccessSystemContract
 {
     /**
-     * @var RolesRepositoryEloquent
+     * @var Role
      */
-    protected $roleRepository;
+    public $role;
 
     /**
-     * @var PermissionRepositoryEloquent
+     * @var Permission
      */
-    protected $permissionRepository;
+    public $permission;
 
     /**
-     * @return RolesRepositoryEloquent
+     * AccessSystem constructor.
      */
-    public function getRoleRepository(): RolesRepositoryEloquent
+    public function __construct()
     {
-        if($this->roleRepository && $this->roleRepository instanceof RolesRepositoryEloquent) {
-            return $this->roleRepository;
-        } else {
-            return $this->roleRepository = app(RolesRepository::class);
-        }
+        $this->role = new Role();
+        $this->permission = new Permission();
     }
 
-    /**
-     * @return PermissionRepositoryEloquent
-     */
-    public function getPermissionsRepository(): PermissionRepositoryEloquent
-    {
-        if($this->permissionRepository && $this->permissionRepository instanceof PermissionRepositoryEloquent) {
-            return $this->permissionRepository;
-        } else {
-            return $this->permissionRepository = app(PermissionRepository::class);
-        }
-    }
 
     /**
      * @param array $data
@@ -55,15 +43,15 @@ class AccessSystem implements AccessSystemContract
     {
         if ($id) {
             if (!empty($with)) {
-                $roles = $this->getRoleRepository()->with($with)->find($id);
+                $roles = $this->role->with($with)->findOrFail($id);
             } else {
-                $roles = $this->getRoleRepository()->find($id);
+                $roles = $this->role->findOrFail($id);
             }
         } else {
             if (!empty($with)) {
-                $roles = $this->getRoleRepository()->with($with)->paginate();
+                $roles = $this->role->with($with)->paginate();
             } else {
-                $roles = $this->getRoleRepository()->paginate();
+                $roles = $this->role->paginate();
             }
         }
 
@@ -80,12 +68,12 @@ class AccessSystem implements AccessSystemContract
     public function presentPermissions(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $permissions = $this->getPermissionsRepository()->find($id);
+            $permissions = $this->permission->findOrFail($id);
         } else {
             if (!empty($with)) {
-                $permissions = $this->getPermissionsRepository()->with($with)->paginate();
+                $permissions = $this->permission->with($with)->paginate();
             } else {
-                $permissions = $this->getPermissionsRepository()->paginate();
+                $permissions = $this->permission->paginate();
             }
         }
 
@@ -99,7 +87,7 @@ class AccessSystem implements AccessSystemContract
      */
     public function createRole(array $data)
     {
-        $role = $this->getRoleRepository()->store($data);
+        $role = $this->role->store($data);
 
         return $role;
     }
@@ -111,7 +99,7 @@ class AccessSystem implements AccessSystemContract
      */
     public function createPermission(array $data)
     {
-        $permission = $this->getPermissionsRepository()->create($data);
+        $permission = $this->permission->create($data);
 
         return $permission;
     }
@@ -126,8 +114,8 @@ class AccessSystem implements AccessSystemContract
     {
         $permissions = $data['permissions'];
         unset($data['permissions']);
-        $role = $this->getRoleRepository()->find($id);
-        $role = $this->getRoleRepository()->renew($data, $permissions, $role);
+        $role = $this->role->findOrFail($id);
+        $role = $this->role->renew($data, $permissions, $role);
 
         return $role;
     }
@@ -140,7 +128,7 @@ class AccessSystem implements AccessSystemContract
      */
     public function updatePermission(array $data, $id)
     {
-        $permission = $this->getPermissionsRepository()->update($data, $id);
+        $permission = $this->permission->update($data, $id);
 
         return $permission;
     }
@@ -153,7 +141,7 @@ class AccessSystem implements AccessSystemContract
      */
     public function deleteRole($id, array $data = []): int
     {
-        $deleted = $this->getRoleRepository()->delete($id);
+        $deleted = $this->role->findOrFail($id)->delete();
 
         return $deleted;
     }
@@ -166,7 +154,7 @@ class AccessSystem implements AccessSystemContract
      */
     public function deletePermission($id, array $data = []): int
     {
-        $deleted = $this->getPermissionsRepository()->delete($id);
+        $deleted = $this->permission->findOrFail($id)->delete();
 
         return $deleted;
     }

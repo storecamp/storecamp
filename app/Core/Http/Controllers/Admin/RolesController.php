@@ -3,6 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\AccessSystemContract;
+use App\Core\Models\Permission;
 use App\Core\Models\Role;
 use App\Core\Repositories\PermissionRepository;
 use App\Core\Repositories\RolesRepository;
@@ -29,14 +30,18 @@ class RolesController extends BaseController
     public $errorRedirectPath = 'admin/roles';
 
     /**
-     * @var RolesRepository
+     * @var Role
      */
-    protected $rolesRepository;
-    /**
-     * @var PermissionRepository
-     */
-    protected $permissionRepository;
+    protected $role;
 
+    /**
+     * @var Permission
+     */
+    protected $permission;
+
+    /**
+     * @var AccessSystemContract
+     */
     protected $accessSystem;
 
     /**
@@ -47,8 +52,8 @@ class RolesController extends BaseController
     public function __construct(AccessSystemContract $accessSystem)
     {
         $this->accessSystem = $accessSystem;
-        $this->rolesRepository = $accessSystem->getRoleRepository();
-        $this->permissionRepository = $accessSystem->getPermissionsRepository();
+        $this->role = $accessSystem->role;
+        $this->permission = $accessSystem->permission;
         $this->middleware('role:Admin');
     }
 
@@ -81,7 +86,7 @@ class RolesController extends BaseController
      */
     public function create()
     {
-        $permissions = $this->permissionRepository->all()->pluck('name', 'id');
+        $permissions = $this->permission->all()->pluck('name', 'id');
         $selectedPerms = [];
 
         return $this->view('create', compact('permissions', 'selectedPerms'));
@@ -126,7 +131,7 @@ class RolesController extends BaseController
         try {
             $data = $request->all();
             $role = $this->accessSystem->presentRoles($data, $id);
-            $permissions = $this->permissionRepository->all()->pluck('name', 'id');
+            $permissions = $this->permission->all()->pluck('name', 'id');
             $selectedPerms = $role->perms()->orderBy('id')->pluck('name', 'id');
 
             return $this->view('edit', compact('role', 'permissions', 'selectedPerms'));
@@ -163,7 +168,7 @@ class RolesController extends BaseController
     public function getPermsJson(Request $request)
     {
         $query = $this->parserSearchValue($request->get('search'));
-        $permGroup = $this->permissionRepository->getModel()->where('name', 'like', $query)->select('name', 'id')->get();
+        $permGroup = $this->permission->where('name', 'like', $query)->select('name', 'id')->get();
         $permGroupArr = [];
         foreach ($permGroup as $key => $attrGroupItem) {
             $permGroupArr[$key]['text'] = $attrGroupItem['name'];

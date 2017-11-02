@@ -25,7 +25,7 @@ class ProductSystem implements ProductSystemContract
     /**
      * ProductSystem constructor.
      *
-     * @param ProductsRepository                  $productRepository
+     * @param ProductsRepository $productRepository
      * @param AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository
      */
     public function __construct(ProductsRepository $productRepository,
@@ -37,7 +37,7 @@ class ProductSystem implements ProductSystemContract
 
     /**
      * @param $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -101,7 +101,9 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository->find(intval($attr['attr_description_id'])), ['value' => $formAttributes[$key]['value']]);
+                    $this->attributeGroupDescriptionRepository
+                        ->find(intval($attr['attr_description_id'])),
+                    ['value' => $formAttributes[$key]['value']]);
                 $attributes[] = $attribute;
             }
         }
@@ -136,7 +138,10 @@ class ProductSystem implements ProductSystemContract
         if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
-                    $this->attributeGroupDescriptionRepository->find($attr['attr_description_id']), ['value' => $formAttributes[$key]['value']]);
+                    $this->attributeGroupDescriptionRepository
+                        ->find($attr['attr_description_id']),
+                    ['value' => $formAttributes[$key]['value']]
+                );
                 $attributes[] = $attribute;
             }
         }
