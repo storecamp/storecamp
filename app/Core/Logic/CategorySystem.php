@@ -4,7 +4,6 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\CategorySystemContract;
 use App\Core\Models\Category;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Traits\MediableCore;
 
 /**
@@ -14,23 +13,21 @@ class CategorySystem implements CategorySystemContract
 {
     use MediableCore;
     /**
-     * @var CategoryRepository
+     * @var Category
      */
-    public $categoryRepository;
+    public $category;
 
     /**
      * CategorySystem constructor.
-     *
-     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct()
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->category = new Category();
     }
 
     /**
      * @param array $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -38,13 +35,12 @@ class CategorySystem implements CategorySystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $categories = $this->categoryRepository->with($with)->find($id);
+            $categories = $this->category->find($id);
         } else {
-            if (!empty($with)) {
-                $categories = $this->categoryRepository->with($with)->order('parent_id', 'ASC')->paginate();
-            } else {
-                $categories = $this->categoryRepository->order('parent_id', 'ASC')->paginate();
-            }
+            $categories = $this->category->orderBy('parent_id', 'ASC')->paginate();
+        }
+        if ($with) {
+            $categories->load($with);
         }
 
         return $categories;
@@ -57,11 +53,11 @@ class CategorySystem implements CategorySystemContract
      */
     public function create(array $data)
     {
-        $data['top'] = isset($data['top']) ? $data['top'] == 'on' ? true : false : false;
         $data['parent_id'] = empty($data['parent_id']) ? null : $data['parent_id'];
+        $data['sort_order'] = empty($data['sort_order']) ? 0 : $data['sort_order'];
         $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
-        $category = $this->categoryRepository->create($data);
+        $category = $this->category->create($data);
         $this->syncMediaFile($category, $selectedFiles, 'thumbnail');
 
         return $category;
@@ -75,11 +71,10 @@ class CategorySystem implements CategorySystemContract
      */
     public function update(array $data, $id)
     {
-        $data['top'] = isset($data['top']) ? $data['top'] == 'on' ? true : false : false;
         $data['parent_id'] = empty($data['parent_id']) ? null : $data['parent_id'];
         $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
-        $category = $this->categoryRepository->find($id);
+        $category = $this->category->findOrFail($id);
         $category->update($data);
         $this->syncMediaFile($category, $selectedFiles, 'thumbnail');
 
@@ -92,9 +87,9 @@ class CategorySystem implements CategorySystemContract
      *
      * @return int
      */
-    public function delete($id, array $data = []) : int
+    public function delete($id, array $data = []): int
     {
-        $deleted = $this->categoryRepository->delete($id);
+        $deleted = $this->category->destroy($id);
 
         return $deleted;
     }
@@ -105,7 +100,7 @@ class CategorySystem implements CategorySystemContract
      * string $type = "string" | "array".
      *
      * @param Category $category
-     * @param string   $type
+     * @param string $type
      *
      * @return string
      */

@@ -6,7 +6,6 @@ use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
 use App\Core\Contracts\ProductInterface;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\CartItemTrait;
 use App\Core\Traits\GeneratesUnique;
@@ -479,7 +478,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         if (is_null($category)) {
             return $query->with('categories');
         }
-        $categoryInstance = app(CategoryRepository::class);
+        $categoryInstance = app(Category::class);
         $category = $categoryInstance->findOrFail($category);
         $categoryIds = $category->descedants()->pluck('id')->toArray();
         array_unshift($categoryIds, $category->id);

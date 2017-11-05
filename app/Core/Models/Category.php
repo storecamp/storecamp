@@ -98,7 +98,6 @@ class Category extends Model implements Transformable
         'image_link',
         'parent_id',
         'status',
-        'top',
         'sort_order',
         'meta_tag_title',
         'meta_tag_description',
@@ -123,7 +122,7 @@ class Category extends Model implements Transformable
          * @var array
          */
         'columns' => [
-            'categories.name'        => 10,
+            'categories.name' => 10,
             'categories.description' => 1,
         ],
     ];
@@ -230,7 +229,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param array $parents
-     * @param null  $parent
+     * @param null $parent
      *
      * @return array|int
      */
@@ -258,7 +257,7 @@ class Category extends Model implements Transformable
     }
 
     /**
-     * @param null  $category
+     * @param null $category
      * @param array $categories
      *
      * @return Collection
@@ -278,6 +277,48 @@ class Category extends Model implements Transformable
         }
 
         return new Collection($categories);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        $categories = $this->where('parent_id', null)->get(); //united
+
+        $categories = $this->addRelation($categories);
+
+        return $categories;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function selectChild($id)
+    {
+        $categories = $this->where('parent_id', $id)->get(); //rooney
+
+        $categories = $this->addRelation($categories);
+
+        return $categories;
+    }
+
+    /**
+     * @param $categories
+     *
+     * @return mixed
+     */
+    public function addRelation($categories)
+    {
+        $categories->map(function ($item, $key) {
+            $sub = $this->selectChild($item->id);
+
+            return $item = array_add($item, 'subCategory', $sub);
+        });
+
+        return $categories;
     }
 
     /**

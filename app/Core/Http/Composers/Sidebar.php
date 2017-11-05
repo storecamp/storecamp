@@ -2,21 +2,20 @@
 
 namespace App\Core\Http\Composers;
 
-use App\Core\Repositories\CategoryRepository;
 use Illuminate\View\View;
 
 class Sidebar
 {
-    protected $categoryRepository;
+    protected $category;
 
     /**
      * Sidebar constructor.
      *
-     * @param $categoryRepository
+     * @param $category
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(\App\Core\Models\Category $category)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->category = $category;
     }
 
     /**
@@ -26,6 +25,6 @@ class Sidebar
      */
     public function compose(View $view)
     {
-        return $view->with('categories', $this->categoryRepository->with('children')->all());
+        return $view->with('categories', $this->category->with('children')->all());
     }
 }

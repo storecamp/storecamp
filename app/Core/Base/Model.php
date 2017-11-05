@@ -69,9 +69,11 @@ abstract class Model extends Eloquent
         if ($method == 'find') {
             $this->finder(...$parameters);
         }
+
         if ($method == 'findOrFail') {
             $this->findOrFailRewrite(...$parameters);
         }
+
         if ($method == 'meta') {
             $file = $this->getName();
 
@@ -165,6 +167,18 @@ abstract class Model extends Eloquent
         $path = explode('\\', get_class($this));
 
         return Str::snake(array_pop($path));
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $value
+     * @param $columns
+     * @return mixed
+     */
+    public function scopeFindByField($query, $field, $value, $columns)
+    {
+        return $query->where($field, '=', $value)->get($columns);
     }
 
     /**

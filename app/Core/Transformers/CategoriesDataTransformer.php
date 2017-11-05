@@ -16,15 +16,15 @@ class CategoriesDataTransformer extends TransformerAbstract
     public function transform(Category $category)
     {
         return [
-            'id'          => $category->id,
-            'name'        => $this->getName($category),
-            'slug'        => $category->slug,
+            'id' => $category->id,
+            'name' => $this->getName($category),
+            'slug' => $category->slug,
             'description' => $this->getDescription($category),
-            'status'      => $this->getStatus($category),
-            'sort_order'  => $category->sort_order,
-            'created_at'  => $category->created_at,
-            'updated_at'  => $category->updated_at,
-            'action'      => $this->getActions($category),
+            'status' => $this->getStatus($category),
+            'sort_order' => $category->sort_order,
+            'created_at' => $category->created_at,
+            'updated_at' => $category->updated_at,
+            'action' => $this->getActions($category),
         ];
     }
 
@@ -37,9 +37,9 @@ class CategoriesDataTransformer extends TransformerAbstract
     {
         return '<a data-toggle="modal" href="#Description-modal"
            class="btn btn-xs btn-info"
-           data-desc-url="'.route('admin::categories::description', $category->unique_id).'"
-           data-desc-id="'.$category->unique_id.'"
-           data-desc-name="'.$category->name.'">
+           data-desc-url="' . route('admin::categories::description', $category->unique_id) . '"
+           data-desc-id="' . $category->unique_id . '"
+           data-desc-name="' . $category->name . '">
             show
         </a>';
     }
@@ -51,7 +51,7 @@ class CategoriesDataTransformer extends TransformerAbstract
      */
     private function getName(Category $category): string
     {
-        return CategorySystem::getCategoryFullPath($category).'<small class="text-muted label bg-info pull-right">'.$category->getType().'</small>';
+        return CategorySystem::getCategoryFullPath($category) . '<small class="text-muted label bg-info pull-right">' . $category->getType() . '</small>';
     }
 
     /**
@@ -61,10 +61,10 @@ class CategoriesDataTransformer extends TransformerAbstract
      */
     private function getActions(Category $category): string
     {
-        return '<a class="btn btn-default edit" href="'.route('admin::categories::edit', $category->unique_id).'" title="Edit">
+        return '<a class="btn btn-default edit" href="' . route('admin::categories::edit', $category->unique_id) . '" title="Edit">
             <em class="fa fa-pencil-square-o"></em>
         </a>
-        <a class="btn btn-danger delete text-warning" href="'.route('admin::categories::get::delete', $category->unique_id).'"
+        <a class="btn btn-danger delete text-warning" href="' . route('admin::categories::get::delete', $category->unique_id) . '"
            title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em>
         </a>';
     }

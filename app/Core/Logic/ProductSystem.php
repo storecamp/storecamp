@@ -4,7 +4,6 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Models\AttributeGroupDescription;
-use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 

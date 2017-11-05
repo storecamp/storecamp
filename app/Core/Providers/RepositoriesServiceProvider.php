@@ -36,8 +36,6 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Products',
             'NewsLetterList',
             'ProductReview',
-            'Subscribers',
-            'Campaign',
             'Mail',
             'Orders',
             'Banner',

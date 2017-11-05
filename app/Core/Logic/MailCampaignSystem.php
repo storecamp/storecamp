@@ -4,8 +4,8 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\MailCampaignSystemContract;
 use App\Core\Models\Mail;
+use App\Core\Models\Subscribers;
 use App\Core\Repositories\MailRepository;
-use App\Core\Repositories\SubscribersRepository;
 use App\Events\MailSentTOReceiver;
 use App\Jobs\SendCampaignEmails;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -18,7 +18,7 @@ use League\Csv\Writer;
 class MailCampaignSystem implements MailCampaignSystemContract
 {
     /**
-     * @var SubscribersRepository
+     * @var Subscribers
      */
     public $subscriber;
     /**
@@ -32,12 +32,13 @@ class MailCampaignSystem implements MailCampaignSystemContract
 
     /**
      * MailCampaignSystem constructor.
-     *
-     * @param SubscribersRepository $subscriber
-     * @param MailRepository        $mail
-     * @param Dispatcher            $dispatcher
+     * @param Subscribers $subscriber
+     * @param MailRepository $mail
+     * @param Dispatcher $dispatcher
      */
-    public function __construct(SubscribersRepository $subscriber, MailRepository $mail, Dispatcher $dispatcher)
+    public function __construct(Subscribers $subscriber,
+                                MailRepository $mail,
+                                Dispatcher $dispatcher)
     {
         $this->subscriber = $subscriber;
         $this->mail = $mail;
@@ -82,7 +83,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
     public function resolveMailHistory($uid)
     {
         $mailHistory = [];
-        $pathToHistory = base_path('resources/views/storage/tmp_mails/'.$uid);
+        $pathToHistory = base_path('resources/views/storage/tmp_mails/' . $uid);
         if (\File::exists($pathToHistory)) {
             $emailArr = \File::allFiles($pathToHistory);
 
@@ -106,7 +107,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
         $path = base_path('resources/views/tmp_mails/');
 
         try {
-            $path = $path.$file.'.html';
+            $path = $path . $file . '.html';
 
             return \File::get($path);
         } catch (\Throwable $e) {
@@ -125,7 +126,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
         $path = base_path('resources/views/storage/tmp_mails/');
 
         try {
-            $path = $path.'/'.$folder.'/'.$filename.'.php';
+            $path = $path . '/' . $folder . '/' . $filename . '.php';
 
             if (\File::exists($path)) {
                 return \File::get($path);
@@ -167,8 +168,8 @@ class MailCampaignSystem implements MailCampaignSystemContract
         $this->handleCampaign($type, $sender_email, $sender_name, $viewFolder, $csvPath);
         Mail::create([
             'user_id' => \Auth::check() ? \Auth::id() : null,
-            'from'    => $sender_email,
-            'to'      => $type,
+            'from' => $sender_email,
+            'to' => $type,
             'subject' => $request->subject ? $request->subject : 'StoreCamp Online Store',
             'message' => $request->message ? $request->message : ' StoreCamp Message Here!',
         ]);
@@ -190,14 +191,14 @@ class MailCampaignSystem implements MailCampaignSystemContract
      */
     private function putMail($request, $uid)
     {
-        $root = base_path('resources/views/storage/tmp_mails').'/'.$uid.'/';
+        $root = base_path('resources/views/storage/tmp_mails') . '/' . $uid . '/';
         if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
         $randomStr = str_random(5);
-        $filename = $randomStr.'.blade.php';
-        $path = $root.$filename;
-        $viewFolder = 'storage/tmp_mails'.'/'.$uid.'/'.$randomStr;
+        $filename = $randomStr . '.blade.php';
+        $path = $root . $filename;
+        $viewFolder = 'storage/tmp_mails' . '/' . $uid . '/' . $randomStr;
         \File::put($path, $request->mail);
 
         return ['root' => $root, 'path' => $path, 'viewFolder' => $viewFolder];
@@ -213,7 +214,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
         if (!\File::exists($root)) {
             \File::makeDirectory($root, 0775, true, true);
         }
-        $path = $root.str_random(5).'.csv';
+        $path = $root . str_random(5) . '.csv';
         \File::put($path, null);
 
         return $path;
@@ -231,7 +232,7 @@ class MailCampaignSystem implements MailCampaignSystemContract
         $file = $csvPath;
         $mails = $this->mailFromFile($file);
         $c = count($mails);
-        echo 'total : '.$c."\n".'<br>';
+        echo 'total : ' . $c . "\n" . '<br>';
         $emails = [];
         $start = 0;
         $end = $c - 1;
@@ -249,8 +250,8 @@ class MailCampaignSystem implements MailCampaignSystemContract
             $receiverMail = trim($mails[$num][0]);
 
             $this->dispatcher->dispatch(new SendCampaignEmails($view, $subject, $receiverMail, $senderAddr, $senderName, $name));
-            \Event::fire(new MailSentTOReceiver('<br>'.' send email: '.$receiverMail.'<strong>'.' finished '.'</strong>'.'<br>'));
-            echo "\n\n Email sent to - ".$receiverMail.'<br>';
+            \Event::fire(new MailSentTOReceiver('<br>' . ' send email: ' . $receiverMail . '<strong>' . ' finished ' . '</strong>' . '<br>'));
+            echo "\n\n Email sent to - " . $receiverMail . '<br>';
         }
         echo "\n <h3 class='text-info'>All done</h3>";
     }

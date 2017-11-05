@@ -54,8 +54,8 @@ class ProductController extends BaseController
             $data = $request->all();
             if ($category) {
                 $products = $this->productSystem->categorized($data, $category, ['media']);
-                $categoryInstance = app('App\\Core\\Repositories\\CategoryRepository');
-                $category = $categoryInstance->find($category);
+                $categoryInstance = app('App\\Core\\Models\\Category');
+                $category = $categoryInstance->findOrFail($category);
             } else {
                 $products = $this->productSystem->present($data, null, ['media']);
             }

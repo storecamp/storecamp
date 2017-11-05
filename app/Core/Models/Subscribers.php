@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Exceptions\SubscriberException;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -80,5 +81,121 @@ class Subscribers extends Model implements Transformable
     public function scopeMails($query, $mail)
     {
         $query->where('email', $mail);
+    }
+
+
+    /**
+     * @param $email
+     *
+     * @return mixed
+     */
+    public function findSubscriber($email)
+    {
+        $subscriber = $this->where('email', $email)->first();
+
+        return $subscriber;
+    }
+
+    /**
+     * @param $data
+     * @param $list
+     *
+     * @return bool
+     */
+    private function createSubscriber($data, $list)
+    {
+        foreach ($data as $key => $value) {
+            $this->{$key} = $value;
+        }
+        $this->save();
+        if (!is_null($list)) {
+            $list->subscribers()->attach($this);
+            $list->save();
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $request
+     * @param $campaignId
+     *
+     * @return bool
+     */
+    public function createSubscription($request, $campaignId)
+    {
+        $mail = $request->get('subscriber_email');
+        $list = Campaign::find($campaignId);
+        $info = [
+            'email' => $mail,
+        ];
+
+        if (is_null($subscriber = $this->where('email', $mail)->first())) {
+            if (!is_null($list)) {
+                $list->subscribers()->attach($subscriber);
+                $list->save();
+                $this->createSubscriber($info, $list);
+
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $countListEmail = $list->subscribers()->where('email', $mail)->count();
+
+            if ($countListEmail == 0) {
+                $subscriber = $this->mails($mail)->first();
+                $list->subscribers()->sync([$subscriber->id]);
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * @param $request
+     * @param $type
+     * @param $subscription_id
+     * @return bool
+     * @throws SubscriberException
+     */
+    public function deleteSubscription($request, $type, $subscription_id)
+    {
+        $mail = $request->get('subscriber_email');
+        $subscriber = $this->where('email', $mail)->first();
+
+        if (is_null($subscriber)) {
+            throw (new SubscriberException())->setModel(
+                get_class($this->model)
+            );
+        }
+
+        foreach ($subscriber->newsList as $list) {
+            if ($list->name == $type || $type === null) {
+                $list->subscribers()->detach($subscriber);
+            }
+        }
+
+        if (is_null($type)) {
+            $subscriber->delete();
+
+            return true;
+        }
+    }
+
+    /**
+     * @param null $type
+     *
+     * @return mixed
+     */
+    public function getNewsList($type = null)
+    {
+        if (is_null($type)) {
+            return Campaign::all();
+        } else {
+            return Campaign::findByField('listName', $type);
+        }
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\Category;
 use App\Core\Models\Product;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Transformers\ProductDataTransformer;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
@@ -19,9 +19,9 @@ use Yajra\DataTables\DataTables;
 class ProductsController extends BaseController
 {
     /**
-     * @var CategoryRepository
+     * @var Category
      */
-    protected $categoryRepository;
+    protected $category;
     /**
      * @var string
      */
@@ -44,11 +44,11 @@ class ProductsController extends BaseController
      * ProductsController constructor.
      *
      * @param ProductSystemContract $productSystem
-     * @param CategoryRepository    $categoryRepository
+     * @param Category $category
      */
-    public function __construct(ProductSystemContract $productSystem, CategoryRepository $categoryRepository)
+    public function __construct(ProductSystemContract $productSystem, Category $category)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->category = $category;
         $this->productSystem = $productSystem;
         $this->productRepository = $this->productSystem->productRepository;
         $this->middleware('role:Admin');
@@ -83,7 +83,7 @@ class ProductsController extends BaseController
      */
     public function create()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->category->all();
         $chosenCategory = null;
         $preferredTag = 'gallery';
 
@@ -144,7 +144,7 @@ class ProductsController extends BaseController
         try {
             $data = $request->all();
             $product = $this->productSystem->present($data, $id, ['attributeGroupDescription', 'categories']);
-            $categories = $this->categoryRepository->all();
+            $categories = $this->category->all();
             $pictures = [];
             $chosenCategory = $product->categories->first();
             $attributesList = $product->attributeGroupDescription->pluck('name', 'id');

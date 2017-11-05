@@ -72,7 +72,7 @@ if (!function_exists('formatBytes')) {
         $bytes /= pow(1024, $pow);
 //         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, $precision).' '.$units[$pow];
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
 
@@ -150,7 +150,7 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
     function pushParentCategoryBreadcrumbs($category, $breadcrumbs)
     {
         while ($category->parent_id != null) {
-            $newParent = app('App\Core\Repositories\CategoryRepository')->find($category->parent_id);
+            $newParent = \App\Core\Models\Category::find($category->parent_id);
             $breadcrumbs->push($newParent->name, route('site::products::index', [$newParent->unique_id]));
 
             return pushParentCategoryBreadcrumbs($newParent, $breadcrumbs);
@@ -161,7 +161,7 @@ if (!function_exists('pushParentCategoryBreadcrumbs')) {
 if (!function_exists('getCategoryFullPath')) {
     /**
      * @param \App\Core\Models\Category $category
-     * @param string                    $type
+     * @param string $type
      *
      * @return string
      */
@@ -175,7 +175,7 @@ if (!function_exists('getFilesByFormat')) {
     /**
      * @param string $root
      * @param string $format
-     * @param bool   $skipFormatEnding
+     * @param bool $skipFormatEnding
      *
      * @return array
      */
@@ -218,7 +218,7 @@ if (!function_exists('getFileNames')) {
         $filesArr = [];
         foreach ($files as $file) {
             $extension = $file->getExtension();
-            $fileName = explode('.'.$extension, $file->getBasename());
+            $fileName = explode('.' . $extension, $file->getBasename());
             $filesArr[] = $fileName[0];
         }
 
@@ -343,7 +343,7 @@ if (!function_exists('menu')) {
     /**
      * @param $key
      * @param string $type
-     * @param array  $options
+     * @param array $options
      *
      * @return \Illuminate\Support\HtmlString
      */

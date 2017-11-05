@@ -4,7 +4,6 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\CategorySystemContract;
 use App\Core\Models\Category;
-use App\Core\Repositories\CategoryRepository;
 use App\Core\Transformers\CategoriesDataTransformer;
 use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
@@ -30,9 +29,9 @@ class CategoriesController extends BaseController
     public $errorRedirectPath = 'admin/categories';
 
     /**
-     * @var CategoryRepository
+     * @var Category
      */
-    protected $repository;
+    protected $category;
 
     /**
      * @var CategorySystemContract
@@ -47,7 +46,7 @@ class CategoriesController extends BaseController
     public function __construct(CategorySystemContract $categorySystem)
     {
         $this->categorySystem = $categorySystem;
-        $this->repository = $this->categorySystem->categoryRepository;
+        $this->category = $this->categorySystem->category;
 
         $this->middleware('role:Admin');
     }
@@ -87,7 +86,7 @@ class CategoriesController extends BaseController
      */
     public function create(Request $request)
     {
-        $categories = $this->repository->with(['parent', 'children'])->all();
+        $categories = $this->category->all()->load(['parent', 'children']);
         $parent = null;
         $preferredTag = 'thumbnail';
 
@@ -101,12 +100,8 @@ class CategoriesController extends BaseController
      */
     public function store(CategoriesFormRequest $request)
     {
-        try {
-            $data = $request->all();
-            $category = $this->categorySystem->create($data);
-        } catch (\Throwable $exception) {
-            return $this->redirectError($exception);
-        }
+        $data = $request->except(['top']);
+        $category = $this->categorySystem->create($data);
 
         return redirect('admin/categories');
     }
@@ -123,7 +118,7 @@ class CategoriesController extends BaseController
         try {
             $data = $request->all();
             $category = $this->categorySystem->present($data, $id, ['media']);
-            $categories = $this->repository->all();
+            $categories = $this->category->all();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         }
@@ -141,7 +136,7 @@ class CategoriesController extends BaseController
     public function getDescription($id)
     {
         try {
-            $category = $this->repository->find($id);
+            $category = $this->category->find($id);
             $description = $category->description;
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
@@ -162,7 +157,7 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->present($data, $id, ['media', 'parent']);
             $parent = $category->parent;
-            $categories = $this->repository->with('parent')->all();
+            $categories = $this->category->all()->load('parent');
             $preferredTag = 'thumbnail';
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -180,7 +175,7 @@ class CategoriesController extends BaseController
     public function update(CategoriesUpdateFormRequest $request, $id)
     {
         try {
-            $data = $request->all();
+            $data = $request->except(['top']);
             $category = $this->categorySystem->update($data, $id);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
