@@ -4,12 +4,10 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\EmailLog;
 use App\Core\Models\EmailLogRecipient;
-use App\Core\Repositories\EmailLogRepository;
-use App\Core\Repositories\EmailLogRepositoryEloquent;
 use App\Core\Repositories\MailRepository;
 use App\Core\Repositories\MailRepositoryEloquent;
-use Illuminate\Http\Request;
 use App\Core\Transformers\MailHistoryTransformer;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -28,9 +26,9 @@ class MailController extends BaseController
     public $errorRedirectPath = 'admin/mail/index';
 
     /**
-     * @var EmailLogRepository
+     * @var EmailLog
      */
-    private $emailLogRepository;
+    private $emailLog;
     /**
      * @var EmailLogRecipient
      */
@@ -41,16 +39,16 @@ class MailController extends BaseController
     private $mailRepository;
 
     /**
-     * AdminEmailsController constructor.
-     * @param EmailLogRepository $emailLogRepository
+     * MailController constructor.
+     * @param EmailLog $emailLog
      * @param EmailLogRecipient $emailLogRecipient
      * @param MailRepository $mailRepository
      */
-    public function __construct(EmailLogRepository $emailLogRepository,
+    public function __construct(EmailLog $emailLog,
                                 EmailLogRecipient $emailLogRecipient,
                                 MailRepository $mailRepository)
     {
-        $this->emailLogRepository = $emailLogRepository;
+        $this->emailLog = $emailLog;
         $this->emailLogRecipient = $emailLogRecipient;
         $this->mailRepository = $mailRepository;
     }
@@ -62,8 +60,8 @@ class MailController extends BaseController
      */
     public function index(Request $request)
     {
-        $mails = $this->emailLogRepository->simplePaginate();
-        $total = $this->emailLogRepository->count();
+        $mails = $this->emailLog->simplePaginate();
+        $total = $this->emailLog->count();
         $no = $mails->firstItem();
 
         return $this->view('index', compact('mails', 'no', 'total'));
@@ -89,12 +87,12 @@ class MailController extends BaseController
      */
     public function show(Request $request, $id)
     {
-        $mail = $this->emailLogRepository->find($id);
-        $total = $this->emailLogRepository->count();
+        $mail = $this->emailLog->find($id);
+        $total = $this->emailLog->count();
         // get previous mail id
-        $previous = $this->emailLogRepository->getModel()->where('id', '<', $mail->id)->max('id');
+        $previous = $this->emailLog->getModel()->where('id', '<', $mail->id)->max('id');
         // get next mail id
-        $next =$this->emailLogRepository->getModel()->where('id', '>', $mail->id)->min('id');
+        $next = $this->emailLog->getModel()->where('id', '>', $mail->id)->min('id');
 
         return $this->view('show', compact('mail', 'total', 'previous', 'next'));
     }
@@ -319,7 +317,7 @@ class MailController extends BaseController
 
     public function destroy($id)
     {
-        $mail = $this->emailLogRepository->findOrFail($id);
+        $mail = $this->emailLog->findOrFail($id);
         $mail->delete();
 
         return $this->redirectNotFound();

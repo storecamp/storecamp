@@ -2,13 +2,14 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Support\Email\EmailCustomization;
-
 use App\Core\Handlers\MailEventHandler;
-use App\Mail\DeliverMail;
 use App\Core\Mappers\MailAddressesMapper;
+use App\Core\Models\EmailLog;
+use App\Core\Support\Email\EmailCustomization;
 use App\Core\Validators\Emails\EmailsValidator;
+use App\Mail\DeliverMail;
 use Carbon\Carbon;
+
 /**
  * Class MailRepositoryEloquent.
  */
@@ -233,22 +234,22 @@ class MailRepositoryEloquent implements MailRepository
                 'text' => isset($message['text']) ? $message['text'] : '',
             ];
 
-            if(isset($message['delay_time'])) {
+            if (isset($message['delay_time'])) {
                 $data['delay_time'] = $message['delay_time'];
             }
 
-            if(isset($message['drafted']) && $message['drafted']) {
+            if (isset($message['drafted']) && $message['drafted']) {
                 $data['is_drafted'] = true;
                 $data['status'] = 'pending';
             }
 
             $recipients = MailEventHandler::getRecipients($message);
-            if(!empty($message['id'])) {
+            if (!empty($message['id'])) {
                 $data['id'] = $message['id'];
-                $emailLogRepository = app(EmailLogRepository::class);
+                $emailLogRepository = app(EmailLog::class);
                 $emailLogRepository->update($data, $recipients);
             } else {
-                $emailLogRepository = app(EmailLogRepository::class);
+                $emailLogRepository = app(EmailLog::class);
                 $emailLogRepository->create($data, $recipients);
             }
         } catch (\Exception $e) {

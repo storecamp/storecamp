@@ -3,30 +3,30 @@
 namespace App\Core\Handlers;
 
 use App\Core\Mappers\MailAddressesMapper;
-use App\Core\Repositories\EmailLogRepository;
+use App\Core\Models\EmailLog;
 
 class MailEventHandler
 {
     /**
-     * @return EmailLogRepository
+     * @return EmailLog
      */
-    public function getEmailLogRepository(): EmailLogRepository
+    public function getEmailLog(): EmailLog
     {
-        return $this->emailLogRepository;
+        return $this->emailLog;
     }
 
     /**
-     * @var EmailLogRepository
+     * @var EmailLog
      */
-    protected $emailLogRepository;
+    protected $emailLog;
 
     /**
      * MailEventHandler constructor.
-     * @param EmailLogRepository $emailLogRepository
+     * @param EmailLog $emailLog
      */
-    public function __construct(EmailLogRepository $emailLogRepository)
+    public function __construct(EmailLog $emailLog)
     {
-        $this->emailLogRepository = $emailLogRepository;
+        $this->emailLog = $emailLog;
     }
 
     /**
@@ -119,7 +119,7 @@ class MailEventHandler
 
             $recipients = MailEventHandler::getRecipients($message);
 
-            $this->emailLogRepository->create($data, $recipients);
+            $this->emailLog->create($data, $recipients);
 
         } catch (\Exception $e) {
             \Log::error($e);
@@ -149,7 +149,7 @@ class MailEventHandler
     public static function getRecipients($message): array
     {
         $result = [];
-        if($message instanceof \Swift_Message) {
+        if ($message instanceof \Swift_Message) {
 
             if ($list = $message->getTo()) {
                 self::addRecipients($result, $list, 'to');
@@ -164,7 +164,7 @@ class MailEventHandler
             }
         }
 
-        if(is_array($message)) {
+        if (is_array($message)) {
 
             if ($list = !empty($message['to']) ? $message['to'] : null) {
                 self::addRecipients($result, $list, 'to');
@@ -208,13 +208,13 @@ class MailEventHandler
     public static function getReplyTo($message)
     {
         $result = null;
-        if($message instanceof \Swift_Message) {
+        if ($message instanceof \Swift_Message) {
             if ($list = $message->getReplyTo()) {
                 $first = current(array_keys($list));
                 $result = $first;
             }
         }
-        if(is_array($message)) {
+        if (is_array($message)) {
             if ($list = !empty($message['reply_to']) ? $message['reply_to'] : null) {
                 $first = current(array_keys($list));
                 $result = $first;
@@ -224,6 +224,7 @@ class MailEventHandler
         }
         return $result;
     }
+
     /**
      * Get From Addresses.
      *
@@ -242,7 +243,7 @@ class MailEventHandler
 
         if (is_array($message)) {
             if (!empty($message['from'])) {
-                if(is_string($message['from'])) {
+                if (is_string($message['from'])) {
                     return [$message['from'], ''];
                 }
                 foreach ($message['from'] as $address => $name) {

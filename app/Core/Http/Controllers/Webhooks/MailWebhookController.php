@@ -2,7 +2,7 @@
 
 namespace App\Core\Http\Controllers\Webhooks;
 
-use App\Core\Repositories\EmailLogRepository;
+use App\Core\Models\EmailLog;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -13,17 +13,17 @@ use Illuminate\Routing\Controller;
 class MailWebhookController extends Controller {
 
     /**
-     * @var EmailLogRepository
+     * @var EmailLog
      */
-    public $emailLogRepository;
+    public $emailLog;
 
     /**
-     * WebhookController constructor.
-     * @param EmailLogRepository $emailLogRepository
+     * MailWebhookController constructor.
+     * @param EmailLog $emailLog
      */
-    public function __construct(EmailLogRepository $emailLogRepository)
+    public function __construct(EmailLog $emailLog)
     {
-        $this->emailLogRepository = $emailLogRepository;
+        $this->emailLog = $emailLog;
     }
 
     /**
@@ -74,7 +74,7 @@ class MailWebhookController extends Controller {
                 return false;
             }
 
-            $this->emailLogRepository->updateRecipientStatus(
+            $this->emailLog->updateRecipientStatus(
                 $input['message_id'], $input['email'], $input['event'],
                 $input);
 

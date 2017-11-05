@@ -29,6 +29,13 @@ class EmailLog extends Model implements Transformable
     /**
      * @var array
      */
+    private $rules = [
+        'from' => 'required',
+    ];
+
+    /**
+     * @var array
+     */
     protected $fillable = [
         'message_id',
         'from',
@@ -49,7 +56,7 @@ class EmailLog extends Model implements Transformable
 
     public static function boot()
     {
-       parent::boot();
+        parent::boot();
     }
 
     /**
@@ -79,6 +86,7 @@ class EmailLog extends Model implements Transformable
     {
         return $this->recipients->where('type', 'bcc')->pluck('email');
     }
+
     /**
      * @return mixed
      */
@@ -100,7 +108,8 @@ class EmailLog extends Model implements Transformable
      * @param $arr
      * @return array
      */
-    public static function array_reverse_recursive($arr) {
+    public static function array_reverse_recursive($arr)
+    {
         foreach ($arr as $key => $val) {
             if (is_array($val))
                 $arr[$key] = self::array_reverse_recursive($val);
@@ -115,7 +124,7 @@ class EmailLog extends Model implements Transformable
     {
         if ($this->attributes['status']) {
             $statuses = [];
-            foreach($this->statuses as $key => $item) {
+            foreach ($this->statuses as $key => $item) {
                 $statuses[$item] = $key;
             };
             return $statuses[$this->attributes['status']];
@@ -150,9 +159,15 @@ class EmailLog extends Model implements Transformable
     }
 
     /**
-     * @var array
+     * TODO implement method
+     *
+     * @param $message_id
+     * @param string $email
+     * @param $event
+     * @param array $input
      */
-    private $rules = [
-        'from' => 'required',
-    ];
+    public function updateRecipientStatus($message_id, string $email, $event, array $input): void
+    {
+
+    }
 }

@@ -3,7 +3,6 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Currency;
-use App\Core\Repositories\CurrencyRepository;
 use App\Core\Transformers\CurrenciesDataTransformer;
 use App\Core\Validators\Currencies\StoreCurrenciesRequest;
 use App\Core\Validators\Currencies\UpdateCurrenciesRequest;
@@ -18,16 +17,16 @@ class CurrenciesController extends BaseController
     public $errorRedirectPath = 'admin::settings::currency::index';
 
     /**
-     * @var CurrencyRepository
+     * @var Currency
      */
-    private $repository;
+    private $currency;
 
     /**
-     * @param CurrencyRepository $repository
+     * @param Currency $currency
      */
-    public function __construct(CurrencyRepository $repository)
+    public function __construct(Currency $currency)
     {
-        $this->repository = $repository;
+        $this->currency = $currency;
     }
 
     /**
@@ -37,7 +36,7 @@ class CurrenciesController extends BaseController
      */
     public function index()
     {
-        $currencies = $this->repository->all();
+        $currencies = $this->currency->all();
 
         return $this->view('index', compact('currencies'));
     }
@@ -79,7 +78,7 @@ class CurrenciesController extends BaseController
         if (!isset($data['main'])) {
             $data['main'] = 0;
         }
-        $this->repository->create($data);
+        $this->currency->create($data);
 
         return redirect()->route('admin::settings::currency::index');
     }
@@ -93,7 +92,7 @@ class CurrenciesController extends BaseController
      */
     public function edit($id)
     {
-        $currency = $this->repository->findOrFail($id);
+        $currency = $this->currency->findOrFail($id);
 
         return $this->view('edit', compact('currency'));
     }
@@ -108,9 +107,9 @@ class CurrenciesController extends BaseController
      */
     public function update(UpdateCurrenciesRequest $request, $id)
     {
-        $currency = $this->repository->findOrFail($id);
+        $currency = $this->currency->findOrFail($id);
         if ($request->main == 1 && $request->main_old == 0) {
-            $currency_old_main = $this->repository->where('main', '=', 1)->first();
+            $currency_old_main = $this->currency->where('main', '=', 1)->first();
             if ($currency_old_main) {
                 $currency_old_main->main = 0;
                 $currency_old_main->save();
@@ -133,11 +132,11 @@ class CurrenciesController extends BaseController
      */
     public function destroy($id)
     {
-        $currency = $this->repository->findOrFail($id);
+        $currency = $this->currency->findOrFail($id);
         $currency->delete();
-        $currency_old_main = $this->repository->where('main', '=', 1)->first();
+        $currency_old_main = $this->currency->where('main', '=', 1)->first();
         if (empty($currency_old_main)) {
-            $newCurrency = $this->repository->first();
+            $newCurrency = $this->currency->first();
             if (!empty($newCurrency)) {
                 $newCurrency->main = true;
                 $newCurrency->save();
