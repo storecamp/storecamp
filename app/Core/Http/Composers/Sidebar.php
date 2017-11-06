@@ -25,6 +25,6 @@ class Sidebar
      */
     public function compose(View $view)
     {
-        return $view->with('categories', $this->category->with('children')->all());
+        return $view->with('categories', $this->category->all()->load('children'));
     }
 }
