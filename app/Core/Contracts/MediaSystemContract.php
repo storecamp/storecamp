@@ -2,6 +2,7 @@
 
 namespace App\Core\Contracts;
 
+use App\Core\Logic\MediaSystem;
 use App\Core\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -16,7 +17,7 @@ interface MediaSystemContract
      *
      * @return mixed
      */
-    public function disk(string $name);
+    public function disk(string $name): MediaSystem;
 
     /**
      * @param $request

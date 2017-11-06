@@ -16,6 +16,10 @@ abstract class Model extends Eloquent
      * @var bool
      */
     public $useSlug = false;
+
+    /**
+     * @var string
+     */
     public $uniqueId = 'unique_id';
 
     public static function boot()
@@ -176,7 +180,7 @@ abstract class Model extends Eloquent
      * @param $columns
      * @return mixed
      */
-    public function scopeFindByField($query, $field, $value, $columns)
+    public function scopeFindByField($query, $field, $value, $columns = ["*"])
     {
         return $query->where($field, '=', $value)->get($columns);
     }

@@ -269,7 +269,7 @@ class FileSystemController extends Controller
         try {
             $folder = $this->mediaSystem->disk($disk)->makeFolder($request, $disk);
 
-            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
+            return response()->json([$disk, $folder->unique_id]);
         } catch (ModelNotFoundException $e) {
             \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
             return response()->json(['msg' => $e->getMessage(), $e->getCode()]);
