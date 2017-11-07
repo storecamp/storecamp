@@ -22,7 +22,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $deleted_at
  * @property-read \App\Core\Models\Thread $thread
  * @property-read \App\Core\Models\User $user
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant whereCreatedAt($value)
@@ -34,6 +33,12 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Participant withoutTrashed()
  */
 class Participant extends Model implements Transformable
 {

@@ -4,7 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Contracts\MediaSystemContract;
-use App\Core\Repositories\FolderRepository;
+use App\Core\Models\Folder;
 use App\Core\Repositories\MediaRepository;
 use App\Core\Support\Media\MediaReceiver;
 use Arcanedev\LogViewer\Exceptions\FilesystemException;
@@ -34,7 +34,7 @@ class MediaController extends BaseController
      */
     public $repository;
     /**
-     * @var FolderRepository
+     * @var Folder
      */
     public $folder;
 

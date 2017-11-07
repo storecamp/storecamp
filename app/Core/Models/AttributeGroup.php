@@ -20,7 +20,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property string $deleted_at
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup whereName($value)
@@ -29,11 +28,15 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup whereDeletedAt($value)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroup withoutTrashed()
  */
 class AttributeGroup extends Model implements Transformable
 {

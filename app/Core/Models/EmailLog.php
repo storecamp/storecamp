@@ -9,6 +9,49 @@ use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Core\Models\EmailLog
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property string|null $message_id
+ * @property string $from
+ * @property string|null $from_name
+ * @property string|null $reply_to
+ * @property string $subject
+ * @property string|null $text
+ * @property string $status
+ * @property string|null $delay_time
+ * @property int $is_drafted
+ * @property string|null $html
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property-read mixed $bcc
+ * @property-read mixed $cc
+ * @property-read mixed $to
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\EmailLogRecipient[] $recipients
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereDelayTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereFrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereFromName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereHtml($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereIsDrafted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereMessageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereReplyTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereSubject($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereUniqueId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\EmailLog whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class EmailLog extends Model implements Transformable
 {
     use TransformableTrait;
