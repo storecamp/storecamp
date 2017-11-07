@@ -4,8 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\EmailLog;
 use App\Core\Models\EmailLogRecipient;
-use App\Core\Repositories\MailRepository;
-use App\Core\Repositories\MailRepositoryEloquent;
+use App\Core\Support\Mail\MailSupport;
 use App\Core\Transformers\MailHistoryTransformer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -34,23 +33,23 @@ class MailController extends BaseController
      */
     private $emailLogRecipient;
     /**
-     * @var MailRepository
+     * @var MailSupport
      */
-    private $mailRepository;
+    private $mailSupport;
 
     /**
      * MailController constructor.
      * @param EmailLog $emailLog
      * @param EmailLogRecipient $emailLogRecipient
-     * @param MailRepository $mailRepository
+     * @param MailSupport $mailSupport
      */
     public function __construct(EmailLog $emailLog,
                                 EmailLogRecipient $emailLogRecipient,
-                                MailRepository $mailRepository)
+                                MailSupport $mailSupport)
     {
         $this->emailLog = $emailLog;
         $this->emailLogRecipient = $emailLogRecipient;
-        $this->mailRepository = $mailRepository;
+        $this->mailSupport = $mailSupport;
     }
 
     /**
@@ -90,9 +89,9 @@ class MailController extends BaseController
         $mail = $this->emailLog->find($id);
         $total = $this->emailLog->count();
         // get previous mail id
-        $previous = $this->emailLog->getModel()->where('id', '<', $mail->id)->max('id');
+        $previous = $this->emailLog->where('id', '<', $mail->id)->max('id');
         // get next mail id
-        $next = $this->emailLog->getModel()->where('id', '>', $mail->id)->min('id');
+        $next = $this->emailLog->where('id', '>', $mail->id)->min('id');
 
         return $this->view('show', compact('mail', 'total', 'previous', 'next'));
     }
@@ -297,8 +296,8 @@ class MailController extends BaseController
      */
     private function sendMail(array $data)
     {
-        $mailRepository = app(MailRepositoryEloquent::class);
-        $mailRepository->sendAsync(
+        $mailSupport = new MailSupport();
+        $mailSupport->sendAsync(
             [
                 'template' => 'admin.mail.custom_body',
                 'to' => !empty($data['to']) ? $data['to'] : config('mail.store_admin'),

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Repositories;
+namespace App\Core\Support\Mail;
 
 use App\Core\Handlers\MailEventHandler;
 use App\Core\Mappers\MailAddressesMapper;
@@ -10,12 +10,8 @@ use App\Core\Validators\Emails\EmailsValidator;
 use App\Mail\DeliverMail;
 use Carbon\Carbon;
 
-/**
- * Class MailRepositoryEloquent.
- */
-class MailRepositoryEloquent implements MailRepository
+class MailSupport
 {
-
     /**
      * Array for the delayed sending of emails
      *
@@ -80,7 +76,6 @@ class MailRepositoryEloquent implements MailRepository
     public function sendAsync(array $data)
     {
         try {
-            \Log::info(json_encode($data));
             $this->send($data, true);
         } catch (\Exception $e) {
             \Log::error($e->getTraceAsString());
@@ -165,7 +160,7 @@ class MailRepositoryEloquent implements MailRepository
      */
     public static function sendDelayedEmails($async = true)
     {
-        $mailRepo = app(MailRepository::class);
+        $mailRepo = new MailSupport();
         $method = $async ? 'sendAsync' : 'send';
 
         foreach (self::$emailsDelayedStack as $emailData) {
@@ -246,11 +241,11 @@ class MailRepositoryEloquent implements MailRepository
             $recipients = MailEventHandler::getRecipients($message);
             if (!empty($message['id'])) {
                 $data['id'] = $message['id'];
-                $emailLogRepository = app(EmailLog::class);
-                $emailLogRepository->update($data, $recipients);
+                $emailLog = app(EmailLog::class);
+                $emailLog->updateLog($data, $recipients);
             } else {
-                $emailLogRepository = app(EmailLog::class);
-                $emailLogRepository->create($data, $recipients);
+                $emailLog = app(EmailLog::class);
+                $emailLog->createLog($data, $recipients);
             }
         } catch (\Exception $e) {
             \Log::error($e);

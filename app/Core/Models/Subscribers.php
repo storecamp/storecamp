@@ -198,7 +198,7 @@ class Subscribers extends Model implements Transformable
         if (is_null($type)) {
             return Campaign::all();
         } else {
-            return Campaign::findByField('listName', $type);
+            return app(Campaign::class)->findByField('listName', $type, ["*"]);
         }
     }
 }

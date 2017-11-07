@@ -55,7 +55,8 @@
     "tamayo/laravel-scout-elastic": "^3.0",
     "elasticsearch/elasticsearch": "^5.3",
     "yab/laravel-scout-mysql-driver": "^2.0",
-    "yajra/laravel-datatables-fractal": "^1.0"
+    "yajra/laravel-datatables-fractal": "^1.0",
+    "sendgrid/sendgrid": "^6.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.7",

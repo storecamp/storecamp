@@ -4,11 +4,9 @@ namespace App\Core\Models;
 
 use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -44,6 +42,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property bool $locked
+ * @property mixed $media
+ * @property mixed $file
  *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereLocked($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder idOrUuId($id_or_uuid, $first = true)
