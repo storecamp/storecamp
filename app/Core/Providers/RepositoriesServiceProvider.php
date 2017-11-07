@@ -44,7 +44,6 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Participant',
             'Settings',
             'Menu',
-            'MenuItems',
             'Parser'
         ];
 

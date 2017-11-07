@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Menu;
-use App\Core\Repositories\MenuItemsRepository;
+use App\Core\Models\MenuItems;
 use App\Core\Repositories\MenuRepository;
 use App\Core\Transformers\MenusDataTransformer;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class MenuController extends BaseController
      */
     private $menu;
     /**
-     * @var MenuItemsRepository
+     * @var MenuItems
      */
     private $menuItems;
 
@@ -31,9 +31,9 @@ class MenuController extends BaseController
      * MenuController constructor.
      *
      * @param MenuRepository      $menu
-     * @param MenuItemsRepository $menuItems
+     * @param MenuItems $menuItems
      */
-    public function __construct(MenuRepository $menu, MenuItemsRepository $menuItems)
+    public function __construct(MenuRepository $menu, MenuItems $menuItems)
     {
         $this->menu = $menu;
         $this->menuItems = $menuItems;
@@ -153,7 +153,7 @@ class MenuController extends BaseController
 
         $data['order'] = 1;
 
-        $highestOrderMenuItem = $this->menuItems->getModel()->where('parent_id', '=', null)
+        $highestOrderMenuItem = $this->menuItems->where('parent_id', '=', null)
             ->orderBy('order', 'DESC')
             ->first();
 

@@ -2,7 +2,7 @@
 
 namespace App\Core\Components\Menu;
 
-use App\Core\Repositories\MenuItemsRepository;
+use App\Core\Models\MenuItems;
 use App\Core\Repositories\MenuRepository;
 
 /**
@@ -15,7 +15,7 @@ class MenuDbBuilder
      */
     protected $menu;
     /**
-     * @var MenuItemsRepository
+     * @var MenuItems
      */
     protected $menuItems;
 
@@ -25,7 +25,7 @@ class MenuDbBuilder
      * @param $menu
      * @param $menuItems
      */
-    public function __construct(MenuRepository $menu, MenuItemsRepository $menuItems)
+    public function __construct(MenuRepository $menu, MenuItems $menuItems)
     {
         $this->menu = $menu;
         $this->menuItems = $menuItems;

@@ -131,4 +131,28 @@ class MenuItems extends Model implements Transformable
 
         $this->attributes['url'] = $value;
     }
+
+    /**
+     * @param array $params
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function createOrFirst(array $params)
+    {
+        if (!isset($params['menu_id']) && !isset($params['title']) && !isset($params['url'])) {
+            throw new \Exception('Menu Id, Title, Url params not specified', 422);
+        }
+        $menuItem = $this->findWhere([
+            ['menu_id', '=', $params['menu_id']], ['title', '=', $params['title']],
+        ]);
+        if (count($menuItem)) {
+            return $menuItem->first();
+        } else {
+            $model = $this->updateOrCreate($params);
+
+            return $model;
+        }
+    }
 }
