@@ -4,10 +4,9 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\User;
-use App\Core\Repositories\MessageRepository;
+use App\Core\Models\Message;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
-use App\Core\Repositories\UserRepository;
 
 /**
  * Class ProductReviewSystem.
@@ -30,21 +29,22 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public $productReview;
 
     /**
-     * @var MessageRepository
+     * @var Message
      */
     public $message;
 
     /**
      * ProductReviewSystem constructor.
      *
-     * @param ProductsRepository      $product
-     * @param User                    $user
+     * @param ProductsRepository $product
+     * @param User $user
      * @param ProductReviewRepository $productReview
-     * @param MessageRepository       $message
+     * @param Message $message
      */
     public function __construct(ProductsRepository $product,
                                 User $user,
-                                ProductReviewRepository $productReview, MessageRepository $message)
+                                ProductReviewRepository $productReview,
+                                Message $message)
     {
         $this->product = $product;
         $this->user = $user;
@@ -54,7 +54,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -118,26 +118,26 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param array $data
-     * @param int   $messageId
+     * @param int $messageId
      *
      * @return bool
      */
     public function editMessage(array $data, int $messageId)
     {
-        $message = $this->message->update(['body' => $data['reply_message']], $messageId);
+        $message = $this->message->findOrFail($messageId)->update(['body' => $data['reply_message']]);
 
         return $message;
     }
 
     /**
-     * @param int   $messageId
+     * @param int $messageId
      * @param array $data
      *
      * @return mixed
      */
     public function deleteMessage(int $messageId, array $data = [])
     {
-        $deleted = $this->message->find($messageId)->delete();
+        $deleted = $this->message->findOrFail($messageId)->delete();
 
         return $deleted;
     }

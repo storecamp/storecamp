@@ -39,7 +39,6 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Returns',
             'StaticPages',
             'Thread',
-            'Message',
             'Participant',
             'Menu',
             'Parser'
