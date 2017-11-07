@@ -31,7 +31,6 @@ class RepositoriesServiceProvider extends ServiceProvider
         $models = [
             'Media',
             'Products',
-            'NewsLetterList',
             'ProductReview',
             'Mail',
             'Orders',
@@ -42,7 +41,6 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Thread',
             'Message',
             'Participant',
-            'Settings',
             'Menu',
             'Parser'
         ];

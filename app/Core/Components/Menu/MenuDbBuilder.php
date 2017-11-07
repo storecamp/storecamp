@@ -3,7 +3,7 @@
 namespace App\Core\Components\Menu;
 
 use App\Core\Models\MenuItems;
-use App\Core\Repositories\MenuRepository;
+use App\Core\Models\Menu;
 
 /**
  * Class MenuDbBuilder.
@@ -11,7 +11,7 @@ use App\Core\Repositories\MenuRepository;
 class MenuDbBuilder
 {
     /**
-     * @var MenuRepository
+     * @var Menu
      */
     protected $menu;
     /**
@@ -25,7 +25,7 @@ class MenuDbBuilder
      * @param $menu
      * @param $menuItems
      */
-    public function __construct(MenuRepository $menu, MenuItems $menuItems)
+    public function __construct(Menu $menu, MenuItems $menuItems)
     {
         $this->menu = $menu;
         $this->menuItems = $menuItems;
@@ -43,7 +43,7 @@ class MenuDbBuilder
     public function renderFromDb($menuName = 'string', $type = 'default', array $options = [])
     {
         // GET THE MENU - sort collection in blade
-        $menu = $this->menu->getModel()->where('name', '=', $menuName)
+        $menu = $this->menu->where('name', '=', $menuName)
             ->with('parent_items.children')
             ->first();
         // Convert options array into object

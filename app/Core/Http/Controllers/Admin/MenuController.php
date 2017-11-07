@@ -4,7 +4,6 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Menu;
 use App\Core\Models\MenuItems;
-use App\Core\Repositories\MenuRepository;
 use App\Core\Transformers\MenusDataTransformer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -16,7 +15,7 @@ class MenuController extends BaseController
 {
     //TODO implement error handling
     /**
-     * @var MenuRepository
+     * @var Menu
      */
     private $menu;
     /**
@@ -30,10 +29,10 @@ class MenuController extends BaseController
     /**
      * MenuController constructor.
      *
-     * @param MenuRepository      $menu
+     * @param Menu $menu
      * @param MenuItems $menuItems
      */
-    public function __construct(MenuRepository $menu, MenuItems $menuItems)
+    public function __construct(Menu $menu, MenuItems $menuItems)
     {
         $this->menu = $menu;
         $this->menuItems = $menuItems;
@@ -97,7 +96,7 @@ class MenuController extends BaseController
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $menu = $this->menu->update($data, $id);
+        $menu = $this->menu->findOrFail($id)->update($data);
 
         return redirect()->route('admin::design::menus::index');
     }
