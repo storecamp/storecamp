@@ -153,28 +153,18 @@ class MailController extends BaseController
             if (!empty($map['from'])) {
                 $validationArr['from'] = 'email';
             }
-            try {
-                \DB::beginTransaction();
-                $validator = \Validator::make($map, $validationArr);
-                if ($validator->fails()) {
-                    throw new \Exception(join(' ', $validator->errors()->all()));
-                }
-                $failures = \Mail::failures();
-                if ($failures) {
-                    return response()->json(['error' => $failures], 500);
-                }
-                $this->sendMail($map);
-                \DB::commit();
-                return response()->json(['ok']);
-            } catch (\Exception $exception) {
-                \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent! Server msg: ' . $exception->getMessage()],
-                    $exception->getCode());
-            } catch (\Throwable $exception) {
-                \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent. Code - ' . $exception->getCode()],
-                    $exception->getCode());
+            \DB::beginTransaction();
+            $validator = \Validator::make($map, $validationArr);
+            if ($validator->fails()) {
+                throw new \Exception(join(' ', $validator->errors()->all()));
             }
+            $failures = \Mail::failures();
+            if ($failures) {
+                return response()->json(['error' => $failures], 500);
+            }
+            $this->sendMail($map);
+            \DB::commit();
+            return response()->json(['ok']);
         } else {
             return response()->json(['error' => 'Mail Not sent'], 500);
         }
@@ -217,18 +207,11 @@ class MailController extends BaseController
         if ($validator->fails()) {
             throw new \Exception(join(' ', $validator->errors()->all()));
         }
-        try {
-            \DB::beginTransaction();
-            $this->sendMail($map);
-            \DB::commit();
-            return response()->json(['ok']);
-        } catch (\Exception $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent']];
-        } catch (\Throwable $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
-        }
+        \DB::beginTransaction();
+        $this->sendMail($map);
+        \DB::commit();
+
+        return response()->json(['ok']);
     }
 
     /**
@@ -267,19 +250,11 @@ class MailController extends BaseController
         if ($validator->fails()) {
             throw new \Exception(join(' ', $validator->errors()->all()));
         }
-        try {
-            \DB::beginTransaction();
-            $this->sendMail($map);
-            \DB::commit();
+        \DB::beginTransaction();
+        $this->sendMail($map);
+        \DB::commit();
 
-            return response()->json(['ok']);
-        } catch (\Exception $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent']];
-        } catch (\Throwable $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
-        }
+        return response()->json(['ok']);
     }
 
     /**
