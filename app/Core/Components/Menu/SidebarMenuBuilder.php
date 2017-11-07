@@ -42,7 +42,6 @@ class SidebarMenuBuilder
 
         $marketing = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-line-chart"></i> Marketing')
-            ->addLink('Subscribers', ['route' => 'admin::subscribers::index'])
             ->addLink('Mail', ['route' => ['admin::mail::index']]);
 
         $design = app('elements.menu.manager')

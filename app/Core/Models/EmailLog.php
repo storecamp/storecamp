@@ -6,6 +6,8 @@ use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
+use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -72,7 +74,7 @@ class EmailLog extends Model implements Transformable
     /**
      * @var array
      */
-    private $rules = [
+    public $rules = [
         'from' => 'required',
     ];
 
@@ -202,15 +204,150 @@ class EmailLog extends Model implements Transformable
     }
 
     /**
-     * TODO implement method
+     * Create Email Log and add email recipients
      *
-     * @param $message_id
-     * @param string $email
-     * @param $event
-     * @param array $input
+     * @param array $data
+     * @param array $recipients
+     * @return bool
+     * @throws ValidationException
      */
-    public function updateRecipientStatus($message_id, string $email, $event, array $input): void
+    public function createLog(array $data, Array $recipients)
     {
+        //save email to log
+        $emailLogObject = new EmailLog();
+        if (!$emailLogObject->validate($data)) {
+            return false;
+        }
+        $emailLog = $emailLogObject->create($data);
 
+        //save email recipients
+        $recipientList = [];
+        foreach ($recipients as $row) {
+            $recipient = new EmailLogRecipient($row);
+            if ($recipient->validate($row)) {
+                $recipientList[] = $recipient;
+            }
+        }
+
+        $emailLog->recipients()->saveMany($recipientList);
+        if (!empty($data['delay_time'])) {
+            $emailLog->status = 'pending';
+            $emailLog->delay_time = $data['delay_time'];
+            $emailLog->save();
+        } elseif (!empty($data['is_drafted']) && $data['is_drafted']) {
+            $emailLog->status = 'pending';
+            $emailLog->save();
+        } else {
+            $emailLog->status = 'sent';
+            $emailLog->save();
+        }
     }
+
+    /**
+     * Update Email Log and add email recipients
+     *
+     * @param array $data
+     * @param array $recipients
+     * @return bool
+     * @throws /Exception
+     */
+    public function updateLog(array $data, Array $recipients)
+    {
+        //save email to log
+        $emailLogObject = new EmailLog();
+        if (!$emailLogObject->validate($data)) {
+            return false;
+        }
+        $emailLog = $emailLogObject->find($data['id']);
+        $emailLog->update($data);
+
+        //save email recipients
+        $recipientList = [];
+        foreach ($recipients as $row) {
+            $recipient = new EmailLogRecipient($row);
+            if ($recipient->validate($row)) {
+                $recipientList[] = $recipient;
+            }
+        }
+
+        foreach ($emailLog->recipients as $recipient) {
+            $recipient->delete();
+        }
+
+        $emailLog->recipients()->saveMany($recipientList);
+        if (!empty($data['delay_time'])) {
+            $emailLog->status = 'pending';
+            $emailLog->delay_time = $data['delay_time'];
+            $emailLog->save();
+        } elseif (!empty($data['is_drafted']) && $data['is_drafted']) {
+            $emailLog->status = 'pending';
+            $emailLog->save();
+        } else {
+            $emailLog->status = 'sent';
+            $emailLog->save();
+        }
+    }
+
+    /**
+     * Update recipient status
+     * @param $messageId
+     * @param $email
+     * @param $status
+     * @param array $data
+     * @return bool
+     */
+    public function updateRecipientStatus($messageId, $email, $status, $data = [])
+    {
+        $recipient = EmailLogRecipient::where('email', $email)
+            ->whereHas('emailLog', function ($query) use ($messageId) {
+                $query->where('message_id', $messageId);
+            })->first();
+
+        if (!$recipient) {
+            return false;
+        }
+
+        //don't change status for clicks and opens
+        switch ($status) {
+            case 'click':
+                $recipient->increment('click_count');
+            case 'open':
+                $recipient->increment('open_count');
+            default:
+                if (isset($data['timestamp'])) {
+                    //check that we don't replace newest status
+                    if ($recipient->timestamp > $data['timestamp']) {
+                        return false;
+                    }
+                    $recipient->timestamp = $data['timestamp'];
+                }
+                if (isset($data['reason'])) {
+                    $recipient->status_desc = $data['reason'];
+                }
+                if (isset($data['response'])) {
+                    $recipient->status_desc = $data['response'];
+                }
+                if (isset($data['useragent'])) {
+                    $recipient->user_agent = $data['useragent'];
+                }
+                $recipient->status = $status;
+        }
+
+        $recipient->save();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDelayedActiveEmails()
+    {
+        $emailLog = new EmailLog();
+        $emails = $emailLog
+            ->where('delay_time', '<=', Carbon::now())
+            ->where('is_drafted', '=', 0)
+            ->where('status', 0)->get();
+
+        return $emails;
+    }
+
 }

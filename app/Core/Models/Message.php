@@ -80,8 +80,8 @@ class Message extends Model implements Transformable
      *
      * @var array
      */
-    protected $rules = [
-        'body' => 'required',
+    public $rules = [
+        'body' => 'required'
     ];
 
     /**

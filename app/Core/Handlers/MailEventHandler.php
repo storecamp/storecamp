@@ -82,44 +82,10 @@ class MailEventHandler
                 'html' => $message->getBody(),
                 'text' => $this->getText($message)
             ];
-            if (config('univer.emails_test_mode') && config('univer.test_email_to')) {
-
-                $data['to'] = $this->originEmailsForTestMetaData($message->getTo());
-                $message->setTo(config('univer.test_email_to'));
-                $data['cc'] = null;
-                $data['bcc'] = null;
-                $data['reply'] = null;
-
-                if ($message->getReplyTo()) {
-                    $data['reply'] = $this->originEmailsForTestMetaData($message->getReplyTo());
-                }
-
-                if ($message->getCc()) {
-                    $data['cc'] = $this->originEmailsForTestMetaData($message->getCc());
-                    $message->setCc(config('univer.test_emails_cc'));
-                }
-
-                if ($message->getBcc()) {
-                    $data['bcc'] = $this->originEmailsForTestMetaData($message->getBcc());
-                    $message->setBcc(config('univer.test_emails_bcc'));
-                }
-
-                $message->setBody($message->getBody() . view('emails.append-original-data-for-test-email', $data)->render());
-
-                $data = [
-                    'from' => $from,
-                    'fromName' => $fromName,
-                    'message_id' => $message->getId(),
-                    'subject' => $message->getSubject(),
-                    'reply_to' => MailEventHandler::getReplyTo($message),
-                    'html' => $message->getBody(),
-                    'text' => $this->getText($message),
-                ];
-            }
 
             $recipients = MailEventHandler::getRecipients($message);
 
-            $this->emailLog->create($data, $recipients);
+            $this->emailLog->createLog($data, $recipients);
 
         } catch (\Exception $e) {
             \Log::error($e);
@@ -219,7 +185,7 @@ class MailEventHandler
                 $first = current(array_keys($list));
                 $result = $first;
             } else {
-                $result = config('mail.dserec_admin', 'dserec_admin');
+                $result = config('mail.store_admin', 'storecamp_admin');
             }
         }
         return $result;

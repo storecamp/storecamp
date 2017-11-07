@@ -69,7 +69,7 @@ class EmailLogRecipient extends Model implements Transformable
         'status',
     ];
 
-    private $rules = [
+    public $rules = [
         'email' => 'required',
         'type' => 'required',
     ];
@@ -90,6 +90,7 @@ class EmailLogRecipient extends Model implements Transformable
     {
         return $this->cache_newEloquentBuilder($query);
     }
+
     /**
      * Get the log for the recipient.
      */

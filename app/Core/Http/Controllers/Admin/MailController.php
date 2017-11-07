@@ -4,8 +4,7 @@ namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\EmailLog;
 use App\Core\Models\EmailLogRecipient;
-use App\Core\Repositories\MailRepository;
-use App\Core\Repositories\MailRepositoryEloquent;
+use App\Core\Support\Mail\MailSupport;
 use App\Core\Transformers\MailHistoryTransformer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -34,23 +33,23 @@ class MailController extends BaseController
      */
     private $emailLogRecipient;
     /**
-     * @var MailRepository
+     * @var MailSupport
      */
-    private $mailRepository;
+    private $mailSupport;
 
     /**
      * MailController constructor.
      * @param EmailLog $emailLog
      * @param EmailLogRecipient $emailLogRecipient
-     * @param MailRepository $mailRepository
+     * @param MailSupport $mailSupport
      */
     public function __construct(EmailLog $emailLog,
                                 EmailLogRecipient $emailLogRecipient,
-                                MailRepository $mailRepository)
+                                MailSupport $mailSupport)
     {
         $this->emailLog = $emailLog;
         $this->emailLogRecipient = $emailLogRecipient;
-        $this->mailRepository = $mailRepository;
+        $this->mailSupport = $mailSupport;
     }
 
     /**
@@ -90,9 +89,9 @@ class MailController extends BaseController
         $mail = $this->emailLog->find($id);
         $total = $this->emailLog->count();
         // get previous mail id
-        $previous = $this->emailLog->getModel()->where('id', '<', $mail->id)->max('id');
+        $previous = $this->emailLog->where('id', '<', $mail->id)->max('id');
         // get next mail id
-        $next = $this->emailLog->getModel()->where('id', '>', $mail->id)->min('id');
+        $next = $this->emailLog->where('id', '>', $mail->id)->min('id');
 
         return $this->view('show', compact('mail', 'total', 'previous', 'next'));
     }
@@ -154,28 +153,18 @@ class MailController extends BaseController
             if (!empty($map['from'])) {
                 $validationArr['from'] = 'email';
             }
-            try {
-                \DB::beginTransaction();
-                $validator = \Validator::make($map, $validationArr);
-                if ($validator->fails()) {
-                    throw new \Exception(join(' ', $validator->errors()->all()));
-                }
-                $failures = \Mail::failures();
-                if ($failures) {
-                    return response()->json(['error' => $failures], 500);
-                }
-                $this->sendMail($map);
-                \DB::commit();
-                return response()->json(['ok']);
-            } catch (\Exception $exception) {
-                \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent! Server msg: ' . $exception->getMessage()],
-                    $exception->getCode());
-            } catch (\Throwable $exception) {
-                \DB::rollBack();
-                return response()->json(['error' => 'Mail Not sent. Code - ' . $exception->getCode()],
-                    $exception->getCode());
+            \DB::beginTransaction();
+            $validator = \Validator::make($map, $validationArr);
+            if ($validator->fails()) {
+                throw new \Exception(join(' ', $validator->errors()->all()));
             }
+            $failures = \Mail::failures();
+            if ($failures) {
+                return response()->json(['error' => $failures], 500);
+            }
+            $this->sendMail($map);
+            \DB::commit();
+            return response()->json(['ok']);
         } else {
             return response()->json(['error' => 'Mail Not sent'], 500);
         }
@@ -218,18 +207,11 @@ class MailController extends BaseController
         if ($validator->fails()) {
             throw new \Exception(join(' ', $validator->errors()->all()));
         }
-        try {
-            \DB::beginTransaction();
-            $this->sendMail($map);
-            \DB::commit();
-            return response()->json(['ok']);
-        } catch (\Exception $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent']];
-        } catch (\Throwable $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
-        }
+        \DB::beginTransaction();
+        $this->sendMail($map);
+        \DB::commit();
+
+        return response()->json(['ok']);
     }
 
     /**
@@ -268,19 +250,11 @@ class MailController extends BaseController
         if ($validator->fails()) {
             throw new \Exception(join(' ', $validator->errors()->all()));
         }
-        try {
-            \DB::beginTransaction();
-            $this->sendMail($map);
-            \DB::commit();
+        \DB::beginTransaction();
+        $this->sendMail($map);
+        \DB::commit();
 
-            return response()->json(['ok']);
-        } catch (\Exception $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent']];
-        } catch (\Throwable $exception) {
-            \DB::rollBack();
-            return ['error', ['Mail Not sent. Code - ' . $exception->getCode()]];
-        }
+        return response()->json(['ok']);
     }
 
     /**
@@ -297,8 +271,8 @@ class MailController extends BaseController
      */
     private function sendMail(array $data)
     {
-        $mailRepository = app(MailRepositoryEloquent::class);
-        $mailRepository->sendAsync(
+        $mailSupport = new MailSupport();
+        $mailSupport->sendAsync(
             [
                 'template' => 'admin.mail.custom_body',
                 'to' => !empty($data['to']) ? $data['to'] : config('mail.store_admin'),

@@ -581,45 +581,6 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
             ]);
         });
 
-        // subscribers
-        $this->group(['prefix' => 'subscribers', 'as' => 'subscribers::'], function () {
-            $this->get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'index']);
-
-            $this->get('/show/{uid}',
-                ['uses' => 'Admin\SubscriptionController@show',
-                    'as' => 'show',
-                ]);
-
-            $this->get('/show_user/{user}',
-                ['uses' => 'Admin\SubscriptionController@showUser',
-                    'as' => 'showUser',
-                ]);
-
-            $this->get('/generate/{newsList_id}',
-                [
-                    'uses' => 'Admin\SubscriptionController@showGenerate',
-                    'as' => 'showGenerate',
-                ]);
-
-            $this->get('/tmp_mail/{file}',
-                [
-                    'uses' => 'Admin\SubscriptionController@getTmpMail',
-                    'as' => 'tmp_mail',
-                ]);
-
-            $this->get('/history_mail/{folder}/{filename}',
-                [
-                    'uses' => 'Admin\SubscriptionController@getHistoryTmpMail',
-                    'as' => 'history_mail',
-                ]);
-
-            $this->post('/generate/{uid}/{type}',
-                [
-                    'uses' => 'Admin\SubscriptionController@generate',
-                    'as' => 'generate',
-                ]);
-        });
-
         $this->group(['prefix' => 'search', 'as' => 'search::'], function () {
             $this->get('searchUser', [
                 'as' => 'searchUser',
@@ -683,50 +644,6 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                 'as' => 'delete',
                 'uses' => 'Admin\MailController@destroy',
                 'middleware' => 'auth'
-            ]);
-        });
-
-        //campaign
-        $this->group(['prefix' => 'campaign', 'as' => 'campaign::'], function () {
-            $this->get('/', ['uses' => 'Admin\CampaignController@index', 'as' => 'index']);
-
-            $this->get('/show/{uid}',
-                ['uses' => 'Admin\CampaignController@show',
-                    'as' => 'show',
-                ]);
-
-            $this->get('/subscriber/{user}',
-                ['uses' => 'Admin\CampaignController@subscribers',
-                    'as' => 'subscriber',
-                ]);
-
-            $this->get('/generate/{Campaign}',
-                [
-                    'uses' => 'Admin\CampaignController@show',
-                    'as' => 'show',
-                ]);
-
-            $this->get('/tmp_mail/{file}',
-                [
-                    'uses' => 'Admin\CampaignController@getTmpMail',
-                    'as' => 'tmp_mail',
-                ]);
-
-            $this->get('/history_mail/{folder}/{filename}',
-                [
-                    'uses' => 'Admin\CampaignController@getHistoryTmpMail',
-                    'as' => 'history_mail',
-                ]);
-
-            $this->post('/generate/{uid}/{type}',
-                [
-                    'uses' => 'Admin\CampaignController@generate',
-                    'as' => 'generate',
-                ]);
-            $this->get('/groups/json', [
-
-                'uses' => 'Admin\CampaignController@getJson',
-                'as' => 'get::json',
             ]);
         });
 
@@ -869,6 +786,7 @@ $this->group(['prefix' => $prefix, 'middleware' => ['localeSessionRedirect', 'lo
                     'as' => 'show',
                 ]);
         });
+
         // Sales
         $this->group(['prefix' => 'sales', 'as' => 'sales::'], function () {
             $this->group(['prefix' => 'orders', 'as' => 'orders::'], function () {

@@ -3,7 +3,6 @@
 namespace App\Core\Drivers\FolderToDb;
 
 use App\Core\Models\Folder;
-use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
 
 /**
@@ -28,11 +27,11 @@ class Synchronizer implements SynchronizerInterface
     /**
      * Synchronizer constructor.
      *
-     * @param MediaRepository                   $media
-     * @param FolderRepository                  $folder
+     * @param MediaRepository $media
+     * @param Folder $folder
      * @param \Illuminate\Filesystem\Filesystem $file
      */
-    public function __construct(MediaRepository $media, FolderRepository $folder, \Illuminate\Filesystem\Filesystem $file)
+    public function __construct(MediaRepository $media, Folder $folder, \Illuminate\Filesystem\Filesystem $file)
     {
         $this->folder = $folder;
         $this->media = $media;
@@ -52,7 +51,7 @@ class Synchronizer implements SynchronizerInterface
         $directories = $this->directoriesIterate($path, true);
         foreach ($directories as $key => $dir) {
             $folderPath = $dir['folderPath'];
-            echo $folderPath.'on disk - '.$disk."\n";
+            echo $folderPath . 'on disk - ' . $disk . "\n";
             $folders = explode('/', $folderPath);
             if (count($folders) > 1) {
                 array_pop($folders);
@@ -76,7 +75,7 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * @param string $root
-     * @param bool   $withFolderName
+     * @param bool $withFolderName
      *
      * @return array
      */
@@ -128,7 +127,7 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * @param null|string $folderPath
-     * @param string      $disk
+     * @param string $disk
      *
      * @return Folder
      */
@@ -166,9 +165,9 @@ class Synchronizer implements SynchronizerInterface
         ]);
         if ($rootFolder->count() == 0) {
             return $rootFolder = $this->folder->create([
-                'name'      => '',
+                'name' => '',
                 'parent_id' => null,
-                'disk'      => $disk,
+                'disk' => $disk,
             ]);
         } else {
             return $rootFolder = $rootFolder->first();
@@ -189,7 +188,7 @@ class Synchronizer implements SynchronizerInterface
         $directories = $this->directoriesIterate($path, true);
         foreach ($directories as $key => $dir) {
             $folderPath = $dir['folderPath'];
-            echo $folderPath.' on disk - '.$disk."\n";
+            echo $folderPath . ' on disk - ' . $disk . "\n";
             $folders = explode('/', $folderPath);
             if (count($folders) > 1) {
                 array_pop($folders);
@@ -203,7 +202,7 @@ class Synchronizer implements SynchronizerInterface
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$newFolder->path_on_disk : $newFolder->path_on_disk;
+                $filePath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot() . '/' . $newFolder->path_on_disk : $newFolder->path_on_disk;
                 foreach ($this->file->files($filePath) as $file) {
                     $iter++;
                     $fileName = $this->file->basename($file);
@@ -216,7 +215,7 @@ class Synchronizer implements SynchronizerInterface
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $newFolderPath = $newFolder->path_on_disk ? $newFolder->path_on_disk.'/'.$fileName : $fileName;
+                        $newFolderPath = $newFolder->path_on_disk ? $newFolder->path_on_disk . '/' . $fileName : $fileName;
                         $media = \MediaUploader::importPath($disk, $newFolderPath);
                         $media->directory_id = $newFolder->id;
                         $media->save();
@@ -227,7 +226,7 @@ class Synchronizer implements SynchronizerInterface
                 $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
                 $folderParentInstance->parent_id = $rootFolder->id;
                 $folderParentInstance->save();
-                $manageFilesPath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot().'/'.$folderParentInstance->path_on_disk : $folderParentInstance->path_on_disk;
+                $manageFilesPath = $this->folder->disk($disk)->getDiskRoot() ? $this->folder->disk($disk)->getDiskRoot() . '/' . $folderParentInstance->path_on_disk : $folderParentInstance->path_on_disk;
                 foreach ($this->file->files($manageFilesPath) as $file) {
                     $fileName = $this->file->basename($file);
                     $fileNameClean = explode('.', $fileName);
@@ -239,7 +238,7 @@ class Synchronizer implements SynchronizerInterface
                         ['disk', '=', $disk],
                     ]);
                     if ($mediaFile->count() == 0) {
-                        $manageRootPath = $folderParentInstancePath ? $folderParentInstancePath.'/'.$fileName : $fileName;
+                        $manageRootPath = $folderParentInstancePath ? $folderParentInstancePath . '/' . $fileName : $fileName;
                         $media = \MediaUploader::importPath($disk, $manageRootPath);
                         $media->directory_id = $folderParentInstance->id;
                         $media->save();
@@ -264,9 +263,9 @@ class Synchronizer implements SynchronizerInterface
             $mediaFile = $this->media->findWhere([
                 ['directory', '=', ''],
                 ['filename', '=', implode('', $fileNameClean)],
-                ['disk', '=', $disk], ]);
+                ['disk', '=', $disk],]);
             if ($mediaFile->count() == 0) {
-                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk.'/'.$fileName : $fileName;
+                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk . '/' . $fileName : $fileName;
                 $media = \MediaUploader::importPath($disk, $manageRootPath);
                 $media->directory_id = $rootFolder->id;
                 $media->save();
@@ -288,9 +287,9 @@ class Synchronizer implements SynchronizerInterface
             $mediaFile = $this->media->findWhere([
                 ['directory', '=', ''],
                 ['filename', '=', implode('', $fileNameClean)],
-                ['disk', '=', $disk], ]);
+                ['disk', '=', $disk],]);
             if ($mediaFile->count() == 0) {
-                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk.'/'.$fileName : $fileName;
+                $manageRootPath = $rootFolder->path_on_disk ? $rootFolder->path_on_disk . '/' . $fileName : $fileName;
                 $media = \MediaUploader::importPath($disk, $manageRootPath);
                 $media->directory_id = $rootFolder->id;
                 $media->save();
@@ -301,7 +300,7 @@ class Synchronizer implements SynchronizerInterface
     /**
      * @param string $root
      * @param string $format
-     * @param bool   $skipFormatEnding
+     * @param bool $skipFormatEnding
      *
      * @return array
      */
@@ -312,11 +311,11 @@ class Synchronizer implements SynchronizerInterface
         $Iterator = new \RecursiveIteratorIterator($Directory,
             \RecursiveIteratorIterator::SELF_FIRST,
             \RecursiveIteratorIterator::CATCH_GET_CHILD);
-        $Regex = new \RegexIterator($Iterator, '/^.+\.'.$format.'$/i', \RecursiveRegexIterator::GET_MATCH);
+        $Regex = new \RegexIterator($Iterator, '/^.+\.' . $format . '$/i', \RecursiveRegexIterator::GET_MATCH);
         $files = [];
         foreach ($Regex as $file) {
             if ($skipFormatEnding) {
-                $files[] = explode('.'.$format, basename($file[0]))[0];
+                $files[] = explode('.' . $format, basename($file[0]))[0];
             } else {
                 $files[] = basename($file[0]);
             }

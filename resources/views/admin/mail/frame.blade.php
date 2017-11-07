@@ -18,7 +18,7 @@
             </div>
             <div style="text-align: left" class="form-group">
                 <label style="text-align: left" for="to">To</label>
-                {!! buildSelect(route('admin::search::searchUser'), 'to', true, [], [], "to", null, true) !!}
+                <input type="text" name="to" id="to" value="" placeholder="To" class="to form-control">
             </div>
             <div style="text-align: left" class="form-group">
                 <label style="text-align: left" for="to">Bcc</label>

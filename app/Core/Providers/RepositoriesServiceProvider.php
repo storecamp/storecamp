@@ -2,7 +2,6 @@
 
 namespace App\Core\Providers;
 
-use App\Core\Models\Parser;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -31,29 +30,22 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $models = [
             'Media',
-            'Folder',
-            'Category',
             'Products',
             'NewsLetterList',
             'ProductReview',
             'Mail',
             'Orders',
-            'Banner',
             'Layout',
             'Promocode',
             'Returns',
             'StaticPages',
-            'Cart',
             'Thread',
             'Message',
             'Participant',
             'Settings',
             'Menu',
             'MenuItems',
-            'Currency',
-            'Parser',
-            'EmailLog',
-            'EmailLogRecipients'
+            'Parser'
         ];
 
         foreach ($models as $repo) {
