@@ -2,6 +2,7 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Folder;
 use App\Core\Models\Media;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -14,7 +15,7 @@ use RepositoryLab\Repository\Eloquent\BaseRepository;
 class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 {
     /**
-     * @var FolderRepository
+     * @var Folder
      */
     public $folder;
     /**
@@ -32,12 +33,11 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 
     /**
      * MediaRepositoryEloquent constructor.
-     *
-     * @param Application      $app
-     * @param Dispatcher       $dispatcher
-     * @param FolderRepository $folder
+     * @param Application $app
+     * @param Dispatcher $dispatcher
+     * @param Folder $folder
      */
-    public function __construct(Application $app, Dispatcher $dispatcher, FolderRepository $folder)
+    public function __construct(Application $app, Dispatcher $dispatcher, Folder $folder)
     {
         parent::__construct($app, $dispatcher);
         $this->folder = $folder;

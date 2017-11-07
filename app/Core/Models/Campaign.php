@@ -20,7 +20,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Subscribers[] $subscribers
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereCampaign($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereUniqueId($value)
@@ -28,11 +27,15 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign whereUpdatedAt($value)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Campaign withoutTrashed()
  */
 class Campaign extends Model implements Transformable
 {

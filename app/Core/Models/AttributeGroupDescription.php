@@ -23,7 +23,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property string $deleted_at
  * @property-read \App\Core\Models\AttributeGroup $attributesGroup
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Product[] $product
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereUniqueId($value)
@@ -33,11 +32,15 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereSortOrder($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereDeletedAt($value)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription withoutTrashed()
  */
 class AttributeGroupDescription extends Model implements Transformable
 {

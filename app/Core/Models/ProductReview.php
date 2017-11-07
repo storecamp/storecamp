@@ -28,7 +28,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\User $user
  * @property-read \App\Core\Models\Product $product
  * @property-read Thread[] $thread
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereProductId($value)
@@ -47,12 +46,16 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview onlyHidden()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview byRating($reason)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read Thread[] $comments
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview withoutTrashed()
  */
 class ProductReview extends Model implements Transformable
 {

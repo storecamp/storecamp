@@ -22,14 +22,12 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property int $user_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUserId($value)
  * @mixin \Eloquent
- *
  * @property string $statusCode
  * @property-read string. $calculations_cache_key
  * @property-read int $count
@@ -52,7 +50,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read float $total_tax
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Transaction[] $transactions
  * @property-read \App\Core\Models\User $user
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders findByUser($userId, $statusCode = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders uuid($unique_id, $first = true)
@@ -61,6 +58,12 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereStatusCode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereStatusIn($statusCodes)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUser($userId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders withoutTrashed()
  */
 class Orders extends Model implements Transformable, OrderInterface
 {

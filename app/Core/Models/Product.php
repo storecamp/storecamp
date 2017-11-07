@@ -55,7 +55,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $reviews
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\AttributeGroupDescription[] $attributeGroupDescription
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereTitle($value)
@@ -92,15 +91,12 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product categorized($category = null)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMedia($tags, $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMediaMatchAll($tags = array())
- *
  * @property float $tax
  * @property string $brand_name
  * @property-read string $display_name
@@ -117,7 +113,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\LikeCounter $likeCounter
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Like[] $likes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findBySKU($sku)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product mostViewed($limit)
@@ -125,6 +120,10 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereBrandName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereLiked($model)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereTax($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Product search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Product searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class Product extends Model implements Transformable, Buyable, ProductInterface
 {

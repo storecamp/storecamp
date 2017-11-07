@@ -21,7 +21,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\User[] $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Permission[] $perms
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereName($value)
@@ -31,13 +30,12 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereAdmin()
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property string $deleted_at
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereDeletedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
  */
 class Role extends AccessRole implements Transformable
 {

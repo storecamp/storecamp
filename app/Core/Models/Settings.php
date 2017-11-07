@@ -10,6 +10,27 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
  * Class Settings.
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property string $key
+ * @property array $value
+ * @property string $type
+ * @property string|null $details
+ * @property string $locked
+ * @property int $order
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings idOrUuId($id_or_uuid, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereDetails($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereLocked($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereOrder($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereUniqueId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Settings whereValue($value)
+ * @mixin \Eloquent
  */
 class Settings extends Model implements Transformable
 {
