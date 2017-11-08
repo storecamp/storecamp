@@ -320,7 +320,7 @@ if (!function_exists('setting')) {
     {
         $setting = app('\App\Core\Models\Settings');
 
-        return $setting->get($key, $default);
+        return $setting->getByKey($key, $default);
     }
 }
 

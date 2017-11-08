@@ -67,7 +67,7 @@ class Settings extends Model implements Transformable
      *
      * @return null
      */
-    public function get($key, $group, $default = null)
+    public function getByKey($key, $group, $default = null)
     {
         $setting = $this->where('key', '=', $key)->first();
         if (isset($setting->id)) {
