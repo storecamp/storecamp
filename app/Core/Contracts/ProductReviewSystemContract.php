@@ -28,17 +28,17 @@ interface ProductReviewSystemContract extends BaseLogicContract
 
     /**
      * @param array $data
-     * @param int   $messageId
+     * @param int|string   $messageId
      *
      * @return mixed
      */
-    public function editMessage(array $data, int $messageId);
+    public function editMessage(array $data, $messageId);
 
     /**
-     * @param int   $messageId
+     * @param int|string   $messageId
      * @param array $data
      *
      * @return mixed
      */
-    public function deleteMessage(int $messageId, array $data = []);
+    public function deleteMessage($messageId, array $data = []);
 }

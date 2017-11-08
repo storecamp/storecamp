@@ -45,9 +45,9 @@ class ProductReviewController extends BaseController
      * ProductReviewController constructor.
      *
      * @param ProductReviewSystemContract $productReviewSystem
-     * @param ProductsRepository          $product
-     * @param User              $user
-     * @param ProductReviewRepository     $reviews
+     * @param ProductsRepository $product
+     * @param User $user
+     * @param ProductReviewRepository $reviews
      */
     public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
                                 User $user, ProductReviewRepository $reviews)
@@ -189,19 +189,13 @@ class ProductReviewController extends BaseController
      */
     public function editMessage(ReplyProductReviewFormRequest $request, $messageId)
     {
-        try {
-            $data = $request->all();
-            $message = $this->productReviewSystem->editMessage($data, $messageId);
-            if ($request->ajax()) {
-                return response()->json(['body' => $message->body], 200);
-            }
-
-            return redirect()->back();
-        } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound($e);
-        } catch (\Throwable $e) {
-            return $this->redirectError($e);
+        $data = $request->all();
+        $message = $this->productReviewSystem->editMessage($data, $messageId);
+        if ($request->ajax()) {
+            return response()->json(['body' => $message->body], 200);
         }
+
+        return redirect()->back();
     }
 
     /**

@@ -118,24 +118,26 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param array $data
-     * @param int $messageId
+     * @param int|string $messageId
      *
-     * @return bool
+     * @return Message
      */
-    public function editMessage(array $data, int $messageId)
+    public function editMessage(array $data, $messageId)
     {
-        $message = $this->message->findOrFail($messageId)->update(['body' => $data['reply_message']]);
+        $message = $this->message->find($messageId);
+        $message->body = $data['reply_message'];
+        $message->save();
 
         return $message;
     }
 
     /**
-     * @param int $messageId
+     * @param int|string $messageId
      * @param array $data
      *
      * @return mixed
      */
-    public function deleteMessage(int $messageId, array $data = [])
+    public function deleteMessage($messageId, array $data = [])
     {
         $deleted = $this->message->findOrFail($messageId)->delete();
 

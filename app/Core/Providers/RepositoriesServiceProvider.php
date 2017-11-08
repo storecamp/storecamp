@@ -41,7 +41,8 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Thread',
             'Participant',
             'Menu',
-            'Parser'
+            'Parser',
+            'Settings'
         ];
 
         foreach ($models as $repo) {

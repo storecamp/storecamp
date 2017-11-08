@@ -12,15 +12,18 @@ class BelongsToUserOrAdmin
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
+     * @param \Closure $next
      *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $messageId = $request->messageId;
-
-        $message = Message::where('id', $messageId);
+        if (is_string($messageId)) {
+            $message = Message::where('unique_id', $messageId);
+        } else {
+            $message = Message::where('id', $messageId);
+        }
         if (\Auth::user()->isAdmin()) {
             return $next($request);
         }
