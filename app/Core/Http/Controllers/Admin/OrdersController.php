@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\OrdersSystemContract;
-use App\Core\Repositories\OrdersRepository;
+use App\Core\Models\Orders;
 use Illuminate\Http\Request;
 
 /**
@@ -18,9 +18,9 @@ class OrdersController extends BaseController
      */
     private $ordersSystem;
     /**
-     * @var OrdersRepository
+     * @var Orders
      */
-    protected $ordersRepository;
+    protected $orders;
 
     /**
      * OrdersController constructor.
@@ -30,7 +30,7 @@ class OrdersController extends BaseController
     public function __construct(OrdersSystemContract $ordersSystem)
     {
         $this->ordersSystem = $ordersSystem;
-        $this->ordersRepository = $ordersSystem->ordersRepository;
+        $this->orders = $ordersSystem->orders;
         $this->middleware('role:Admin');
     }
 

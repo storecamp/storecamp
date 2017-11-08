@@ -3,20 +3,20 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\OrdersSystemContract;
-use App\Core\Repositories\OrdersRepository;
+use App\Core\Models\Orders;
 
 class OrdersSystem implements OrdersSystemContract
 {
-    public $ordersRepository;
+    public $orders;
 
     /**
      * OrdersSystem constructor.
      *
-     * @param $ordersRepository
+     * @param $orders
      */
-    public function __construct(OrdersRepository $ordersRepository)
+    public function __construct(Orders $orders)
     {
-        $this->ordersRepository = $ordersRepository;
+        $this->orders = $orders;
     }
 
     /**
@@ -29,12 +29,12 @@ class OrdersSystem implements OrdersSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $roles = $this->ordersRepository->find($id);
+            $roles = $this->orders->find($id);
         } else {
             if (!empty($with)) {
-                $roles = $this->ordersRepository->with($with)->paginate();
+                $roles = $this->orders->with($with)->paginate();
             } else {
-                $roles = $this->ordersRepository->paginate();
+                $roles = $this->orders->paginate();
             }
         }
 

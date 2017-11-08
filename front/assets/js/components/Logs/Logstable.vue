@@ -51,3 +51,8 @@
         props: ['entry', 'num', 'envs']
     }
 </script>
+<style scoped>
+    .stack-content {
+        word-break: break-word;
+    }
+</style>

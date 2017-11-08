@@ -13,4 +13,7 @@ const {mix} = require('laravel-mix');
 
 mix.js('assets/js/app.js', '../public/front/js')
     .sass('assets/sass/app.scss', '../public/front/css')
-    .browserSync();
+    .browserSync({
+        proxy: 'storecamp.dev'
+    }
+);
