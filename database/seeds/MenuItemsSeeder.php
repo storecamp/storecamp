@@ -15,7 +15,7 @@ class MenuItemsSeeder extends Seeder
             'name' => 'modules',
         ]);
 
-        $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
+        $menuItemInstance = new \App\Core\Models\MenuItems();
 
         $menuItem = $menuItemInstance->createOrFirst([
             'menu_id'    => $menu->id,
