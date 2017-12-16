@@ -6,7 +6,7 @@ use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\ProductReview;
 use App\Core\Models\User;
 use App\Core\Repositories\ProductReviewRepository;
-use App\Core\Repositories\ProductsRepository;
+use App\Core\Models\Product;
 use App\Core\Transformers\ReviewDataTransformer;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
@@ -23,7 +23,7 @@ class ProductReviewController extends BaseController
     public $viewPathBase = 'admin.reviews.';
     public $errorRedirectPath = 'admin/reviews/index';
     /**
-     * @var ProductsRepository
+     * @var Product
      */
     protected $product;
     /**
@@ -45,11 +45,11 @@ class ProductReviewController extends BaseController
      * ProductReviewController constructor.
      *
      * @param ProductReviewSystemContract $productReviewSystem
-     * @param ProductsRepository $product
+     * @param Product $product
      * @param User $user
      * @param ProductReviewRepository $reviews
      */
-    public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
+    public function __construct(ProductReviewSystemContract $productReviewSystem, Product $product,
                                 User $user, ProductReviewRepository $reviews)
     {
         $this->productReviewSystem = $productReviewSystem;

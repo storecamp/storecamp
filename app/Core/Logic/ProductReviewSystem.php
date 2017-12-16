@@ -6,7 +6,7 @@ use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\User;
 use App\Core\Models\Message;
 use App\Core\Repositories\ProductReviewRepository;
-use App\Core\Repositories\ProductsRepository;
+use App\Core\Models\Product;
 
 /**
  * Class ProductReviewSystem.
@@ -14,7 +14,7 @@ use App\Core\Repositories\ProductsRepository;
 class ProductReviewSystem implements ProductReviewSystemContract
 {
     /**
-     * @var ProductsRepository
+     * @var Product
      */
     public $product;
 
@@ -36,12 +36,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * ProductReviewSystem constructor.
      *
-     * @param ProductsRepository $product
+     * @param Product $product
      * @param User $user
      * @param ProductReviewRepository $productReview
      * @param Message $message
      */
-    public function __construct(ProductsRepository $product,
+    public function __construct(Product $product,
                                 User $user,
                                 ProductReviewRepository $productReview,
                                 Message $message)

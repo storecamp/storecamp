@@ -29,7 +29,7 @@ elixir((mix) => {
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     mix.browserSync({
-        proxy: 'storecamp.dev'
+        proxy: 'storecamp.local:8080'
     });
 });
 

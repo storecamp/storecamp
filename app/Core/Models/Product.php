@@ -133,7 +133,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
     use Auditable;
     use Mediable;
     use CartItemTrait;
-    use CacheableEloquent;
+//    use CacheableEloquent;
     use ViewCounterTrait;
     use Likeable;
     use ProductCalculations;
@@ -183,6 +183,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'value',
         'brand_name',
     ];
+
+    protected $with = ['attributeGroupDescription', 'categories', 'productReview'];
     /**
      * Searchable rules.
      *
@@ -247,7 +249,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'products_categories');
+
+        return $this->belongsToMany(Category::class, 'products_categories', 'product_id');
     }
 
     /**
@@ -474,9 +477,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function scopeCategorized($query, $category = null)
     {
-        if (is_null($category)) {
-            return $query->with('categories');
-        }
         $categoryInstance = app(Category::class);
         $category = $categoryInstance->findOrFail($category);
         $categoryIds = $category->descedants()->pluck('id')->toArray();

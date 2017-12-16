@@ -4,6 +4,7 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Models\AttributeGroupDescription;
+use App\Core\Models\Product;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 
@@ -14,9 +15,9 @@ class ProductSystem implements ProductSystemContract
 {
     use MediableCore;
     /**
-     * @var ProductsRepository
+     * @var Product
      */
-    public $productRepository;
+    public $product;
     /**
      * @var AttributeGroupDescription
      */
@@ -24,11 +25,11 @@ class ProductSystem implements ProductSystemContract
 
     /**
      * ProductSystem constructor.
-     * @param ProductsRepository $productRepository
+     * @param Product $product
      */
-    public function __construct(ProductsRepository $productRepository)
+    public function __construct(Product $product)
     {
-        $this->productRepository = $productRepository;
+        $this->product = $product;
         $this->attributeGroupDescription = new AttributeGroupDescription();
     }
 
@@ -42,18 +43,9 @@ class ProductSystem implements ProductSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            if (!empty($with)) {
-                $products = $this->productRepository->with($with);
-            } else {
-                $products = $this->productRepository;
-            }
-            $products = $products->findOrFail($id);
+            $products = $this->product->find($id);
         } else {
-            if (!empty($with)) {
-                $products = $this->productRepository->newest()->with($with)->paginate();
-            } else {
-                $products = $this->productRepository->newest()->paginate();
-            }
+            $products = $this->product->newest()->paginate();
         }
 
         return $products;
@@ -63,17 +55,16 @@ class ProductSystem implements ProductSystemContract
      * @param array $data
      * @param $category
      * @param array $with
-     *
-     * @return $this|ProductsRepository
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function categorized(array $data, $category, array $with = [])
     {
+        array_push($with, 'categories');
         if (!empty($with)) {
-            $products = $this->productRepository->categorized($category)->with($with)->paginate();
+            $products = $this->product->categorized($category)->with($with)->paginate();
         } else {
-            $products = $this->productRepository->categorized($category)->paginate();
+            $products = $this->product->categorized($category)->paginate();
         }
-
         return $products;
     }
 
@@ -89,9 +80,8 @@ class ProductSystem implements ProductSystemContract
 
         $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
-        $product = $this->productRepository->create($data);
+        $product = $this->product->create($data);
         $this->syncMediaFiles($product, $selectedFiles, 'gallery');
-
         $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         $product->categories()->attach($categoryId);
         $attributes = [];
@@ -120,7 +110,8 @@ class ProductSystem implements ProductSystemContract
         unset($data['product_attribute']);
         $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : '';
         unset($data['selected_files']);
-        $product = $this->productRepository->update($data, $id);
+        $product = $this->product->find($id);
+        $product->update($data);
         $this->syncMediaFiles($product, $selectedFiles, 'gallery');
         $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         if ($categoryId) {
@@ -154,7 +145,7 @@ class ProductSystem implements ProductSystemContract
      */
     public function delete($id, array $data = []): int
     {
-        $deleted = $this->productRepository->delete($id);
+        $deleted = $this->product->destroy($id);
 
         return $deleted;
     }
