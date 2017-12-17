@@ -5,7 +5,6 @@ namespace App\Core\Logic;
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Models\AttributeGroupDescription;
 use App\Core\Models\Product;
-use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 
 /**
@@ -140,8 +139,8 @@ class ProductSystem implements ProductSystemContract
     /**
      * @param $id
      * @param array $data
-     *
      * @return int
+     * @throws \Exception
      */
     public function delete($id, array $data = []): int
     {
