@@ -107,7 +107,6 @@ class ProductReview extends Model implements Transformable
      */
     public $participant;
 
-
     /**
      * ProductReview constructor.
      * @param array $attributes

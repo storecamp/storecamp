@@ -19,7 +19,13 @@ use Yajra\DataTables\DataTables;
  */
 class ProductReviewController extends BaseController
 {
+    /**
+     * @var string
+     */
     public $viewPathBase = 'admin.reviews.';
+    /**
+     * @var string
+     */
     public $errorRedirectPath = 'admin/reviews/index';
     /**
      * @var Product
@@ -96,7 +102,8 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $review = $this->productReviewSystem->present($data, $id, ['user', 'comments']);
+            $review->product = $review->product()->first();
             $currentUserId = \Auth::user()->id;
 //            $reviews->comments->first()->markAsRead($currentUserId);
             return $this->view('show', compact('review', 'currentUserId'));
@@ -143,6 +150,11 @@ class ProductReviewController extends BaseController
         }
     }
 
+    /**
+     * @param UpdateProductReviewFormRequest $request
+     * @param $reviewId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateProductReviewFormRequest $request, $reviewId)
     {
         try {
@@ -167,7 +179,8 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $review = $this->productReviewSystem->present($data, $id, ['user', 'comments']);
+            $review->product = $review->product()->first();
             $product = $review->product;
 
             return $this->view('edit', compact('review', 'product'));
@@ -177,6 +190,7 @@ class ProductReviewController extends BaseController
             return $this->redirectError($e);
         }
     }
+
 
     /**
      * edit message in review.
