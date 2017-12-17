@@ -145,7 +145,7 @@ class ProductSystem implements ProductSystemContract
      */
     public function delete($id, array $data = []): int
     {
-        $deleted = $this->product->destroy($id);
+        $deleted = $this->product->findOrFail($id)->delete();
 
         return $deleted;
     }

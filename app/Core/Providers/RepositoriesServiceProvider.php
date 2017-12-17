@@ -30,7 +30,6 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $models = [
             'Media',
-            'Products',
             'ProductReview'
         ];
 

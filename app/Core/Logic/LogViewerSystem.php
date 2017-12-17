@@ -129,11 +129,8 @@ class LogViewerSystem implements LogViewerSystemContract
     }
 
     /**
-     * Delete a log.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return bool|mixed
      */
     public function delete(Request $request)
     {

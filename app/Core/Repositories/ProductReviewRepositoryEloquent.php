@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Models\Message;
 use App\Core\Models\Participant;
+use App\Core\Models\Product;
 use App\Core\Models\ProductReview;
 use App\Core\Models\Role;
 use App\Core\Models\Thread;
@@ -22,7 +23,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     protected $role;
     /**
-     * @var ProductsRepository
+     * @var Product
      */
     protected $product;
     /**
@@ -46,11 +47,11 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      * ProductReviewRepositoryEloquent constructor.
      * @param Application $app
      * @param Dispatcher $dispatcher
-     * @param ProductsRepository $product
+     * @param Product $product
      */
     public function __construct(Application $app,
                                 Dispatcher $dispatcher,
-                                ProductsRepository $product)
+                                Product $product)
     {
         parent::__construct($app, $dispatcher);
         $this->role = new Role();

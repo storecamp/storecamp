@@ -190,6 +190,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function delete($id, array $data = []): int
     {
         $deleted = $this->productReview->delete($id);
+//        $deleted = $this->productReview->findOrFail($id)->delete();
 
         return $deleted;
     }
