@@ -29,8 +29,7 @@ class RepositoriesServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
-            'Media',
-            'ProductReview'
+            'Media'
         ];
 
         foreach ($models as $repo) {

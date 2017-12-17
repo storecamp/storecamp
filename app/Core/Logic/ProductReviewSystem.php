@@ -3,9 +3,9 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductReviewSystemContract;
+use App\Core\Models\ProductReview;
 use App\Core\Models\User;
 use App\Core\Models\Message;
-use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Models\Product;
 
 /**
@@ -24,7 +24,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public $user;
 
     /**
-     * @var ProductReviewRepository
+     * @var ProductReview
      */
     public $productReview;
 
@@ -38,12 +38,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
      *
      * @param Product $product
      * @param User $user
-     * @param ProductReviewRepository $productReview
+     * @param ProductReview $productReview
      * @param Message $message
      */
     public function __construct(Product $product,
                                 User $user,
-                                ProductReviewRepository $productReview,
+                                ProductReview $productReview,
                                 Message $message)
     {
         $this->product = $product;
@@ -95,7 +95,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function toggleVisibility($id, array $data)
     {
-        $productReview = $this->productReview->find($id);
+        $productReview = $this->productReview->findOrFail($id);
         if ($productReview->hidden == 0) {
             $productReview->hidden = 1;
         } else {
@@ -111,7 +111,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function markAsRead($id, $data)
     {
-        $productReview = $this->productReview->with('comments')->find($id);
+        $productReview = $this->productReview->with('comments')->findOrFail($id);
         $currentUser = \Auth::user();
         $productReview->comments->first()->markAsRead($currentUser->id);
     }
@@ -119,12 +119,11 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param array $data
      * @param int|string $messageId
-     *
-     * @return Message
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     public function editMessage(array $data, $messageId)
     {
-        $message = $this->message->find($messageId);
+        $message = $this->message->findOrFail($messageId);
         $message->body = $data['reply_message'];
         $message->save();
 
@@ -134,8 +133,8 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param int|string $messageId
      * @param array $data
-     *
-     * @return mixed
+     * @return bool|mixed|null
+     * @throws \Exception
      */
     public function deleteMessage($messageId, array $data = [])
     {
@@ -176,7 +175,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function update(array $data, $reviewId)
     {
-        $review = $this->productReview->update($data, $reviewId);
+        $review = $this->productReview->findOrFail($reviewId)->update($data);
 
         return $review;
     }
@@ -184,13 +183,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param $id
      * @param array $data
-     *
      * @return int
+     * @throws \Exception
      */
     public function delete($id, array $data = []): int
     {
-        $deleted = $this->productReview->delete($id);
-//        $deleted = $this->productReview->findOrFail($id)->delete();
+        $deleted = $this->productReview->findOrFail($id)->delete();
 
         return $deleted;
     }

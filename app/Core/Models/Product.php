@@ -184,7 +184,7 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
         'brand_name',
     ];
 
-    protected $with = ['attributeGroupDescription', 'categories', 'productReview'];
+    protected $with = ['attributeGroupDescription', 'categories'];
     /**
      * Searchable rules.
      *
