@@ -38,7 +38,7 @@ class ProductsController extends BaseController
     /**
      * @var
      */
-    protected $productRepository;
+    protected $product;
 
     /**
      * ProductsController constructor.
@@ -50,7 +50,7 @@ class ProductsController extends BaseController
     {
         $this->category = $category;
         $this->productSystem = $productSystem;
-        $this->productRepository = $this->productSystem->productRepository;
+        $this->product = $this->productSystem->product;
         $this->middleware('role:Admin');
     }
 
@@ -222,7 +222,7 @@ class ProductsController extends BaseController
     {
         if (strlen(trim($request->get('search'))) > 0) {
             $query = $this->parserSearchValue($request->get('search'));
-            $products = $this->productRepository->getModel()->where('title', 'like', $query)
+            $products = $this->product->where('title', 'like', $query)
                 ->select('title', 'id')->get();
             $productGroupArr = [];
             foreach ($products as $key => $attrGroupItem) {

@@ -9,8 +9,7 @@ use App\Core\Exceptions\InvalidRowIDException;
 use App\Core\Exceptions\UnknownModelException;
 use App\Core\Exceptions\UserNotLoggedInException;
 use App\Core\Models\Cart;
-use App\Core\Repositories\CartRepository;
-use App\Core\Repositories\ProductsRepository;
+use App\Core\Models\Product;
 use App\Core\Support\Cart\CartItem;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Events\Dispatcher;
@@ -25,9 +24,9 @@ class CartSystem implements CartSystemContract
     const DEFAULT_INSTANCE = 'cart';
 
     /**
-     * @var ProductsRepository
+     * @var Product
      */
-    public $productsRepository;
+    public $product;
     /**
      * @var Cart
      */
@@ -74,19 +73,19 @@ class CartSystem implements CartSystemContract
      * @param SessionManager $session
      * @param Dispatcher $events
      * @param Cart $cart
-     * @param ProductsRepository $productsRepository
+     * @param Product $product
      * @param AuthManager $auth
      */
     public function __construct(SessionManager $session,
                                 Dispatcher $events,
                                 Cart $cart,
-                                ProductsRepository $productsRepository,
+                                Product $product,
                                 AuthManager $auth)
     {
         $this->cart = $cart;
         $this->session = $session;
         $this->events = $events;
-        $this->productsRepository = $productsRepository;
+        $this->product = $product;
         $this->currency = config('sales.currency');
         $this->auth = $auth;
         $this->instance(self::DEFAULT_INSTANCE);
@@ -117,7 +116,7 @@ class CartSystem implements CartSystemContract
      */
     public function addItem(array $data, $productId)
     {
-        $product = $this->productsRepository->find($productId);
+        $product = $this->product->find($productId);
         $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
         $options = isset($data['options']) ? $data['options'] : [];
         if (isset($data['instance'])) {

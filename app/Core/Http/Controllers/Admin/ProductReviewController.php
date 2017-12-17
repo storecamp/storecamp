@@ -5,8 +5,7 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\ProductReview;
 use App\Core\Models\User;
-use App\Core\Repositories\ProductReviewRepository;
-use App\Core\Repositories\ProductsRepository;
+use App\Core\Models\Product;
 use App\Core\Transformers\ReviewDataTransformer;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
@@ -20,10 +19,16 @@ use Yajra\DataTables\DataTables;
  */
 class ProductReviewController extends BaseController
 {
+    /**
+     * @var string
+     */
     public $viewPathBase = 'admin.reviews.';
+    /**
+     * @var string
+     */
     public $errorRedirectPath = 'admin/reviews/index';
     /**
-     * @var ProductsRepository
+     * @var Product
      */
     protected $product;
     /**
@@ -32,7 +37,7 @@ class ProductReviewController extends BaseController
     protected $user;
 
     /**
-     * @var ProductReviewRepository
+     * @var ProductReview
      */
     protected $reviews;
 
@@ -45,12 +50,12 @@ class ProductReviewController extends BaseController
      * ProductReviewController constructor.
      *
      * @param ProductReviewSystemContract $productReviewSystem
-     * @param ProductsRepository $product
+     * @param Product $product
      * @param User $user
-     * @param ProductReviewRepository $reviews
+     * @param ProductReview $reviews
      */
-    public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
-                                User $user, ProductReviewRepository $reviews)
+    public function __construct(ProductReviewSystemContract $productReviewSystem, Product $product,
+                                User $user, ProductReview $reviews)
     {
         $this->productReviewSystem = $productReviewSystem;
         $this->product = $productReviewSystem->product;
@@ -97,7 +102,8 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $review = $this->productReviewSystem->present($data, $id, ['user', 'comments']);
+            $review->product = $review->product()->first();
             $currentUserId = \Auth::user()->id;
 //            $reviews->comments->first()->markAsRead($currentUserId);
             return $this->view('show', compact('review', 'currentUserId'));
@@ -144,6 +150,11 @@ class ProductReviewController extends BaseController
         }
     }
 
+    /**
+     * @param UpdateProductReviewFormRequest $request
+     * @param $reviewId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateProductReviewFormRequest $request, $reviewId)
     {
         try {
@@ -168,7 +179,8 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $review = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);
+            $review = $this->productReviewSystem->present($data, $id, ['user', 'comments']);
+            $review->product = $review->product()->first();
             $product = $review->product;
 
             return $this->view('edit', compact('review', 'product'));
@@ -178,6 +190,7 @@ class ProductReviewController extends BaseController
             return $this->redirectError($e);
         }
     }
+
 
     /**
      * edit message in review.
