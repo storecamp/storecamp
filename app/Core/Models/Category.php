@@ -33,7 +33,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Product[] $products
  * @property-read \App\Core\Models\Category $parent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $children
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereParentId($value)
@@ -52,13 +51,11 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category options()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property int $_lft
  * @property int $_rgt
  * @property string $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category d()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category onlyParent()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereHasMedia($tags, $match_all = false)
@@ -69,6 +66,9 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category withMediaMatchAll($tags = array())
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Category search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\Category searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class Category extends Model implements Transformable
 {
@@ -98,7 +98,6 @@ class Category extends Model implements Transformable
         'image_link',
         'parent_id',
         'status',
-        'top',
         'sort_order',
         'meta_tag_title',
         'meta_tag_description',
@@ -123,7 +122,7 @@ class Category extends Model implements Transformable
          * @var array
          */
         'columns' => [
-            'categories.name'        => 10,
+            'categories.name' => 10,
             'categories.description' => 1,
         ],
     ];
@@ -230,7 +229,7 @@ class Category extends Model implements Transformable
 
     /**
      * @param array $parents
-     * @param null  $parent
+     * @param null $parent
      *
      * @return array|int
      */
@@ -258,7 +257,7 @@ class Category extends Model implements Transformable
     }
 
     /**
-     * @param null  $category
+     * @param null $category
      * @param array $categories
      *
      * @return Collection
@@ -278,6 +277,48 @@ class Category extends Model implements Transformable
         }
 
         return new Collection($categories);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        $categories = $this->where('parent_id', null)->get(); //united
+
+        $categories = $this->addRelation($categories);
+
+        return $categories;
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function selectChild($id)
+    {
+        $categories = $this->where('parent_id', $id)->get(); //rooney
+
+        $categories = $this->addRelation($categories);
+
+        return $categories;
+    }
+
+    /**
+     * @param $categories
+     *
+     * @return mixed
+     */
+    public function addRelation($categories)
+    {
+        $categories->map(function ($item, $key) {
+            $sub = $this->selectChild($item->id);
+
+            return $item = array_add($item, 'subCategory', $sub);
+        });
+
+        return $categories;
     }
 
     /**

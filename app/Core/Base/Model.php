@@ -13,10 +13,29 @@ use Illuminate\Support\Str;
 abstract class Model extends Eloquent
 {
     /**
+     * @var array
+     */
+    public $rules = [];
+    /**
      * @var bool
      */
     public $useSlug = false;
+
+    /**
+     * @var string
+     */
     public $uniqueId = 'unique_id';
+    private $modelQuery;
+
+    /**
+     * Model constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->modelQuery = $this;
+    }
 
     public static function boot()
     {
@@ -69,9 +88,11 @@ abstract class Model extends Eloquent
         if ($method == 'find') {
             $this->finder(...$parameters);
         }
+
         if ($method == 'findOrFail') {
             $this->findOrFailRewrite(...$parameters);
         }
+
         if ($method == 'meta') {
             $file = $this->getName();
 
@@ -168,6 +189,39 @@ abstract class Model extends Eloquent
     }
 
     /**
+     * @param $query
+     * @param $field
+     * @param $value
+     * @param $columns
+     * @return mixed
+     */
+    public function scopeFindByField($query, $field, $value, $columns = ["*"])
+    {
+        return $query->where($field, '=', $value)->get($columns);
+    }
+
+    /**
+     * @param array $where
+     * @param array $columns
+     * @return mixed
+     */
+    public function findWhere(array $where, $columns = ['*'])
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                $this->modelQuery = $this->modelQuery->where($field, $condition, $val);
+            } else {
+                $this->modelQuery = $this->modelQuery->where($field, '=', $value);
+            }
+        }
+
+        $model = $this->modelQuery->get($columns);
+
+        return $model;
+    }
+
+    /**
      * @param $file
      *
      * @return Meta
@@ -178,5 +232,14 @@ abstract class Model extends Eloquent
         $meta->setTable($file . '_meta');
 
         return $meta;
+    }
+
+
+    public function validate($data)
+    {
+        // make a new validator object
+        $v = \Validator::make($data, $this->rules);
+        // return the result
+        return $v->passes();
     }
 }

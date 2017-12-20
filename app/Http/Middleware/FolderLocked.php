@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Core\Repositories\FolderRepository;
+use App\Core\Models\Folder;
 use Closure;
 
 class FolderLocked
@@ -12,9 +12,9 @@ class FolderLocked
     /**
      * FolderLocked constructor.
      *
-     * @param FolderRepository $folder
+     * @param Folder $folder
      */
-    public function __construct(FolderRepository $folder)
+    public function __construct(Folder $folder)
     {
         $this->folder = $folder;
     }

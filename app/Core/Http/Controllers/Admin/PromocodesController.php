@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Http\Controllers\Controller;
-use App\Core\Repositories\PromocodeRepository;
+use App\Core\Models\Promocode;
 use Illuminate\Http\Request;
 
 /**
@@ -11,16 +11,16 @@ use Illuminate\Http\Request;
  */
 class PromocodesController extends Controller
 {
-    private $repository;
+    private $promocode;
 
     /**
      * PromocodesController constructor.
      *
-     * @param PromocodeRepository $repository
+     * @param Promocode $promocode
      */
-    public function __construct(PromocodeRepository $repository)
+    public function __construct(Promocode $promocode)
     {
-        $this->repository = $repository;
+        $this->promocode = $promocode;
         $this->middleware('role:Admin');
     }
 

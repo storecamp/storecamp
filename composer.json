@@ -34,7 +34,7 @@
     "darrylkuhn/dialect": "^1.0",
     "plank/laravel-mediable": "^2.5",
     "that0n3guy/transliteration": "^2.0",
-    "barryvdh/laravel-debugbar": "^2.3",
+    "barryvdh/laravel-debugbar": "^3.1",
     "nilsenj/toastr-laravel": "dev-1.0-stable",
     "league/csv": "^8.2",
     "laravel/socialite": "^3.0",
@@ -55,7 +55,8 @@
     "tamayo/laravel-scout-elastic": "^3.0",
     "elasticsearch/elasticsearch": "^5.3",
     "yab/laravel-scout-mysql-driver": "^2.0",
-    "yajra/laravel-datatables-fractal": "^1.0"
+    "yajra/laravel-datatables-fractal": "^1.0",
+    "sendgrid/sendgrid": "^6.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.7",

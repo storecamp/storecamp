@@ -3,17 +3,16 @@
 namespace App\Components\MediaSystem;
 
 use App\Core\Models\Folder;
-use App\Core\Repositories\FolderRepository;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Media;
 
 class MediaSystemApiBuilder
 {
     /**
-     * @var FolderRepository
+     * @var Folder
      */
     protected $folder;
     /**
-     * @var MediaRepository
+     * @var Media
      */
     protected $media;
 
@@ -23,7 +22,7 @@ class MediaSystemApiBuilder
      * @param $folder
      * @param $media
      */
-    public function __construct(FolderRepository $folder, MediaRepository $media)
+    public function __construct(Folder $folder, Media $media)
     {
         $this->folder = $folder;
         $this->media = $media;

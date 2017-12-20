@@ -41,7 +41,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Role[] $roles
  * @property-read Message[] $messages
  * @property-read Thread[] $threads
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereName($value)
@@ -61,26 +60,28 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User users()
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
- *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMedia($tags, $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMediaMatchAll($tags)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMediaMatchAll($tags = array())
- *
  * @property string $locale
  * @property bool $banned
  * @property-read \App\Core\Models\Cart $cart
  * @property-read int $shop_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Orders[] $orders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\UserCounter[] $user_counters
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereBanned($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereLocale($value)
+ * @property bool $is_admin
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\User mostViewed($limit)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\User search($search, $threshold = null, $entireText = false, $entireTextOnly = false)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Models\User searchRestricted($search, $restriction, $threshold = null, $entireText = false, $entireTextOnly = false)
  */
 class User extends Authenticatable implements
     Transformable,

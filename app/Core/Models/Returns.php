@@ -12,9 +12,9 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * App\Core\Models\Returns.
  *
  * @mixin \Eloquent
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Returns idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Returns uuid($unique_id, $first = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
  */
 class Returns extends Model implements Transformable
 {

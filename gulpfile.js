@@ -29,18 +29,8 @@ elixir((mix) => {
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     mix.browserSync({
-        proxy: 'storecamp.dev'
+        proxy: 'storecamp.local'
     });
-});
-// create a task to serve the app
-gulp.task('serve', function() {
-
-    // start the php server
-    // make sure we use the public directory since this is Laravel
-    php.server({
-        base: './public'
-    });
-
 });
 
 

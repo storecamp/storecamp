@@ -8,8 +8,8 @@ use App\Core\Exceptions\CartAlreadyStoredException;
 use App\Core\Exceptions\InvalidRowIDException;
 use App\Core\Exceptions\UnknownModelException;
 use App\Core\Exceptions\UserNotLoggedInException;
-use App\Core\Repositories\CartRepository;
-use App\Core\Repositories\ProductsRepository;
+use App\Core\Models\Cart;
+use App\Core\Models\Product;
 use App\Core\Support\Cart\CartItem;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Events\Dispatcher;
@@ -24,13 +24,13 @@ class CartSystem implements CartSystemContract
     const DEFAULT_INSTANCE = 'cart';
 
     /**
-     * @var ProductsRepository
+     * @var Product
      */
-    public $productsRepository;
+    public $product;
     /**
-     * @var CartRepository
+     * @var Cart
      */
-    public $cartRepository;
+    public $cart;
     /**
      * Instance of the session manager.
      *
@@ -67,22 +67,25 @@ class CartSystem implements CartSystemContract
     private $auth;
 
     /**
+     *
      * CartSystem constructor.
      *
-     * @param SessionManager     $session
-     * @param Dispatcher         $events
-     * @param CartRepository     $cartRepository
-     * @param ProductsRepository $productsRepository
-     * @param AuthManager        $auth
+     * @param SessionManager $session
+     * @param Dispatcher $events
+     * @param Cart $cart
+     * @param Product $product
+     * @param AuthManager $auth
      */
-    public function __construct(SessionManager $session, Dispatcher $events,
-                                CartRepository $cartRepository, ProductsRepository $productsRepository,
+    public function __construct(SessionManager $session,
+                                Dispatcher $events,
+                                Cart $cart,
+                                Product $product,
                                 AuthManager $auth)
     {
-        $this->cartRepository = $cartRepository;
+        $this->cart = $cart;
         $this->session = $session;
         $this->events = $events;
-        $this->productsRepository = $productsRepository;
+        $this->product = $product;
         $this->currency = config('sales.currency');
         $this->auth = $auth;
         $this->instance(self::DEFAULT_INSTANCE);
@@ -90,7 +93,7 @@ class CartSystem implements CartSystemContract
 
     /**
      * @param array $data
-     * @param bool  $withAggregations
+     * @param bool $withAggregations
      *
      * @return Collection
      */
@@ -113,7 +116,7 @@ class CartSystem implements CartSystemContract
      */
     public function addItem(array $data, $productId)
     {
-        $product = $this->productsRepository->find($productId);
+        $product = $this->product->find($productId);
         $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
         $options = isset($data['options']) ? $data['options'] : [];
         if (isset($data['instance'])) {
@@ -185,7 +188,7 @@ class CartSystem implements CartSystemContract
      * Add an item to the cart.
      *
      * @param $id
-     * @param null  $qty
+     * @param null $qty
      * @param array $options
      *
      * @return CartItem|array
@@ -348,7 +351,7 @@ class CartSystem implements CartSystemContract
     /**
      * Get the total price of the items in the cart.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -360,15 +363,15 @@ class CartSystem implements CartSystemContract
         $total = $content->reduce(function ($total, $cartItem) {
             return $total + ($cartItem->qty * $cartItem->priceTax);
         }, 0);
-        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        $currency = $this->withCurrency ? $this->currency . ' ' : null;
 
-        return $currency.cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
+        return $currency . cartNumberFormat($total, $decimals, $decimalPoint, $thousandSeperator);
     }
 
     /**
      * Get the total tax of the items in the cart.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -380,15 +383,15 @@ class CartSystem implements CartSystemContract
         $tax = $content->reduce(function ($tax, CartItem $cartItem) {
             return $tax + ($cartItem->qty * $cartItem->tax);
         }, 0);
-        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        $currency = $this->withCurrency ? $this->currency . ' ' : null;
 
-        return $currency.cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
+        return $currency . cartNumberFormat($tax, $decimals, $decimalPoint, $thousandSeperator);
     }
 
     /**
      * Get the subtotal (total - tax) of the items in the cart.
      *
-     * @param int    $decimals
+     * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
      *
@@ -404,9 +407,9 @@ class CartSystem implements CartSystemContract
                 return 0;
             }
         }, 0);
-        $currency = $this->withCurrency ? $this->currency.' ' : null;
+        $currency = $this->withCurrency ? $this->currency . ' ' : null;
 
-        return $currency.cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
+        return $currency . cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
     }
 
     /**
@@ -427,7 +430,7 @@ class CartSystem implements CartSystemContract
      * Associate the cart item with the given rowId with the given model.
      *
      * @param string $rowId
-     * @param mixed  $model
+     * @param mixed $model
      *
      * @return void
      */
@@ -446,7 +449,7 @@ class CartSystem implements CartSystemContract
     /**
      * Set the tax rate for the cart item with the given rowId.
      *
-     * @param string    $rowId
+     * @param string $rowId
      * @param int|float $taxRate
      *
      * @return void
@@ -481,9 +484,9 @@ class CartSystem implements CartSystemContract
             throw new UserNotLoggedInException('Order placement requires logged in user.');
         }
         // Create order
-        $order = call_user_func(config('sales.order').'::create', [
-            'user_id'       => $this->auth->user()->id,
-            'statusCode'    => $statusCode,
+        $order = call_user_func(config('sales.order') . '::create', [
+            'user_id' => $this->auth->user()->id,
+            'statusCode' => $statusCode,
         ]);
         $cart = $this->store($this->content()->rowId());
         $cart->order_id = $order->id;
@@ -510,11 +513,11 @@ class CartSystem implements CartSystemContract
             throw new UserNotLoggedInException("A cart with identifier {$identifier} requires logged in user.");
         }
 
-        $cart = $this->cartRepository->create([
+        $cart = $this->cart->create([
             'unique_id' => $identifier,
-            'user_id'   => $this->auth->user()->id,
-            'instance'  => $this->currentInstance(),
-            'content'   => json_encode($content),
+            'user_id' => $this->auth->user()->id,
+            'instance' => $this->currentInstance(),
+            'content' => json_encode($content),
         ]);
         $this->events->fire('cart.stored');
 
@@ -533,8 +536,8 @@ class CartSystem implements CartSystemContract
         if (!$this->storedCartWithIdentifierExists($identifier)) {
             return;
         }
-        $stored = $this->cartRepository
-            ->find($identifier);
+        $stored = $this->cart
+            ->findOrFail($identifier);
         $storedContent = json_decode($stored->content);
         $currentInstance = $this->currentInstance();
         $this->instance($stored->instance);
@@ -545,7 +548,7 @@ class CartSystem implements CartSystemContract
         $this->events->fire('cart.restored');
         $this->session->put($this->instance, $content);
         $this->instance($currentInstance);
-        $this->cartRepository->delete($identifier);
+        $this->cart->destroy($identifier);
     }
 
     /**
@@ -635,6 +638,6 @@ class CartSystem implements CartSystemContract
      */
     private function storedCartWithIdentifierExists($identifier): bool
     {
-        return count($this->cartRepository->where('unique_id', $identifier)) > 0 ?? false;
+        return count($this->cart->where('unique_id', $identifier)) > 0 ?? false;
     }
 }

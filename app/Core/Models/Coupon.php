@@ -25,7 +25,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property string $expires_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon findByCode($code)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon uuid($unique_id, $first = true)
@@ -42,6 +41,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Coupon whereValue($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
  */
 class Coupon extends Model implements Transformable, CouponInterface
 {

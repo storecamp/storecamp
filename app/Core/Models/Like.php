@@ -22,7 +22,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $likeable
  * @property-write mixed $value
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like idOrUuId($id_or_uuid, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like uuid($unique_id, $first = true)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Like whereCreatedAt($value)

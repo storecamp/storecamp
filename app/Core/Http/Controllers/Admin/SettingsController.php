@@ -3,7 +3,6 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Settings;
-use App\Core\Repositories\SettingsRepository;
 use App\Core\Validators\Settings\StoreSettingsRequest;
 use App\Core\Validators\Settings\UpdateSettingsRequest;
 use Illuminate\Http\Request;
@@ -18,18 +17,16 @@ class SettingsController extends BaseController
     public $errorRedirectPath = 'admin::settings::default::index';
 
     /**
-     * @var SettingsRepository
+     * @var Settings
      */
     protected $settings;
 
     /**
      * SettingsController constructor.
-     *
-     * @param SettingsRepository $settings
      */
-    public function __construct(SettingsRepository $settings)
+    public function __construct()
     {
-        $this->settings = $settings;
+        $this->settings = new Settings();
         $this->middleware(['role:Admin']);
     }
 
@@ -38,7 +35,7 @@ class SettingsController extends BaseController
      */
     public function index()
     {
-        $settings = $this->settings->order('order', 'ASC')->model->get();
+        $settings = $this->settings->orderBy('order', 'ASC')->get();
 
         return $this->view('index', compact('settings'));
     }
@@ -60,7 +57,7 @@ class SettingsController extends BaseController
      */
     public function store(StoreSettingsRequest $request)
     {
-        $lastSetting = $this->settings->order('order', 'DESC')->first();
+        $lastSetting = $this->settings->orderBy('order', 'DESC')->first();
 
         if (is_null($lastSetting)) {
             $order = 0;
@@ -84,7 +81,7 @@ class SettingsController extends BaseController
      */
     public function update(UpdateSettingsRequest $request, $id)
     {
-        $setting = $this->settings->find($id);
+        $setting = $this->settings->findOrFail($id);
         $setting->value = $request->setting;
         if ($request->key) {
             $setting->key = $request->key;
@@ -102,7 +99,7 @@ class SettingsController extends BaseController
      */
     public function delete($id)
     {
-        $this->settings->delete($id);
+        $this->settings->destroy($id);
         $this->flash('success', 'Successfully Deleted Setting');
 
         return redirect()->to(route('admin::settings::default::index'));
@@ -117,7 +114,8 @@ class SettingsController extends BaseController
     {
         $setting = $this->settings->find($id);
         $swapOrder = $setting->order;
-        $previousSetting = $this->settings->order('order', 'DESC')->model->where('order', '<', $swapOrder)->first();
+        $previousSetting = $this->settings->orderBy('order', 'DESC')
+            ->where('order', '<', $swapOrder)->first();
 
         $message = 'This is already at the top of the list';
         $type = 'error';
@@ -142,7 +140,7 @@ class SettingsController extends BaseController
      */
     public function delete_value($id)
     {
-        $setting = $this->settings->find($id);
+        $setting = $this->settings->findOrFail($id);
         $key = $setting->key;
         if (isset($setting->id)) {
             $setting->value = '';
@@ -163,11 +161,12 @@ class SettingsController extends BaseController
      */
     public function move_down($id)
     {
-        $setting = $this->settings->find($id);
+        $setting = $this->settings->findOrFail($id);
         $swapOrder = $setting->order;
         $key = $setting->key;
 
-        $previousSetting = $this->settings->order('order', 'ASC')->model->where('order', '>', $swapOrder)->first();
+        $previousSetting = $this->settings->orderBy('order', 'ASC')
+            ->where('order', '>', $swapOrder)->first();
         $message = 'This is already at the bottom of the list';
         $type = 'error';
 

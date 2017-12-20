@@ -2,6 +2,7 @@
 
 namespace App\Core\Transformers;
 
+use App\Core\Models\Product;
 use App\Core\Models\ProductReview;
 use League\Fractal\TransformerAbstract;
 
@@ -9,9 +10,10 @@ class ReviewDataTransformer extends TransformerAbstract
 {
     public function transform(ProductReview $review)
     {
+
         return [
             'id'         => $review->id,
-            'product'    => $review->product->title,
+            'product'    => Product::findOrFail($review->product_id)->title,
             'rating'     => $this->getReviewRating($review),
             'hidden'     => $this->getReviewHidden($review),
             'isViewed'   => $this->getIsViewed($review),

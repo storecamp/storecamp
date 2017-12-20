@@ -4,9 +4,10 @@ namespace App\Core\Models;
 
 use App\Core\Base\Model;
 use App\Core\Components\Auditing\Auditable;
-use App\Core\Support\Cacheable\CacheableEloquent;
 use App\Core\Traits\GeneratesUnique;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Filesystem\Filesystem;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -38,10 +39,11 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
- * @mixin \Eloquent
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  * @property bool $locked
+ * @property mixed $media
+ * @property mixed $file
  *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereLocked($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder idOrUuId($id_or_uuid, $first = true)
@@ -56,6 +58,9 @@ class Folder extends Model implements Transformable
     use Auditable;
 //    use CacheableEloquent;
 
+    /**
+     * @var array
+     */
     protected $with = ['files'];
     /**
      * @var array
@@ -72,6 +77,49 @@ class Folder extends Model implements Transformable
     ];
 
     /**
+     * @var Media
+     */
+    protected $media;
+    /**
+     * @var Filesystem
+     */
+    protected $file;
+    /**
+     * @var string
+     */
+    public $disk = 'local';
+
+    /**
+     * @var mixed
+     */
+    public $diskRoot;
+
+    /**
+     * @var mixed
+     */
+    public $rootFromProject;
+
+    /**
+     * @var
+     */
+    public $model;
+
+    /**
+     * Folder constructor.
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->media = new Media();
+        $this->file = new Filesystem();
+        $this->disk;
+        $this->model = $this;
+        $this->diskRoot = config('filesystems.disks.local.root');
+        $this->rootFromProject = config('filesystems.disks.local.rootFromProject');
+    }
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -84,6 +132,7 @@ class Folder extends Model implements Transformable
             ],
         ];
     }
+
 
     /**
      * bootable methods fix.
@@ -116,4 +165,227 @@ class Folder extends Model implements Transformable
     {
         return $this->hasMany(Media::class, 'directory_id');
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDisk()
+    {
+        return $this->disk;
+    }
+
+    /**
+     * @param $disk
+     *
+     * @return Folder
+     */
+    public function setDisk($disk): Folder
+    {
+        $this->disk = $disk;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiskRoot(): string
+    {
+        return $this->diskRoot;
+    }
+
+    /**
+     * @param $diskRoot
+     *
+     * @return Folder
+     */
+    public function setDiskRoot($diskRoot): Folder
+    {
+        $this->diskRoot = $diskRoot;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRootFromProject(): string
+    {
+        return $this->rootFromProject;
+    }
+
+    /**
+     * @param mixed $rootFromProject
+     */
+    public function setRootFromProject($rootFromProject)
+    {
+        $this->rootFromProject = $rootFromProject;
+    }
+
+    /**
+     * @param string $name
+     * @return Folder
+     */
+    public function disk(string $name): Folder
+    {
+        if (!empty($name)) {
+            $that = $this->setDisk($name);
+            $that->setDiskRoot(config('filesystems.disks.' . $name . '.root'));
+            $that->setRootFromProject(config('filesystems.disks.' . $name . '.rootFromProject'));
+
+            return $that;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiskRoots()
+    {
+        $rootFolders = $this->where([
+            ['parent_id', '=', null],
+            ['name', '=', ''],
+            ['path_on_disk', '=', null],
+        ])->get();
+
+        return $rootFolders;
+    }
+
+    /**
+     * @param $disk
+     * @param null $folder
+     * @return mixed
+     */
+    public function getDefaultFolder($disk, $folder = null)
+    {
+        if ($folder) {
+            $newFolder = $this->disk($disk)->byDisk($folder);
+        } else {
+            $newFolder = $this->disk($disk)->findByField('disk', $disk)->first();
+        }
+
+        return $newFolder;
+    }
+
+    /**
+     * @param Folder $folder
+     * @param array $array
+     *
+     * @return string
+     */
+    public function getParentFoldersPath($folder, array $array = [])
+    {
+        while ($folder->parent_id != null) {
+            $newParent = $this->byDisk($folder->parent_id);
+            array_unshift($array, $newParent->name);
+
+            return $this->getParentFoldersPath($newParent, $array);
+        }
+
+        return implode('/', array_filter($array));
+    }
+
+    /**
+     * rewrite of delete method.
+     *
+     * @param $id
+     *
+     * @return int
+     */
+    public function deleteFolder($id)
+    {
+        $folder = $this->byDisk($id);
+        $parentFoldersPath = $this->getParentFoldersPath($folder);
+        $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
+        $folderFullPath = $this->getDiskRoot() . '/' . $folderPath;
+        if ($this->file->isDirectory($folderFullPath)) {
+            $medias = $this->media->inDirectory($this->getDisk(), $folderPath)->get();
+            foreach ($medias as $media) {
+                $media->delete();
+            }
+            $result = $this->file->deleteDirectory($folderFullPath);
+        } else {
+            $medias = $this->media->inDirectory($this->getDisk(), $folderPath);
+            if ($medias->count() > 0) {
+                foreach ($medias->get() as $media) {
+                    $media->delete();
+                }
+            }
+        }
+        $this->destroy($folder->id);
+    }
+
+    /**
+     * @param QueryBuilder $query
+     * @param $id
+     * @return $this
+     */
+    public function scopeFindByDisk($query, $id)
+    {
+        if (is_numeric($id)) {
+            return $query->where('disk', '=', $this->getDisk())
+                ->where('id', $id);
+        } else {
+            return $query->where('disk', '=', $this->getDisk())
+                ->where('unique_id', $id);
+        }
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $q
+     * @param array $where
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Builder|mixed
+     */
+    public function scopeFindWhere(\Illuminate\Database\Eloquent\Builder $q, array $where, $columns = ['*'])
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                $q->where($field, $condition, $val);
+            } else {
+                $q->where($field, '=', $value);
+            }
+        }
+
+        return $q;
+    }
+
+    /**
+     * @param $id
+     * @param array $columns
+     * @return mixed
+     */
+    public function byDisk($id, $columns = ['*'])
+    {
+        return $this->findByDisk($id)->first($columns);
+    }
+
+    /**
+     * @param $query
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @return mixed
+     */
+    public function scopeWhereDisk($query, $key, $value, $operator = '=')
+    {
+        return $query->model->where('disk', '=', $this->getDisk())
+            ->where($key, $operator, $value);
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @param array $columns
+     * @return \Illuminate\Support\Collection
+     */
+    public function getByFieldWhereDisk($key, $value, $operator = '=', $columns = ['*'])
+    {
+        return $this->whereDisk($key, $value, $operator)->get($columns);
+    }
+
 }

@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Http\Controllers\Controller;
-use App\Core\Repositories\ReturnsRepository;
+use App\Core\Models\Returns;
 use Illuminate\Http\Request;
 
 /**
@@ -14,9 +14,9 @@ class ReturnsController extends Controller
     private $repository;
 
     /**
-     * @param ReturnsRepository $repository
+     * @param Returns $repository
      */
-    public function __construct(ReturnsRepository $repository)
+    public function __construct(Returns $repository)
     {
         $this->repository = $repository;
         $this->middleware('role:Admin');

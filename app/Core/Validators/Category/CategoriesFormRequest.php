@@ -25,7 +25,7 @@ class CategoriesFormRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2,max:120',
-            'slug' => 'required|unique:categories,slug',
+            'parent_id' => 'integer'
         ];
     }
 }

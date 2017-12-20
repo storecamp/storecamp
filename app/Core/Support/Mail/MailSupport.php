@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Core\Repositories;
-
-use App\Core\Support\Email\EmailCustomization;
+namespace App\Core\Support\Mail;
 
 use App\Core\Handlers\MailEventHandler;
-use App\Mail\DeliverMail;
 use App\Core\Mappers\MailAddressesMapper;
+use App\Core\Models\EmailLog;
+use App\Core\Support\Email\EmailCustomization;
 use App\Core\Validators\Emails\EmailsValidator;
+use App\Mail\DeliverMail;
 use Carbon\Carbon;
-/**
- * Class MailRepositoryEloquent.
- */
-class MailRepositoryEloquent implements MailRepository
-{
 
+class MailSupport
+{
     /**
      * Array for the delayed sending of emails
      *
@@ -38,29 +35,25 @@ class MailRepositoryEloquent implements MailRepository
      */
     public function send(array $data, $async = false)
     {
-        try {
-            $data['to'] = isset($data['to']) ? self::validateInputEmails($data['to']) : [];
-            $data['cc'] = isset($data['cc']) ? self::validateInputEmails($data['cc']) : [];
-            $data['bcc'] = isset($data['bcc']) ? self::validateInputEmails($data['bcc']) : [];
-            $data['reply'] = isset($data['reply']) ? self::validateInputEmails($data['reply']) : [];
+        $data['to'] = isset($data['to']) ? self::validateInputEmails($data['to']) : [];
+        $data['cc'] = isset($data['cc']) ? self::validateInputEmails($data['cc']) : [];
+        $data['bcc'] = isset($data['bcc']) ? self::validateInputEmails($data['bcc']) : [];
+        $data['reply'] = isset($data['reply']) ? self::validateInputEmails($data['reply']) : [];
 
-            if (empty($data['to'])) {
-                throw new \Exception('To property for mail not provided. Please provide it.', 422);
-            }
-            $mailData = new DeliverMail($data);
-            if (!empty($data['delay_time']) || !empty($data['drafted'])) {
-                $this->saveDelayed($data);
+        if (empty($data['to'])) {
+            throw new \Exception('To property for mail not provided. Please provide it.', 422);
+        }
+        $mailData = new DeliverMail($data);
+        if (!empty($data['delay_time']) || !empty($data['drafted'])) {
+            $this->saveDelayed($data);
+        } else {
+            if ($async) {
+                \Mail::queue($mailData);
+                \Log::info('Mail Sent to queue');
             } else {
-                if ($async) {
-                    \Mail::queue($mailData);
-                    \Log::info('Mail Sent to queue');
-                } else {
-                    \Mail::send($mailData);
-                    \Log::info('Mail Sent');
-                }
+                \Mail::send($mailData);
+                \Log::info('Mail Sent');
             }
-        } catch (\Throwable $e) {
-            \Log::error('Send Mail Fail', $e->getTrace());
         }
     }
 
@@ -78,12 +71,8 @@ class MailRepositoryEloquent implements MailRepository
      */
     public function sendAsync(array $data)
     {
-        try {
-            \Log::info(json_encode($data));
-            $this->send($data, true);
-        } catch (\Exception $e) {
-            \Log::error($e->getTraceAsString());
-        }
+        $this->send($data, true);
+
     }
 
     /**
@@ -164,7 +153,7 @@ class MailRepositoryEloquent implements MailRepository
      */
     public static function sendDelayedEmails($async = true)
     {
-        $mailRepo = app(MailRepository::class);
+        $mailRepo = new MailSupport();
         $method = $async ? 'sendAsync' : 'send';
 
         foreach (self::$emailsDelayedStack as $emailData) {
@@ -233,23 +222,23 @@ class MailRepositoryEloquent implements MailRepository
                 'text' => isset($message['text']) ? $message['text'] : '',
             ];
 
-            if(isset($message['delay_time'])) {
+            if (isset($message['delay_time'])) {
                 $data['delay_time'] = $message['delay_time'];
             }
 
-            if(isset($message['drafted']) && $message['drafted']) {
+            if (isset($message['drafted']) && $message['drafted']) {
                 $data['is_drafted'] = true;
                 $data['status'] = 'pending';
             }
 
             $recipients = MailEventHandler::getRecipients($message);
-            if(!empty($message['id'])) {
+            if (!empty($message['id'])) {
                 $data['id'] = $message['id'];
-                $emailLogRepository = app(EmailLogRepository::class);
-                $emailLogRepository->update($data, $recipients);
+                $emailLog = app(EmailLog::class);
+                $emailLog->updateLog($data, $recipients);
             } else {
-                $emailLogRepository = app(EmailLogRepository::class);
-                $emailLogRepository->create($data, $recipients);
+                $emailLog = app(EmailLog::class);
+                $emailLog->createLog($data, $recipients);
             }
         } catch (\Exception $e) {
             \Log::error($e);

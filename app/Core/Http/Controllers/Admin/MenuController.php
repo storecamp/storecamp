@@ -3,8 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Models\Menu;
-use App\Core\Repositories\MenuItemsRepository;
-use App\Core\Repositories\MenuRepository;
+use App\Core\Models\MenuItems;
 use App\Core\Transformers\MenusDataTransformer;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -16,11 +15,11 @@ class MenuController extends BaseController
 {
     //TODO implement error handling
     /**
-     * @var MenuRepository
+     * @var Menu
      */
     private $menu;
     /**
-     * @var MenuItemsRepository
+     * @var MenuItems
      */
     private $menuItems;
 
@@ -30,10 +29,10 @@ class MenuController extends BaseController
     /**
      * MenuController constructor.
      *
-     * @param MenuRepository      $menu
-     * @param MenuItemsRepository $menuItems
+     * @param Menu $menu
+     * @param MenuItems $menuItems
      */
-    public function __construct(MenuRepository $menu, MenuItemsRepository $menuItems)
+    public function __construct(Menu $menu, MenuItems $menuItems)
     {
         $this->menu = $menu;
         $this->menuItems = $menuItems;
@@ -97,7 +96,7 @@ class MenuController extends BaseController
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $menu = $this->menu->update($data, $id);
+        $menu = $this->menu->findOrFail($id)->update($data);
 
         return redirect()->route('admin::design::menus::index');
     }
@@ -153,7 +152,7 @@ class MenuController extends BaseController
 
         $data['order'] = 1;
 
-        $highestOrderMenuItem = $this->menuItems->getModel()->where('parent_id', '=', null)
+        $highestOrderMenuItem = $this->menuItems->where('parent_id', '=', null)
             ->orderBy('order', 'DESC')
             ->first();
 

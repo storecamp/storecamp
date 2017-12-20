@@ -2,8 +2,8 @@
 
 namespace App\Core\Http\Controllers\Admin;
 
+use App\Core\Models\Parser;
 use App\Core\Parsers\Rozetka\Rozetka;
-use App\Core\Repositories\ParserRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -22,16 +22,15 @@ class ParsersControllerController extends BaseController
     public $errorRedirectPath = 'admin/parsers';
 
     /**
-     * @var ParserRepository
+     * @var Parser
      */
     private $repository;
 
     /**
      * ParsersControllerController constructor.
-     *
-     * @param ParserRepository $repository
+     * @param Parser $repository
      */
-    public function __construct(ParserRepository $repository)
+    public function __construct(Parser $repository)
     {
         $this->repository = $repository;
         $this->middleware('role:Admin');
@@ -75,7 +74,9 @@ class ParsersControllerController extends BaseController
         $newsearch = new Rozetka($model, $pagelimit ? $pagelimit : 1);
         $result = $newsearch->parse($keyword);
         if ($result) {
-            $this->toastr('success', 'Data stored in a file in parsers folder with name: '.'<b>'.$result.'.csv'.'</b>');
+            $this->toastr('success',
+                'Data stored in a file in parsers folder with name: '.'<b>'
+                .$result.'.csv'.'</b>');
 
             return redirect()->back();
         } else {

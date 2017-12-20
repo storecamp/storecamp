@@ -6,8 +6,8 @@ use App\Components\MediaSystem\MediaSystemApiBuilder;
 use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Http\Controllers\Controller;
-use App\Core\Repositories\FolderRepository;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Folder;
+use App\Core\Models\Media;
 use App\Core\Support\Media\MediaReceiver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,11 +20,11 @@ class FileSystemController extends Controller
     use HandlesMediaUploadExceptions;
 
     /**
-     * @var MediaRepository
+     * @var Media
      */
     public $repository;
     /**
-     * @var FolderRepository
+     * @var Folder
      */
     public $folder;
 
@@ -269,7 +269,7 @@ class FileSystemController extends Controller
         try {
             $folder = $this->mediaSystem->disk($disk)->makeFolder($request, $disk);
 
-            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
+            return response()->json([$disk, $folder->unique_id]);
         } catch (ModelNotFoundException $e) {
             \Log::warning("ModelNotFoundException Error: msg - " . $e->getMessage() . " code - " . $e->getCode());
             return response()->json(['msg' => $e->getMessage(), $e->getCode()]);

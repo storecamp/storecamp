@@ -31,7 +31,6 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @property-read \App\Core\Models\Message $parentMessage
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Participant[] $participants
  * @property-read \App\Core\Models\ProductReview $reviews
- *
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread between($participants)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUser($userId)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread forUserWithNewMessages($userId)
@@ -47,6 +46,13 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereUniqueId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Core\Models\ProductReview $productReview
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Core\Base\Model findByField($field, $value, $columns)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Thread withoutTrashed()
  */
 class Thread extends Model implements Transformable
 {

@@ -3,7 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Http\Controllers\Controller;
-use App\Core\Repositories\BannerRepository;
+use App\Core\Models\Banner;
 use Illuminate\Http\Request;
 
 /**
@@ -14,9 +14,9 @@ class BannerController extends Controller
     private $repository;
 
     /**
-     * @param BannerRepository $repository
+     * @param Banner $repository
      */
-    public function __construct(BannerRepository $repository)
+    public function __construct(Banner $repository)
     {
         $this->repository = $repository;
         $this->middleware('role:Admin');

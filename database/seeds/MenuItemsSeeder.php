@@ -5,9 +5,7 @@ use Illuminate\Database\Seeder;
 class MenuItemsSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * @throws Exception
      */
     public function run()
     {
@@ -15,7 +13,7 @@ class MenuItemsSeeder extends Seeder
             'name' => 'modules',
         ]);
 
-        $menuItemInstance = app('App\Core\Repositories\MenuItemsRepository');
+        $menuItemInstance = new \App\Core\Models\MenuItems();
 
         $menuItem = $menuItemInstance->createOrFirst([
             'menu_id'    => $menu->id,

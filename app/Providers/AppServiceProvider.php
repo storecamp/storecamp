@@ -8,7 +8,6 @@ use App\Core\Providers\GeneratorsServiceProvider;
 use App\Core\Providers\LogicServiceProvider;
 use App\Core\Providers\MailServiceProvider;
 use App\Core\Providers\MenuBuilderProvider;
-use App\Core\Providers\RepositoriesServiceProvider;
 use App\Core\Providers\SupportProvider;
 use App\Core\Providers\ViewComposerServiceProvider;
 use Illuminate\Support\ServiceProvider;
@@ -28,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
         LogicServiceProvider::class,
         MailServiceProvider::class,
         MenuBuilderProvider::class,
-        RepositoriesServiceProvider::class,
         SupportProvider::class,
         ViewComposerServiceProvider::class,
     ];

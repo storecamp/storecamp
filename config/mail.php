@@ -128,4 +128,5 @@ return [
         'verify_peer_name' => env('MAIL_SSLOPTIONS_VERIFY_PEER_NAME', true),
     ],
     'store_admin' => 'admin@store.com',
+    'pretend' => false
 ];

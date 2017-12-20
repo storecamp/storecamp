@@ -3,30 +3,30 @@
 namespace App\Core\Handlers;
 
 use App\Core\Mappers\MailAddressesMapper;
-use App\Core\Repositories\EmailLogRepository;
+use App\Core\Models\EmailLog;
 
 class MailEventHandler
 {
     /**
-     * @return EmailLogRepository
+     * @return EmailLog
      */
-    public function getEmailLogRepository(): EmailLogRepository
+    public function getEmailLog(): EmailLog
     {
-        return $this->emailLogRepository;
+        return $this->emailLog;
     }
 
     /**
-     * @var EmailLogRepository
+     * @var EmailLog
      */
-    protected $emailLogRepository;
+    protected $emailLog;
 
     /**
      * MailEventHandler constructor.
-     * @param EmailLogRepository $emailLogRepository
+     * @param EmailLog $emailLog
      */
-    public function __construct(EmailLogRepository $emailLogRepository)
+    public function __construct(EmailLog $emailLog)
     {
-        $this->emailLogRepository = $emailLogRepository;
+        $this->emailLog = $emailLog;
     }
 
     /**
@@ -82,44 +82,10 @@ class MailEventHandler
                 'html' => $message->getBody(),
                 'text' => $this->getText($message)
             ];
-            if (config('univer.emails_test_mode') && config('univer.test_email_to')) {
-
-                $data['to'] = $this->originEmailsForTestMetaData($message->getTo());
-                $message->setTo(config('univer.test_email_to'));
-                $data['cc'] = null;
-                $data['bcc'] = null;
-                $data['reply'] = null;
-
-                if ($message->getReplyTo()) {
-                    $data['reply'] = $this->originEmailsForTestMetaData($message->getReplyTo());
-                }
-
-                if ($message->getCc()) {
-                    $data['cc'] = $this->originEmailsForTestMetaData($message->getCc());
-                    $message->setCc(config('univer.test_emails_cc'));
-                }
-
-                if ($message->getBcc()) {
-                    $data['bcc'] = $this->originEmailsForTestMetaData($message->getBcc());
-                    $message->setBcc(config('univer.test_emails_bcc'));
-                }
-
-                $message->setBody($message->getBody() . view('emails.append-original-data-for-test-email', $data)->render());
-
-                $data = [
-                    'from' => $from,
-                    'fromName' => $fromName,
-                    'message_id' => $message->getId(),
-                    'subject' => $message->getSubject(),
-                    'reply_to' => MailEventHandler::getReplyTo($message),
-                    'html' => $message->getBody(),
-                    'text' => $this->getText($message),
-                ];
-            }
 
             $recipients = MailEventHandler::getRecipients($message);
 
-            $this->emailLogRepository->create($data, $recipients);
+            $this->emailLog->createLog($data, $recipients);
 
         } catch (\Exception $e) {
             \Log::error($e);
@@ -149,7 +115,7 @@ class MailEventHandler
     public static function getRecipients($message): array
     {
         $result = [];
-        if($message instanceof \Swift_Message) {
+        if ($message instanceof \Swift_Message) {
 
             if ($list = $message->getTo()) {
                 self::addRecipients($result, $list, 'to');
@@ -164,7 +130,7 @@ class MailEventHandler
             }
         }
 
-        if(is_array($message)) {
+        if (is_array($message)) {
 
             if ($list = !empty($message['to']) ? $message['to'] : null) {
                 self::addRecipients($result, $list, 'to');
@@ -208,22 +174,23 @@ class MailEventHandler
     public static function getReplyTo($message)
     {
         $result = null;
-        if($message instanceof \Swift_Message) {
+        if ($message instanceof \Swift_Message) {
             if ($list = $message->getReplyTo()) {
                 $first = current(array_keys($list));
                 $result = $first;
             }
         }
-        if(is_array($message)) {
+        if (is_array($message)) {
             if ($list = !empty($message['reply_to']) ? $message['reply_to'] : null) {
                 $first = current(array_keys($list));
                 $result = $first;
             } else {
-                $result = config('mail.dserec_admin', 'dserec_admin');
+                $result = config('mail.store_admin', 'storecamp_admin');
             }
         }
         return $result;
     }
+
     /**
      * Get From Addresses.
      *
@@ -242,7 +209,7 @@ class MailEventHandler
 
         if (is_array($message)) {
             if (!empty($message['from'])) {
-                if(is_string($message['from'])) {
+                if (is_string($message['from'])) {
                     return [$message['from'], ''];
                 }
                 foreach ($message['from'] as $address => $name) {

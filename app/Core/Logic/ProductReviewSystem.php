@@ -3,11 +3,10 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductReviewSystemContract;
+use App\Core\Models\ProductReview;
 use App\Core\Models\User;
-use App\Core\Repositories\MessageRepository;
-use App\Core\Repositories\ProductReviewRepository;
-use App\Core\Repositories\ProductsRepository;
-use App\Core\Repositories\UserRepository;
+use App\Core\Models\Message;
+use App\Core\Models\Product;
 
 /**
  * Class ProductReviewSystem.
@@ -15,7 +14,7 @@ use App\Core\Repositories\UserRepository;
 class ProductReviewSystem implements ProductReviewSystemContract
 {
     /**
-     * @var ProductsRepository
+     * @var Product
      */
     public $product;
 
@@ -25,26 +24,27 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public $user;
 
     /**
-     * @var ProductReviewRepository
+     * @var ProductReview
      */
     public $productReview;
 
     /**
-     * @var MessageRepository
+     * @var Message
      */
     public $message;
 
     /**
      * ProductReviewSystem constructor.
      *
-     * @param ProductsRepository      $product
-     * @param User                    $user
-     * @param ProductReviewRepository $productReview
-     * @param MessageRepository       $message
+     * @param Product $product
+     * @param User $user
+     * @param ProductReview $productReview
+     * @param Message $message
      */
-    public function __construct(ProductsRepository $product,
+    public function __construct(Product $product,
                                 User $user,
-                                ProductReviewRepository $productReview, MessageRepository $message)
+                                ProductReview $productReview,
+                                Message $message)
     {
         $this->product = $product;
         $this->user = $user;
@@ -54,7 +54,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
 
     /**
      * @param $data
-     * @param null  $id
+     * @param null $id
      * @param array $with
      *
      * @return mixed
@@ -95,7 +95,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function toggleVisibility($id, array $data)
     {
-        $productReview = $this->productReview->find($id);
+        $productReview = $this->productReview->findOrFail($id);
         if ($productReview->hidden == 0) {
             $productReview->hidden = 1;
         } else {
@@ -111,33 +111,34 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function markAsRead($id, $data)
     {
-        $productReview = $this->productReview->with('comments')->find($id);
+        $productReview = $this->productReview->with('comments')->findOrFail($id);
         $currentUser = \Auth::user();
         $productReview->comments->first()->markAsRead($currentUser->id);
     }
 
     /**
      * @param array $data
-     * @param int   $messageId
-     *
-     * @return bool
+     * @param int|string $messageId
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    public function editMessage(array $data, int $messageId)
+    public function editMessage(array $data, $messageId)
     {
-        $message = $this->message->update(['body' => $data['reply_message']], $messageId);
+        $message = $this->message->findOrFail($messageId);
+        $message->body = $data['reply_message'];
+        $message->save();
 
         return $message;
     }
 
     /**
-     * @param int   $messageId
+     * @param int|string $messageId
      * @param array $data
-     *
-     * @return mixed
+     * @return bool|mixed|null
+     * @throws \Exception
      */
-    public function deleteMessage(int $messageId, array $data = [])
+    public function deleteMessage($messageId, array $data = [])
     {
-        $deleted = $this->message->find($messageId)->delete();
+        $deleted = $this->message->findOrFail($messageId)->delete();
 
         return $deleted;
     }
@@ -174,7 +175,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function update(array $data, $reviewId)
     {
-        $review = $this->productReview->update($data, $reviewId);
+        $review = $this->productReview->findOrFail($reviewId)->update($data);
 
         return $review;
     }
@@ -182,12 +183,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
     /**
      * @param $id
      * @param array $data
-     *
      * @return int
+     * @throws \Exception
      */
     public function delete($id, array $data = []): int
     {
-        $deleted = $this->productReview->delete($id);
+        $deleted = $this->productReview->findOrFail($id)->delete();
 
         return $deleted;
     }

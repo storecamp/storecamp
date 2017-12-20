@@ -29,7 +29,7 @@ class ProductController extends BaseController
     /**
      * @var
      */
-    private $productRepository;
+    private $product;
 
     /**
      * ProductController constructor.
@@ -39,7 +39,7 @@ class ProductController extends BaseController
     public function __construct(ProductSystemContract $productSystem)
     {
         $this->productSystem = $productSystem;
-        $this->productRepository = $productSystem->productRepository;
+        $this->product = $productSystem->product;
     }
 
     /**
@@ -54,8 +54,8 @@ class ProductController extends BaseController
             $data = $request->all();
             if ($category) {
                 $products = $this->productSystem->categorized($data, $category, ['media']);
-                $categoryInstance = app('App\\Core\\Repositories\\CategoryRepository');
-                $category = $categoryInstance->find($category);
+                $categoryInstance = app('App\\Core\\Models\\Category');
+                $category = $categoryInstance->findOrFail($category);
             } else {
                 $products = $this->productSystem->present($data, null, ['media']);
             }
@@ -79,8 +79,7 @@ class ProductController extends BaseController
         try {
             $data = $request->all();
             $product = $this->productSystem->present($data, $productId, ['categories', 'productReview', 'media']);
-            $mostViewed = $this->productRepository->
-            mostViewed(5)->model->get();
+            $mostViewed = $this->product->mostViewed(5)->get();
             $category = $product->categories->first();
             $product->view();
 
