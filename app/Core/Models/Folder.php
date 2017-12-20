@@ -58,6 +58,9 @@ class Folder extends Model implements Transformable
     use Auditable;
 //    use CacheableEloquent;
 
+    /**
+     * @var array
+     */
     protected $with = ['files'];
     /**
      * @var array
@@ -97,6 +100,11 @@ class Folder extends Model implements Transformable
     public $rootFromProject;
 
     /**
+     * @var
+     */
+    public $model;
+
+    /**
      * Folder constructor.
      * @param array $attributes
      */
@@ -106,6 +114,7 @@ class Folder extends Model implements Transformable
         $this->media = new Media();
         $this->file = new Filesystem();
         $this->disk;
+        $this->model = $this;
         $this->diskRoot = config('filesystems.disks.local.root');
         $this->rootFromProject = config('filesystems.disks.local.rootFromProject');
     }
@@ -322,6 +331,26 @@ class Folder extends Model implements Transformable
             return $query->where('disk', '=', $this->getDisk())
                 ->where('unique_id', $id);
         }
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $q
+     * @param array $where
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Builder|mixed
+     */
+    public function scopeFindWhere(\Illuminate\Database\Eloquent\Builder $q, array $where, $columns = ['*'])
+    {
+        foreach ($where as $field => $value) {
+            if (is_array($value)) {
+                list($field, $condition, $val) = $value;
+                $q->where($field, $condition, $val);
+            } else {
+                $q->where($field, '=', $value);
+            }
+        }
+
+        return $q;
     }
 
     /**

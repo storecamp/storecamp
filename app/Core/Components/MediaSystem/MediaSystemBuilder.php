@@ -3,7 +3,7 @@
 namespace App\Components\MediaSystem;
 
 use App\Core\Models\Folder;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Media;
 
 /**
  * Class MediaSystemBuilder
@@ -16,7 +16,7 @@ class MediaSystemBuilder
      */
     protected $folder;
     /**
-     * @var MediaRepository
+     * @var Media
      */
     protected $media;
 
@@ -26,7 +26,7 @@ class MediaSystemBuilder
      * @param $folder
      * @param $media
      */
-    public function __construct(Folder $folder, MediaRepository $media)
+    public function __construct(Folder $folder, Media $media)
     {
         $this->folder = $folder;
         $this->media = $media;

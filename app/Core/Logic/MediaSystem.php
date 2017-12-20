@@ -4,7 +4,7 @@ namespace App\Core\Logic;
 
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Models\Folder;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Media;
 use App\Core\Support\Media\MediaUploader;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class MediaSystem implements MediaSystemContract
      */
     public $folder;
     /**
-     * @var MediaRepository
+     * @var Media
      */
     public $media;
     /**
@@ -50,11 +50,11 @@ class MediaSystem implements MediaSystemContract
      * MediaSystem constructor.
      *
      * @param Folder $folder
-     * @param MediaRepository $media
+     * @param Media $media
      * @param Filesystem $filesystem
      * @param MediaUploader $mediaUploader
      */
-    public function __construct(Folder $folder, MediaRepository $media,
+    public function __construct(Folder $folder, Media $media,
                                 Filesystem $filesystem, MediaUploader $mediaUploader)
     {
         $this->folder = $folder;
@@ -257,7 +257,7 @@ class MediaSystem implements MediaSystemContract
         $newFolder = $folderDisk->getDiskRoot() . '/' . $beRenamedToPath;
 
         if ($this->filesystem->isDirectory($selectedFolder)) {
-            $medias = $this->media->inDirectory($folderDisk->getDisk(), $renamedPath);
+            $medias = $this->media->getInDirectory($folderDisk->getDisk(), $renamedPath);
             $renamed = $this->filesystem->move($selectedFolder, $newFolder);
             foreach ($medias as $media) {
                 $media->directory = $beRenamedToPath;
@@ -362,9 +362,9 @@ class MediaSystem implements MediaSystemContract
     {
         $folderInstance = $this->folder->disk($disk);
         if ($tag) {
-            $media = $this->media->inDirectory($folderInstance->getDisk(), $path, $tag);
+            $media = $this->media->getInDirectory($folderInstance->getDisk(), $path, $tag);
         } else {
-            $media = $this->media->inDirectory($folderInstance->getDisk(), $path);
+            $media = $this->media->getInDirectory($folderInstance->getDisk(), $path);
         }
         $media = ['media' => $media, 'path' => $path, 'tag' => $tag, 'folderInstance' => $folder, 'disk' => $disk];
 

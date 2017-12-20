@@ -62,6 +62,7 @@ return [
             'prefix'    => '',
             'strict'    => true,
             'engine'    => null,
+            'unix_socket' => env('DB_SOCKET','/var/run/mysqld/mysqld.sock'),
         ],
 
         'pgsql' => [

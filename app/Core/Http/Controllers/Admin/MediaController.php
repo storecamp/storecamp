@@ -5,7 +5,7 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Models\Folder;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Media;
 use App\Core\Support\Media\MediaReceiver;
 use Arcanedev\LogViewer\Exceptions\FilesystemException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -30,7 +30,7 @@ class MediaController extends BaseController
      */
     public $errorRedirectPath = 'admin/media';
     /**
-     * @var MediaRepository
+     * @var Media
      */
     public $repository;
     /**

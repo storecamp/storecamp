@@ -7,7 +7,7 @@ use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Contracts\MediaSystemContract;
 use App\Core\Http\Controllers\Controller;
 use App\Core\Models\Folder;
-use App\Core\Repositories\MediaRepository;
+use App\Core\Models\Media;
 use App\Core\Support\Media\MediaReceiver;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,7 +20,7 @@ class FileSystemController extends Controller
     use HandlesMediaUploadExceptions;
 
     /**
-     * @var MediaRepository
+     * @var Media
      */
     public $repository;
     /**
