@@ -19,7 +19,7 @@
     {{ Form::label('category_id', 'Products Category', ['class' => 'control-label']) }}
     <a data-toggle="modal" href="#category-chooser-modal"
        class="form-control choose-opener col-sm-12">
-        {{ isset($chosenCategory) ? $chosenCategory->name : "choose category" }}
+        {{ isset($chosenCategory) ? $chosenCategoryPath : "choose category" }}
     </a>
     <div class="clearfix"></div>
     {{ Form::input('text','category_id', $chosenCategoryId, ['class' => 'chosen-category hidden']) }}
@@ -39,7 +39,7 @@
                 <h4 href="#" class="pull-left chosen-category text-success"><b class="text-muted">Category </b>
                     <span class="chosen-status">
                         @if($chosenCategory)
-                            {{ $chosenCategory->name }} - <i class="fa fa-thumbs-o-up"></i>
+                            {{ $chosenCategoryPath }} - <i class="fa fa-thumbs-o-up"></i>
                         @endif
                     </span>
                 </h4>

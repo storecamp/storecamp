@@ -12,6 +12,15 @@
         <li><a href="#activity" data-toggle="tab">Db Activity</a></li>
     </ul>
     <div class="tab-content">
+        @if(count($errors))
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="tab-pane active" id="general">
             <input type="text" name="selected_files" value="" class="hidden">
             <div class="form-group">
@@ -26,7 +35,7 @@
 
             </div>
             <div class="clearfix"></div>
-            @include('admin.products.category_chooser_modal', [$categories, $chosenCategory])
+            @include('admin.products.category_chooser_modal', [$categories, $chosenCategory, $chosenCategoryPath])
             @include('admin.components.description-form', [$property_name='body'])
             <div class="form-group">
                 <label class="control-label" for="input-date-available">Date Available</label>

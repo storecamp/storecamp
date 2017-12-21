@@ -42,9 +42,9 @@ class ProductSystem implements ProductSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $products = $this->product->find($id);
+            $products = $this->product->with($with)->find($id);
         } else {
-            $products = $this->product->newest()->paginate();
+            $products = $this->product->with($with)->newest()->paginate();
         }
 
         return $products;

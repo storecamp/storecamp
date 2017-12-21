@@ -3,6 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Logic\CategorySystem;
 use App\Core\Models\Category;
 use App\Core\Models\Product;
 use App\Core\Transformers\ProductDataTransformer;
@@ -145,13 +146,17 @@ class ProductsController extends BaseController
             $data = $request->all();
             $product = $this->productSystem->present($data, $id, ['attributeGroupDescription', 'categories']);
             $categories = $this->category->all();
+            $categories->map(function($item, $index){
+                $item['fullpath'] = $item ? CategorySystem::getCategoryFullPath($item) : 'no category  provided';
+            });
             $pictures = [];
             $chosenCategory = $product->categories->first();
+            $chosenCategoryPath = $chosenCategory ? CategorySystem::getCategoryFullPath($chosenCategory) : 'no category  provided';
             $attributesList = $product->attributeGroupDescription->pluck('name', 'id');
             $preferredTag = 'gallery';
 
             return $this->view('edit', compact('product', 'categories', 'pictures',
-                'chosenCategory', 'attributesList', 'preferredTag'));
+                'chosenCategory', 'chosenCategoryPath', 'attributesList', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -160,39 +165,24 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Update the specified article in storage.
-     *
      * @param Update $request
      * @param $id
-     *
-     * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function update(Update $request, $id)
     {
-        try {
-            \DB::beginTransaction();
-            $data = $request->all();
-            $this->productSystem->update($data, $id);
-            \Db::commit();
-
-            return redirect('admin/products');
-        } catch (ModelNotFoundException $e) {
-            \Db::rollBack();
-
-            return $this->redirectNotFound($e);
-        } catch (\Throwable $e) {
-            \Db::rollBack();
-
-            return $this->redirectError($e);
-        }
+        \DB::beginTransaction();
+        $data = $request->all();
+        $this->productSystem->update($data, $id);
+        \Db::commit();
+        return redirect('admin/products');
     }
 
     /**
-     * Remove the specified article from storage.
-     *
-     * @param int $id
-     *
-     * @return Response|RedirectResponse
+     * @param $id
+     * @return RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function destroy($id)
     {

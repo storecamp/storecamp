@@ -249,7 +249,6 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      */
     public function categories(): BelongsToMany
     {
-
         return $this->belongsToMany(Category::class, 'products_categories', 'product_id');
     }
 
