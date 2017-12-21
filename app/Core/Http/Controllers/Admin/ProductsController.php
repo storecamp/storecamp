@@ -87,8 +87,9 @@ class ProductsController extends BaseController
         $categories = $this->category->all();
         $chosenCategory = null;
         $preferredTag = 'gallery';
+        $chosenCategoryPath = $chosenCategory ? CategorySystem::getCategoryFullPath($chosenCategory) : 'no category  provided';
 
-        return $this->view('create', compact('categories', 'chosenCategory', 'preferredTag'));
+        return $this->view('create', compact('categories', 'chosenCategory', 'chosenCategoryPath', 'preferredTag'));
     }
 
     /**
