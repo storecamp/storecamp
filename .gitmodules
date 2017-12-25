@@ -1,0 +1,3 @@
+[submodule "storecamp"]
+	path = storecamp
+	url = https://github.com/Laradock/laradock.git

@@ -5,13 +5,12 @@ namespace App\Core\Http\Controllers\Admin;
 use App\Core\Contracts\AccessSystemContract;
 use App\Core\Models\Permission;
 use App\Core\Models\Role;
-use App\Core\Repositories\PermissionRepository;
-use App\Core\Repositories\RolesRepository;
 use App\Core\Transformers\RolesDataTransformer;
 use App\Core\Validators\Role\RolesFormRequest;
 use App\Core\Validators\Role\RolesUpdateFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Yajra\DataTables\DataTables;
 
 /**
